@@ -1,0 +1,177 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /Users/ThomasChan/Documents/Coding/ThirdYear/CMPUT301/MDBook/app/src/main/AndroidManifest.xml:2:1-27:12
+INJECTED from /Users/ThomasChan/Documents/Coding/ThirdYear/CMPUT301/MDBook/app/src/main/AndroidManifest.xml:2:1-27:12
+INJECTED from /Users/ThomasChan/Documents/Coding/ThirdYear/CMPUT301/MDBook/app/src/main/AndroidManifest.xml:2:1-27:12
+INJECTED from /Users/ThomasChan/Documents/Coding/ThirdYear/CMPUT301/MDBook/app/src/main/AndroidManifest.xml:2:1-27:12
+MERGED from [com.android.support:design:28.0.0] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/design-28.0.0.aar/3c65c0a32d6ffb62e3c1cc43c4878ecb/AndroidManifest.xml:17:1-24:12
+MERGED from [com.android.support:appcompat-v7:28.0.0] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/a95ef3d3083291fb8ace51451c2da584/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-fragment:28.0.0] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/support-fragment-28.0.0.aar/d0b5652a5cbe7e1ed81e9dbcf4a32ba2/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:animated-vector-drawable:28.0.0] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-28.0.0.aar/bfad692a8568681d27a25db1530e278c/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:recyclerview-v7:28.0.0] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/recyclerview-v7-28.0.0.aar/04720514ea7710a709937fdd326b35d3/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-core-ui:28.0.0] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/support-core-ui-28.0.0.aar/e92af5d5ed504eb789a8916efc42db82/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-core-utils:28.0.0] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/support-core-utils-28.0.0.aar/992c8d0a9b1299e8323567ffb7a42a96/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-vector-drawable:28.0.0] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-28.0.0.aar/850d08acfc2935f6f62cb1fe2fa9fff3/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:transition:28.0.0] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/transition-28.0.0.aar/283c90ad14bef7bee5d3ec4a1be7fc7d/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:loader:28.0.0] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/loader-28.0.0.aar/42bcf282386c6ef3bf080cd6bacbcb49/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:viewpager:28.0.0] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/viewpager-28.0.0.aar/ce1cdda37a51e1aedc6a3b5df8689813/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:coordinatorlayout:28.0.0] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/coordinatorlayout-28.0.0.aar/42db3adce7fa48376027880ab5e3323f/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:drawerlayout:28.0.0] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/drawerlayout-28.0.0.aar/38211fd39322c3182c3d9bd73a306e17/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:slidingpanelayout:28.0.0] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/slidingpanelayout-28.0.0.aar/86532b82ed46d5c083d523bb8ce131fe/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:customview:28.0.0] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/customview-28.0.0.aar/5bfb8be000cfd52da72fdbb52aa97c31/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:swiperefreshlayout:28.0.0] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/swiperefreshlayout-28.0.0.aar/bc36e6efd3c96ae34209c8a2ab802b64/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:asynclayoutinflater:28.0.0] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/asynclayoutinflater-28.0.0.aar/b97fd848c8706b99a2e98ef6c420396b/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-compat:28.0.0] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/support-compat-28.0.0.aar/b2edbb9c8564ef5ad914d0c9903667f5/AndroidManifest.xml:17:1-24:12
+MERGED from [com.android.support:versionedparcelable:28.0.0] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/versionedparcelable-28.0.0.aar/66bbddd35a88588f74c003915e3af7e5/AndroidManifest.xml:17:1-25:12
+MERGED from [com.android.support:cursoradapter:28.0.0] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/cursoradapter-28.0.0.aar/0478139a971393e294137cb91fc7b63f/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:cardview-v7:28.0.0] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/cardview-v7-28.0.0.aar/c32bfe73783c73acb05b4ef84dc5fb3a/AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.lifecycle:runtime:1.1.1] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/runtime-1.1.1.aar/a11254bbfbf99a012722918c45acc4ca/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:documentfile:28.0.0] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/documentfile-28.0.0.aar/4cb3541b5c9b2e34aa8a3743aaa7ba19/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:localbroadcastmanager:28.0.0] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/localbroadcastmanager-28.0.0.aar/9baeacf454e8bd0c5d2fc8899639a49c/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:print:28.0.0] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/print-28.0.0.aar/8b2cae2637612bc90415d5b2efcb81a0/AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.lifecycle:viewmodel:1.1.1] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/viewmodel-1.1.1.aar/61c45615eeafd1dd7deb851823e3d2d8/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:interpolator:28.0.0] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/interpolator-28.0.0.aar/45901ce24e9dc6f1e6336bbdf1969ccc/AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.lifecycle:livedata:1.1.1] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/livedata-1.1.1.aar/25fa501af64ee6078f7b71ad21d6b883/AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.lifecycle:livedata-core:1.1.1] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/livedata-core-1.1.1.aar/0c272ef33ae2c98e6ba5297a281617c2/AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.core:runtime:1.1.1] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/runtime-1.1.1.aar/aed345e69dd54e7f2b70f7b9e3518bad/AndroidManifest.xml:17:1-22:12
+INJECTED from /Users/ThomasChan/Documents/Coding/ThirdYear/CMPUT301/MDBook/app/src/main/AndroidManifest.xml:2:1-27:12
+INJECTED from /Users/ThomasChan/Documents/Coding/ThirdYear/CMPUT301/MDBook/app/src/main/AndroidManifest.xml:2:1-27:12
+INJECTED from /Users/ThomasChan/Documents/Coding/ThirdYear/CMPUT301/MDBook/app/src/main/AndroidManifest.xml:2:1-27:12
+	package
+		ADDED from /Users/ThomasChan/Documents/Coding/ThirdYear/CMPUT301/MDBook/app/src/main/AndroidManifest.xml:3:5-44
+		INJECTED from /Users/ThomasChan/Documents/Coding/ThirdYear/CMPUT301/MDBook/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/ThomasChan/Documents/Coding/ThirdYear/CMPUT301/MDBook/app/src/main/AndroidManifest.xml
+	android:versionName
+		INJECTED from /Users/ThomasChan/Documents/Coding/ThirdYear/CMPUT301/MDBook/app/src/main/AndroidManifest.xml
+		ADDED from /Users/ThomasChan/Documents/Coding/ThirdYear/CMPUT301/MDBook/app/src/main/AndroidManifest.xml:2:1-27:12
+		INJECTED from /Users/ThomasChan/Documents/Coding/ThirdYear/CMPUT301/MDBook/app/src/main/AndroidManifest.xml
+	android:versionCode
+		INJECTED from /Users/ThomasChan/Documents/Coding/ThirdYear/CMPUT301/MDBook/app/src/main/AndroidManifest.xml
+		ADDED from /Users/ThomasChan/Documents/Coding/ThirdYear/CMPUT301/MDBook/app/src/main/AndroidManifest.xml:2:1-27:12
+		INJECTED from /Users/ThomasChan/Documents/Coding/ThirdYear/CMPUT301/MDBook/app/src/main/AndroidManifest.xml
+	xmlns:android
+		ADDED from /Users/ThomasChan/Documents/Coding/ThirdYear/CMPUT301/MDBook/app/src/main/AndroidManifest.xml:2:11-69
+uses-permission#android.permission.GET_ACCOUNTS
+ADDED from /Users/ThomasChan/Documents/Coding/ThirdYear/CMPUT301/MDBook/app/src/main/AndroidManifest.xml:5:5-71
+	android:name
+		ADDED from /Users/ThomasChan/Documents/Coding/ThirdYear/CMPUT301/MDBook/app/src/main/AndroidManifest.xml:5:22-68
+uses-permission#android.permission.READ_PROFILE
+ADDED from /Users/ThomasChan/Documents/Coding/ThirdYear/CMPUT301/MDBook/app/src/main/AndroidManifest.xml:6:5-71
+	android:name
+		ADDED from /Users/ThomasChan/Documents/Coding/ThirdYear/CMPUT301/MDBook/app/src/main/AndroidManifest.xml:6:22-68
+uses-permission#android.permission.READ_CONTACTS
+ADDED from /Users/ThomasChan/Documents/Coding/ThirdYear/CMPUT301/MDBook/app/src/main/AndroidManifest.xml:7:5-72
+	android:name
+		ADDED from /Users/ThomasChan/Documents/Coding/ThirdYear/CMPUT301/MDBook/app/src/main/AndroidManifest.xml:7:22-69
+application
+ADDED from /Users/ThomasChan/Documents/Coding/ThirdYear/CMPUT301/MDBook/app/src/main/AndroidManifest.xml:9:5-25:19
+MERGED from [com.android.support:design:28.0.0] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/design-28.0.0.aar/3c65c0a32d6ffb62e3c1cc43c4878ecb/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:design:28.0.0] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/design-28.0.0.aar/3c65c0a32d6ffb62e3c1cc43c4878ecb/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:support-compat:28.0.0] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/support-compat-28.0.0.aar/b2edbb9c8564ef5ad914d0c9903667f5/AndroidManifest.xml:22:5-94
+MERGED from [com.android.support:support-compat:28.0.0] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/support-compat-28.0.0.aar/b2edbb9c8564ef5ad914d0c9903667f5/AndroidManifest.xml:22:5-94
+MERGED from [com.android.support:versionedparcelable:28.0.0] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/versionedparcelable-28.0.0.aar/66bbddd35a88588f74c003915e3af7e5/AndroidManifest.xml:22:5-23:19
+MERGED from [com.android.support:versionedparcelable:28.0.0] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/versionedparcelable-28.0.0.aar/66bbddd35a88588f74c003915e3af7e5/AndroidManifest.xml:22:5-23:19
+	android:appComponentFactory
+		ADDED from [com.android.support:support-compat:28.0.0] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/support-compat-28.0.0.aar/b2edbb9c8564ef5ad914d0c9903667f5/AndroidManifest.xml:22:18-91
+	android:supportsRtl
+		ADDED from /Users/ThomasChan/Documents/Coding/ThirdYear/CMPUT301/MDBook/app/src/main/AndroidManifest.xml:14:9-35
+	android:label
+		ADDED from /Users/ThomasChan/Documents/Coding/ThirdYear/CMPUT301/MDBook/app/src/main/AndroidManifest.xml:12:9-41
+	android:roundIcon
+		ADDED from /Users/ThomasChan/Documents/Coding/ThirdYear/CMPUT301/MDBook/app/src/main/AndroidManifest.xml:13:9-54
+	android:icon
+		ADDED from /Users/ThomasChan/Documents/Coding/ThirdYear/CMPUT301/MDBook/app/src/main/AndroidManifest.xml:11:9-43
+	android:allowBackup
+		ADDED from /Users/ThomasChan/Documents/Coding/ThirdYear/CMPUT301/MDBook/app/src/main/AndroidManifest.xml:10:9-35
+	android:theme
+		ADDED from /Users/ThomasChan/Documents/Coding/ThirdYear/CMPUT301/MDBook/app/src/main/AndroidManifest.xml:15:9-40
+activity#com.example.thomaschan.mdbook.LoginActivity
+ADDED from /Users/ThomasChan/Documents/Coding/ThirdYear/CMPUT301/MDBook/app/src/main/AndroidManifest.xml:16:9-24:20
+	android:label
+		ADDED from /Users/ThomasChan/Documents/Coding/ThirdYear/CMPUT301/MDBook/app/src/main/AndroidManifest.xml:18:13-45
+	android:name
+		ADDED from /Users/ThomasChan/Documents/Coding/ThirdYear/CMPUT301/MDBook/app/src/main/AndroidManifest.xml:17:13-42
+intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
+ADDED from /Users/ThomasChan/Documents/Coding/ThirdYear/CMPUT301/MDBook/app/src/main/AndroidManifest.xml:19:13-23:29
+action#android.intent.action.MAIN
+ADDED from /Users/ThomasChan/Documents/Coding/ThirdYear/CMPUT301/MDBook/app/src/main/AndroidManifest.xml:20:17-69
+	android:name
+		ADDED from /Users/ThomasChan/Documents/Coding/ThirdYear/CMPUT301/MDBook/app/src/main/AndroidManifest.xml:20:25-66
+category#android.intent.category.LAUNCHER
+ADDED from /Users/ThomasChan/Documents/Coding/ThirdYear/CMPUT301/MDBook/app/src/main/AndroidManifest.xml:22:17-77
+	android:name
+		ADDED from /Users/ThomasChan/Documents/Coding/ThirdYear/CMPUT301/MDBook/app/src/main/AndroidManifest.xml:22:27-74
+uses-sdk
+INJECTED from /Users/ThomasChan/Documents/Coding/ThirdYear/CMPUT301/MDBook/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /Users/ThomasChan/Documents/Coding/ThirdYear/CMPUT301/MDBook/app/src/main/AndroidManifest.xml
+INJECTED from /Users/ThomasChan/Documents/Coding/ThirdYear/CMPUT301/MDBook/app/src/main/AndroidManifest.xml
+MERGED from [com.android.support:design:28.0.0] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/design-28.0.0.aar/3c65c0a32d6ffb62e3c1cc43c4878ecb/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:design:28.0.0] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/design-28.0.0.aar/3c65c0a32d6ffb62e3c1cc43c4878ecb/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:appcompat-v7:28.0.0] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/a95ef3d3083291fb8ace51451c2da584/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:appcompat-v7:28.0.0] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/a95ef3d3083291fb8ace51451c2da584/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-fragment:28.0.0] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/support-fragment-28.0.0.aar/d0b5652a5cbe7e1ed81e9dbcf4a32ba2/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-fragment:28.0.0] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/support-fragment-28.0.0.aar/d0b5652a5cbe7e1ed81e9dbcf4a32ba2/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:animated-vector-drawable:28.0.0] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-28.0.0.aar/bfad692a8568681d27a25db1530e278c/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:animated-vector-drawable:28.0.0] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-28.0.0.aar/bfad692a8568681d27a25db1530e278c/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:recyclerview-v7:28.0.0] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/recyclerview-v7-28.0.0.aar/04720514ea7710a709937fdd326b35d3/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:recyclerview-v7:28.0.0] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/recyclerview-v7-28.0.0.aar/04720514ea7710a709937fdd326b35d3/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-ui:28.0.0] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/support-core-ui-28.0.0.aar/e92af5d5ed504eb789a8916efc42db82/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-ui:28.0.0] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/support-core-ui-28.0.0.aar/e92af5d5ed504eb789a8916efc42db82/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-utils:28.0.0] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/support-core-utils-28.0.0.aar/992c8d0a9b1299e8323567ffb7a42a96/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-utils:28.0.0] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/support-core-utils-28.0.0.aar/992c8d0a9b1299e8323567ffb7a42a96/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-vector-drawable:28.0.0] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-28.0.0.aar/850d08acfc2935f6f62cb1fe2fa9fff3/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-vector-drawable:28.0.0] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-28.0.0.aar/850d08acfc2935f6f62cb1fe2fa9fff3/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:transition:28.0.0] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/transition-28.0.0.aar/283c90ad14bef7bee5d3ec4a1be7fc7d/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:transition:28.0.0] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/transition-28.0.0.aar/283c90ad14bef7bee5d3ec4a1be7fc7d/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:loader:28.0.0] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/loader-28.0.0.aar/42bcf282386c6ef3bf080cd6bacbcb49/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:loader:28.0.0] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/loader-28.0.0.aar/42bcf282386c6ef3bf080cd6bacbcb49/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:viewpager:28.0.0] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/viewpager-28.0.0.aar/ce1cdda37a51e1aedc6a3b5df8689813/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:viewpager:28.0.0] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/viewpager-28.0.0.aar/ce1cdda37a51e1aedc6a3b5df8689813/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:coordinatorlayout:28.0.0] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/coordinatorlayout-28.0.0.aar/42db3adce7fa48376027880ab5e3323f/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:coordinatorlayout:28.0.0] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/coordinatorlayout-28.0.0.aar/42db3adce7fa48376027880ab5e3323f/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:drawerlayout:28.0.0] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/drawerlayout-28.0.0.aar/38211fd39322c3182c3d9bd73a306e17/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:drawerlayout:28.0.0] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/drawerlayout-28.0.0.aar/38211fd39322c3182c3d9bd73a306e17/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:slidingpanelayout:28.0.0] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/slidingpanelayout-28.0.0.aar/86532b82ed46d5c083d523bb8ce131fe/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:slidingpanelayout:28.0.0] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/slidingpanelayout-28.0.0.aar/86532b82ed46d5c083d523bb8ce131fe/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:customview:28.0.0] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/customview-28.0.0.aar/5bfb8be000cfd52da72fdbb52aa97c31/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:customview:28.0.0] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/customview-28.0.0.aar/5bfb8be000cfd52da72fdbb52aa97c31/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:swiperefreshlayout:28.0.0] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/swiperefreshlayout-28.0.0.aar/bc36e6efd3c96ae34209c8a2ab802b64/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:swiperefreshlayout:28.0.0] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/swiperefreshlayout-28.0.0.aar/bc36e6efd3c96ae34209c8a2ab802b64/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:asynclayoutinflater:28.0.0] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/asynclayoutinflater-28.0.0.aar/b97fd848c8706b99a2e98ef6c420396b/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:asynclayoutinflater:28.0.0] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/asynclayoutinflater-28.0.0.aar/b97fd848c8706b99a2e98ef6c420396b/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-compat:28.0.0] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/support-compat-28.0.0.aar/b2edbb9c8564ef5ad914d0c9903667f5/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-compat:28.0.0] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/support-compat-28.0.0.aar/b2edbb9c8564ef5ad914d0c9903667f5/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:versionedparcelable:28.0.0] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/versionedparcelable-28.0.0.aar/66bbddd35a88588f74c003915e3af7e5/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:versionedparcelable:28.0.0] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/versionedparcelable-28.0.0.aar/66bbddd35a88588f74c003915e3af7e5/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:cursoradapter:28.0.0] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/cursoradapter-28.0.0.aar/0478139a971393e294137cb91fc7b63f/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:cursoradapter:28.0.0] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/cursoradapter-28.0.0.aar/0478139a971393e294137cb91fc7b63f/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:cardview-v7:28.0.0] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/cardview-v7-28.0.0.aar/c32bfe73783c73acb05b4ef84dc5fb3a/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:cardview-v7:28.0.0] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/cardview-v7-28.0.0.aar/c32bfe73783c73acb05b4ef84dc5fb3a/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:runtime:1.1.1] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/runtime-1.1.1.aar/a11254bbfbf99a012722918c45acc4ca/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:runtime:1.1.1] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/runtime-1.1.1.aar/a11254bbfbf99a012722918c45acc4ca/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:documentfile:28.0.0] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/documentfile-28.0.0.aar/4cb3541b5c9b2e34aa8a3743aaa7ba19/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:documentfile:28.0.0] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/documentfile-28.0.0.aar/4cb3541b5c9b2e34aa8a3743aaa7ba19/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:localbroadcastmanager:28.0.0] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/localbroadcastmanager-28.0.0.aar/9baeacf454e8bd0c5d2fc8899639a49c/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:localbroadcastmanager:28.0.0] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/localbroadcastmanager-28.0.0.aar/9baeacf454e8bd0c5d2fc8899639a49c/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:print:28.0.0] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/print-28.0.0.aar/8b2cae2637612bc90415d5b2efcb81a0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:print:28.0.0] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/print-28.0.0.aar/8b2cae2637612bc90415d5b2efcb81a0/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:viewmodel:1.1.1] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/viewmodel-1.1.1.aar/61c45615eeafd1dd7deb851823e3d2d8/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:viewmodel:1.1.1] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/viewmodel-1.1.1.aar/61c45615eeafd1dd7deb851823e3d2d8/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:interpolator:28.0.0] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/interpolator-28.0.0.aar/45901ce24e9dc6f1e6336bbdf1969ccc/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:interpolator:28.0.0] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/interpolator-28.0.0.aar/45901ce24e9dc6f1e6336bbdf1969ccc/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:livedata:1.1.1] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/livedata-1.1.1.aar/25fa501af64ee6078f7b71ad21d6b883/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:livedata:1.1.1] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/livedata-1.1.1.aar/25fa501af64ee6078f7b71ad21d6b883/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:livedata-core:1.1.1] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/livedata-core-1.1.1.aar/0c272ef33ae2c98e6ba5297a281617c2/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:livedata-core:1.1.1] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/livedata-core-1.1.1.aar/0c272ef33ae2c98e6ba5297a281617c2/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.core:runtime:1.1.1] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/runtime-1.1.1.aar/aed345e69dd54e7f2b70f7b9e3518bad/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.core:runtime:1.1.1] /Users/ThomasChan/.gradle/caches/transforms-1/files-1.1/runtime-1.1.1.aar/aed345e69dd54e7f2b70f7b9e3518bad/AndroidManifest.xml:20:5-44
+INJECTED from /Users/ThomasChan/Documents/Coding/ThirdYear/CMPUT301/MDBook/app/src/main/AndroidManifest.xml
+INJECTED from /Users/ThomasChan/Documents/Coding/ThirdYear/CMPUT301/MDBook/app/src/main/AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from /Users/ThomasChan/Documents/Coding/ThirdYear/CMPUT301/MDBook/app/src/main/AndroidManifest.xml
+		ADDED from /Users/ThomasChan/Documents/Coding/ThirdYear/CMPUT301/MDBook/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/ThomasChan/Documents/Coding/ThirdYear/CMPUT301/MDBook/app/src/main/AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from /Users/ThomasChan/Documents/Coding/ThirdYear/CMPUT301/MDBook/app/src/main/AndroidManifest.xml
+		ADDED from /Users/ThomasChan/Documents/Coding/ThirdYear/CMPUT301/MDBook/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/ThomasChan/Documents/Coding/ThirdYear/CMPUT301/MDBook/app/src/main/AndroidManifest.xml
