@@ -1,12 +1,11 @@
+// Tests the problem objects
 package com.example.mdbook;
-
-import junit.framework.TestCase;
 
 import org.junit.Test;
 
 import java.util.Date;
 
-public class ProblemTest extends TestCase{
+public class ProblemTest {
 
     // Test for a title of too long of length
     @Test(expected = IllegalArgumentException.class)
