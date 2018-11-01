@@ -1,12 +1,16 @@
 // Tests the problem objects
 package com.example.mdbook;
 
+import android.provider.ContactsContract;
+
 import org.junit.Test;
 
 
 import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class ProblemTest {
 
@@ -58,16 +62,25 @@ public class ProblemTest {
         assertSame("comment", problem.getComment());
     }
 
-    // Test for ability to add/remove records
+    // Test for ability to add/remove records and problems to pull photos from records
     @Test
     public void testAddRemoveRecord(){
-        Record record = new Record("title",new Date(), "photoReference");
-        Problem problem = new Problem("TestTitle", "TestDesc");
-        assertEquals(problem.getRecords().size(),0);
-        problemList.addRecord(record);
-        assertEquals(problem.getRecords().size(), 1);
-        problemList.removeRecord(record);
-        assertEquals(problem.getRecords().size(), 0);
-    }
+        Record record = new Record("title",new Date());
+        Photo photo = new Photo();
+        record.addPhoto(photo);
 
+        // test for adding problem to record
+        Problem problem = new Problem("TestTitle", "TestDesc");
+        assertFalse(problem.getRecords().contains(record));
+        problemList.addRecord(record);
+
+        // test for record being added
+        assertTrue(problem.getRecords().contains(record));
+        // test for problem containing photos of added records
+        asserTrue(problem.getPhotos().contains(photo));
+
+        // test for removing record
+        problemList.removeRecord(record);
+        assertFalse(problem.getRecords().contains(record));
+    }
 }

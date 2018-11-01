@@ -1,5 +1,5 @@
 package com.example.mdbook;
-// test functionalities of usermanager
+// test functionalities of usermanager and elastisearch controller
 
 
 import android.content.Context;
@@ -24,7 +24,8 @@ public class UserManagerTest extends TestCase implements {
     }
 
     // test loading and saving user data via elastisearch
-    public void testLoadSaveUser(){
+    // depends on elastisearch controller
+    public void testLoadSaveDeleteUser(){
 
         UserManager.initManager(InstrumentationRegistry.getContext());
         UserManager um = UserManager.getManager();
@@ -42,6 +43,12 @@ public class UserManagerTest extends TestCase implements {
         // check changes were loaded
         u2 = um.loadUser("patientid");
         assertEquals("newphone", u2.getPhoneNumber());
+
+        // delete profile
+        um.deleteUser(u);
+
+        // check to make sure patient doest exist
+        assertFalse(um.login("patientid"));
 
     }
 

@@ -26,6 +26,7 @@ public class UserTest extends TestCase {
     }
 
     // check that patients can add problems but caregivers can't
+    @Test(expected = NoSuchMethodException.class)
     public void testAddProblem(){
         Patient u = new Patient("patientid", "userphone", "useremail@test.com");
         Caregiver  c = new Caregiver("caregiverid", "userphone", "useremail@test.com");
