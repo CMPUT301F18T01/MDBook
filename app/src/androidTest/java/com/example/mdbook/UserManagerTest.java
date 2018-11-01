@@ -3,6 +3,7 @@ package com.example.mdbook;
 
 
 import android.content.Context;
+import android.os.UserManager;
 import android.support.test.InstrumentationRegistry;
 
 import junit.framework.TestCase;
@@ -15,7 +16,7 @@ public class UserManagerTest extends TestCase implements {
     public void testSingleton(){
         UserManager.initManager(InstrumentationRegistry.getContext());
         UserManager um = UserManager.getManager();
-        Patient u = new Patient("userid", "userphone", "useremail@test.com");
+        Patient u = new Patient("patientid", "userphone", "useremail@test.com");
         um.addUser(u);
         UserManager um2  = UserManager.getManager();
         assertTrue(um2.login("userid"));
@@ -28,10 +29,10 @@ public class UserManagerTest extends TestCase implements {
         UserManager.initManager(InstrumentationRegistry.getContext());
         UserManager um = UserManager.getManager();
         // create new profile
-        Patient u = new Patient("userid", "userphone", "useremail@test.com");
+        Patient u = new Patient("patientid", "userphone", "useremail@test.com");
         um.addUser(u);
         // load profile
-        Patient u2 = um.loadUser("userid");
+        Patient u2 = um.loadUser("patientid");
         assertEquals(u.getPhoneNumber(), u2.getPhoneNumber());
 
         // modify and save profile
@@ -39,7 +40,7 @@ public class UserManagerTest extends TestCase implements {
         um.saveUser(u);
 
         // check changes were loaded
-        u2 = um.loadUser("userid");
+        u2 = um.loadUser("patientid");
         assertEquals("newphone", u2.getPhoneNumber());
 
     }
@@ -48,7 +49,7 @@ public class UserManagerTest extends TestCase implements {
     public void testToFromStringUser(){
         UserManager.initManager(InstrumentationRegistry.getContext());
         UserManager um = UserManager.getManager();
-        Patient u = new Patient("userid", "userphone", "useremail@test.com");
+        Patient u = new Patient("patientid", "userphone", "useremail@test.com");
         String uString = UserManager.userToString(u);
         Patient u2 = UserManager.userFromString(uString);
         assertEquals(u.getUserID(), u2.getUserID());
@@ -60,13 +61,14 @@ public class UserManagerTest extends TestCase implements {
     public void testLoginFail(){
         UserManager.initManager(InstrumentationRegistry.getContext());
         UserManager um = UserManager.getManager();
-        Patient p = new Patient("userid", "userphone", "useremail@test.com");
+        Patient p = new Patient("patientid", "userphone", "useremail@test.com");
         um.addUser(p);
         // test that login fails
-        assertFalse(um.login("userid_"));
+        assertFalse(um.login("patientid_"));
         // test that data is not loaded into usercontroller
         User u = UserController.getUser();
-        assertNotSame("userid", u.getUserID());
+        assertNotSame("patientid", u.getUserID());
+        assertNotSame("patientid_", u.getUserID());
     }
 
     // test to make sure user data is loaded into user object upon login
@@ -74,16 +76,16 @@ public class UserManagerTest extends TestCase implements {
     public void testUserLogin(){
         UserManager.initManager(InstrumentationRegistry.getContext());
         UserManager um = UserManager.getManager();
-        Patient u = new Patient("userid", "userphone", "useremail@test.com");
+        Patient u = new Patient("patientid", "userphone", "useremail@test.com");
         um.addUser(u);
-        Patient u2 = new Patient("userid2", "userphone", "useremail2@test.com");
+        Patient u2 = new Patient("patientid2", "userphone", "useremail2@test.com");
         um.addUser(u2);
         User u = UserController.getUser();
-        um.login("userid");
-        assertEquals(u.getUserID(), "userid");
+        um.login("patientid");
+        assertEquals(u.getUserID(), "patientid");
         um.logout();
-        um.login("userid2");
-        assertEquals(u.getUserID(), "userid2");
+        um.login("patientid2");
+        assertEquals(u.getUserID(), "patientid2");
         um.logout();
 
     }
@@ -93,15 +95,15 @@ public class UserManagerTest extends TestCase implements {
     public void testUserLogout(){
         UserManager.initManager(InstrumentationRegistry.getContext());
         UserManager um = UserManager.getManager();
-        Patient u = new Patient("userid", "userphone", "useremail@test.com");
+        Patient u = new Patient("patientid", "userphone", "useremail@test.com");
         um.addUser(u);
         User u = UserController.getUser();
-        um.login("userid");
+        um.login("patientid");
         // make sure login was successful
-        assertEquals(u.getUserID(), "userid");
+        assertEquals(u.getUserID(), "patientid");
         um.logout();
         // make sure usercontroller is wiped on logout
-        assertNotSame("userid", u.getUserID());
+        assertNotSame("patientid", u.getUserID());
     }
 
     // test to make sure login cannot be completed before logging out
@@ -110,11 +112,11 @@ public class UserManagerTest extends TestCase implements {
     public void testInvalidLogin(){
         UserManager.initManager(InstrumentationRegistry.getContext());
         UserManager um = UserManager.getManager();
-        Patient u = new Patient("userid", "userphone", "useremail@test.com");
+        Patient u = new Patient("patientid", "userphone", "useremail@test.com");
         um.addUser(u);
         // verify successful login
-        assertTrue(um.login("userid"));
+        assertTrue(um.login("patientid"));
         // attempt logging in without logging out first
-        um.login("userid");
+        um.login("patientid");
     }
 }
