@@ -3,7 +3,6 @@ package com.example.mdbook;
 
 import junit.framework.TestCase;
 
-import java.util.ArrayList;
 import java.util.Date;
 
 public class RecordTest extends TestCase {
