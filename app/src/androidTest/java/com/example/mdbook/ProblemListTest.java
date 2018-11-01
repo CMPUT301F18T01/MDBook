@@ -12,6 +12,7 @@ public class ProblemListTest extends TestCase {
         assertEquals(problemList.size(), 0);
         problemList.addProblem(problem);
         assertEquals(problemList.size(), 1);
+        assertTrue(problemList.contains(problem));
         problemList.removeProblem(problem);
         assertEquals(problemList.size(), 0);
     }
