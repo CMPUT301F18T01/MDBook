@@ -14,9 +14,9 @@ public class RecordTest extends TestCase {
 
         /* Add items */
         // test location picker
-        Location location = LocationPicker.here();
-        record.addLocation(location);
-        assertEquals(location, record.getLocation());
+        GeoLocation geoLocation = new GeoLocation();
+        record.addLocation(geoLocation);
+        assertEquals(geoLocation, record.getLocation());
 
         // test photos, record should be able to hold at least 10
         for(int i = 0; i<9;i++){
@@ -27,14 +27,14 @@ public class RecordTest extends TestCase {
         assertTrue(record.getPhotos().contains(photo));
 
         // test for body location
-        BodyLocation bodyLocation = new BodyLocation(0,0);
+        BodyLocation bodyLocation = new BodyLocation("arm");
         record.addBodyLocation(bodyLocation);
         assertEquals(bodyLocation, record.getBodyLocation());
 
 
         // test for comment, title, date
         record.addComment("test comment");
-        assertEquals("test comment". record.getComment());
+        assertEquals("test comment", record.getComment());
         assertEquals(rTitle, record.getTitle());
         assertEquals(rDate, record.getDate());
     }

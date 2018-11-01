@@ -11,7 +11,7 @@ public class ElasticsearchControllerTest extends TestCase {
     // test ability to load and save users, problems and records
     public void testSaveLoad() {
         Patient patient = new Patient("patientid", "userphone", "useremail@test.com");
-        ElasticsearchControler esc = ElasticsearchController.getController();
+        ElasticsearchController esc = ElasticsearchController.getController();
         esc.addPatient(patient);
 
         // ensure patient is added and can be loaded by esc
@@ -23,7 +23,7 @@ public class ElasticsearchControllerTest extends TestCase {
         // should add problem with blank record reference and patientID user reference
         // should also add problem/record id  to "patientid" problem/record id reference list
         String problemID = esc.addProblem("patientid", problem);
-        String recordID = esc.addRecord(problemID, record);
+        String recordID = esc.addRecord(problemID, "patientID", record);
 
 
         // ensure esc can retrieve problem from patient
@@ -48,15 +48,15 @@ public class ElasticsearchControllerTest extends TestCase {
     public void testSearch(){
         // create and add a new patient
         Patient patient = new Patient("patientid", "userphone", "useremail@test.com");
-        ElasticsearchControler esc = ElasticsearchController.getController();
+        ElasticsearchController esc = ElasticsearchController.getController();
         Problem problem = new Problem("Title", "Description coconut");
         Record record = new Record("Title", new Date(), "Description banana");
-        Geolocation geolocation = new GeoLocation();
-        record.addGeoLocation(geolocation);
+        GeoLocation geolocation = new GeoLocation();
+        record.addLocation(geolocation);
 
         esc.addPatient(patient);
         String problemID = esc.addProblem("patientid", problem);
-        String recordID = esc.addRecord(problemID, record);
+        String recordID = esc.addRecord(problemID, "patientid", record);
 
         // ensure location search works
         ArrayList<String> georesults = esc.searchGeoLocation(geolocation);

@@ -55,11 +55,11 @@ public class ProblemTest {
     @Test
     public void testProblemEdit(){
         Problem problem = new Problem("Title", "Description");
-        assertSame("Description", problem.getDescription());
+        assertEquals("Description", problem.getDescription());
         problem.setDescription("newDesc");
-        assertSame("newDesc", problem.getDescription());
+        assertEquals("newDesc", problem.getDescription());
         problem.addComment("comment");
-        assertSame("comment", problem.getComment());
+        assertTrue(problem.getComments().contains("comment"));
     }
 
     // Test for ability to add/remove records and problems to pull photos from records
@@ -72,15 +72,15 @@ public class ProblemTest {
         // test for adding problem to record
         Problem problem = new Problem("TestTitle", "TestDesc");
         assertFalse(problem.getRecords().contains(record));
-        problemList.addRecord(record);
+        problem.addRecord(record);
 
         // test for record being added
         assertTrue(problem.getRecords().contains(record));
         // test for problem containing photos of added records
-        asserTrue(problem.getPhotos().contains(photo));
+        assertTrue(problem.getPhotos().contains(photo));
 
         // test for removing record
-        problemList.removeRecord(record);
+        problem.removeRecord(record);
         assertFalse(problem.getRecords().contains(record));
     }
 }
