@@ -5,7 +5,7 @@ import java.util.ArrayList;
 class Problem {
 
     // create new problem object
-    public Problem(String title, String description) {
+    public Problem(String title, String description) throws IllegalArgumentException  {
 
     }
 

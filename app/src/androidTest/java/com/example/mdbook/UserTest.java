@@ -11,8 +11,7 @@ import org.junit.Test;
 public class UserTest extends TestCase {
 
 
-    // check that caregivers can add patients but patients can't
-    @Test(expected = NoSuchMethodException.class)
+    // check that caregivers can add patients
     public void testAddPatient(){
         Patient patient = new Patient("patientid", "userphone", "useremail@test.com");
         Caregiver  caregiver = new Caregiver("caregiverid", "userphone", "useremail@test.com");
@@ -20,24 +19,19 @@ public class UserTest extends TestCase {
 
         // try adding patient to caregiver
         assertTrue(caregiver.addPatient(testPatient));
-
-        // try adding patient to patient
-        patient.addPatient(testPatient);
     }
 
-    // check that patients can add problems but caregivers can't
-    @Test(expected = NoSuchMethodException.class)
+    // check that patients can add problems
     public void testAddProblem(){
         Patient u = new Patient("patientid", "userphone", "useremail@test.com");
         Caregiver  c = new Caregiver("caregiverid", "userphone", "useremail@test.com");
         Problem pr = new Problem("title","description");
         Problem pr2 = new Problem("title","description");
+
         // try adding problem to patient
         u.addProblem(pr);
         assertTrue(u.getProblems().contains(pr));
 
-        //try adding problem to caregiver
-        c.addProblem(pr2);
     }
 
     // userID should be at least 8 characters

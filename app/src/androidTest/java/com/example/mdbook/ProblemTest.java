@@ -1,37 +1,41 @@
 // Tests the problem objects
 package com.example.mdbook;
 
-import android.provider.ContactsContract;
 
-import org.junit.Test;
+
+
+import junit.framework.TestCase;
 
 
 import java.util.Date;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
-public class ProblemTest {
+
+public class ProblemTest extends TestCase{
 
     // Test for a title of too long of length
-    @Test(expected = IllegalArgumentException.class)
     public void testProblemLongTitle(){
         // create a title of length > 30
         String longTitle = "TitleOfMoreThan30Characters_____";
         String testDesc = "Test Description";
-        Problem problem = new Problem(longTitle, testDesc);
+        try {
+            Problem problem = new Problem(longTitle, testDesc);
+            assert (false);
+        }
+        catch (IllegalArgumentException e){
+            assert(true);
+        }
     }
 
     // Test for no title
-    @Test(expected = IllegalArgumentException.class)
-    public void testProblemNoTitle(){
+    //@Test(expected = IllegalArgumentException.class)
+    public void testProblemNoTitle() throws IllegalArgumentException {
         String testDesc = "Test Description";
         Problem problem = new Problem("", testDesc);
     }
 
     // Test for a description of too long of length
-    @Test(expected = IllegalArgumentException.class)
+    //@Test(expected = IllegalArgumentException.class)
     public void testProblemLongDescription(){
         String title = "Title";
         // create a description of length > 300
@@ -43,7 +47,6 @@ public class ProblemTest {
     }
 
     // Test for empty description (should be valid)
-    @Test
     public void testProblemNoDescription(){
         String title = "Title";
         String testDesc = "";
@@ -52,7 +55,6 @@ public class ProblemTest {
     }
 
     // Test for problem edits
-    @Test
     public void testProblemEdit(){
         Problem problem = new Problem("Title", "Description");
         assertEquals("Description", problem.getDescription());
@@ -63,7 +65,6 @@ public class ProblemTest {
     }
 
     // Test for ability to add/remove records and problems to pull photos from records
-    @Test
     public void testAddRemoveRecord(){
         Record record = new Record("title",new Date());
         Photo photo = new Photo();

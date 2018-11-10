@@ -4,7 +4,6 @@ package com.example.mdbook;
 
 import android.support.test.InstrumentationRegistry;
 import junit.framework.TestCase;
-import org.junit.Test;
 
 
 public class UserManagerTest extends TestCase {
@@ -119,7 +118,7 @@ public class UserManagerTest extends TestCase {
 
     // test to make sure login cannot be completed before logging out
     // requires use of usercontroller singleton
-    @Test(expected = IllegalStateException.class)
+    //@Test(expected = IllegalStateException.class)
     public void testInvalidLogin(){
         UserManager.initManager(InstrumentationRegistry.getContext());
         UserManager um = UserManager.getManager();
