@@ -21,9 +21,6 @@ import java.util.ArrayList;
  *
  * @author Noah Burghardt
  * @see com.example.mdbook.Problem
- * @see com.example.mdbook.GeoLocation
- * @see com.example.mdbook.BodyLocation
- * @see com.example.mdbook.Photo
  * @version 0.0.1
  **/
 class ProblemList {
