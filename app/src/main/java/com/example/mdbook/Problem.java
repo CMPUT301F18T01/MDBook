@@ -67,10 +67,12 @@ class Problem {
 
     /**
      * @param comment comment to be appended to Problems list of comments.
-     *                Different than record comments.
+     *                Different than record comments. Only adds comment if length is >= 1.
      */
     public void addComment(String comment) {
-
+        if (comment.length() > 0){
+            this.comments.add(comment);
+        }
     }
 
     /**
