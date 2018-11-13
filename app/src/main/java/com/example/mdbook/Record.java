@@ -36,22 +36,49 @@ class Record {
     /**
      * Generates a new Record object with date and title.
      * Description will be initialized as an empty string and date will be initialized as
-     * the current time and date.
-     * @param Title Title of record, must be 30 characters or less
+     * the current time and date. Photos will be an empty list, comment will be an empty string
+     * and all other attributes will be null.
+     * @param title Title of record, must be 30 characters or less.
+     * @throws IllegalArgumentException if title length is invalid
      */
     //TODO: test this
-    public Record(String Title) {
-        
+    public Record(String title) throws IllegalArgumentException {
+        if (title.length() < 1 || title.length() > 30){
+            throw new IllegalArgumentException();
+        }
+        else {
+            this.title = title;
+            this.date = new Date();
+            this.description = "";
+            this.geoLocation = null;
+            this.bodyLocation = null;
+            this.photos = new ArrayList<>();
+            this.comment = "";
+        }
     }
 
     /**
-     * Generates a new Record object with description
+     * Generates a new Record object with given title, date and description. Photos will be an empty
+     * list, comment will be an empty string and all other attributes will be null.
      * @param title Title of record. Must be 30 characters or less
      * @param date Date associated with record, should be current date/time by default
      * @param description Description of record,
      *                    including anything that might set it apart from previous records
+     * @throws IllegalArgumentException if title or description lengths are invalid
      */
-    public Record(String title, Date date, String description) {
+    public Record(String title, Date date, String description) throws IllegalArgumentException {
+        if (title.length() < 1 || title.length() > 30 || description.length() > 300){
+            throw new IllegalArgumentException();
+        }
+        else {
+            this.title = title;
+            this.date = date;
+            this.description = description;
+            this.geoLocation = null;
+            this.bodyLocation = null;
+            this.photos = new ArrayList<>();
+            this.comment = "";
+        }
     }
 
     /**
@@ -59,7 +86,7 @@ class Record {
      * @param geoLocation geographic location to be associated with record
      */
     public void setLocation(GeoLocation geoLocation) {
-
+        this.geoLocation = geoLocation;
     }
 
     /**
@@ -68,7 +95,7 @@ class Record {
      *         Returns null if record has no geolocation.
      */
     public GeoLocation getLocation() {
-        return(new GeoLocation());
+        return this.geoLocation;
     }
 
     /**
@@ -76,7 +103,7 @@ class Record {
      * @param photo Photo to be added.
      */
     public void addPhoto(Photo photo) {
-
+        this.photos.add(photo);
     }
 
     /**
@@ -86,7 +113,13 @@ class Record {
      */
     //TODO: add this to test cases
     public boolean deletePhoto(Photo photo) {
-       return false;
+       if(this.photos.contains(photo)){
+           this.photos.remove(photo);
+           return true;
+       }
+       else {
+           return false;
+       }
     }
 
     /**
@@ -95,7 +128,7 @@ class Record {
      *         including an ArrayList of zero items if there are no associated records.
      */
     public ArrayList<Photo> getPhotos() {
-        return(new ArrayList<>());
+        return(this.photos);
     }
 
     /**
@@ -103,64 +136,77 @@ class Record {
      * @see BodyLocation
      */
     public void setBodyLocation(BodyLocation bodyLocation) {
+        this.bodyLocation = bodyLocation;
     }
 
     /**
-     * @return Body location of the record
+     * @return Body location of the record, returns null if no body location has been set.
      * @see BodyLocation
      */
     public BodyLocation getBodyLocation() {
-        return(new BodyLocation("arm"));
+        return this.bodyLocation;
     }
 
     /**
-     * Adds a comment to the record. Records can only have 1 comment.
+     * Sets record comment. Records can only have 1 comment.
      * @param comment The new comment.
      */
     public void setComment(String comment) {
+        this.comment = comment;
     }
 
     /**
      * @return The comment for the record
      */
     public String getComment() {
-        return("");
+        return this.comment;
     }
 
-    // return records title
-
     /**
-     * @return The title of the record.
+     * @return The title of the record. Should never be an empty string.
      */
     public String getTitle() {
-        return("");
+        return this.title;
     }
 
     /**
      * @param title The new title of the record.
+     * @throws IllegalArgumentException if title is too short or too long
      */
     public void setTitle(String title) {
-
+        if (title.length() < 1 || title.length() > 30){
+            throw new IllegalArgumentException();
+        }
+        else {
+            this.title = title;
+        }
     }
 
     /**
      * @return The date the record was recorded on.
      */
     public Date getDate() {
-        return(new Date());
+        return this.date;
     }
 
     /**
      * @return The description of the record.
      */
     public String getDescription(){
-        return null;
+        return this.description;
     }
 
     /**
      * @param desc The new description of the record.
+     * @throws IllegalArgumentException if description is too long  (>300 chars)
      */
-    public void setDescription(String desc) {
+    public void setDescription(String desc) throws IllegalArgumentException {
+        if (desc.length() > 300){
+            throw new IllegalArgumentException();
+        }
+        else {
+            this.description = desc;
+        }
 
     }
 }
