@@ -1,3 +1,5 @@
+// Based off the StudentListManager in the student-picker app by Abram Hindle
+// https://github.com/abramhindle/student-picker
 package com.example.mdbook;
 
 
