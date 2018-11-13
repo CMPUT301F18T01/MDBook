@@ -24,7 +24,15 @@ import java.util.Date;
  * @version 0.0.1
  **/
 class Record {
-    
+
+    private String title;
+    private Date date;
+    private String description;
+    private GeoLocation geoLocation;
+    private BodyLocation bodyLocation;
+    private ArrayList<Photo> photos;
+    private String comment;
+
     /**
      * Generates a new Record object with date and title.
      * Description will be initialized as an empty string and date will be initialized as
@@ -33,7 +41,7 @@ class Record {
      */
     //TODO: test this
     public Record(String Title) {
-
+        
     }
 
     /**

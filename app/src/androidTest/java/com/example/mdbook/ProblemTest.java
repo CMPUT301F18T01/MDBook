@@ -66,7 +66,7 @@ public class ProblemTest extends TestCase{
 
     // Test for ability to add/remove records and problems to pull photos from records
     public void testAddRemoveRecord(){
-        Record record = new Record("title",new Date());
+        Record record = new Record("title");
         Photo photo = new Photo();
         record.addPhoto(photo);
 

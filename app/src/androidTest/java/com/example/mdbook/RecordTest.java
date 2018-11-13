@@ -9,8 +9,9 @@ public class RecordTest extends TestCase {
     // test record ability to hold items
     public void testCreateRecord(){
         String rTitle = "recordTitle";
+        String rDesc = "recordDescription";
         Date rDate = new Date();
-        Record record = new Record(rTitle, rDate);
+        Record record = new Record(rTitle, rDate, rDesc);
 
         /* Add items */
         // test location picker
@@ -37,5 +38,6 @@ public class RecordTest extends TestCase {
         assertEquals("test comment", record.getComment());
         assertEquals(rTitle, record.getTitle());
         assertEquals(rDate, record.getDate());
+        assertEquals(rDesc, record.getDescription());
     }
 }
