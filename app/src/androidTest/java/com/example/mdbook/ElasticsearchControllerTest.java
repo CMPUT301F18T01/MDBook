@@ -52,7 +52,7 @@ public class ElasticsearchControllerTest extends TestCase {
         Problem problem = new Problem("Title", "Description coconut");
         Record record = new Record("Title", new Date(), "Description banana");
         GeoLocation geolocation = new GeoLocation();
-        record.addLocation(geolocation);
+        record.setLocation(geolocation);
 
         esc.addPatient(patient);
         String problemID = esc.addProblem("patientid", problem);
