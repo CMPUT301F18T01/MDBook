@@ -12,11 +12,10 @@ public class UserManagerTest extends TestCase {
     public void testSingleton(){
         UserManager.initManager();
         UserManager um = UserManager.getManager();
-        Patient u = new Patient("patientid", "userphone", "useremail@test.com");
-        um.addUser(u);
-        UserManager um2  = UserManager.getManager();
-        assertTrue(um2.login("userid"));
-        um.logout();
+        UserManager.initManager();
+        UserManager um2 = UserManager.getManager();
+        // check if the returned UserManager is the exact same object, by reference
+        assert(um == um2);
     }
 
     // test loading and saving user data via elastisearch
