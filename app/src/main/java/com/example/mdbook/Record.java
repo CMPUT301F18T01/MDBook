@@ -207,6 +207,5 @@ class Record {
         else {
             this.description = desc;
         }
-
     }
 }
