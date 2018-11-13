@@ -46,7 +46,7 @@ public class UserTest extends TestCase {
     // test to make sure user controller instantiates only one user object
     public void testUserControllerSingleton(){
         // init usermanager and new patient
-        UserManager.initManager(InstrumentationRegistry.getContext());
+        UserManager.initManager();
         Patient patient = new Patient("patientid", "userphone", "useremail@test.com");
         // save user to cloud
         UserManager userManager = UserManager.getManager();

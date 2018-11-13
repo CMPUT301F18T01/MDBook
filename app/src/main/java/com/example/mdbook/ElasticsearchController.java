@@ -18,7 +18,7 @@ class ElasticsearchController {
     // returns a basic user object with only id, phone and email
     // according to elasticsearch for that userID
     public User getUser(String userID) {
-        return(new User("id", "phone", "email"));
+        return(new Patient("id", "phone", "email"));
     }
 
     // should add problem with blank record reference and user reference
