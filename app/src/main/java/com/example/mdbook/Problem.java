@@ -1,12 +1,46 @@
+/*
+ * Record
+ *
+ * Version 0.0.1
+ *
+ * 2018-11-13
+ *
+ * Copyright (c) 2018. All rights reserved.
+ */
 package com.example.mdbook;
 
 import java.util.ArrayList;
 
+/**
+ * The Problem object holds the information about a Problem, including its records.
+ *
+ * @author Noah Burghardt
+ * @see ProblemList
+ * @see Record
+ * @version 0.0.1
+ **/
 class Problem {
 
-    // create new problem object
-    public Problem(String title, String description) throws IllegalArgumentException  {
+    private ArrayList<Record> records;
+    private String title;
+    private String description;
 
+
+    /**
+     * Generates new problem object with given parameters.
+     * @param title Problem title (<=30 chars)
+     * @param description Problem description (<= 300 chars)
+     * @throws IllegalArgumentException thrown if title or description are of invalid length
+     */
+    public Problem(String title, String description) throws IllegalArgumentException  {
+        if (title.length() < 1 || title.length() > 30 || description.length() > 300){
+            throw new IllegalArgumentException();
+        }
+        else {
+            this.records = new ArrayList<>();
+            this.title = title;
+            this.description = description;
+        }
     }
 
     // return description of problem
