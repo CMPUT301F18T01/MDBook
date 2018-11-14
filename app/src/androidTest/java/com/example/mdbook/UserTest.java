@@ -6,8 +6,6 @@ import android.support.test.InstrumentationRegistry;
 
 import junit.framework.TestCase;
 
-import org.junit.Test;
-
 public class UserTest extends TestCase {
 
 
@@ -35,15 +33,20 @@ public class UserTest extends TestCase {
     }
 
     // userID should be at least 8 characters
-    @Test(expected = IllegalArgumentException.class)
+    // expecting illegal argument exception
     public void testTooShortUserID(){
-        Patient patient = new Patient("userid", "userphone", "useremail@test.com");
+        try {
+            Patient patient = new Patient("userid", "userphone", "useremail@test.com");
+            assert(false);
+        } catch (IllegalArgumentException e){
+            assert (true);
+        }
     }
 
     // test to make sure user controller instantiates only one user object
     public void testUserControllerSingleton(){
         // init usermanager and new patient
-        UserManager.initManager(InstrumentationRegistry.getContext());
+        UserManager.initManager();
         Patient patient = new Patient("patientid", "userphone", "useremail@test.com");
         // save user to cloud
         UserManager userManager = UserManager.getManager();

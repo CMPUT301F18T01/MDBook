@@ -10,26 +10,25 @@ public class UserManagerTest extends TestCase {
 
     // verify that UserManager only instantiates one instance of itself
     public void testSingleton(){
-        UserManager.initManager(InstrumentationRegistry.getContext());
+        UserManager.initManager();
         UserManager um = UserManager.getManager();
-        Patient u = new Patient("patientid", "userphone", "useremail@test.com");
-        um.addUser(u);
-        UserManager um2  = UserManager.getManager();
-        assertTrue(um2.login("userid"));
-        um.logout();
+        UserManager.initManager();
+        UserManager um2 = UserManager.getManager();
+        // check if the returned UserManager is the exact same object, by reference
+        assert(um == um2);
     }
 
     // test loading and saving user data via elastisearch
     // depends on elastisearch controller
     public void testLoadSaveDeleteUser(){
 
-        UserManager.initManager(InstrumentationRegistry.getContext());
+        UserManager.initManager();
         UserManager um = UserManager.getManager();
         // create new profile
         Patient u = new Patient("patientid", "userphone", "useremail@test.com");
         um.addUser(u);
         // load profile
-        Patient u2 = (Patient)um.loadUser("patientid");
+        Patient u2 = (Patient)um.fetchUser("patientid");
         assertEquals(u.getPhoneNumber(), u2.getPhoneNumber());
 
         // modify and save profile
@@ -37,7 +36,7 @@ public class UserManagerTest extends TestCase {
         um.saveUser(u);
 
         // check changes were loaded
-        u2 = (Patient)um.loadUser("patientid");
+        u2 = (Patient)um.fetchUser("patientid");
         assertEquals("newphone", u2.getPhoneNumber());
 
         // delete profile
@@ -48,21 +47,11 @@ public class UserManagerTest extends TestCase {
 
     }
 
-    // converting user object to and from a string
-    public void testToFromStringUser(){
-        UserManager.initManager(InstrumentationRegistry.getContext());
-        UserManager um = UserManager.getManager();
-        Patient u = new Patient("patientid", "userphone", "useremail@test.com");
-        String uString = UserManager.userToString(u);
-        Patient u2 = (Patient)UserManager.userFromString(uString);
-        assertEquals(u.getUserID(), u2.getUserID());
-
-    }
 
     // test for expected output when logging in
     // test to make sure data isn't loaded into user object upon failed login
     public void testLoginFail(){
-        UserManager.initManager(InstrumentationRegistry.getContext());
+        UserManager.initManager();
         UserManager um = UserManager.getManager();
         Patient p = new Patient("patientid", "userphone", "useremail@test.com");
         um.addUser(p);
@@ -79,7 +68,7 @@ public class UserManagerTest extends TestCase {
     // requires use of usercontroller singleton
     public void testUserLogin(){
         // add 2 users
-        UserManager.initManager(InstrumentationRegistry.getContext());
+        UserManager.initManager();
         UserManager um = UserManager.getManager();
         Patient patient = new Patient("patientid", "userphone", "useremail@test.com");
         um.addUser(patient);
@@ -101,7 +90,7 @@ public class UserManagerTest extends TestCase {
     // test to make sure user data is removed from user object upon logout
     // requires use of usercontroller singleton
     public void testUserLogout(){
-        UserManager.initManager(InstrumentationRegistry.getContext());
+        UserManager.initManager();
         UserManager um = UserManager.getManager();
         UserController userController = UserController.getUserController();
         Patient patient = new Patient("patientid", "userphone", "useremail@test.com");
@@ -120,7 +109,7 @@ public class UserManagerTest extends TestCase {
     // requires use of usercontroller singleton
     //@Test(expected = IllegalStateException.class)
     public void testInvalidLogin(){
-        UserManager.initManager(InstrumentationRegistry.getContext());
+        UserManager.initManager();
         UserManager um = UserManager.getManager();
         Patient u = new Patient("patientid", "userphone", "useremail@test.com");
         um.addUser(u);

@@ -7,9 +7,6 @@ package com.example.mdbook;
 import junit.framework.TestCase;
 
 
-import java.util.Date;
-
-
 
 public class ProblemTest extends TestCase{
 
@@ -28,14 +25,19 @@ public class ProblemTest extends TestCase{
     }
 
     // Test for no title
-    //@Test(expected = IllegalArgumentException.class)
+    // expecting an illegal argument exception
     public void testProblemNoTitle() throws IllegalArgumentException {
         String testDesc = "Test Description";
-        Problem problem = new Problem("", testDesc);
+        try {
+            Problem problem = new Problem("", testDesc);
+            assert (false);
+        } catch (IllegalArgumentException e){
+            assert (true);
+        }
     }
 
     // Test for a description of too long of length
-    //@Test(expected = IllegalArgumentException.class)
+    // expecting an illegal argument exception
     public void testProblemLongDescription(){
         String title = "Title";
         // create a description of length > 300
@@ -43,7 +45,12 @@ public class ProblemTest extends TestCase{
         for(int i=0;i<301;i++){
             testDesc += 't';
         }
-        Problem problem = new Problem(title, testDesc);
+        try {
+            Problem problem = new Problem(title, testDesc);
+            assert (false);
+        } catch (IllegalArgumentException e){
+            assert (true);
+        }
     }
 
     // Test for empty description (should be valid)
@@ -66,7 +73,7 @@ public class ProblemTest extends TestCase{
 
     // Test for ability to add/remove records and problems to pull photos from records
     public void testAddRemoveRecord(){
-        Record record = new Record("title",new Date());
+        Record record = new Record("title");
         Photo photo = new Photo();
         record.addPhoto(photo);
 
