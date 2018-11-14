@@ -9,8 +9,6 @@
  */
 
 package com.example.mdbook;
-// holds problem objects, adds a few extra methods
-// might be able to be replaced by a simple ArrayList in Patient class
 
 import java.util.ArrayList;
 
@@ -24,6 +22,7 @@ import java.util.ArrayList;
  * @version 0.0.1
  **/
 class ProblemList {
+
     private ArrayList<Problem> problems;
 
     public ProblemList(){
