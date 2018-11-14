@@ -35,10 +35,7 @@ class Caregiver extends User{
         super(userID, userPhone, userEmail);
         this.patients = new ArrayList<>();
     }
-
-    // adds Patient to caregiver list
-    // returns True on successful addition
-
+    
     /**
      * Adds patient to caregivers patient list.
      * @param patient The patient to add.
