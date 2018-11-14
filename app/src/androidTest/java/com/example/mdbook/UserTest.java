@@ -45,19 +45,21 @@ public class UserTest extends TestCase {
     }
 
     // test to make sure user controller instantiates only one user object
-    public void testUserControllerSingleton(){
-        // init usermanager and new patient
-        UserManager.initManager();
+    public void testUserControllerSingleton() {
+        // create new patient
         Patient patient = new Patient("patientid", "userphone", "useremail@test.com");
-        // save user to cloud
-        UserManager userManager = UserManager.getManager();
-        userManager.saveUser(patient);
-        // load user from cloud into user controller
+
+        // load user into user controller
         UserController userController = UserController.getUserController();
-        userController.loadUser("patientid");
+        userController.loadUser(patient);
+
+        // grab new instance of user
+        UserController userController1 = UserController.getUserController();
+
         // check loaded user against initial patient
-        assertEquals(userController.getUser().getUserID(), patient.getUserID());
+        assert (userController1.getUser() == patient);
     }
+
 
 
 
