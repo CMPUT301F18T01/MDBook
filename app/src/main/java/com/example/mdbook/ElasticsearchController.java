@@ -17,6 +17,7 @@ class ElasticsearchController {
 
     // returns a basic user object with only id, phone and email
     // according to elasticsearch for that userID
+    // returns null if user id doesnt correspond with any users
     public User getUser(String userID) {
         return(new Patient("id", "phone", "email"));
     }
