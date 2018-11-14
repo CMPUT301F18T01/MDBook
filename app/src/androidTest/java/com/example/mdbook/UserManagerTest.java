@@ -24,24 +24,28 @@ public class UserManagerTest extends TestCase {
         UserManager.initManager();
         UserManager um = UserManager.getManager();
         // create new profile
-        Patient u = new Patient("patientid", "userphone", "useremail@test.com");
-        um.addUser(u);
+        try {
+            um.createPatient("patientid", "userphone", "useremail@test.com");
+        } catch (UserIDNotAvailableException e){
+            assert false;
+        }
+
         // load profile
-        Patient u2 = (Patient)um.fetchUser("patientid");
-        assertEquals(u.getPhoneNumber(), u2.getPhoneNumber());
+        Patient patient = (Patient) um.fetchUser("patientid");
+        assertEquals("userphone", patient.getPhoneNumber());
 
         // modify and save profile
-        u.setPhoneNumber("newphone");
-        um.saveUser(u);
+        patient.setPhoneNumber("newphone");
+        um.saveUser(patient);
 
         // check changes were loaded
-        u2 = (Patient)um.fetchUser("patientid");
-        assertEquals("newphone", u2.getPhoneNumber());
+        patient = (Patient) um.fetchUser("patientid");
+        assertEquals("newphone", patient.getPhoneNumber());
 
         // delete profile
-        um.deleteUser(u);
+        um.deleteUser(patient);
 
-        // check to make sure patient doest exist
+        // check to make sure patient doesn't exist
         assertFalse(um.login("patientid"));
 
     }
