@@ -10,15 +10,28 @@ class ElasticsearchController {
         return null;
     }
 
-    // add patient to patients object and push to elasticsearch
-    public void addPatient(Patient patient) {
+
+    // Adds a new user to either the patients or caregivers table depending on user type
+    // throws exception if userID is taken
+    public void createUser(User user) throws UserIDNotAvailableException {
+
+    }
+
+    // Adds a patients userID to a caregivers patient list
+    public void addPatient(Caregiver caregiver, Patient patient) throws NoSuchUserException {
+
+    }
+
+    // updates user data, i.e. phone, email, userID
+    // Throws error if user doesn't already exist in cloud storage,
+    // if that is the case use createUser().
+    public void saveUser(User user) throws NoSuchUserException {
 
     }
 
     // returns a basic user object with only id, phone and email
     // according to elasticsearch for that userID
-    // returns null if user id doesnt correspond with any users
-    public User getUser(String userID) {
+    public User getUser(String userID) throws NoSuchUserException {
         return(new Patient("id", "phone", "email"));
     }
 
