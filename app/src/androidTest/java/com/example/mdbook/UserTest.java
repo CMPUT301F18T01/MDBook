@@ -2,8 +2,6 @@ package com.example.mdbook;
 // test functionalities of user class and controller
 
 
-import android.support.test.InstrumentationRegistry;
-
 import junit.framework.TestCase;
 
 public class UserTest extends TestCase {
@@ -50,11 +48,11 @@ public class UserTest extends TestCase {
         Patient patient = new Patient("patientid", "userphone", "useremail@test.com");
 
         // load user into user controller
-        UserController userController = UserController.getUserController();
+        UserController userController = UserController.getController();
         userController.loadUser(patient);
 
         // grab new instance of user
-        UserController userController1 = UserController.getUserController();
+        UserController userController1 = UserController.getController();
 
         // check loaded user against initial patient
         assert (userController1.getUser() == patient);

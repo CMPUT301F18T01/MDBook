@@ -2,7 +2,6 @@ package com.example.mdbook;
 // test functionalities of usermanager and elastisearch controller
 
 
-import android.support.test.InstrumentationRegistry;
 import junit.framework.TestCase;
 
 
@@ -58,7 +57,7 @@ public class UserManagerTest extends TestCase {
         // test that login fails
         assertFalse(um.login("patientid_"));
         // test that data is not loaded into usercontroller
-        UserController userController = UserController.getUserController();
+        UserController userController = UserController.getController();
         User u = userController.getUser();
         assertNotSame("patientid", u.getUserID());
         assertNotSame("patientid_", u.getUserID());
@@ -75,7 +74,7 @@ public class UserManagerTest extends TestCase {
         Patient patient1 = new Patient("patientid2", "userphone", "useremail2@test.com");
         um.addUser(patient1);
 
-        UserController userController = UserController.getUserController();
+        UserController userController = UserController.getController();
 
         // test logging in to both accounts
         um.login("patientid");
@@ -92,7 +91,7 @@ public class UserManagerTest extends TestCase {
     public void testUserLogout(){
         UserManager.initManager();
         UserManager um = UserManager.getManager();
-        UserController userController = UserController.getUserController();
+        UserController userController = UserController.getController();
         Patient patient = new Patient("patientid", "userphone", "useremail@test.com");
         um.addUser(patient);
         Patient patient1 = (Patient)userController.getUser();
