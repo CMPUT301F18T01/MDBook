@@ -63,7 +63,14 @@ class Caregiver extends User{
     /**
      * @return ArrayList of patientIDs for this caregiver.
      */
-    public ArrayList<String> getPatients(){
+    public ArrayList<String> getPatientList(){
         return this.patientList;
+    }
+
+    /**
+     * @param patientList ArrayList of patient IDs. Sets patient list, does not append.
+     */
+    public void setPatientList(ArrayList<String> patientList){
+        this.patientList = patientList;
     }
 }

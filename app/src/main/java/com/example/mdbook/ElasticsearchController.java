@@ -11,6 +11,7 @@ package com.example.mdbook;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.security.InvalidKeyException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -108,12 +109,18 @@ class ElasticsearchController {
     // updates user data, i.e. phone, email, userID
     // Throws error if user doesn't already exist in cloud storage,
     // if that is the case use createUser() to create a basic user, then saveUser to update data.
+    //TODO
     public void saveUser(User user) throws NoSuchUserException {
 
     }
-
-    // returns the full user object matching the given id
-    // including records, problems etc
+    
+    /**
+     * Returns the full user object matching the given ID.
+     * Includes full records, problems, etc.
+     * @param userID userID of a patient or caregiver.
+     * @return The full user object.
+     * @throws NoSuchUserException Thrown if userID is not connected to a user.
+     */
     public User getUser(String userID) throws NoSuchUserException {
         /* Check if userID corresponds with a patient */
         if (this.patients.containsKey(userID)){
@@ -126,19 +133,61 @@ class ElasticsearchController {
                 Patient patient = new Patient(userID, phone, email);
 
                 /* load problems */
+                for (String problemID : problemIDs){
+                    patient.addProblem(this.getProblem(problemID));
+                }
+                return patient;
+
+            } catch (JSONException e){
+                throw new RuntimeException(e);
+            } catch (InvalidKeyException e) {
+                e.printStackTrace();
+                throw new RuntimeException("User attributes are corrupt.", e);
+            }
+        }
+
+        /* Check if userID corresponds with a caregiver */
+        else if (this.caregivers.containsKey(userID)){
+            try {
+                /* load basic data into caregiver */
+                JSONObject caregiverJSON = this.caregivers.get(userID);
+                String phone = caregiverJSON.getString("phone");
+                String email = caregiverJSON.getString("email");
+                ArrayList<String> patientIDs = (ArrayList<String>) caregiverJSON.get("patients");
+                Caregiver caregiver = new Caregiver(userID, phone, email);
+                caregiver.setPatientList(patientIDs);
+                return caregiver;
 
             } catch (JSONException e){
                 throw new RuntimeException(e);
             }
         }
-        /* Check if userID corresponds with a caregiver */
-        else if (this.caregivers.containsKey(userID)){
 
-        }
         else {
             throw new NoSuchUserException();
         }
     }
+
+    // returns problem matching given problemID
+    // Fully fleshed out problem with records, photos etc
+    public Problem getProblem(String problemID) throws InvalidKeyException {
+        try {
+            if (this.problems.containsKey(problemID)) {
+                JSONObject problemJSON = this.problems.get(problemID);
+                String title = problemJSON.getString("title");
+                String description = problemJSON.getString("description");
+                Problem problem = new Problem(title, description);
+
+                /* Add records */
+
+            } else {
+                throw new InvalidKeyException("Problem does not exist!");
+            }
+        } catch (JSONException e){
+            throw new RuntimeException(e);
+        }
+    }
+
 
     // should add problem with blank record reference and user reference
     // should also add problem id  to user problem id reference list
@@ -155,12 +204,6 @@ class ElasticsearchController {
         return null;
     }
 
-    // returns list of problems for given patientID
-    // Patient ID is stored with an array of problem ID strings
-    // Takes those string, looks them up in the problems table and generates list
-    public ArrayList<String> getProblems(String patientID) {
-        return null;
-    }
 
     // returns userID of patient who owns given problem
     public String getPatientFromProblem(String problemID) {
