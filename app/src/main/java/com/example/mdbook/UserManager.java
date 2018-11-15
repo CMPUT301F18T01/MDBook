@@ -143,8 +143,8 @@ public class UserManager {
             return false;
         }
         try {
-            User user = this.esc.getUser(userid);
-            UserController.getController().loadUser(user);
+            User user = this.fetchUser(userid);
+            userController.loadUser(user);
             return true;
         } catch (NoSuchUserException e){
             return false;
