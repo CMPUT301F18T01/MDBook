@@ -1,13 +1,17 @@
 package com.example.mdbook;
-// test functionalities of usermanager and elastisearch controller
-
+/**
+ * test functionalities of usermanager and elastisearch controller
+  */
 
 import junit.framework.TestCase;
 
 
 public class UserManagerTest extends TestCase {
 
-    // verify that UserManager only instantiates one instance of itself
+    /**
+     *  verify that UserManager only instantiates one instance of itself
+      */
+
     public void testSingleton(){
         UserManager.initManager();
         UserManager um = UserManager.getManager();
@@ -17,37 +21,59 @@ public class UserManagerTest extends TestCase {
         assert(um == um2);
     }
 
-    // test loading and saving user data via elastisearch
-    // depends on elastisearch controller
+    /**
+     *    test loading and saving user data via elastisearch
+     *    depends on elastisearch controller
+      */
+
+
     public void testLoadSaveDeleteUser(){
 
         UserManager.initManager();
         UserManager um = UserManager.getManager();
-        // create new profile
+        /**
+         *   create new profile
+         */
+
         try {
             um.createPatient("patientid", "userphone", "useremail@test.com");
         } catch (UserIDNotAvailableException e){
             assert false;
         }
 
-        // load profile
+        /**
+         *  load profile
+          */
+
         try {
             Patient patient = (Patient) um.fetchUser("patientid");
             assertEquals("userphone", patient.getPhoneNumber());
 
 
-            // modify and save profile
+            /**
+             * modify and save profile
+              */
+
             patient.setPhoneNumber("newphone");
             um.saveUser(patient);
 
-            // check changes were loaded
+            /**
+             * check changes were loaded
+              */
+
             patient = (Patient) um.fetchUser("patientid");
             assertEquals("newphone", patient.getPhoneNumber());
 
-            // delete profile
+            /**
+             * delete profile
+              */
+
             um.deleteUser(patient.getUserID());
 
-            // check to make sure patient doesn't exist
+            /**
+             *  check to make sure patient doesn't exist
+              */
+
             assertFalse(um.login("patientid"));
         } catch (NoSuchUserException e){
             assert false;
@@ -55,16 +81,26 @@ public class UserManagerTest extends TestCase {
     }
 
 
-    // test for expected output when logging in
-    // test to make sure data isn't loaded into user object upon failed login
+    /**
+     *  test for expected output when logging in
+     *  test to make sure data isn't loaded into user object upon failed login
+      */
+
+
     public void testLoginFail(){
         UserManager.initManager();
         UserManager um = UserManager.getManager();
         try {
             um.createPatient("patientid", "userphone", "user@email.com");
-            // test that login fails
+            /**
+             *   test that login fails
+              */
+
             assertFalse(um.login("patientid_"));
-            // test that data is not loaded into usercontroller
+            /**
+             * test that data is not loaded into usercontroller
+              */
+
             UserController userController = UserController.getController();
             User u = userController.getUser();
             assertNotSame("patientid", u.getUserID());
@@ -74,10 +110,17 @@ public class UserManagerTest extends TestCase {
         }
     }
 
-    // test to make sure user data is loaded into user object upon login
-    // requires use of usercontroller singleton
+    /**
+     *  test to make sure user data is loaded into user object upon login
+     *  requires use of usercontroller singleton
+     */
+
+
     public void testUserLogin(){
-        // add 2 users
+        /**
+         * add 2 users
+          */
+
         UserManager.initManager();
         UserManager um = UserManager.getManager();
         try {
@@ -86,7 +129,10 @@ public class UserManagerTest extends TestCase {
 
             UserController userController = UserController.getController();
 
-            // test logging in to both accounts
+            /**
+             * test logging in to both accounts
+              */
+
             um.login("patientid");
             assertEquals(userController.getUser().getUserID(), "patientid");
             um.logout();
@@ -99,8 +145,12 @@ public class UserManagerTest extends TestCase {
 
     }
 
-    // test to make sure user data is removed from user object upon logout
-    // requires use of usercontroller singleton
+    /**
+     *  test to make sure user data is removed from user object upon logout
+     *  requires use of usercontroller singleton
+      */
+
+
     public void testUserLogout(){
         UserManager.initManager();
         UserManager um = UserManager.getManager();
@@ -110,29 +160,47 @@ public class UserManagerTest extends TestCase {
             um.login("patientid");
             Patient patient1 = (Patient) userController.getUser();
 
-            // make sure login was successful
+            /**
+             *  make sure login was successful
+             */
+
             assertEquals(patient1.getUserID(), "patientid");
             um.logout();
-            // make sure usercontroller is wiped on logout
+            /**
+             *  make sure usercontroller is wiped on logout
+              */
+
             assertNull(userController.getUser());
         } catch (UserIDNotAvailableException e){
             assert false;
         }
     }
 
-    // test to make sure login cannot be completed before logging out
+    /**
+     *  test to make sure login cannot be completed before logging out
+      */
+
     public void testInvalidLogin(){
         UserManager.initManager();
         UserManager um = UserManager.getManager();
         try {
             um.createPatient("patientid", "userphone", "useremail@test.com");
             um.createPatient("patientid1", "userphone1", "useremail1@test.com");
-            // verify successful login
+            /**
+             *  verify successful login
+             */
+
             assertTrue(um.login("patientid"));
-            // attempt logging in without logging out first
+            /**
+             *   attempt logging in without logging out first
+              */
+
             assertFalse(um.login("patientid"));
             assertFalse(um.login("patientid1"));
-            // ensure first user is still the one logged in
+            /**
+             *   ensure first user is still the one logged in
+              */
+
             assertEquals("patientid", UserController.getController().getUser().getUserID());
         } catch (UserIDNotAvailableException e) {
             assert false;

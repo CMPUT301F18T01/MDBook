@@ -1,11 +1,17 @@
-// test the problem list
+/**
+ * test the problem list
+  */
+
 package com.example.mdbook;
 
 import junit.framework.TestCase;
 
 
 public class ProblemListTest extends TestCase {
-    // test problem can be added to / removed from problem list
+    /**
+     *  test problem can be added to / removed from problem list
+      */
+
     public void testAddRemoveProblem() {
         Problem problem = new Problem("TestTitle", "TestDesc");
         ProblemList problemList = new ProblemList();

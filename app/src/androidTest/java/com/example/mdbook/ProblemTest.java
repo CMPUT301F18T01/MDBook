@@ -1,4 +1,8 @@
-// Tests the problem objects
+/**
+ * Tests the problem objects
+  */
+
+
 package com.example.mdbook;
 
 
@@ -10,9 +14,15 @@ import junit.framework.TestCase;
 
 public class ProblemTest extends TestCase{
 
-    // Test for a title of too long of length
+    /**
+     *  Test for a title of too long of length
+      */
+
     public void testProblemLongTitle(){
-        // create a title of length > 30
+        /**
+         * create a title of length > 30
+          */
+
         String longTitle = "TitleOfMoreThan30Characters_____";
         String testDesc = "Test Description";
         try {
@@ -24,8 +34,12 @@ public class ProblemTest extends TestCase{
         }
     }
 
-    // Test for no title
-    // expecting an illegal argument exception
+    /**
+     *  Test for no title
+     *  expecting an illegal argument exception
+     */
+
+
     public void testProblemNoTitle() throws IllegalArgumentException {
         String testDesc = "Test Description";
         try {
@@ -36,11 +50,20 @@ public class ProblemTest extends TestCase{
         }
     }
 
-    // Test for a description of too long of length
-    // expecting an illegal argument exception
+    /**
+     *  Test for a description of too long of length
+     */
+
+    /**
+     * expecting an illegal argument exception
+      */
+
     public void testProblemLongDescription(){
         String title = "Title";
-        // create a description of length > 300
+        /**
+         *  create a description of length > 300
+          */
+
         String testDesc = "";
         for(int i=0;i<301;i++){
             testDesc += 't';
@@ -53,7 +76,10 @@ public class ProblemTest extends TestCase{
         }
     }
 
-    // Test for empty description (should be valid)
+    /**
+     *  Test for empty description (should be valid)
+      */
+
     public void testProblemNoDescription(){
         String title = "Title";
         String testDesc = "";
@@ -61,7 +87,10 @@ public class ProblemTest extends TestCase{
         assertEquals("", problem.getDescription());
     }
 
-    // Test for problem edits
+    /**
+     *  Test for problem edits
+      */
+
     public void testProblemEdit(){
         Problem problem = new Problem("Title", "Description");
         assertEquals("Description", problem.getDescription());
@@ -71,23 +100,35 @@ public class ProblemTest extends TestCase{
         assertTrue(problem.getComments().contains("comment"));
     }
 
-    // Test for ability to add/remove records and problems to pull photos from records
+    /**
+     *   Test for ability to add/remove records and problems to pull photos from records
+      */
+
     public void testAddRemoveRecord(){
         Record record = new Record("title");
         Photo photo = new Photo();
         record.addPhoto(photo);
 
-        // test for adding problem to record
+        /**
+         *  test for adding problem to record
+          */
+
         Problem problem = new Problem("TestTitle", "TestDesc");
         assertFalse(problem.getRecords().contains(record));
         problem.addRecord(record);
 
-        // test for record being added
-        assertTrue(problem.getRecords().contains(record));
-        // test for problem containing photos of added records
-        assertTrue(problem.getPhotos().contains(photo));
+        /**
+         *     test for record being added
+         */
 
-        // test for removing record
+        assertTrue(problem.getRecords().contains(record));
+        /**
+         *   test for problem containing photos of added records
+          */
+        assertTrue(problem.getPhotos().contains(photo));
+        /**
+         *   test for removing record
+         */
         problem.removeRecord(record);
         assertFalse(problem.getRecords().contains(record));
     }

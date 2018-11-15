@@ -1,25 +1,37 @@
 package com.example.mdbook;
-// tests record objects and by extension, photo, location and problem containment
+/**
+ * tests record objects and by extension, photo, location and problem containment
+  */
+
 
 import junit.framework.TestCase;
 
 import java.util.Date;
 
 public class RecordTest extends TestCase {
-    // test record ability to hold items
+    /**
+     *  test record ability to hold item
+      */
     public void testCreateRecord(){
         String rTitle = "recordTitle";
         String rDesc = "recordDescription";
         Date rDate = new Date();
         Record record = new Record(rTitle, rDate, rDesc);
 
-        /* Add items */
-        // test location picker
+
+        /**
+         * Add items
+         *  test location picker
+         */
+
         GeoLocation geoLocation = new GeoLocation();
         record.setLocation(geoLocation);
         assertEquals(geoLocation, record.getLocation());
 
-        // test photos, record should be able to hold at least 10
+        /**
+         *
+         */
+
         for(int i = 0; i<9;i++){
             record.addPhoto(new Photo());
         }
@@ -27,13 +39,17 @@ public class RecordTest extends TestCase {
         record.addPhoto(photo);
         assertTrue(record.getPhotos().contains(photo));
 
-        // test for body location
+
+
         BodyLocation bodyLocation = new BodyLocation("arm");
         record.setBodyLocation(bodyLocation);
         assertEquals(bodyLocation, record.getBodyLocation());
 
 
-        // test for comment, title, date
+        /**
+         * test for comment, title, date
+          */
+
         record.setComment("test comment");
         assertEquals("test comment", record.getComment());
         assertEquals(rTitle, record.getTitle());
