@@ -67,10 +67,12 @@ class ElasticsearchController {
         return elasticsearchController;
     }
 
-
-    // Adds a new user to either the patients or caregivers table depending on user type.
-    // Does not add anything beyond contact info.
-    // throws exception if userID is taken
+    /**
+     * Adds a new user to either the patients or caregivers table, depending on user type.
+     * Only use for new users, i.e. does not save problem+ info.
+     * @param user The user object (Patient or Caregiver) containing the new contact info.
+     * @throws UserIDNotAvailableException Thrown if userID is already taken.
+     */
     public void createUser(User user) throws UserIDNotAvailableException {
         String userID = user.getUserID();
         // ensure userID is unique
