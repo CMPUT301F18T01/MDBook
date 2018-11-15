@@ -49,11 +49,11 @@ class ElasticsearchController {
      *         ElasticSearch.
      *
      */
-    private HashMap<String, JSONObject> patients;
-    private HashMap<String, JSONObject> caregivers;
-    private HashMap<String, JSONObject> problems;
-    private HashMap<String, JSONObject> records;
-    private HashMap<String, Photo> photos;
+    private HashMap<String, JSONObject> patients = new HashMap<>();
+    private HashMap<String, JSONObject> caregivers = new HashMap<>();
+    private HashMap<String, JSONObject> problems = new HashMap<>();
+    private HashMap<String, JSONObject> records = new HashMap<>();
+    private HashMap<String, Photo> photos = new HashMap<>();
 
     private static ElasticsearchController elasticsearchController = null;
 

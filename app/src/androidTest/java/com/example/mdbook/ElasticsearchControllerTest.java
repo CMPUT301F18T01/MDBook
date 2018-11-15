@@ -2,12 +2,37 @@ package com.example.mdbook;
 
 import junit.framework.TestCase;
 
+import java.security.InvalidKeyException;
 import java.util.ArrayList;
 import java.util.Date;
 
 // test for elasticsearchcontroller
 // tests are a bit wordy, most of this stuff will be wrapped up cleanly in usermanager
 public class ElasticsearchControllerTest extends TestCase {
+
+    // test abilitiy to create new users
+    public void testCreateUser(){
+        ElasticsearchController esc = ElasticsearchController.getController();
+        Patient patient = new Patient("patientid", "userphone", "useremail@test.com");
+        try {
+            esc.createUser(patient);
+            Patient patient1 = (Patient) esc.getUser("patientid");
+            ContactUser patient2 = esc.getUserContact("patientid");
+
+            /*
+             * Test User Contact and User retrieval
+             * Test based on content (email) since reference-based test will fail.
+             */
+            assertSame(patient.getEmail(), patient1.getEmail());
+            assertSame(patient.getEmail(), patient2.getEmail());
+        } catch (UserIDNotAvailableException e) {
+            assert false;
+        } catch (NoSuchUserException e) {
+            assert false;
+        }
+
+
+    }
     // test ability to load and save users, problems and records
     public void testSaveLoad() {
         Patient patient = new Patient("patientid", "userphone", "useremail@test.com");
@@ -37,8 +62,12 @@ public class ElasticsearchControllerTest extends TestCase {
         // ensure esc can retrieve problem from patient
         // esc.getProblems("pid") checks the patients object for a patient matching pid
         // then returns the list of problem ids under the "problemids" key
-        ArrayList<String> problemIDs = esc.getProblems("patientid");
-        assertTrue(problemIDs.contains(problemID));
+        try {
+            Problem problem1 = esc.getProblem(problemID);
+            assertSame(problem.getDescription(), problem1.getDescription());
+        } catch (InvalidKeyException e) {
+            assert false;
+        }
 
         // ensure esc can retrieve patient from problem
         // esc.getPatientFromProblem(prid) checks the problems object for a problem matching prid

@@ -144,4 +144,11 @@ class Problem {
 
         return photos;
     }
+
+    /**
+     * @return problem title
+     */
+    public String getTitle() {
+        return this.title;
+    }
 }

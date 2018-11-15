@@ -15,7 +15,7 @@ public class UserTest extends TestCase {
 
         // try adding patient to caregiver
         caregiver.addPatient(testPatient);
-        assertTrue(caregiver.getPatients().contains(testPatient));
+        assertTrue(caregiver.getPatientList().contains(testPatient.getUserID()));
     }
 
     // check that patients can add problems
