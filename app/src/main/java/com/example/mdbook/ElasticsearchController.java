@@ -1,9 +1,42 @@
 package com.example.mdbook;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 class ElasticsearchController {
 
+    /**
+     * Patient:
+     *      "phone": String
+     *      "email": String
+     *      "problems": ArrayList of problemIDs (strings)
+     * Caregiver:
+     *      "phone": String
+     *      "email": String
+     *      "patient": ArrayList of patient userIDs (strings)
+     * Problem:
+     *      "title": String
+     *      "description": String
+     *      "comments": ArrayList of comments (strings)
+     *      "records": ArrayList of recordIDs (strings)
+     * Record:
+     *      "title": String
+     *      "date": Date, though in actual implementation might be different?
+     *      "description": String
+     *      "geoLocation": GeoLocation, might be different in actual implementation
+     *      "bodyLocation": BodyLocation, might be different in actual implementation
+     *      "photos": ArrayList of photoIDs (strings)
+     *      "comment": String
+     * Photos: Photo, might be different in actual implementation, not sure how to store images in
+     *         ElasticSearch.
+     *
+     */
+    private HashMap<String, HashMap<String,Object>> Patients;
+    private HashMap<String, HashMap<String,Object>> Caregivers;
+    private HashMap<String, HashMap<String,Object>> Problems;
+    private HashMap<String, HashMap<String,Object>> Records;
+    private HashMap<String, Photo> Photos;
+    
     // return singleton version of ElasticsearchController
     // (lazy singleton)
     public static ElasticsearchController getController() {
