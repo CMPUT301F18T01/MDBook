@@ -13,7 +13,6 @@ import org.json.JSONObject;
 
 import java.security.InvalidKeyException;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * Sets up the framework for ElasticsearchController but stores all data in cache.
@@ -23,39 +22,8 @@ import java.util.HashMap;
  **/
 class ElasticsearchController {
 
-    /**
-     * Patient:
-     *      "phone": String
-     *      "email": String
-     *      "problems": ArrayList of problemIDs (strings)
-     * Caregiver:
-     *      "phone": String
-     *      "email": String
-     *      "patient": ArrayList of patient userIDs (strings)
-     * Problem:
-     *      "title": String
-     *      "description": String
-     *      "comments": ArrayList of comments (strings)
-     *      "records": ArrayList of recordIDs (strings)
-     * Record:
-     *      "title": String
-     *      "date": Date, though in actual implementation might be different?
-     *      "description": String
-     *      "geoLocation": GeoLocation, might be different in actual implementation
-     *      "bodyLocation": BodyLocation, might be different in actual implementation
-     *      "photos": ArrayList of photoIDs (strings)
-     *      "comment": String
-     * Photos: Photo, might be different in actual implementation, not sure how to store images in
-     *         ElasticSearch.
-     *
-     */
-    private HashMap<String, JSONObject> patients = new HashMap<>();
-    private HashMap<String, JSONObject> caregivers = new HashMap<>();
-    private HashMap<String, JSONObject> problems = new HashMap<>();
-    private HashMap<String, JSONObject> records = new HashMap<>();
-    private HashMap<String, Photo> photos = new HashMap<>();
-
     private static ElasticsearchController elasticsearchController = null;
+    private DataManager dataManager = DataManager.getDataManager();
 
     /**
      * @return Singleton instance of ElasticSearchController
@@ -74,33 +42,7 @@ class ElasticsearchController {
      * @throws UserIDNotAvailableException Thrown if userID is already taken.
      */
     public void createUser(User user) throws UserIDNotAvailableException {
-        String userID = user.getUserID();
-        // ensure userID is unique
-        if (this.patients.containsKey(userID) || this.caregivers.containsKey(userID)){
-            throw new UserIDNotAvailableException();
-        }
-        else {
-            /* fetch data from user object */
-            JSONObject data = new JSONObject();
-            try {
-                data.put("phone", user.getPhoneNumber());
-                data.put("email", user.getEmail());
 
-                /* save data in corresponding table */
-                if (user.getClass() == Patient.class) {
-                    data.put("problems", new ArrayList<String>());
-                    this.patients.put(userID, data);
-                } else if (user.getClass() == Caregiver.class) {
-                    data.put("patients", new ArrayList<String>());
-                    this.caregivers.put(userID, data);
-                } else {
-                    throw new ClassCastException(
-                            "The inputted user must be of the Patient or Caregiver class.");
-                }
-            } catch (JSONException e){
-                throw new RuntimeException(e);
-            }
-        }
     }
 
     // Adds a patients userID to a caregivers patient list
@@ -236,33 +178,12 @@ class ElasticsearchController {
         return null;
     }
 
-
-    // returns userID of patient who owns given problem
-    public String getPatientFromProblem(String problemID) {
-        return null;
-    }
-
     // returns all associated records for the given problem
     public ArrayList<String> getRecords(String problemID) {
         return null;
     }
 
-    // returns userID of patient who owns the given record
-    public String getPatientFromRecord(String recordID) {
-        return null;
-    }
 
-    // returns combined list of records and parent problems of records with the given
-    // geolocation
-    public ArrayList<String> searchGeoLocation(GeoLocation geolocation) {
-        return null;
-    }
-
-    // returns combined list of records and parent problems of records containing
-    // keyword
-    public ArrayList<String> searchKeyword(String keyWord) {
-        return null;
-    }
 
     // deletes all data belonging to the userID
     public void deleteUser(String userID) {

@@ -9,14 +9,18 @@
  */
 package com.example.mdbook;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Provides a singleton interface for managing users and user login / logout.
  * Also provides interface for creating and deleting users. Activities should use userManager
  * instead of going directly through the database controller or the Patient / Caregiver classes.
  * On login, the logged in user object is to be interacted with through the UserController.
- * Relies on ElasticsearchController for data lookup and management.
+ * Relies on DataManager for data lookup and management.
  *
  * Based off the StudentListManager in the student-picker app by Abram Hindle
  * https://github.com/abramhindle/student-picker
@@ -30,7 +34,7 @@ import java.util.ArrayList;
 public class UserManager {
 
     static private UserManager userManager = null;
-    private ElasticsearchController esc;
+    private DataManager dataManager = null;
 
 
     /**
@@ -57,7 +61,7 @@ public class UserManager {
      * Constructor, called only by initManager() method.
      */
     private UserManager(){
-        this.esc = ElasticsearchController.getController();
+        this.dataManager = DataManager.getDataManager();
     }
 
     /**
@@ -69,8 +73,28 @@ public class UserManager {
      */
     public void createPatient(String userID, String userPhone, String userEmail)
             throws UserIDNotAvailableException {
-        Patient patient = new Patient(userID, userPhone, userEmail);
-        this.esc.createUser(patient);
+        /* Fetch fresh copy of patient list */
+        HashMap patients = dataManager.getPatients();
+
+        /* Ensure userID is unique */
+        if (patients.containsKey(userID) || dataManager.getCaregivers().containsKey(userID)){
+            throw new UserIDNotAvailableException();
+        }
+        else {
+            /* store data */
+            JSONObject data = new JSONObject();
+            try {
+                data.put("phone", userPhone);
+                data.put("email", userEmail);
+                data.put("problems", new ArrayList<String>());
+
+                /* save data in patients table */
+                patients.put(userID, data);
+
+            } catch (JSONException e){
+                throw new RuntimeException(e);
+            }
+        }
     }
 
     /**
@@ -82,8 +106,28 @@ public class UserManager {
      */
     public void createCaregiver(String userID, String userPhone, String userEmail)
             throws UserIDNotAvailableException {
-        Caregiver caregiver = new Caregiver(userID,userPhone, userEmail);
-        this.esc.createUser(caregiver);
+        /* Fetch fresh copy of patient list */
+        HashMap caregivers = dataManager.getCaregivers();
+
+        /* Ensure userID is unique */
+        if (caregivers.containsKey(userID) || dataManager.getPatients().containsKey(userID)){
+            throw new UserIDNotAvailableException();
+        }
+        else {
+            /* store data */
+            JSONObject data = new JSONObject();
+            try {
+                data.put("phone", userPhone);
+                data.put("email", userEmail);
+                data.put("patients", new ArrayList<String>());
+
+                /* save data in patients table */
+                caregivers.put(userID, data);
+
+            } catch (JSONException e){
+                throw new RuntimeException(e);
+            }
+        }
     }
 
     /**
