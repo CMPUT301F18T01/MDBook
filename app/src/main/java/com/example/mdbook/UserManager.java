@@ -331,12 +331,32 @@ public class UserManager {
      * caregiver, e.g. a ContactUser. 
      */
     public void saveUser(User user) throws NoSuchUserException, IllegalArgumentException {
-        if (user.getClass() != Patient.class && user.getClass() != Caregiver.class){
+        HashMap<String, JSONObject> patients = dataManager.getPatients();
+        HashMap<String, JSONObject> caregivers = dataManager.getCaregivers();
+        HashMap<String, JSONObject> problems = dataManager.getProblems();
+
+        if (user.getClass() == Patient.class) {
+            /* Update contact info */
+            JSONObject patientJSON = patients.get(user.getUserID());
+            user = (Patient) user;
+            patientJSON.put("phone", user.getPhoneNumber());
+            patientJSON.put("email", user.getEmail());
+
+            /* Update problems */
+            /* Start by updating already existing problems */
+            for (Problem problem : ((Patient) user).getProblems()){
+                // TODO
+            }
+
+        }
+        else if (user.getClass() == Caregiver.class){
+
+        }
+
+        else{
             throw new IllegalArgumentException("User is not a patient or a Caregiver!");
         }
-        else {
-            //TODO
-        }
+
     }
 
     /**
