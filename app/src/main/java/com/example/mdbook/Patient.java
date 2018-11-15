@@ -9,6 +9,8 @@
  */
 package com.example.mdbook;
 
+import java.util.ArrayList;
+
 /**
  * Extends User into the patient class. Adds a problem list.
  * Provides methods for adding and removing problems.
@@ -16,24 +18,24 @@ package com.example.mdbook;
  * an updated copy. Hence no updateProblem() method.
  *
  * @author Noah Burghardt
- * @see ProblemList
+ * @see Problem
  * @see User
  * @version 0.0.1
  **/
 class Patient extends User {
 
-    private ProblemList problems;
+    private ArrayList<Problem> problems;
 
     /**
      * Creates new Patient in same way as superclass User.
-     * Generates problems as an empty ProblemList.
+     * Generates problems as an empty list.
      * @param userID the unique user ID, as a string. This class does not check for uniqueness.
      * @param userPhone the phone number, as a string
      * @param userEmail the email address, as a string
      */
     public Patient(String userID, String userPhone, String userEmail){
         super(userID, userPhone, userEmail);
-        this.problems = new ProblemList();
+        this.problems = new ArrayList<Problem>();
     }
 
     /**
@@ -42,7 +44,7 @@ class Patient extends User {
      * @param problem the problem to be added
      */
     public void addProblem(Problem problem) {
-        this.problems.addProblem(problem);
+        this.problems.add(problem);
     }
 
     /**
@@ -51,13 +53,13 @@ class Patient extends User {
      * @param problem the problem to remove
      */
     public void removeProblem(Problem problem) {
-        this.problems.removeProblem(problem);
+        this.problems.remove(problem);
     }
 
     /**
-     * @return ProblemList for this patient.
+     * @return Problem list for this patient.
      */
-    public ProblemList getProblems() {
+    public ArrayList<Problem> getProblems() {
         return this.problems;
     }
 }

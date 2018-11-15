@@ -15,7 +15,6 @@ import java.util.ArrayList;
  * The Problem object holds the information about a Problem, including its records.
  *
  * @author Noah Burghardt
- * @see ProblemList
  * @see Record
  * @version 0.0.1
  **/
