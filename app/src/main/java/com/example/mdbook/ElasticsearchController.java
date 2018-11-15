@@ -84,8 +84,8 @@ class ElasticsearchController {
         return null;
     }
 
-    // deletes the given unser
-    public void deleteUser(User user) {
+    // deletes all data belonging to the userID
+    public void deleteUser(String userID) {
     }
 }
 

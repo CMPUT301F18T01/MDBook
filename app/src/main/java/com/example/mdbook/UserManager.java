@@ -13,6 +13,8 @@ import java.util.ArrayList;
 
 /**
  * Provides a singleton interface for managing users and user login / logout.
+ * Also provides interface for creating and deleting users. Activities should use userManager
+ * instead of going directly through the database controller or the Patient / Caregiver classes.
  * On login, the logged in user object is to be interacted with through the UserController.
  * Relies on ElasticsearchController for data lookup and management.
  *
@@ -84,15 +86,12 @@ public class UserManager {
         this.esc.createUser(caregiver);
     }
 
-    // verify user exists through elasticsearchcontroller
-    // attempt login
-    // load user into usercontroller on success
-    // return true on success, else return false
-
     /**
-     * 
-     * @param userid
-     * @return
+     * Verify user exists and login credentials are valid.
+     * Loads user into UserController on success.
+     * @param userid The userID of the user trying to log in.
+     * @return Returns true on successful login, false if credentials are invalid
+     * OR user doesn't exist
      */
     public boolean login(String userid) {
         try {
@@ -104,23 +103,40 @@ public class UserManager {
         }
     }
 
-    // clear out data in usercontroller
+    /**
+     * Clears all data out of UserController.
+     */
     public void logout() {
         UserController.getController().clearUser();
     }
 
-    // load data of arbitrary user into new User object, return User object
+    /**
+     * Builds user object for the given userID from database. Returns said user object.
+     * Does not load into UserController
+     * @param userID The userID of the user to load.
+     * @return A patient or caregiver object built from the userID.
+     * @throws NoSuchUserException Thrown if there is no user with the given userID in the database.
+     */
     public User fetchUser (String userID) throws NoSuchUserException {
         return this.esc.getUser(userID);
     }
 
-    // save data of arbitrary user
+    /**
+     * Take the data in the given user object, find the entry in the database with a matching userID
+     * and update the database.
+     * @param user The user object to be synced into the database.
+     * @throws NoSuchUserException Thrown if there is no user with a matching userID already in the
+     * database. Shouldn't happen if users are created through the usermanager.
+     */
     public void saveUser(User user) throws NoSuchUserException {
         this.esc.saveUser(user);
     }
 
-    // delete arbitrary user
-    public void deleteUser(User user) {
-        this.esc.deleteUser(user);
+    /**
+     * Delete all data belonging to the user associated with the given userID from the database.
+     * @param userID The userID of the user to be cleared out.
+     */
+    public void deleteUser(String userID) {
+        this.esc.deleteUser(userID);
     }
 }
