@@ -309,6 +309,8 @@ public class UserManager {
                 for (String photoID : (ArrayList<String>) recordJSON.get("photos")){
                     record.addPhoto(photos.get(photoID));
                 }
+
+                return record;
             }
             else{
                 throw new InvalidKeyException("Record does not exist!");
@@ -328,13 +330,12 @@ public class UserManager {
      * @throws IllegalArgumentException Thrown if the inputted user is not a (full) patient or
      * caregiver, e.g. a ContactUser. 
      */
-    //TODO
     public void saveUser(User user) throws NoSuchUserException, IllegalArgumentException {
         if (user.getClass() != Patient.class && user.getClass() != Caregiver.class){
             throw new IllegalArgumentException("User is not a patient or a Caregiver!");
         }
         else {
-            this.esc.saveUser(user);
+            //TODO
         }
     }
 
@@ -364,7 +365,7 @@ public class UserManager {
      */
     //TODO
     public void deleteUser(String userID) {
-        this.esc.deleteUser(userID);
+
     }
 
 }
