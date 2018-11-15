@@ -207,7 +207,9 @@ class ElasticsearchController {
                 Problem problem = new Problem(title, description);
 
                 /* Add records */
+                // TODO
 
+                return problem;
             } else {
                 throw new InvalidKeyException("Problem does not exist!");
             }
