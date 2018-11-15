@@ -14,10 +14,11 @@ import org.json.JSONObject;
 
 import java.security.InvalidKeyException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 /**
- * Provides a singleton interface for managing users and user login / logout.
+ * Provides a singleton interface for managing users, user data and user login / logout.
  * Also provides interface for creating and deleting users. Activities should use userManager
  * instead of going directly through the database controller or the Patient / Caregiver classes.
  * On login, the logged in user object is to be interacted with through the UserController.
@@ -252,7 +253,6 @@ public class UserManager {
      * @param problemID The problem ID number
      * @return A fully filled out problem object
      */
-    // TODO
     private Problem getProblem(String problemID) throws InvalidKeyException {
         HashMap<String, JSONObject> problems = dataManager.getProblems();
         try {
@@ -262,19 +262,22 @@ public class UserManager {
                 String description = problemJSON.getString("description");
                 Problem problem = new Problem(title, description);
 
+                /* Add comments */
                 for (String comment : (ArrayList<String>) problemJSON.get("comments")){
                     problem.addComment(comment);
                 }
 
                 /* Add records */
-                // TODO
+                for (String recordID : (ArrayList<String>) problemJSON.get("records")){
+                    problem.addRecord(this.getRecord(recordID));
+                }
 
                 return problem;
             } else {
                 throw new InvalidKeyException("Problem does not exist!");
             }
         } catch (JSONException e){
-            throw new RuntimeException(e);
+            throw new RuntimeException("User data is corrupt.", e);
         }
     }
 
@@ -283,8 +286,36 @@ public class UserManager {
      * @param recordID The problem ID number
      * @return A fully filled out problem object
      */
-    // TODO
-    private Record getRecord(String recordID){
+    private Record getRecord(String recordID) throws InvalidKeyException{
+        HashMap<String, JSONObject> records = dataManager.getRecords();
+        HashMap<String, Photo> photos = dataManager.getPhotos();
+        try {
+            if (records.containsKey(recordID)){
+                JSONObject recordJSON = records.get(recordID);
+                /* Fetch data */
+                String title = recordJSON.getString("title");
+                Date date = (Date) recordJSON.get("date");
+                String description = recordJSON.getString("description");
+                GeoLocation geoLocation = (GeoLocation) recordJSON.get("geoLocation");
+                BodyLocation bodyLocation = (BodyLocation) recordJSON.get("bodyLocation");
+                String comment = recordJSON.getString("comment");
+
+                Record record = new Record(title, date, description);
+                record.setGeoLocation(geoLocation);
+                record.setBodyLocation(bodyLocation);
+                record.setComment(comment);
+
+                /* Add photos */
+                for (String photoID : (ArrayList<String>) recordJSON.get("photos")){
+                    record.addPhoto(photos.get(photoID));
+                }
+            }
+            else{
+                throw new InvalidKeyException("Record does not exist!");
+            }
+        } catch (JSONException e){
+            throw new RuntimeException("User data is corrupt.", e);
+        }
 
     }
 

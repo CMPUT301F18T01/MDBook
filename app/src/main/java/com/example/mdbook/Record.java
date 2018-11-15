@@ -208,4 +208,11 @@ class Record {
             this.description = desc;
         }
     }
+
+    /**
+     * @param geoLocation new geographic location
+     */
+    public void setGeoLocation(GeoLocation geoLocation) {
+        this.geoLocation = geoLocation;
+    }
 }
