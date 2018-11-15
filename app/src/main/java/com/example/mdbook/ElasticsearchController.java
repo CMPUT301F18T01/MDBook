@@ -8,6 +8,9 @@ package com.example.mdbook;
  *
  * Copyright (c) 2018. All rights reserved.
  */
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -45,10 +48,10 @@ class ElasticsearchController {
      *         ElasticSearch.
      *
      */
-    private HashMap<String, HashMap<String,Object>> patients;
-    private HashMap<String, HashMap<String,Object>> caregivers;
-    private HashMap<String, HashMap<String,Object>> problems;
-    private HashMap<String, HashMap<String,Object>> records;
+    private HashMap<String, JSONObject> patients;
+    private HashMap<String, JSONObject> caregivers;
+    private HashMap<String, JSONObject> problems;
+    private HashMap<String, JSONObject> records;
     private HashMap<String, Photo> photos;
 
     private static ElasticsearchController elasticsearchController = null;
@@ -75,19 +78,24 @@ class ElasticsearchController {
         }
         else {
             /* fetch data from user object */
-            HashMap<String, Object> data = new HashMap<>();
-            data.put("phone", user.getPhoneNumber());
-            data.put("email", user.getEmail());
+            JSONObject data = new JSONObject();
+            try {
+                data.put("phone", user.getPhoneNumber());
+                data.put("email", user.getEmail());
 
-            /* save data in corresponding table */
-            if (user.getClass() == Patient.class) {
-                this.patients.put(userID, data);
-            } else if (user.getClass() == Caregiver.class) {
-                this.caregivers.put(userID, data);
-            }
-            else {
-                throw new ClassCastException(
-                        "The inputted user must be of the Patient or Caregiver class.");
+                /* save data in corresponding table */
+                if (user.getClass() == Patient.class) {
+                    data.put("problems", new ArrayList<String>());
+                    this.patients.put(userID, data);
+                } else if (user.getClass() == Caregiver.class) {
+                    data.put("patients", new ArrayList<String>());
+                    this.caregivers.put(userID, data);
+                } else {
+                    throw new ClassCastException(
+                            "The inputted user must be of the Patient or Caregiver class.");
+                }
+            } catch (JSONException e){
+                throw new RuntimeException(e);
             }
         }
     }
@@ -99,7 +107,7 @@ class ElasticsearchController {
 
     // updates user data, i.e. phone, email, userID
     // Throws error if user doesn't already exist in cloud storage,
-    // if that is the case use createUser().
+    // if that is the case use createUser() to create a basic user, then saveUser to update data.
     public void saveUser(User user) throws NoSuchUserException {
 
     }
@@ -107,8 +115,29 @@ class ElasticsearchController {
     // returns the full user object matching the given id
     // including records, problems etc
     public User getUser(String userID) throws NoSuchUserException {
-        this.patients.get(userID);
-        return(new Patient("id", "phone", "email"));
+        /* Check if userID corresponds with a patient */
+        if (this.patients.containsKey(userID)){
+            try {
+                /* load basic data into patient */
+                JSONObject patientJSON = this.patients.get(userID);
+                String phone = patientJSON.getString("phone");
+                String email = patientJSON.getString("email");
+                ArrayList<String> problemIDs = (ArrayList<String>) patientJSON.get("problems");
+                Patient patient = new Patient(userID, phone, email);
+
+                /* load problems */
+
+            } catch (JSONException e){
+                throw new RuntimeException(e);
+            }
+        }
+        /* Check if userID corresponds with a caregiver */
+        else if (this.caregivers.containsKey(userID)){
+
+        }
+        else {
+            throw new NoSuchUserException();
+        }
     }
 
     // should add problem with blank record reference and user reference
