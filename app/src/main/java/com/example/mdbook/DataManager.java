@@ -27,14 +27,13 @@ public class DataManager {
      *      "records": ArrayList of recordIDs (strings)
      * Record:
      *      "title": String
-     *      "date": Date, though in actual implementation might be different?
+     *      "date": Date
      *      "description": String
-     *      "geoLocation": GeoLocation, might be different in actual implementation
-     *      "bodyLocation": BodyLocation, might be different in actual implementation
+     *      "geoLocation": GeoLocation
+     *      "bodyLocation": BodyLocation
      *      "photos": ArrayList of photoIDs (strings)
      *      "comment": String
-     * Photos: Photo, might be different in actual implementation, not sure how to store images in
-     *         ElasticSearch.
+     * Photos: Photo
      *
      */
     private HashMap<String, JSONObject> patients;
