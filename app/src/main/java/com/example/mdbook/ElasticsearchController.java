@@ -1,8 +1,22 @@
 package com.example.mdbook;
-
+/*
+ * ElasticSearchController
+ *
+ * Version 0.0.1
+ *
+ * 2018-11-13
+ *
+ * Copyright (c) 2018. All rights reserved.
+ */
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * Sets up the framework for ElasticsearchController but stores all data in cache.
+ *
+ * @author Noah Burghardt
+ * @version 0.0.1
+ **/
 class ElasticsearchController {
 
     /**
@@ -31,23 +45,51 @@ class ElasticsearchController {
      *         ElasticSearch.
      *
      */
-    private HashMap<String, HashMap<String,Object>> Patients;
-    private HashMap<String, HashMap<String,Object>> Caregivers;
-    private HashMap<String, HashMap<String,Object>> Problems;
-    private HashMap<String, HashMap<String,Object>> Records;
-    private HashMap<String, Photo> Photos;
-    
-    // return singleton version of ElasticsearchController
-    // (lazy singleton)
+    private HashMap<String, HashMap<String,Object>> patients;
+    private HashMap<String, HashMap<String,Object>> caregivers;
+    private HashMap<String, HashMap<String,Object>> problems;
+    private HashMap<String, HashMap<String,Object>> records;
+    private HashMap<String, Photo> photos;
+
+    private static ElasticsearchController elasticsearchController = null;
+
+    /**
+     * @return Singleton instance of ElasticSearchController
+     */
     public static ElasticsearchController getController() {
-        return null;
+        if (elasticsearchController == null){
+            elasticsearchController = new ElasticsearchController();
+        }
+        return elasticsearchController;
     }
 
 
-    // Adds a new user to either the patients or caregivers table depending on user type
+    // Adds a new user to either the patients or caregivers table depending on user type.
+    // Does not add anything beyond contact info.
     // throws exception if userID is taken
     public void createUser(User user) throws UserIDNotAvailableException {
+        String userID = user.getUserID();
+        // ensure userID is unique
+        if (this.patients.containsKey(userID) || this.caregivers.containsKey(userID)){
+            throw new UserIDNotAvailableException();
+        }
+        else {
+            /* fetch data from user object */
+            HashMap<String, Object> data = new HashMap<>();
+            data.put("phone", user.getPhoneNumber());
+            data.put("email", user.getEmail());
 
+            /* save data in corresponding table */
+            if (user.getClass() == Patient.class) {
+                this.patients.put(userID, data);
+            } else if (user.getClass() == Caregiver.class) {
+                this.caregivers.put(userID, data);
+            }
+            else {
+                throw new ClassCastException(
+                        "The inputted user must be of the Patient or Caregiver class.");
+            }
+        }
     }
 
     // Adds a patients userID to a caregivers patient list
@@ -65,6 +107,7 @@ class ElasticsearchController {
     // returns the full user object matching the given id
     // including records, problems etc
     public User getUser(String userID) throws NoSuchUserException {
+        this.patients.get(userID);
         return(new Patient("id", "phone", "email"));
     }
 
