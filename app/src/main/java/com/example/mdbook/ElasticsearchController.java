@@ -29,8 +29,8 @@ class ElasticsearchController {
 
     }
 
-    // returns a basic user object with only id, phone and email
-    // according to elasticsearch for that userID
+    // returns the full user object matching the given id
+    // including records, problems etc
     public User getUser(String userID) throws NoSuchUserException {
         return(new Patient("id", "phone", "email"));
     }
@@ -50,8 +50,10 @@ class ElasticsearchController {
         return null;
     }
 
-    // returns list of problemIDs for given patienID
-    public ArrayList<String> getProblems(String patientID) {
+    // returns list of problems for given patientID
+    // Patient ID is stored with an array of problem ID strings
+    // Takes those string, looks them up in the problems table and generates list
+    public ArrayList<Problem> getProblems(String patientID) {
         return null;
     }
 
@@ -60,8 +62,8 @@ class ElasticsearchController {
         return null;
     }
 
-    // returns all associated records for the given patient
-    public ArrayList<String> getRecords(String patientID) {
+    // returns all associated records for the given problem
+    public ArrayList<String> getRecords(String problemID) {
         return null;
     }
 
@@ -80,6 +82,10 @@ class ElasticsearchController {
     // keyword
     public ArrayList<String> searchKeyword(String keyWord) {
         return null;
+    }
+
+    // deletes the given unser
+    public void deleteUser(User user) {
     }
 }
 

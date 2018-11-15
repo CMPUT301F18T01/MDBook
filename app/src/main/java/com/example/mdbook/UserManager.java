@@ -9,6 +9,8 @@
  */
 package com.example.mdbook;
 
+import java.util.ArrayList;
+
 /**
  * Provides a singleton interface for managing users and user login / logout.
  * On login, the logged in user object is to be interacted with through the UserController.
@@ -56,13 +58,26 @@ public class UserManager {
         this.esc = ElasticsearchController.getController();
     }
 
-    // create new patient
+    /**
+     * Create new patient profile and save.
+     * @param userID The unique ID of the new patient. Must be unique.
+     * @param userPhone The phone number of the new patient.
+     * @param userEmail The email of the new patient.
+     * @throws UserIDNotAvailableException Thrown if the userID is not unique
+     */
     public void createPatient(String userID, String userPhone, String userEmail)
             throws UserIDNotAvailableException {
         Patient patient = new Patient(userID, userPhone, userEmail);
         this.esc.createUser(patient);
     }
-    // create new Caregiver
+
+    /**
+     * Create new caregiver profile and save.
+     * @param userID The unique ID of the new caregiver. Must be unique.
+     * @param userPhone The phone number of the new caregiver.
+     * @param userEmail The email of the new caregiver.
+     * @throws UserIDNotAvailableException Thrown if the userID is not unique
+     */
     public void createCaregiver(String userID, String userPhone, String userEmail)
             throws UserIDNotAvailableException {
         Caregiver caregiver = new Caregiver(userID,userPhone, userEmail);
@@ -73,6 +88,12 @@ public class UserManager {
     // attempt login
     // load user into usercontroller on success
     // return true on success, else return false
+
+    /**
+     * 
+     * @param userid
+     * @return
+     */
     public boolean login(String userid) {
         try {
             User user = this.esc.getUser(userid);
@@ -88,17 +109,18 @@ public class UserManager {
         UserController.getController().clearUser();
     }
 
-    // load data of user into new User object, return User object
-    public User fetchUser (String Userid) {
-        return(new Patient("userID","userPhone", "userEmail"));
+    // load data of arbitrary user into new User object, return User object
+    public User fetchUser (String userID) throws NoSuchUserException {
+        return this.esc.getUser(userID);
     }
 
-    // deconstruct user and update through elasticsearchcontroller
-    public void saveUser(User user) {
-
+    // save data of arbitrary user
+    public void saveUser(User user) throws NoSuchUserException {
+        this.esc.saveUser(user);
     }
 
-    // deconstruct user and remove all associated data through elasticsearchcontroller
-    public void deleteUser(Patient u) {
+    // delete arbitrary user
+    public void deleteUser(User user) {
+        this.esc.deleteUser(user);
     }
 }
