@@ -141,10 +141,17 @@ public class UserManager {
      * and update the database.
      * @param user The user object to be synced into the database.
      * @throws NoSuchUserException Thrown if there is no user with a matching userID already in the
-     * database. Shouldn't happen if users are created through the usermanager.
+     * database. Shouldn't happen if users are created through the UserManager.
+     * @throws IllegalArgumentException Thrown if the inputted user is not a (full) patient or
+     * caregiver, e.g. a ContactUser. 
      */
-    public void saveUser(User user) throws NoSuchUserException {
-        this.esc.saveUser(user);
+    public void saveUser(User user) throws NoSuchUserException, IllegalArgumentException {
+        if (user.getClass() != Patient.class && user.getClass() != Caregiver.class){
+            throw new IllegalArgumentException("User is not a patient or a Caregiver!");
+        }
+        else {
+            this.esc.saveUser(user);
+        }
     }
 
     /**
