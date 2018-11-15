@@ -113,7 +113,7 @@ class ElasticsearchController {
     public void saveUser(User user) throws NoSuchUserException {
 
     }
-    
+
     /**
      * Returns the full user object matching the given ID.
      * Includes full records, problems, etc.
@@ -159,12 +159,40 @@ class ElasticsearchController {
                 return caregiver;
 
             } catch (JSONException e){
-                throw new RuntimeException(e);
+                e.printStackTrace();
+                throw new RuntimeException("User attributes are corrupt.", e);
             }
         }
 
         else {
             throw new NoSuchUserException();
+        }
+    }
+
+    /**
+     * Retrieves only the userID, phone and email of a user. Good for giving a profile overview
+     * without having to fetch entire user model.
+     * @param userID The ID of the user to fetch,
+     * @return A ContactUser containing only the contact information.
+     */
+    public ContactUser getUserContact(String userID) throws NoSuchUserException{
+        JSONObject userJSON = null;
+        if (this.caregivers.containsKey(userID)) {
+            userJSON = caregivers.get(userID);
+        } else if (this.patients.containsKey(userID)){
+            userJSON = patients.get(userID);
+        }
+        else {
+            throw new NoSuchUserException();
+        }
+
+        try {
+            return new ContactUser(userID,
+                    userJSON.getString("phone"),
+                    userJSON.getString("email"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+            throw new RuntimeException("User attributes are corrupt.", e);
         }
     }
 
@@ -235,5 +263,6 @@ class ElasticsearchController {
     // deletes all data belonging to the userID
     public void deleteUser(String userID) {
     }
+
 }
 

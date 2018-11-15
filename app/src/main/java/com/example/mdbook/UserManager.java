@@ -126,6 +126,17 @@ public class UserManager {
     }
 
     /**
+     * Builds user object containing only userID, phone and email. Returns said user object.
+     * Does not load into UserController. Good for showing an overview of a User.
+     * @param userID The ID of the user to fetch.
+     * @return A patient or caregiver object with only the contact information stored.
+     * @throws NoSuchUserException Thrown if
+     */
+    public ContactUser fetchUserContact (String userID) throws NoSuchUserException {
+        return this.esc.getUserContact(userID);
+    }
+
+    /**
      * Take the data in the given user object, find the entry in the database with a matching userID
      * and update the database.
      * @param user The user object to be synced into the database.
@@ -143,4 +154,5 @@ public class UserManager {
     public void deleteUser(String userID) {
         this.esc.deleteUser(userID);
     }
+
 }
