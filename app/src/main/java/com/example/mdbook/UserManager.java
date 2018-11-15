@@ -90,10 +90,14 @@ public class UserManager {
      * Verify user exists and login credentials are valid.
      * Loads user into UserController on success.
      * @param userid The userID of the user trying to log in.
-     * @return Returns true on successful login, false if credentials are invalid
-     * OR user doesn't exist
+     * @return Returns true on successful login, false if credentials are invalid,
+     * user doesn't exist or there is already someone logged in.
      */
     public boolean login(String userid) {
+        UserController userController = UserController.getController();
+        if (userController.getUser() != null){
+            return false;
+        }
         try {
             User user = this.esc.getUser(userid);
             UserController.getController().loadUser(user);
