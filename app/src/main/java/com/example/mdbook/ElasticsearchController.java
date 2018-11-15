@@ -10,15 +10,28 @@ class ElasticsearchController {
         return null;
     }
 
-    // add patient to patients object and push to elasticsearch
-    public void addPatient(Patient patient) {
+
+    // Adds a new user to either the patients or caregivers table depending on user type
+    // throws exception if userID is taken
+    public void createUser(User user) throws UserIDNotAvailableException {
 
     }
 
-    // returns a basic user object with only id, phone and email
-    // according to elasticsearch for that userID
-    // returns null if user id doesnt correspond with any users
-    public User getUser(String userID) {
+    // Adds a patients userID to a caregivers patient list
+    public void addPatient(Caregiver caregiver, Patient patient) throws NoSuchUserException {
+
+    }
+
+    // updates user data, i.e. phone, email, userID
+    // Throws error if user doesn't already exist in cloud storage,
+    // if that is the case use createUser().
+    public void saveUser(User user) throws NoSuchUserException {
+
+    }
+
+    // returns the full user object matching the given id
+    // including records, problems etc
+    public User getUser(String userID) throws NoSuchUserException {
         return(new Patient("id", "phone", "email"));
     }
 
@@ -37,7 +50,9 @@ class ElasticsearchController {
         return null;
     }
 
-    // returns list of problemIDs for given patienID
+    // returns list of problems for given patientID
+    // Patient ID is stored with an array of problem ID strings
+    // Takes those string, looks them up in the problems table and generates list
     public ArrayList<String> getProblems(String patientID) {
         return null;
     }
@@ -47,8 +62,8 @@ class ElasticsearchController {
         return null;
     }
 
-    // returns all associated records for the given patient
-    public ArrayList<String> getRecords(String patientID) {
+    // returns all associated records for the given problem
+    public ArrayList<String> getRecords(String problemID) {
         return null;
     }
 
@@ -67,6 +82,10 @@ class ElasticsearchController {
     // keyword
     public ArrayList<String> searchKeyword(String keyWord) {
         return null;
+    }
+
+    // deletes all data belonging to the userID
+    public void deleteUser(String userID) {
     }
 }
 

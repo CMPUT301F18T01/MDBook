@@ -12,10 +12,18 @@ public class ElasticsearchControllerTest extends TestCase {
     public void testSaveLoad() {
         Patient patient = new Patient("patientid", "userphone", "useremail@test.com");
         ElasticsearchController esc = ElasticsearchController.getController();
-        esc.addPatient(patient);
+        try {
+            esc.createUser(patient);
+        } catch (UserIDNotAvailableException e) {
+            assert false;
+        }
 
         // ensure patient is added and can be loaded by esc
-        assertEquals(patient.getEmail(), esc.getUser("patientid").getEmail());
+        try {
+            assertEquals(patient.getEmail(), esc.getUser("patientid").getEmail());
+        } catch (NoSuchUserException e) {
+            assert false;
+        }
 
         // add problem, record and connect with patient
         Problem problem = new Problem("Title", "Description");
@@ -54,7 +62,11 @@ public class ElasticsearchControllerTest extends TestCase {
         GeoLocation geolocation = new GeoLocation();
         record.setLocation(geolocation);
 
-        esc.addPatient(patient);
+        try {
+            esc.createUser(patient);
+        } catch (UserIDNotAvailableException e){
+            assert false;
+        }
         String problemID = esc.addProblem("patientid", problem);
         String recordID = esc.addRecord(problemID, "patientid", record);
 
