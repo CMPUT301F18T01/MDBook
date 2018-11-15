@@ -53,7 +53,7 @@ class ElasticsearchController {
     // returns list of problems for given patientID
     // Patient ID is stored with an array of problem ID strings
     // Takes those string, looks them up in the problems table and generates list
-    public ArrayList<Problem> getProblems(String patientID) {
+    public ArrayList<String> getProblems(String patientID) {
         return null;
     }
 
