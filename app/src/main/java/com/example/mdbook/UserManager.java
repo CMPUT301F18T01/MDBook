@@ -12,6 +12,7 @@ package com.example.mdbook;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.security.InvalidKeyException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -189,18 +190,103 @@ public class UserManager {
     }
 
     /**
-     * Builds user object for the given userID from database. Returns said user object.
+     * Builds full user object for the given userID from database. Returns said user object.
      * Does not load into UserController
      * @param userID The userID of the user to load.
      * @return A patient or caregiver object built from the userID.
      * @throws NoSuchUserException Thrown if there is no user with the given userID in the database.
      */
-    //TODO
     public User fetchUser (String userID) throws NoSuchUserException {
-        return this.esc.getUser(userID);
+        HashMap<String, JSONObject> patients = dataManager.getPatients();
+        HashMap<String, JSONObject> caregivers = dataManager.getCaregivers();
+
+        /* Check if userID corresponds with a patient */
+        if (patients.containsKey(userID)){
+            try {
+                /* load basic data into patient */
+                JSONObject patientJSON = patients.get(userID);
+                String phone = patientJSON.getString("phone");
+                String email = patientJSON.getString("email");
+                ArrayList<String> problemIDs = (ArrayList<String>) patientJSON.get("problems");
+                Patient patient = new Patient(userID, phone, email);
+
+                /* Get problem method also loads in records, photos, etc */
+                for (String problemID : problemIDs){
+                    patient.addProblem(getProblem(problemID));
+                }
+
+                return patient;
+
+            } catch (JSONException e){
+                throw new RuntimeException(e);
+            } catch (InvalidKeyException e) {
+                throw new RuntimeException("The user data is corrupt", e);
+            }
+        }
+
+        /* Check if userID corresponds with a caregiver */
+        else if (caregivers.containsKey(userID)){
+            try {
+                /* load basic data into caregiver */
+                JSONObject caregiverJSON = caregivers.get(userID);
+                String phone = caregiverJSON.getString("phone");
+                String email = caregiverJSON.getString("email");
+                ArrayList<String> patientIDs = (ArrayList<String>) caregiverJSON.get("patients");
+                Caregiver caregiver = new Caregiver(userID, phone, email);
+                caregiver.setPatientList(patientIDs);
+                return caregiver;
+
+            } catch (JSONException e){
+                e.printStackTrace();
+                throw new RuntimeException("User attributes are corrupt.", e);
+            }
+        }
+
+        else {
+            throw new NoSuchUserException();
+        }
     }
 
+    /**
+     * Assistant method for retrieving full problem objects
+     * @param problemID The problem ID number
+     * @return A fully filled out problem object
+     */
+    // TODO
+    private Problem getProblem(String problemID) throws InvalidKeyException {
+        HashMap<String, JSONObject> problems = dataManager.getProblems();
+        try {
+            if (problems.containsKey(problemID)) {
+                JSONObject problemJSON = problems.get(problemID);
+                String title = problemJSON.getString("title");
+                String description = problemJSON.getString("description");
+                Problem problem = new Problem(title, description);
 
+                for (String comment : (ArrayList<String>) problemJSON.get("comments")){
+                    problem.addComment(comment);
+                }
+
+                /* Add records */
+                // TODO
+
+                return problem;
+            } else {
+                throw new InvalidKeyException("Problem does not exist!");
+            }
+        } catch (JSONException e){
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Assistant method for retrieving full record objects
+     * @param recordID The problem ID number
+     * @return A fully filled out problem object
+     */
+    // TODO
+    private Record getRecord(String recordID){
+
+    }
 
     /**
      * Take the data in the given user object, find the entry in the database with a matching userID
@@ -219,6 +305,26 @@ public class UserManager {
         else {
             this.esc.saveUser(user);
         }
+    }
+
+    /**
+     * Assistant method to saveUser method. Saves Problem data.
+     * @param problemID
+     * @param problem
+     */
+    //TODO
+    private void setProblem(String problemID, Problem problem){
+
+    }
+
+    /**
+     * Assistant method to setProblem and saveUser methods. Saves record data.
+     * @param recordID
+     * @param record
+     */
+    //TODO
+    private void setRecord(String recordID, Record record){
+
     }
 
     /**
