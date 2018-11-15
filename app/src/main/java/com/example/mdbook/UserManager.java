@@ -159,26 +159,48 @@ public class UserManager {
     }
 
     /**
+     * Builds user object containing only userID, phone and email. Returns said user object.
+     * Does not load into UserController. Good for showing an overview of a User.
+     * @param userID The ID of the user to fetch.
+     * @return A patient or caregiver object with only the contact information stored.
+     * @throws NoSuchUserException Thrown if the userID couldn't be found.
+     */
+    public ContactUser fetchUserContact (String userID) throws NoSuchUserException {
+        HashMap<String, JSONObject> patients = dataManager.getPatients();
+        HashMap<String, JSONObject> caregivers = dataManager.getCaregivers();
+        JSONObject userJSON;
+
+        if (caregivers.containsKey(userID)) {
+            userJSON = caregivers.get(userID);
+        } else if (patients.containsKey(userID)){
+            userJSON = patients.get(userID);
+        }
+        else {
+            throw new NoSuchUserException();
+        }
+
+        try {
+            return new ContactUser(userID,
+                    userJSON.getString("phone"),
+                    userJSON.getString("email"));
+        } catch (JSONException e) {
+            throw new RuntimeException("User attributes are corrupt.", e);
+        }
+    }
+
+    /**
      * Builds user object for the given userID from database. Returns said user object.
      * Does not load into UserController
      * @param userID The userID of the user to load.
      * @return A patient or caregiver object built from the userID.
      * @throws NoSuchUserException Thrown if there is no user with the given userID in the database.
      */
+    //TODO
     public User fetchUser (String userID) throws NoSuchUserException {
         return this.esc.getUser(userID);
     }
 
-    /**
-     * Builds user object containing only userID, phone and email. Returns said user object.
-     * Does not load into UserController. Good for showing an overview of a User.
-     * @param userID The ID of the user to fetch.
-     * @return A patient or caregiver object with only the contact information stored.
-     * @throws NoSuchUserException Thrown if
-     */
-    public ContactUser fetchUserContact (String userID) throws NoSuchUserException {
-        return this.esc.getUserContact(userID);
-    }
+
 
     /**
      * Take the data in the given user object, find the entry in the database with a matching userID
@@ -189,6 +211,7 @@ public class UserManager {
      * @throws IllegalArgumentException Thrown if the inputted user is not a (full) patient or
      * caregiver, e.g. a ContactUser. 
      */
+    //TODO
     public void saveUser(User user) throws NoSuchUserException, IllegalArgumentException {
         if (user.getClass() != Patient.class && user.getClass() != Caregiver.class){
             throw new IllegalArgumentException("User is not a patient or a Caregiver!");
@@ -202,6 +225,7 @@ public class UserManager {
      * Delete all data belonging to the user associated with the given userID from the database.
      * @param userID The userID of the user to be cleared out.
      */
+    //TODO
     public void deleteUser(String userID) {
         this.esc.deleteUser(userID);
     }
