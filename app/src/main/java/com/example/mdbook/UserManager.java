@@ -339,8 +339,12 @@ public class UserManager {
             /* Update contact info */
             JSONObject patientJSON = patients.get(user.getUserID());
             user = (Patient) user;
-            patientJSON.put("phone", user.getPhoneNumber());
-            patientJSON.put("email", user.getEmail());
+            try {
+                patientJSON.put("phone", user.getPhoneNumber());
+                patientJSON.put("email", user.getEmail());
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
 
             /* Update problems */
             /* Start by updating already existing problems */
