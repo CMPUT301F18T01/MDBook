@@ -13,20 +13,20 @@ import java.util.HashMap;
  **/
 public class DataManager {
     /**
-     * Patient:
+     * PatientID:
      *      "phone": String
      *      "email": String
      *      "problems": ArrayList of problemIDs (strings)
-     * Caregiver:
+     * CaregiverID:
      *      "phone": String
      *      "email": String
      *      "patient": ArrayList of patient userIDs (strings)
-     * Problem:
+     * ProblemID:
      *      "title": String
      *      "description": String
      *      "comments": ArrayList of comments (strings)
      *      "records": ArrayList of recordIDs (strings)
-     * Record:
+     * RecordID:
      *      "title": String
      *      "date": Date
      *      "description": String
@@ -34,7 +34,7 @@ public class DataManager {
      *      "bodyLocation": BodyLocation
      *      "photos": ArrayList of photoIDs (strings)
      *      "comment": String
-     * Photos: Photo
+     * PhotoID: Photo
      *
      */
     private HashMap<String, JSONObject> patients;
