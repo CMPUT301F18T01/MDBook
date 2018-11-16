@@ -32,7 +32,7 @@ class Record {
     private BodyLocation bodyLocation;
     private ArrayList<Photo> photos;
     private String comment;
-    private String recordID;
+    private int recordID;
 
     /**
      * Generates a new Record object with date and title.
@@ -220,14 +220,14 @@ class Record {
     /**
      * @return Record ID for this record. Will be null if record hasn't already existed in storage.
      */
-    public String getRecordID() {
+    public int getRecordID() {
         return recordID;
     }
 
     /**
      * @param recordID Set recordID, should be generated from database.
      */
-    public void setRecordID(String recordID) {
+    public void setRecordID(int recordID) {
         this.recordID = recordID;
     }
 }

@@ -24,7 +24,7 @@ class Problem {
     private String title;
     private String description;
     private ArrayList<String> comments;
-    private String problemID;
+    private int problemID;
 
 
     /**
@@ -155,14 +155,14 @@ class Problem {
     /**
      * @return Problem ID, can be null.
      */
-    public String getProblemID(){
+    public int getProblemID(){
         return this.problemID;
     }
 
     /**
      * @param problemID Problem ID
      */
-    public void setProblemID(String problemID) {
+    public void setProblemID(int problemID) {
         this.problemID = problemID;
     }
 }

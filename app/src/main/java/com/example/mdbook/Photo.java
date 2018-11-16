@@ -2,16 +2,16 @@ package com.example.mdbook;
 
 // class to hold photo objects
 class Photo {
-    private String photoid;
+    private int photoid;
     public Photo(){
 
     }
 
-    public String getPhotoid() {
+    public int getPhotoid() {
         return photoid;
     }
 
-    public void setPhotoid(String photoid) {
+    public void setPhotoid(int photoid) {
         this.photoid = photoid;
     }
 }
