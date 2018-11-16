@@ -17,7 +17,6 @@ import junit.framework.TestCase;
 /**
  * Tests the problem objects
  *
- * @see  com.example.mdbook.ProblemList
  * @see com.example.mdbook.Record
  *
  * @author Noah Burghardt
