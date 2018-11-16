@@ -16,7 +16,7 @@ public class DataManager {
      * PatientID:
      *      "phone": String
      *      "email": String
-     *      "problems": ArrayList of problemIDs (strings)
+     *      "problems": ArrayList of problemIDs (ints)
      * CaregiverID:
      *      "phone": String
      *      "email": String
@@ -25,14 +25,14 @@ public class DataManager {
      *      "title": String
      *      "description": String
      *      "comments": ArrayList of comments (strings)
-     *      "records": ArrayList of recordIDs (strings)
+     *      "records": ArrayList of recordIDs (ints)
      * RecordID:
      *      "title": String
      *      "date": Date
      *      "description": String
      *      "geoLocation": GeoLocation
      *      "bodyLocation": BodyLocation
-     *      "photos": ArrayList of photoIDs (strings)
+     *      "photos": ArrayList of photoIDs (ints)
      *      "comment": String
      * PhotoID: Photo
      *
@@ -64,6 +64,7 @@ public class DataManager {
         this.problems = new HashMap<>();
         this.records = new HashMap<>();
         this.photos = new HashMap<>();
+        this.availableIDs = new ArrayList<>();
     }
 
     public HashMap<String, JSONObject> getCaregivers() {

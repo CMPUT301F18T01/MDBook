@@ -24,7 +24,7 @@ class Problem {
     private String title;
     private String description;
     private ArrayList<String> comments;
-    private int problemID;
+    private int problemID = -1;
 
 
     /**

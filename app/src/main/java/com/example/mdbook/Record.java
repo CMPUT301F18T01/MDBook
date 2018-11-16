@@ -32,7 +32,7 @@ class Record {
     private BodyLocation bodyLocation;
     private ArrayList<Photo> photos;
     private String comment;
-    private int recordID;
+    private int recordID = -1;
 
     /**
      * Generates a new Record object with date and title.

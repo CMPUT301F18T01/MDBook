@@ -2,7 +2,7 @@ package com.example.mdbook;
 
 // class to hold photo objects
 class Photo {
-    private int photoid;
+    private int photoid = -1;
     public Photo(){
 
     }

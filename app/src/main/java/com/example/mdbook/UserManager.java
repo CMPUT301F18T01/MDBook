@@ -88,7 +88,7 @@ public class UserManager {
             try {
                 data.put("phone", userPhone);
                 data.put("email", userEmail);
-                data.put("problems", new ArrayList<String>());
+                data.put("problems", new ArrayList<Integer>());
 
                 /* save data in patients table */
                 patients.put(userID, data);
@@ -208,11 +208,11 @@ public class UserManager {
                 JSONObject patientJSON = patients.get(userID);
                 String phone = patientJSON.getString("phone");
                 String email = patientJSON.getString("email");
-                ArrayList<String> problemIDs = (ArrayList<String>) patientJSON.get("problems");
+                ArrayList<Integer> problemIDs = (ArrayList<Integer>) patientJSON.get("problems");
                 Patient patient = new Patient(userID, phone, email);
 
                 /* Get problem method also loads in records, photos, etc */
-                for (String problemID : problemIDs){
+                for (int problemID : problemIDs){
                     patient.addProblem(getProblem(problemID));
                 }
 
@@ -253,7 +253,7 @@ public class UserManager {
      * @param problemID The problem ID number
      * @return A fully filled out problem object
      */
-    private Problem getProblem(String problemID) throws InvalidKeyException {
+    private Problem getProblem(int problemID) throws InvalidKeyException {
         HashMap<Integer, JSONObject> problems = dataManager.getProblems();
         try {
             if (problems.containsKey(problemID)) {
@@ -269,7 +269,7 @@ public class UserManager {
                 }
 
                 /* Add records */
-                for (String recordID : (ArrayList<String>) problemJSON.get("records")){
+                for (int recordID : (ArrayList<Integer>) problemJSON.get("records")){
                     problem.addRecord(this.getRecord(recordID));
                 }
 
@@ -284,10 +284,10 @@ public class UserManager {
 
     /**
      * Assistant method for retrieving full record objects
-     * @param recordID The problem ID number
+     * @param recordID The record ID number
      * @return A fully filled out problem object
      */
-    private Record getRecord(String recordID) throws InvalidKeyException{
+    private Record getRecord(int recordID) throws InvalidKeyException{
         HashMap<Integer, JSONObject> records = dataManager.getRecords();
         HashMap<Integer, Photo> photos = dataManager.getPhotos();
         try {
@@ -308,7 +308,7 @@ public class UserManager {
                 record.setRecordID(recordID);
 
                 /* Add photos */
-                for (String photoID : (ArrayList<String>) recordJSON.get("photos")){
+                for (int photoID : (ArrayList<Integer>) recordJSON.get("photos")){
                     Photo photo = photos.get(photoID);
                     photo.setPhotoid(photoID);
                     record.addPhoto(photo);
@@ -344,7 +344,6 @@ public class UserManager {
         if (user.getClass() == Patient.class) {
             /* Update contact info */
             JSONObject patientJSON = patients.get(user.getUserID());
-            user = (Patient) user;
             try {
                 patientJSON.put("phone", user.getPhoneNumber());
                 patientJSON.put("email", user.getEmail());
@@ -352,25 +351,35 @@ public class UserManager {
                 throw new RuntimeException(e);
             }
 
-            /* Update problems, update records transitively */
+            /* Update problems, update/add/remove records transitively */
+            /* Get problemID list from user object */
             ArrayList<Integer> problemIDList = new ArrayList<>();
             for (Problem problem : ((Patient) user).getProblems()){
                 problemIDList.add(problem.getProblemID());
             }
 
             /* Remove problems not present in user */
-            for (String problemID : (ArrayList<String>) patientJSON.get("problems")){
-                if (!((Patient) user).getProblems().contains(problemID)){
-                    
+            try {
+                for (int problemID : (ArrayList<Integer>) patientJSON.get("problems")){
+                    if (!problemIDList.contains(problemID)){
+                        deleteProblem(problemID);
+                    }
                 }
+            } catch (JSONException e) {
+                throw new RuntimeException("Patient problem data is corrupt", e);
             }
-            /* Start by updating already existing problems */
+
+            /* Update new and already existing problems */
             for (Problem problem : ((Patient) user).getProblems()){
                 int problemID = setProblem(problem);
-                problemIDList.add(problemID);
+
+                /* Add new problemIDs to problemID list */
+                if (!problemIDList.contains(problemID)) {
+                    problemIDList.add(problemID);
+                }
             }
 
-
+            /* Update stored problemID list */
             try {
                 patientJSON.put("problems", problemIDList);
             } catch (JSONException e) {
@@ -407,11 +416,11 @@ public class UserManager {
 
         /* Generate recordIDs */
 
-        if (problem.getProblemID() == null){
-            int problemID = dataManager.getAvailableID();
+        if (problem.getProblemID() == -1){
+            problem.setProblemID(dataManager.getAvailableID());
 
         }
-        return null;
+        return problem.getProblemID();
     }
 
     /**
@@ -430,6 +439,14 @@ public class UserManager {
      */
     //TODO
     public void deleteUser(String userID) {
+
+    }
+
+    private void deleteProblem(int problemID){
+
+    }
+
+    private void deleteRecord(int recordID){
 
     }
 
