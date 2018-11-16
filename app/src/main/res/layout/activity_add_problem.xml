@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AddProblemActivity">
+
+    <EditText
+        android:id="@+id/addTitle"
+        android:layout_width="304dp"
+        android:layout_height="49dp"
+        android:layout_marginTop="60dp"
+        android:ems="10"
+        android:hint="Problem Title"
+        android:inputType="textPersonName"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="29dp" />
+
+    <EditText
+        android:id="@+id/addDate"
+        android:layout_width="304dp"
+        android:layout_height="49dp"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:hint="Problem Date"
+        android:inputType="textPersonName"
+        app:layout_constraintTop_toBottomOf="@+id/addTitle"
+        tools:layout_editor_absoluteX="29dp" />
+
+    <TextView
+        android:id="@+id/addProblemTextView"
+        android:layout_width="184dp"
+        android:layout_height="34dp"
+        android:text="Add Problem "
+        android:visibility="visible"
+        tools:layout_editor_absoluteX="29dp"
+        tools:layout_editor_absoluteY="16dp" />
+
+    <EditText
+        android:id="@+id/addDescription"
+        android:layout_width="303dp"
+        android:layout_height="178dp"
+        android:ems="10"
+        android:hint="Problem Description "
+        android:inputType="textPersonName"
+        tools:layout_editor_absoluteX="29dp"
+        tools:layout_editor_absoluteY="193dp" />
+
+    <Button
+        android:id="@+id/saveButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:text="Save"
+        app:layout_constraintTop_toBottomOf="@+id/addDescription"
+        tools:layout_editor_absoluteX="70dp" />
+
+    <Button
+        android:id="@+id/cancelButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="52dp"
+        android:layout_marginLeft="52dp"
+        android:layout_marginTop="48dp"
+        android:text="Cancel"
+        app:layout_constraintStart_toEndOf="@+id/saveButton"
+        app:layout_constraintTop_toBottomOf="@+id/addDescription" />
+
+</android.support.constraint.ConstraintLayout>

@@ -23,7 +23,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ListProblemActivity"></activity>
+        <activity android:name=".ListProblemActivity" />
+        <activity android:name=".AddProblemActivity"></activity>
     </application>
 
 </manifest>
