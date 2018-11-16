@@ -39,6 +39,7 @@ public class UserManager {
     private DataManager dataManager;
 
 
+
     /**
      * Initialize singleton instance.
      */
@@ -64,6 +65,7 @@ public class UserManager {
      */
     private UserManager(){
         this.dataManager = DataManager.getDataManager();
+
     }
 
     /**
@@ -97,6 +99,7 @@ public class UserManager {
                 throw new RuntimeException(e);
             }
         }
+
     }
 
     /**
@@ -130,6 +133,7 @@ public class UserManager {
                 throw new RuntimeException(e);
             }
         }
+
     }
 
     /**
@@ -280,6 +284,7 @@ public class UserManager {
         } catch (JSONException e){
             throw new RuntimeException("User data is corrupt.", e);
         }
+
     }
 
     /**
@@ -322,7 +327,6 @@ public class UserManager {
         } catch (JSONException e){
             throw new RuntimeException("User data is corrupt.", e);
         }
-
     }
 
     /**
@@ -467,6 +471,7 @@ public class UserManager {
     public void deleteUser(String userID) {
 
     }
+
 
     private void deleteProblem(int problemID){
 
