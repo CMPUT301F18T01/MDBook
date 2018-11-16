@@ -18,7 +18,7 @@ package com.example.mdbook;
 class ElasticsearchController {
 
     private static ElasticsearchController elasticsearchController = null;
-    private DataManager dataManager = DataManager.getDataManager();
+    private DataManager dataManager;
 
     /**
      * @return Singleton instance of ElasticSearchController
@@ -26,6 +26,7 @@ class ElasticsearchController {
     public static ElasticsearchController getController() {
         if (elasticsearchController == null) {
             elasticsearchController = new ElasticsearchController();
+            elasticsearchController.dataManager = DataManager.getDataManager();
         }
         return elasticsearchController;
     }
