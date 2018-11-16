@@ -24,7 +24,7 @@ import java.util.HashMap;
  * On login, the logged in user object is to be interacted with through the UserController.
  * Relies on DataManager for data lookup and management.
  *
- * Based off the StudentListManager in the student-picker app by Abram Hindle
+ * Based (partially) off the StudentListManager in the student-picker app by Abram Hindle
  * https://github.com/abramhindle/student-picker
  *
  * @author Noah Burghardt
@@ -37,8 +37,6 @@ public class UserManager {
 
     static private UserManager userManager = null;
     private DataManager dataManager;
-
-
 
     /**
      * Initialize singleton instance.
@@ -180,36 +178,6 @@ public class UserManager {
     }
 
     /**
-     * Builds user object containing only userID, phone and email. Returns said user object.
-     * Does not load into UserController. Good for showing an overview of a User.
-     * @param userID The ID of the user to fetch.
-     * @return A patient or caregiver object with only the contact information stored.
-     * @throws NoSuchUserException Thrown if the userID couldn't be found.
-     */
-    public ContactUser fetchUserContact (String userID) throws NoSuchUserException {
-        HashMap<String, JSONObject> patients = dataManager.getPatients();
-        HashMap<String, JSONObject> caregivers = dataManager.getCaregivers();
-        JSONObject userJSON;
-
-        if (caregivers.containsKey(userID)) {
-            userJSON = caregivers.get(userID);
-        } else if (patients.containsKey(userID)){
-            userJSON = patients.get(userID);
-        }
-        else {
-            throw new NoSuchUserException();
-        }
-
-        try {
-            return new ContactUser(userID,
-                    userJSON.getString("phone"),
-                    userJSON.getString("email"));
-        } catch (JSONException e) {
-            throw new RuntimeException("User attributes are corrupt.", e);
-        }
-    }
-
-    /**
      * Builds full user object for the given userID from database. Returns said user object.
      * Does not load into UserController
      * @param userID The userID of the user to load.
@@ -263,6 +231,158 @@ public class UserManager {
         }
 
         else {
+            throw new NoSuchUserException();
+        }
+    }
+
+    /**
+     * Builds user object containing only userID, phone and email. Returns said user object.
+     * Does not load into UserController. Good for showing an overview of a User.
+     * @param userID The ID of the user to fetch.
+     * @return A patient or caregiver object with only the contact information stored.
+     * @throws NoSuchUserException Thrown if the userID couldn't be found.
+     */
+    public ContactUser fetchUserContact (String userID) throws NoSuchUserException {
+        HashMap<String, JSONObject> patients = dataManager.getPatients();
+        HashMap<String, JSONObject> caregivers = dataManager.getCaregivers();
+        JSONObject userJSON;
+
+        if (caregivers.containsKey(userID)) {
+            userJSON = caregivers.get(userID);
+        } else if (patients.containsKey(userID)){
+            userJSON = patients.get(userID);
+        }
+        else {
+            throw new NoSuchUserException();
+        }
+
+        try {
+            return new ContactUser(userID,
+                    userJSON.getString("phone"),
+                    userJSON.getString("email"));
+        } catch (JSONException e) {
+            throw new RuntimeException("User attributes are corrupt.", e);
+        }
+    }
+
+    /**
+     * Take the data in the given user object, find the entry in the database with a matching userID
+     * and update the database. Also calls methods to update problem and record data. Anything in
+     * database not in user object is removed.
+     *
+     * @param user The user object to be synced into the database.
+     * @throws NoSuchUserException Thrown if there is no user with a matching userID already in the
+     * database. Shouldn't happen if users are created through the UserManager.
+     * @throws IllegalArgumentException Thrown if the inputted user is not a (full) patient or
+     * caregiver, e.g. a ContactUser.
+     */
+    public void saveUser(User user) throws NoSuchUserException, IllegalArgumentException {
+        HashMap<String, JSONObject> patients = dataManager.getPatients();
+        HashMap<String, JSONObject> caregivers = dataManager.getCaregivers();
+
+        /* Check to make sure user exists */
+        if (!patients.containsKey(user.getUserID()) && !caregivers.containsKey(user.getUserID())){
+            throw new NoSuchUserException();
+        }
+
+        if (user.getClass() == Patient.class) {
+            /* Update contact info */
+            JSONObject patientJSON = patients.get(user.getUserID());
+            try {
+                patientJSON.put("phone", user.getPhoneNumber());
+                patientJSON.put("email", user.getEmail());
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
+
+            /* Update problems, update/add/remove records transitively */
+            /* Get pre-existing problemID list from user object */
+            ArrayList<Integer> problemIDList = new ArrayList<>();
+            for (Problem problem : ((Patient) user).getProblems()){
+                if (problem.getProblemID() != -1) {
+                    problemIDList.add(problem.getProblemID());
+                }
+            }
+
+            /* Remove problems not present in user */
+            try {
+                for (int problemID : (ArrayList<Integer>) patientJSON.get("problems")){
+                    if (!problemIDList.contains(problemID)){
+                        deleteProblem(problemID);
+                    }
+                }
+            } catch (JSONException e) {
+                throw new RuntimeException("Patient problem data is corrupt", e);
+            }
+
+            /* Update new and already existing problems */
+            for (Problem problem : ((Patient) user).getProblems()){
+                int problemID = setProblem(problem);
+
+                /* Add new problemIDs to problemID list */
+                if (!problemIDList.contains(problemID)) {
+                    problemIDList.add(problemID);
+                }
+            }
+
+            /* Update stored problemID list */
+            try {
+                patientJSON.put("problems", problemIDList);
+            } catch (JSONException e) {
+                throw new RuntimeException("User problem ID list is corrupt", e);
+            }
+
+            patients.put(user.getUserID(), patientJSON);
+        }
+
+        else if (user.getClass() == Caregiver.class){
+            /* Update contact info */
+            JSONObject caregiverJSON = caregivers.get(user.getUserID());
+            try {
+                caregiverJSON.put("phone", user.getPhoneNumber());
+                caregiverJSON.put("email", user.getEmail());
+
+                /* Update patientID list */
+                caregiverJSON.put("patients", ((Caregiver) user).getPatientList());
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        else{
+            throw new IllegalArgumentException("User is not a patient or a Caregiver!");
+        }
+
+    }
+
+    /**
+     * Delete all data belonging to the user associated with the given userID from the database.
+     * Does not delete patients of caregiver when caregiver is deleted.
+     * @param userID The userID of the user to be cleared out.
+     */
+    public void deleteUser(String userID) throws NoSuchUserException {
+        HashMap<String, JSONObject> patients = dataManager.getPatients();
+        HashMap<String, JSONObject> caregivers = dataManager.getCaregivers();
+
+        /* Check to make sure user exists */
+        if (patients.containsKey(userID)){
+            /* grab problemIDs */
+            ArrayList<Integer> problemIDs = null;
+            try {
+                problemIDs = (ArrayList<Integer>) patients.get(userID).get("problems");
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
+            /* delete problems */
+            for (int problemID : problemIDs){
+                deleteProblem(problemID);
+            }
+            /* delete patient */
+            patients.remove(userID);
+
+        } else if (caregivers.containsKey(userID)){
+            caregivers.remove(userID);
+        } else {
             throw new NoSuchUserException();
         }
     }
@@ -346,96 +466,6 @@ public class UserManager {
         } catch (JSONException e){
             throw new RuntimeException("User record data is corrupt.", e);
         }
-    }
-
-    /**
-     * Take the data in the given user object, find the entry in the database with a matching userID
-     * and update the database. Also calls methods to update problem and record data. Anything in
-     * database not in user object is removed.
-     *
-     * @param user The user object to be synced into the database.
-     * @throws NoSuchUserException Thrown if there is no user with a matching userID already in the
-     * database. Shouldn't happen if users are created through the UserManager.
-     * @throws IllegalArgumentException Thrown if the inputted user is not a (full) patient or
-     * caregiver, e.g. a ContactUser. 
-     */
-    public void saveUser(User user) throws NoSuchUserException, IllegalArgumentException {
-        HashMap<String, JSONObject> patients = dataManager.getPatients();
-        HashMap<String, JSONObject> caregivers = dataManager.getCaregivers();
-
-        /* Check to make sure user exists */
-        if (!patients.containsKey(user.getUserID()) && !caregivers.containsKey(user.getUserID())){
-            throw new NoSuchUserException();
-        }
-
-        if (user.getClass() == Patient.class) {
-            /* Update contact info */
-            JSONObject patientJSON = patients.get(user.getUserID());
-            try {
-                patientJSON.put("phone", user.getPhoneNumber());
-                patientJSON.put("email", user.getEmail());
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
-            }
-
-            /* Update problems, update/add/remove records transitively */
-            /* Get pre-existing problemID list from user object */
-            ArrayList<Integer> problemIDList = new ArrayList<>();
-            for (Problem problem : ((Patient) user).getProblems()){
-                if (problem.getProblemID() != -1) {
-                    problemIDList.add(problem.getProblemID());
-                }
-            }
-
-            /* Remove problems not present in user */
-            try {
-                for (int problemID : (ArrayList<Integer>) patientJSON.get("problems")){
-                    if (!problemIDList.contains(problemID)){
-                        deleteProblem(problemID);
-                    }
-                }
-            } catch (JSONException e) {
-                throw new RuntimeException("Patient problem data is corrupt", e);
-            }
-
-            /* Update new and already existing problems */
-            for (Problem problem : ((Patient) user).getProblems()){
-                int problemID = setProblem(problem);
-
-                /* Add new problemIDs to problemID list */
-                if (!problemIDList.contains(problemID)) {
-                    problemIDList.add(problemID);
-                }
-            }
-
-            /* Update stored problemID list */
-            try {
-                patientJSON.put("problems", problemIDList);
-            } catch (JSONException e) {
-                throw new RuntimeException("User problem ID list is corrupt", e);
-            }
-
-            patients.put(user.getUserID(), patientJSON);
-        }
-
-        else if (user.getClass() == Caregiver.class){
-            /* Update contact info */
-            JSONObject caregiverJSON = caregivers.get(user.getUserID());
-            try {
-                caregiverJSON.put("phone", user.getPhoneNumber());
-                caregiverJSON.put("email", user.getEmail());
-
-                /* Update patientID list */
-                caregiverJSON.put("patients", ((Caregiver) user).getPatientList());
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
-            }
-        }
-
-        else{
-            throw new IllegalArgumentException("User is not a patient or a Caregiver!");
-        }
-
     }
 
     /**
@@ -572,38 +602,6 @@ public class UserManager {
 
         records.put(record.getRecordID(), recordJSON);
         return record.getRecordID();
-    }
-
-    /**
-     * Delete all data belonging to the user associated with the given userID from the database.
-     * Does not delete patients of caregiver when caregiver is deleted.
-     * @param userID The userID of the user to be cleared out.
-     */
-    public void deleteUser(String userID) throws NoSuchUserException {
-        HashMap<String, JSONObject> patients = dataManager.getPatients();
-        HashMap<String, JSONObject> caregivers = dataManager.getCaregivers();
-
-        /* Check to make sure user exists */
-        if (patients.containsKey(userID)){
-            /* grab problemIDs */
-            ArrayList<Integer> problemIDs = null;
-            try {
-                problemIDs = (ArrayList<Integer>) patients.get(userID).get("problems");
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
-            }
-            /* delete problems */
-            for (int problemID : problemIDs){
-                deleteProblem(problemID);
-            }
-            /* delete patient */
-            patients.remove(userID);
-
-        } else if (caregivers.containsKey(userID)){
-            caregivers.remove(userID);
-        } else {
-            throw new NoSuchUserException();
-        }
     }
 
     /**
