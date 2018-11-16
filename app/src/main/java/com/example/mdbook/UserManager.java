@@ -1,7 +1,7 @@
 /*
  * UserManager
  *
- * Version 1.0.0
+ * Version 2.0.0
  *
  * 2018-11-13
  *
@@ -24,21 +24,19 @@ import java.util.HashMap;
  * On login, the logged in user object is to be interacted with through the UserController.
  * Relies on DataManager for data lookup and management.
  *
- * Based off the StudentListManager in the student-picker app by Abram Hindle
+ * Based (partially) off the StudentListManager in the student-picker app by Abram Hindle
  * https://github.com/abramhindle/student-picker
  *
  * @author Noah Burghardt
  * @see User
  * @see UserController
  * @see ElasticsearchController
- * @version 1.0.0
+ * @version 2.0.0
  **/
 public class UserManager {
 
     static private UserManager userManager = null;
     private DataManager dataManager;
-
-
 
     /**
      * Initialize singleton instance.
@@ -65,7 +63,6 @@ public class UserManager {
      */
     private UserManager(){
         this.dataManager = DataManager.getDataManager();
-
     }
 
     /**
@@ -73,16 +70,22 @@ public class UserManager {
      * @param userID The unique ID of the new patient. Must be unique.
      * @param userPhone The phone number of the new patient.
      * @param userEmail The email of the new patient.
+     * @returns A new patient object with the given attributes.
      * @throws UserIDNotAvailableException Thrown if the userID is not unique
+     * @throws IllegalArgumentException Thrown if the userID is less than 8 characters
      */
-    public void createPatient(String userID, String userPhone, String userEmail)
-            throws UserIDNotAvailableException {
+    public Patient createPatient(String userID, String userPhone, String userEmail)
+            throws UserIDNotAvailableException, IllegalArgumentException {
         /* Fetch fresh copy of patient list */
         HashMap patients = dataManager.getPatients();
 
         /* Ensure userID is unique */
         if (patients.containsKey(userID) || dataManager.getCaregivers().containsKey(userID)){
             throw new UserIDNotAvailableException();
+        }
+        /* Ensure userID is long enough */
+        if (userID.length() < 8){
+            throw new IllegalArgumentException();
         }
         else {
             /* store data */
@@ -100,6 +103,8 @@ public class UserManager {
             }
         }
 
+        Patient patient = new Patient(userID, userPhone, userEmail);
+        return patient;
     }
 
     /**
@@ -107,10 +112,12 @@ public class UserManager {
      * @param userID The unique ID of the new caregiver. Must be unique.
      * @param userPhone The phone number of the new caregiver.
      * @param userEmail The email of the new caregiver.
+     * @returns A new caregiver object with the given attributes.
      * @throws UserIDNotAvailableException Thrown if the userID is not unique
+     * @throws IllegalArgumentException Thrown if the userID is less than 8 characters
      */
-    public void createCaregiver(String userID, String userPhone, String userEmail)
-            throws UserIDNotAvailableException {
+    public Caregiver createCaregiver(String userID, String userPhone, String userEmail)
+            throws UserIDNotAvailableException, IllegalArgumentException {
         /* Fetch fresh copy of patient list */
         HashMap caregivers = dataManager.getCaregivers();
 
@@ -118,6 +125,11 @@ public class UserManager {
         if (caregivers.containsKey(userID) || dataManager.getPatients().containsKey(userID)){
             throw new UserIDNotAvailableException();
         }
+        /* Ensure userID is long enough */
+        if (userID.length() < 8){
+            throw new IllegalArgumentException();
+        }
+
         else {
             /* store data */
             JSONObject data = new JSONObject();
@@ -133,7 +145,8 @@ public class UserManager {
                 throw new RuntimeException(e);
             }
         }
-
+        Caregiver caregiver = new Caregiver(userID, userPhone, userEmail);
+        return caregiver;
     }
 
     /**
@@ -162,36 +175,6 @@ public class UserManager {
      */
     public void logout() {
         UserController.getController().clearUser();
-    }
-
-    /**
-     * Builds user object containing only userID, phone and email. Returns said user object.
-     * Does not load into UserController. Good for showing an overview of a User.
-     * @param userID The ID of the user to fetch.
-     * @return A patient or caregiver object with only the contact information stored.
-     * @throws NoSuchUserException Thrown if the userID couldn't be found.
-     */
-    public ContactUser fetchUserContact (String userID) throws NoSuchUserException {
-        HashMap<String, JSONObject> patients = dataManager.getPatients();
-        HashMap<String, JSONObject> caregivers = dataManager.getCaregivers();
-        JSONObject userJSON;
-
-        if (caregivers.containsKey(userID)) {
-            userJSON = caregivers.get(userID);
-        } else if (patients.containsKey(userID)){
-            userJSON = patients.get(userID);
-        }
-        else {
-            throw new NoSuchUserException();
-        }
-
-        try {
-            return new ContactUser(userID,
-                    userJSON.getString("phone"),
-                    userJSON.getString("email"));
-        } catch (JSONException e) {
-            throw new RuntimeException("User attributes are corrupt.", e);
-        }
     }
 
     /**
@@ -253,79 +236,32 @@ public class UserManager {
     }
 
     /**
-     * Assistant method for retrieving full problem objects
-     * @param problemID The problem ID number
-     * @return A fully filled out problem object
+     * Builds user object containing only userID, phone and email. Returns said user object.
+     * Does not load into UserController. Good for showing an overview of a User.
+     * @param userID The ID of the user to fetch.
+     * @return A patient or caregiver object with only the contact information stored.
+     * @throws NoSuchUserException Thrown if the userID couldn't be found.
      */
-    private Problem getProblem(int problemID) throws InvalidKeyException {
-        HashMap<Integer, JSONObject> problems = dataManager.getProblems();
-        try {
-            if (problems.containsKey(problemID)) {
-                JSONObject problemJSON = problems.get(problemID);
-                String title = problemJSON.getString("title");
-                String description = problemJSON.getString("description");
-                Problem problem = new Problem(title, description);
-                problem.setProblemID(problemID);
+    public ContactUser fetchUserContact (String userID) throws NoSuchUserException {
+        HashMap<String, JSONObject> patients = dataManager.getPatients();
+        HashMap<String, JSONObject> caregivers = dataManager.getCaregivers();
+        JSONObject userJSON;
 
-                /* Add comments */
-                for (String comment : (ArrayList<String>) problemJSON.get("comments")){
-                    problem.addComment(comment);
-                }
-
-                /* Add records */
-                for (int recordID : (ArrayList<Integer>) problemJSON.get("records")){
-                    problem.addRecord(this.getRecord(recordID));
-                }
-
-                return problem;
-            } else {
-                throw new InvalidKeyException("Problem does not exist!");
-            }
-        } catch (JSONException e){
-            throw new RuntimeException("User data is corrupt.", e);
+        if (caregivers.containsKey(userID)) {
+            userJSON = caregivers.get(userID);
+        } else if (patients.containsKey(userID)){
+            userJSON = patients.get(userID);
+        }
+        else {
+            throw new NoSuchUserException();
         }
 
-    }
-
-    /**
-     * Assistant method for retrieving full record objects
-     * @param recordID The record ID number
-     * @return A fully filled out problem object
-     */
-    private Record getRecord(int recordID) throws InvalidKeyException{
-        HashMap<Integer, JSONObject> records = dataManager.getRecords();
-        HashMap<Integer, Photo> photos = dataManager.getPhotos();
         try {
-            if (records.containsKey(recordID)){
-                JSONObject recordJSON = records.get(recordID);
-                /* Fetch data */
-                String title = recordJSON.getString("title");
-                Date date = (Date) recordJSON.get("date");
-                String description = recordJSON.getString("description");
-                GeoLocation geoLocation = (GeoLocation) recordJSON.get("geoLocation");
-                BodyLocation bodyLocation = (BodyLocation) recordJSON.get("bodyLocation");
-                String comment = recordJSON.getString("comment");
-
-                Record record = new Record(title, date, description);
-                record.setGeoLocation(geoLocation);
-                record.setBodyLocation(bodyLocation);
-                record.setComment(comment);
-                record.setRecordID(recordID);
-
-                /* Add photos */
-                for (int photoID : (ArrayList<Integer>) recordJSON.get("photos")){
-                    Photo photo = photos.get(photoID);
-                    photo.setPhotoid(photoID);
-                    record.addPhoto(photo);
-                }
-
-                return record;
-            }
-            else{
-                throw new InvalidKeyException("Record does not exist!");
-            }
-        } catch (JSONException e){
-            throw new RuntimeException("User data is corrupt.", e);
+            return new ContactUser(userID,
+                    userJSON.getString("phone"),
+                    userJSON.getString("email"));
+        } catch (JSONException e) {
+            throw new RuntimeException("User attributes are corrupt.", e);
         }
     }
 
@@ -338,7 +274,7 @@ public class UserManager {
      * @throws NoSuchUserException Thrown if there is no user with a matching userID already in the
      * database. Shouldn't happen if users are created through the UserManager.
      * @throws IllegalArgumentException Thrown if the inputted user is not a (full) patient or
-     * caregiver, e.g. a ContactUser. 
+     * caregiver, e.g. a ContactUser.
      */
     public void saveUser(User user) throws NoSuchUserException, IllegalArgumentException {
         HashMap<String, JSONObject> patients = dataManager.getPatients();
@@ -360,10 +296,12 @@ public class UserManager {
             }
 
             /* Update problems, update/add/remove records transitively */
-            /* Get problemID list from user object */
+            /* Get pre-existing problemID list from user object */
             ArrayList<Integer> problemIDList = new ArrayList<>();
             for (Problem problem : ((Patient) user).getProblems()){
-                problemIDList.add(problem.getProblemID());
+                if (problem.getProblemID() != -1) {
+                    problemIDList.add(problem.getProblemID());
+                }
             }
 
             /* Remove problems not present in user */
@@ -418,6 +356,119 @@ public class UserManager {
     }
 
     /**
+     * Delete all data belonging to the user associated with the given userID from the database.
+     * Does not delete patients of caregiver when caregiver is deleted.
+     * @param userID The userID of the user to be cleared out.
+     */
+    public void deleteUser(String userID) throws NoSuchUserException {
+        HashMap<String, JSONObject> patients = dataManager.getPatients();
+        HashMap<String, JSONObject> caregivers = dataManager.getCaregivers();
+
+        /* Check to make sure user exists */
+        if (patients.containsKey(userID)){
+            /* grab problemIDs */
+            ArrayList<Integer> problemIDs = null;
+            try {
+                problemIDs = (ArrayList<Integer>) patients.get(userID).get("problems");
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
+            /* delete problems */
+            for (int problemID : problemIDs){
+                deleteProblem(problemID);
+            }
+            /* delete patient */
+            patients.remove(userID);
+
+        } else if (caregivers.containsKey(userID)){
+            caregivers.remove(userID);
+        } else {
+            throw new NoSuchUserException();
+        }
+    }
+
+    /**
+     * Assistant method for retrieving full problem objects
+     * @param problemID The problem ID number
+     * @return A fully filled out problem object
+     */
+    private Problem getProblem(int problemID) throws InvalidKeyException {
+        HashMap<Integer, JSONObject> problems = dataManager.getProblems();
+        try {
+            if (problems.containsKey(problemID)) {
+                JSONObject problemJSON = problems.get(problemID);
+                String title = problemJSON.getString("title");
+                String description = problemJSON.getString("description");
+                Problem problem = new Problem(title, description);
+                problem.setProblemID(problemID);
+
+                /* Add comments */
+                for (String comment : (ArrayList<String>) problemJSON.get("comments")){
+                    problem.addComment(comment);
+                }
+
+                /* Add records */
+                for (int recordID : (ArrayList<Integer>) problemJSON.get("records")){
+                    problem.addRecord(this.getRecord(recordID));
+                }
+
+                return problem;
+            } else {
+                throw new InvalidKeyException("Problem does not exist!");
+            }
+        } catch (JSONException e){
+            throw new RuntimeException("User data is corrupt.", e);
+        }
+
+    }
+
+    /**
+     * Assistant method for retrieving full record objects
+     * @param recordID The record ID number
+     * @return A fully filled out problem object
+     */
+    private Record getRecord(int recordID) throws InvalidKeyException{
+        HashMap<Integer, JSONObject> records = dataManager.getRecords();
+        HashMap<Integer, Photo> photos = dataManager.getPhotos();
+        try {
+            if (records.containsKey(recordID)){
+                JSONObject recordJSON = records.get(recordID);
+                /* Fetch data */
+                String title = recordJSON.getString("title");
+                Date date = (Date) recordJSON.get("date");
+                String description = recordJSON.getString("description");
+                String comment = recordJSON.getString("comment");
+
+                Record record = new Record(title, date, description);
+
+                record.setComment(comment);
+                record.setRecordID(recordID);
+                if (recordJSON.has("geoLocation")){
+                    GeoLocation geoLocation = (GeoLocation) recordJSON.get("geoLocation");
+                    record.setGeoLocation(geoLocation);
+                }
+                if (recordJSON.has("bodyLocation")) {
+                    BodyLocation bodyLocation = (BodyLocation) recordJSON.get("bodyLocation");
+                    record.setBodyLocation(bodyLocation);
+                }
+                /* Add photos */
+                for (int photoID : (ArrayList<Integer>) recordJSON.get("photos")){
+                    Photo photo = photos.get(photoID);
+                    photo.setPhotoid(photoID);
+                    record.addPhoto(photo);
+                }
+
+                return record;
+            }
+            else{
+                throw new InvalidKeyException("Record does not exist!");
+            }
+        } catch (JSONException e){
+            throw new RuntimeException("User record data is corrupt.", e);
+        }
+    }
+
+    /**
      * Assistant method to saveUser method. Saves Problem data, also calls method to save
      * corresponding record data.
      *
@@ -434,6 +485,7 @@ public class UserManager {
             problemJSON.put("title", problem.getTitle());
             problemJSON.put("description", problem.getDescription());
             problemJSON.put("comments", problem.getComments());
+            problemJSON.put("records", new ArrayList<Integer>());
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
@@ -441,13 +493,16 @@ public class UserManager {
         /* Generate problemID if needed */
         if (problem.getProblemID() == -1){
             problem.setProblemID(dataManager.getAvailableID());
+            /* Problem is new, add empty recordID list */
         }
 
         /* Update records */
-        /* Get recordID list from problem object */
+        /* Get pre-existing recordID list from problem object */
         ArrayList<Integer> recordIDList = new ArrayList<>();
         for (Record record : problem.getRecords()){
-            recordIDList.add(record.getRecordID());
+            if (record.getRecordID() != -1) {
+                recordIDList.add(record.getRecordID());
+            }
         }
 
         /* Remove records not present in problem */
@@ -502,6 +557,7 @@ public class UserManager {
             recordJSON.put("geoLocation", record.getLocation());
             recordJSON.put("bodyLocation", record.getBodyLocation());
             recordJSON.put("comment", record.getComment());
+            recordJSON.put("photos", new ArrayList<Integer>());
         } catch (JSONException e){
             throw new RuntimeException(e);
         }
@@ -512,10 +568,12 @@ public class UserManager {
         }
 
         /* Update photos */
-        /* Generate photoID list from record object */
+        /* Generate pre-existing photoID list from record object */
         ArrayList<Integer> photoIDs = new ArrayList<>();
         for (Photo photo : record.getPhotos()){
-            photoIDs.add(photo.getPhotoid());
+            if (photo.getPhotoid() != -1) {
+                photoIDs.add(photo.getPhotoid());
+            }
         }
         /* Remove photos not present in record object */
         try {
@@ -547,38 +605,6 @@ public class UserManager {
     }
 
     /**
-     * Delete all data belonging to the user associated with the given userID from the database.
-     * Does not delete patients of caregiver when caregiver is deleted.
-     * @param userID The userID of the user to be cleared out.
-     */
-    public void deleteUser(String userID) throws NoSuchUserException {
-        HashMap<String, JSONObject> patients = dataManager.getPatients();
-        HashMap<String, JSONObject> caregivers = dataManager.getCaregivers();
-
-        /* Check to make sure user exists */
-        if (patients.containsKey(userID)){
-            /* grab problemIDs */
-            ArrayList<Integer> problemIDs = null;
-            try {
-                problemIDs = (ArrayList<Integer>) patients.get(userID).get("problems");
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
-            }
-            /* delete problems */
-            for (int problemID : problemIDs){
-                deleteProblem(problemID);
-            }
-            /* delete patient */
-            patients.remove(userID);
-
-        } else if (caregivers.containsKey(userID)){
-            caregivers.remove(userID);
-        } else {
-            throw new NoSuchUserException();
-        }
-    }
-
-    /**
      * Deletes the problem data and associated records and photos from storage.
      * @param problemID The ID of the problem to delete.
      */
@@ -592,6 +618,9 @@ public class UserManager {
                 }
                 /* delete problem */
                 problems.remove(problemID);
+                /* make problemID available again */
+                dataManager.addAvailableID(problemID);
+
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             }
@@ -611,10 +640,15 @@ public class UserManager {
                 /* Remove photos */
                 for (int photoID : photoIDs){
                     photos.remove(photoID);
+                    /* make photoID available again */
+                    dataManager.addAvailableID(photoID);
                 }
 
                 /* delete record object */
                 records.remove(recordID);
+                /* make recordID available again */
+                dataManager.addAvailableID(recordID);
+
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             }
