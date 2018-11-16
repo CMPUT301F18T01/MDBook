@@ -449,17 +449,44 @@ public class UserManager {
         }
 
         /* Remove records not present in problem */
+        try {
+            for (int recordID : (ArrayList<Integer>) problemJSON.get("records")){
+                if (!recordIDList.contains(recordID)){
+                    deleteRecord(recordID);
+                }
+            }
+        } catch (JSONException e) {
+            throw new RuntimeException("Problem record data is corrupt", e);
+        }
 
+        /* Update new and already existing records */
+        for (Record record : problem.getRecords()){
+            int recordID = setRecord(record);
+
+            /* Add new recordIDs to recordID list */
+            if (!recordIDList.contains(recordID)){
+                recordIDList.add(recordID);
+            }
+        }
+
+        /* Update stored recordID list */
+        try {
+            problemJSON.put("records", recordIDList);
+        } catch (JSONException e) {
+            throw new RuntimeException("Problem recordID list is corrupt", e);
+        }
+        
+        /* Save problem and return problemID */
+        problems.put(problem.getProblemID(), problemJSON);
         return problem.getProblemID();
     }
 
     /**
      * Assistant method to setProblem and saveUser methods. Saves record data.
-     * @param recordID
      * @param record
      */
     //TODO
-    private void setRecord(String recordID, Record record){
+    private int setRecord(Record record){
 
     }
 
