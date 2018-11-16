@@ -73,15 +73,20 @@ public class UserManager {
      * @param userPhone The phone number of the new patient.
      * @param userEmail The email of the new patient.
      * @throws UserIDNotAvailableException Thrown if the userID is not unique
+     * @throws IllegalArgumentException Thrown if the userID is less than 8 characters
      */
     public void createPatient(String userID, String userPhone, String userEmail)
-            throws UserIDNotAvailableException {
+            throws UserIDNotAvailableException, IllegalArgumentException {
         /* Fetch fresh copy of patient list */
         HashMap patients = dataManager.getPatients();
 
         /* Ensure userID is unique */
         if (patients.containsKey(userID) || dataManager.getCaregivers().containsKey(userID)){
             throw new UserIDNotAvailableException();
+        }
+        /* Ensure userID is long enough */
+        if (userID.length() < 8){
+            throw new IllegalArgumentException();
         }
         else {
             /* store data */
@@ -107,9 +112,10 @@ public class UserManager {
      * @param userPhone The phone number of the new caregiver.
      * @param userEmail The email of the new caregiver.
      * @throws UserIDNotAvailableException Thrown if the userID is not unique
+     * @throws IllegalArgumentException Thrown if the userID is less than 8 characters
      */
     public void createCaregiver(String userID, String userPhone, String userEmail)
-            throws UserIDNotAvailableException {
+            throws UserIDNotAvailableException, IllegalArgumentException {
         /* Fetch fresh copy of patient list */
         HashMap caregivers = dataManager.getCaregivers();
 
@@ -117,6 +123,11 @@ public class UserManager {
         if (caregivers.containsKey(userID) || dataManager.getPatients().containsKey(userID)){
             throw new UserIDNotAvailableException();
         }
+        /* Ensure userID is long enough */
+        if (userID.length() < 8){
+            throw new IllegalArgumentException();
+        }
+
         else {
             /* store data */
             JSONObject data = new JSONObject();

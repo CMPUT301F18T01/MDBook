@@ -66,20 +66,6 @@ public class UserTest extends TestCase {
 
     }
 
-    /**
-     * userID should be at least 8 characters
-     * expecting illegal argument exception
-     */
-    public void testTooShortUserID(){
-        try {
-            Patient patient = new Patient("userid", "userphone",
-                    "useremail@test.com");
-
-            fail();
-        } catch (IllegalArgumentException e){
-            assertTrue(true);
-        }
-    }
 
     /**
      * test to make sure user controller instantiates only one user object

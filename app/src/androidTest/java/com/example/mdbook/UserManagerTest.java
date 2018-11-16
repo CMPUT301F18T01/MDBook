@@ -216,18 +216,18 @@ public class UserManagerTest extends TestCase {
         UserController userController = UserController.getController();
         try {
             userManager.logout();
-            userManager.deleteUser("userid");
+            userManager.deleteUser("contactid");
             assertNull(UserController.getController().getUser());
         } catch (NoSuchUserException e) {
             ;
         }
 
         try{
-            String userID = "userid";
+            String userID = "contactid";
             String userPhone = "userPhone";
             String userEmail = "userEmail";
             userManager.createPatient(userID, userPhone, userEmail);
-            ContactUser user = userManager.fetchUserContact("userid");
+            ContactUser user = userManager.fetchUserContact("contactid");
             assertEquals("userPhone", user.getPhoneNumber());
 
         } catch (UserIDNotAvailableException e) {
@@ -248,7 +248,7 @@ public class UserManagerTest extends TestCase {
         UserController userController = UserController.getController();
         try {
             userManager.logout();
-            userManager.deleteUser("userid");
+            userManager.deleteUser("takenuserid");
             assertNull(UserController.getController().getUser());
         } catch (NoSuchUserException e) {
             ;
@@ -257,16 +257,44 @@ public class UserManagerTest extends TestCase {
         // Create two accounts with the same userid
         // Ensure the first one is created successfully and the second one isn't.
         try {
-            userManager.createCaregiver("userid", "phone", "email");
+            userManager.createCaregiver("takenuserid", "phone", "email");
         } catch (UserIDNotAvailableException e) {
             fail();
         }
 
         try {
-            userManager.createPatient("userid","phone", "email");
+            userManager.createPatient("takenuserid","phone", "email");
             fail();
         } catch (UserIDNotAvailableException e) {
             assert true;
+        }
+    }
+
+    /**
+     * userID should be at least 8 characters
+     * expecting illegal argument exception
+     */
+    public void testTooShortUserID(){
+        /* Set up testing environment */
+        UserManager.initManager();
+        UserManager userManager = UserManager.getManager();
+        UserController userController = UserController.getController();
+        try {
+            userManager.logout();
+            userManager.deleteUser("shortid");
+            assertNull(UserController.getController().getUser());
+        } catch (NoSuchUserException e) {
+            ;
+        }
+
+        try {
+            userManager.createPatient("shortid", "userphone",
+                    "useremail@test.com");
+            fail();
+        } catch (IllegalArgumentException e){
+            assertTrue(true);
+        } catch (UserIDNotAvailableException e) {
+            fail();
         }
     }
 
