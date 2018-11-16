@@ -420,18 +420,32 @@ public class UserManager {
     //TODO
     private int setProblem(Problem problem){
         HashMap<Integer, JSONObject> problems = dataManager.getProblems();
+        HashMap<Integer, JSONObject> records = dataManager.getRecords();
+
         /* Build problem JSON */
         JSONObject problemJSON = new JSONObject();
-        problemJSON.put("title", problem.getTitle());
-        problemJSON.put("description", problem.getDescription());
-        problemJSON.put("comments", problem.getComments());
+        try {
+            problemJSON.put("title", problem.getTitle());
+            problemJSON.put("description", problem.getDescription());
+            problemJSON.put("comments", problem.getComments());
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
 
-        /* Generate recordIDs */
-
+        /* Generate problemID if needed */
         if (problem.getProblemID() == -1){
             problem.setProblemID(dataManager.getAvailableID());
-
         }
+
+        /* Update records */
+        /* Get recordID list from problem object */
+        ArrayList<Integer> recordIDList = new ArrayList<>();
+        for (Record record : problem.getRecords()){
+            recordIDList.add(record.getRecordID());
+        }
+
+        /* Remove records not present in problem */
+
         return problem.getProblemID();
     }
 
