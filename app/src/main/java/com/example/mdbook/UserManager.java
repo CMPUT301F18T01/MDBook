@@ -607,6 +607,9 @@ public class UserManager {
                 }
                 /* delete problem */
                 problems.remove(problemID);
+                /* make problemID available again */
+                dataManager.addAvailableID(problemID);
+
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             }
@@ -626,10 +629,15 @@ public class UserManager {
                 /* Remove photos */
                 for (int photoID : photoIDs){
                     photos.remove(photoID);
+                    /* make photoID available again */
+                    dataManager.addAvailableID(photoID);
                 }
 
                 /* delete record object */
                 records.remove(recordID);
+                /* make recordID available again */
+                dataManager.addAvailableID(recordID);
+
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             }
