@@ -317,15 +317,20 @@ public class UserManager {
                 String title = recordJSON.getString("title");
                 Date date = (Date) recordJSON.get("date");
                 String description = recordJSON.getString("description");
-                GeoLocation geoLocation = (GeoLocation) recordJSON.get("geoLocation");
-                BodyLocation bodyLocation = (BodyLocation) recordJSON.get("bodyLocation");
                 String comment = recordJSON.getString("comment");
 
                 Record record = new Record(title, date, description);
-                record.setGeoLocation(geoLocation);
-                record.setBodyLocation(bodyLocation);
+
                 record.setComment(comment);
                 record.setRecordID(recordID);
+                if (recordJSON.has("geoLocation")){
+                    GeoLocation geoLocation = (GeoLocation) recordJSON.get("geoLocation");
+                    record.setGeoLocation(geoLocation);
+                }
+                if (recordJSON.has("bodyLocation")) {
+                    BodyLocation bodyLocation = (BodyLocation) recordJSON.get("bodyLocation");
+                    record.setBodyLocation(bodyLocation);
+                }
 
                 /* Add photos */
                 for (int photoID : (ArrayList<Integer>) recordJSON.get("photos")){
@@ -340,7 +345,7 @@ public class UserManager {
                 throw new InvalidKeyException("Record does not exist!");
             }
         } catch (JSONException e){
-            throw new RuntimeException("User data is corrupt.", e);
+            throw new RuntimeException("User record data is corrupt.", e);
         }
     }
 
@@ -375,10 +380,12 @@ public class UserManager {
             }
 
             /* Update problems, update/add/remove records transitively */
-            /* Get problemID list from user object */
+            /* Get pre-existing problemID list from user object */
             ArrayList<Integer> problemIDList = new ArrayList<>();
             for (Problem problem : ((Patient) user).getProblems()){
-                problemIDList.add(problem.getProblemID());
+                if (problem.getProblemID() != -1) {
+                    problemIDList.add(problem.getProblemID());
+                }
             }
 
             /* Remove problems not present in user */
@@ -465,10 +472,12 @@ public class UserManager {
         }
 
         /* Update records */
-        /* Get recordID list from problem object */
+        /* Get pre-existing recordID list from problem object */
         ArrayList<Integer> recordIDList = new ArrayList<>();
         for (Record record : problem.getRecords()){
-            recordIDList.add(record.getRecordID());
+            if (record.getRecordID() != -1) {
+                recordIDList.add(record.getRecordID());
+            }
         }
 
         /* Remove records not present in problem */
@@ -539,10 +548,12 @@ public class UserManager {
         }
 
         /* Update photos */
-        /* Generate photoID list from record object */
+        /* Generate pre-existing photoID list from record object */
         ArrayList<Integer> photoIDs = new ArrayList<>();
         for (Photo photo : record.getPhotos()){
-            photoIDs.add(photo.getPhotoid());
+            if (photo.getPhotoid() != -1) {
+                photoIDs.add(photo.getPhotoid());
+            }
         }
         /* Remove photos not present in record object */
         try {
