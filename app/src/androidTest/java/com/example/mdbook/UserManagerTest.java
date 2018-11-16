@@ -42,18 +42,22 @@ public class UserManagerTest extends TestCase {
     }
 
     /**
-<<<<<<< HEAD
      * Test creating a patient
-=======
-     * test loading and saving user data via elastisearch
-     * depends on elastisearch controller
->>>>>>> master
      */
     public void testLoadSaveDeleteUser(){
         // create new profile
         UserManager.initManager();
         UserManager um = UserManager.getManager();
+        /* Ensure that testing user doesn't already exist */
+        try {
+            um.logout();
+            um.deleteUser("patientid");
+            assertNull(UserController.getController().getUser());
+        } catch (NoSuchUserException e) {
+            e.printStackTrace();
+        }
 
+        /* create new user */
         try {
             um.createPatient("patientid", "userphone",
                     "useremail@test.com");
@@ -81,6 +85,7 @@ public class UserManagerTest extends TestCase {
 
              //check to make sure patient doesn't exist
             assertFalse(um.login("patientid"));
+            assertNull(UserController.getController().getUser());
 
         } catch (NoSuchUserException e){
             assert false;
@@ -95,6 +100,16 @@ public class UserManagerTest extends TestCase {
     public void testLoginFail(){
         UserManager.initManager();
         UserManager um = UserManager.getManager();
+        /* Ensure that testing users don't already exist */
+        try {
+            um.logout();
+            um.deleteUser("patientid");
+            um.deleteUser("patientid_");
+            assertNull(UserController.getController().getUser());
+        } catch (NoSuchUserException e) {
+            e.printStackTrace();
+        }
+
         try {
             um.createPatient("patientid", "userphone", "user@email.com");
 
@@ -104,8 +119,7 @@ public class UserManagerTest extends TestCase {
             //test that data is not loaded into usercontroller
             UserController userController = UserController.getController();
             User u = userController.getUser();
-            assertNotSame("patientid", u.getUserID());
-            assertNotSame("patientid_", u.getUserID());
+            assertNull(u);
         } catch (UserIDNotAvailableException e){
             assert false;
         }
