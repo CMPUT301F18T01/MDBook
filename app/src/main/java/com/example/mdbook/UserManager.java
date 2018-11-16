@@ -488,6 +488,7 @@ public class UserManager {
      */
     private int setRecord(Record record){
         HashMap<Integer, JSONObject> records = dataManager.getRecords();
+        return -1;
     }
 
     /**

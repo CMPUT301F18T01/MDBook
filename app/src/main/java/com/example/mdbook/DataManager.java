@@ -1,5 +1,6 @@
 package com.example.mdbook;
 
+
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -44,6 +45,8 @@ public class DataManager {
     private HashMap<Integer, Photo> photos;
     private ArrayList<Integer> availableIDs;
     private int availableID = 0;
+    private ElasticsearchController elasticsearchController = ElasticsearchController.getController();
+    private LocalStorageController localStorageController = LocalStorageController.getController();
 
 
     private static DataManager dataManager = null;
@@ -134,4 +137,10 @@ public class DataManager {
     public void addAvailableID(int availableID){
         this.availableIDs.add(availableID);
     }
+
+    public void push(){
+        elasticsearchController.push();
+        localStorageController.push();
+    }
+
 }

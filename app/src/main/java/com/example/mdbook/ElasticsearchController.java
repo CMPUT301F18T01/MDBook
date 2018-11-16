@@ -24,12 +24,13 @@ class ElasticsearchController {
      * @return Singleton instance of ElasticSearchController
      */
     public static ElasticsearchController getController() {
-        if (elasticsearchController == null){
+        if (elasticsearchController == null) {
             elasticsearchController = new ElasticsearchController();
         }
         return elasticsearchController;
     }
 
-
+    public void push() {
+    }
 }
 
