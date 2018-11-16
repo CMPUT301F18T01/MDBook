@@ -2,6 +2,7 @@ package com.example.mdbook;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -38,9 +39,12 @@ public class DataManager {
      */
     private HashMap<String, JSONObject> patients;
     private HashMap<String, JSONObject> caregivers;
-    private HashMap<String, JSONObject> problems;
-    private HashMap<String, JSONObject> records;
-    private HashMap<String, Photo> photos;
+    private HashMap<Integer, JSONObject> problems;
+    private HashMap<Integer, JSONObject> records;
+    private HashMap<Integer, Photo> photos;
+    private ArrayList<Integer> availableIDs;
+    private int availableID = 0;
+
 
     private static DataManager dataManager = null;
 
@@ -100,5 +104,33 @@ public class DataManager {
 
     public void setRecords(HashMap<String, JSONObject> records) {
         this.records = records;
+    }
+
+    /**
+     * If there are unused IDs preceding the currently available one, return and remove one of
+     * those. Otherwise return fresh ID and increment counter.
+     * @return
+     */
+    public int getAvailableID(){
+        if (availableIDs.size() == 0){
+            availableID += 1;
+            return availableID-1;
+        }
+        else {
+            int id = availableIDs.get(0);
+            availableIDs.remove(0);
+            return id;
+        }
+    }
+
+    /**
+     * Adds id number to list of available IDs. This indicates that the corresponding item has
+     * been deleted.
+     * @param availableID ID number to be added to queue of available IDs. Any information here can
+     *                    be eventually overwritten but is not guaranteed to happen immediately or
+     *                    at all.
+     */
+    public void addAvailableID(int availableID){
+        this.availableIDs.add(availableID);
     }
 }
