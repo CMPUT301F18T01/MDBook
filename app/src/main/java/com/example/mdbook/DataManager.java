@@ -74,15 +74,15 @@ public class DataManager {
         return patients;
     }
 
-    public HashMap<String, JSONObject> getProblems() {
+    public HashMap<Integer, JSONObject> getProblems() {
         return problems;
     }
 
-    public HashMap<String, JSONObject> getRecords() {
+    public HashMap<Integer, JSONObject> getRecords() {
         return records;
     }
 
-    public HashMap<String, Photo> getPhotos() {
+    public HashMap<Integer, Photo> getPhotos() {
         return photos;
     }
 
@@ -94,15 +94,15 @@ public class DataManager {
         this.patients = patients;
     }
 
-    public void setPhotos(HashMap<String, Photo> photos) {
+    public void setPhotos(HashMap<Integer, Photo> photos) {
         this.photos = photos;
     }
 
-    public void setProblems(HashMap<String, JSONObject> problems) {
+    public void setProblems(HashMap<Integer, JSONObject> problems) {
         this.problems = problems;
     }
 
-    public void setRecords(HashMap<String, JSONObject> records) {
+    public void setRecords(HashMap<Integer, JSONObject> records) {
         this.records = records;
     }
 
