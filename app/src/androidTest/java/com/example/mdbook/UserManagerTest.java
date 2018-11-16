@@ -309,9 +309,9 @@ public class UserManagerTest extends TestCase {
 
         /* Create a new caregiver, patient, problem, record and photo and connect them */
         Photo photo = new Photo();
-        Record record = new Record("title");
+        Record record = new Record("recordtitle");
         record.addPhoto(photo);
-        Problem problem = new Problem("title", "description");
+        Problem problem = new Problem("problemtitle", "description");
         problem.addRecord(record);
 
         /* Create patient and caregiver */
@@ -335,6 +335,24 @@ public class UserManagerTest extends TestCase {
         } catch (NoSuchUserException e) {
             fail();
         }
+
+        /* Load changes */
+        try {
+            patient = (Patient) userManager.fetchUser(patientID);
+            caregiver = (Caregiver) userManager.fetchUser(caregiverID);
+        } catch (NoSuchUserException e) {
+            fail();
+        }
+
+        /* compare data */
+        problem = patient.getProblems().get(0);
+        record = problem.getRecords().get(0);
+        assertEquals(caregiverID, caregiver.getUserID());
+        assertEquals(patientID, patient.getUserID());
+        assertEquals(patient.getUserID(), caregiver.getPatientList().get(0));
+        assertEquals("problemtitle", problem.getTitle());
+        assertEquals("recordtitle", record.getTitle());
+        assertEquals(1, record.getPhotos().size());
 
     }
 }
