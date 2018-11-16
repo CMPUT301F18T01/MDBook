@@ -158,8 +158,11 @@ public class UserManagerTest extends TestCase {
             String userPhone = "userPhone";
             String userEmail = "userEmail";
             userManager.createPatient(userID, userPhone, userEmail);
+            
 
-        } catch (UserIDNotAvailableException)
+        } catch (UserIDNotAvailableException e) {
+            assert false;
+        }
     }
 
     /**

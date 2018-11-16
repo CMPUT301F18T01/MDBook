@@ -20,7 +20,7 @@ public class DataManager {
      * CaregiverID:
      *      "phone": String
      *      "email": String
-     *      "patient": ArrayList of patient userIDs (strings)
+     *      "patients": ArrayList of patient userIDs (strings)
      * ProblemID:
      *      "title": String
      *      "description": String

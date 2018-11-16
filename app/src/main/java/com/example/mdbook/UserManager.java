@@ -388,9 +388,21 @@ public class UserManager {
 
             patients.put(user.getUserID(), patientJSON);
         }
-        else if (user.getClass() == Caregiver.class){
 
+        else if (user.getClass() == Caregiver.class){
+            /* Update contact info */
+            JSONObject caregiverJSON = patients.get(user.getUserID());
+            try {
+                caregiverJSON.put("phone", user.getPhoneNumber());
+                caregiverJSON.put("email", user.getEmail());
+
+                /* Update patientID list */
+                caregiverJSON.put("patients", ((Caregiver) user).getPatientList());
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
         }
+
         else{
             throw new IllegalArgumentException("User is not a patient or a Caregiver!");
         }
