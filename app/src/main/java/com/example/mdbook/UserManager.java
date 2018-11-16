@@ -456,6 +456,12 @@ public class UserManager {
         /* Generate problemID if needed */
         if (problem.getProblemID() == -1){
             problem.setProblemID(dataManager.getAvailableID());
+            /* Problem is new, add empty recordID list */
+            try {
+                problemJSON.put("records", new ArrayList<Integer>());
+            } catch (JSONException e) {
+                throw new RuntimeException("Problem data is corrupt", e);
+            }
         }
 
         /* Update records */
@@ -524,6 +530,12 @@ public class UserManager {
         /* Generate recordID if needed */
         if (record.getRecordID() == -1){
             record.setRecordID(dataManager.getAvailableID());
+            /* new record, add empty photoid list */
+            try {
+                recordJSON.put("photos", new ArrayList<Integer>());
+            } catch (JSONException e) {
+                throw new RuntimeException("Record data is corrupt", e);
+            }
         }
 
         /* Update photos */

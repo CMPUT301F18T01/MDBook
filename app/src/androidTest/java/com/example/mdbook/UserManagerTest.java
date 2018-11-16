@@ -325,9 +325,16 @@ public class UserManagerTest extends TestCase {
         } catch (UserIDNotAvailableException e) {
             fail();
         }
-
         patient.addProblem(problem);
         caregiver.addPatient(patient);
+
+        /* save changes */
+        try {
+            userManager.saveUser(patient);
+            userManager.saveUser(caregiver);
+        } catch (NoSuchUserException e) {
+            fail();
+        }
 
     }
 }
