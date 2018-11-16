@@ -344,6 +344,11 @@ public class UserManager {
         HashMap<String, JSONObject> patients = dataManager.getPatients();
         HashMap<String, JSONObject> caregivers = dataManager.getCaregivers();
 
+        /* Check to make sure user exists */
+        if (!patients.containsKey(user.getUserID()) && !caregivers.containsKey(user.getUserID())){
+            throw new NoSuchUserException();
+        }
+
         if (user.getClass() == Patient.class) {
             /* Update contact info */
             JSONObject patientJSON = patients.get(user.getUserID());
@@ -420,7 +425,6 @@ public class UserManager {
      * @return Returns problemID already owned by problem or generated from the DataManager for new
      * problems.
      */
-    //TODO
     private int setProblem(Problem problem){
         HashMap<Integer, JSONObject> problems = dataManager.getProblems();
 
@@ -488,25 +492,133 @@ public class UserManager {
      */
     private int setRecord(Record record){
         HashMap<Integer, JSONObject> records = dataManager.getRecords();
-        return -1;
+        HashMap<Integer, Photo> photos = dataManager.getPhotos();
+        /* Build record JSON */
+        JSONObject recordJSON = new JSONObject();
+        try {
+            recordJSON.put("title", record.getTitle());
+            recordJSON.put("date", record.getDate());
+            recordJSON.put("description", record.getDescription());
+            recordJSON.put("geoLocation", record.getLocation());
+            recordJSON.put("bodyLocation", record.getBodyLocation());
+            recordJSON.put("comment", record.getComment());
+        } catch (JSONException e){
+            throw new RuntimeException(e);
+        }
+
+        /* Generate recordID if needed */
+        if (record.getRecordID() == -1){
+            record.setRecordID(dataManager.getAvailableID());
+        }
+
+        /* Update photos */
+        /* Generate photoID list from record object */
+        ArrayList<Integer> photoIDs = new ArrayList<>();
+        for (Photo photo : record.getPhotos()){
+            photoIDs.add(photo.getPhotoid());
+        }
+        /* Remove photos not present in record object */
+        try {
+            for (int photoID : (ArrayList<Integer>) recordJSON.get("photos")) {
+                if (!photoIDs.contains(photoID)) {
+                    photos.remove(photoID);
+                }
+            }
+
+            /* Update new and already existing photos */
+            for (Photo photo : record.getPhotos()) {
+                int photoID = photo.getPhotoid();
+                if (photoID == -1) {
+                    photoID = dataManager.getAvailableID();
+                    photo.setPhotoid(photoID);
+                    photoIDs.add(photoID);
+                }
+                photos.put(photoID, photo);
+            }
+
+            /* Update photoID list in record object */
+            recordJSON.put("photos", photoIDs);
+        } catch (JSONException e) {
+            throw new RuntimeException("Record photoID list is corrupt", e);
+        }
+
+        records.put(record.getRecordID(), recordJSON);
+        return record.getRecordID();
     }
 
     /**
      * Delete all data belonging to the user associated with the given userID from the database.
+     * Does not delete patients of caregiver when caregiver is deleted.
      * @param userID The userID of the user to be cleared out.
      */
-    //TODO
-    public void deleteUser(String userID) {
+    public void deleteUser(String userID) throws NoSuchUserException {
+        HashMap<String, JSONObject> patients = dataManager.getPatients();
+        HashMap<String, JSONObject> caregivers = dataManager.getCaregivers();
 
+        /* Check to make sure user exists */
+        if (patients.containsKey(userID)){
+            /* grab problemIDs */
+            ArrayList<Integer> problemIDs = null;
+            try {
+                problemIDs = (ArrayList<Integer>) patients.get(userID).get("problems");
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
+            /* delete problems */
+            for (int problemID : problemIDs){
+                deleteProblem(problemID);
+            }
+            /* delete patient */
+            patients.remove(userID);
+
+        } else if (caregivers.containsKey(userID)){
+            caregivers.remove(userID);
+        } else {
+            throw new NoSuchUserException();
+        }
     }
 
-
+    /**
+     * Deletes the problem data and associated records and photos from storage.
+     * @param problemID The ID of the problem to delete.
+     */
     private void deleteProblem(int problemID){
-
+        HashMap<Integer, JSONObject>  problems = dataManager.getProblems();
+        if (problems.containsKey(problemID)){
+            try {
+                /* remove records */
+                for (Integer recordID : (ArrayList<Integer>) problems.get(problemID).get("records")) {
+                    deleteRecord(recordID);
+                }
+                /* delete problem */
+                problems.remove(problemID);
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
+    /**
+     * Deletes the record data and associated photos from storage.
+     * @param recordID The ID of the record to delete.
+     */
     private void deleteRecord(int recordID){
+        HashMap<Integer, JSONObject> records = dataManager.getRecords();
+        HashMap<Integer, Photo> photos = dataManager.getPhotos();
+        if (records.containsKey(recordID)){
+            try {
+                ArrayList<Integer> photoIDs = (ArrayList<Integer>) records.get(recordID).get("photos");
+                /* Remove photos */
+                for (int photoID : photoIDs){
+                    photos.remove(photoID);
+                }
 
+                /* delete record object */
+                records.remove(recordID);
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
 }
