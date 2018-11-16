@@ -48,13 +48,11 @@ public class UserManagerTest extends TestCase {
         /* Set up test environment */
         UserManager.initManager();
         UserManager um = UserManager.getManager();
+        um.logout();
         try {
-            um.logout();
             um.deleteUser("patientid");
-            assertNull(UserController.getController().getUser());
-        } catch (NoSuchUserException e) {
-            ;
-        }
+        } catch (NoSuchUserException e) {;}
+        assertNull(UserController.getController().getUser());
 
         /* create new user */
         try {
@@ -101,14 +99,14 @@ public class UserManagerTest extends TestCase {
         /* Set up testing environment */
         UserManager.initManager();
         UserManager um = UserManager.getManager();
+        um.logout();
         try {
-            um.logout();
             um.deleteUser("patientid");
+        } catch (NoSuchUserException e) {;}
+        try {
             um.deleteUser("caregiverid");
-            assertNull(UserController.getController().getUser());
-        } catch (NoSuchUserException e) {
-            ;
-        }
+        } catch (NoSuchUserException e) {;}
+        assertNull(UserController.getController().getUser());
 
         try {
             // create new patient
@@ -134,14 +132,14 @@ public class UserManagerTest extends TestCase {
         UserManager.initManager();
         UserManager um = UserManager.getManager();
         UserController userController = UserController.getController();
+        um.logout();
         try {
-            um.logout();
             um.deleteUser("patientid");
+        } catch (NoSuchUserException e) {;}
+        try {
             um.deleteUser("patientid2");
-            assertNull(UserController.getController().getUser());
-        } catch (NoSuchUserException e) {
-            ;
-        }
+        } catch (NoSuchUserException e){;}
+        assertNull(UserController.getController().getUser());
 
         try {
             // create 2 patients
@@ -174,14 +172,14 @@ public class UserManagerTest extends TestCase {
         UserManager.initManager();
         UserManager um = UserManager.getManager();
         UserController userController = UserController.getController();
+        um.logout();
         try {
-            um.logout();
             um.deleteUser("patientid");
+        } catch (NoSuchUserException e) {;}
+        try {
             um.deleteUser("patientid1");
-            assertNull(UserController.getController().getUser());
-        } catch (NoSuchUserException e) {
-            ;
-        }
+        } catch (NoSuchUserException e){;}
+        assertNull(UserController.getController().getUser());
 
         try {
             um.createPatient("patientid", "userphone",
@@ -214,13 +212,11 @@ public class UserManagerTest extends TestCase {
         UserManager.initManager();
         UserManager userManager = UserManager.getManager();
         UserController userController = UserController.getController();
+        userManager.logout();
         try {
-            userManager.logout();
             userManager.deleteUser("contactid");
-            assertNull(UserController.getController().getUser());
-        } catch (NoSuchUserException e) {
-            ;
-        }
+        } catch (NoSuchUserException e) {;}
+        assertNull(UserController.getController().getUser());
 
         try{
             String userID = "contactid";
@@ -246,13 +242,11 @@ public class UserManagerTest extends TestCase {
         UserManager.initManager();
         UserManager userManager = UserManager.getManager();
         UserController userController = UserController.getController();
+        userManager.logout();
         try {
-            userManager.logout();
             userManager.deleteUser("takenuserid");
-            assertNull(UserController.getController().getUser());
-        } catch (NoSuchUserException e) {
-            ;
-        }
+        } catch (NoSuchUserException e) {;}
+        assertNull(UserController.getController().getUser());
 
         // Create two accounts with the same userid
         // Ensure the first one is created successfully and the second one isn't.
@@ -279,13 +273,11 @@ public class UserManagerTest extends TestCase {
         UserManager.initManager();
         UserManager userManager = UserManager.getManager();
         UserController userController = UserController.getController();
+        userManager.logout();
         try {
-            userManager.logout();
             userManager.deleteUser("shortid");
-            assertNull(UserController.getController().getUser());
-        } catch (NoSuchUserException e) {
-            ;
-        }
+        } catch (NoSuchUserException e) {;}
+        assertNull(UserController.getController().getUser());
 
         try {
             userManager.createPatient("shortid", "userphone",
@@ -306,20 +298,36 @@ public class UserManagerTest extends TestCase {
         UserManager.initManager();
         UserManager userManager = UserManager.getManager();
         UserController userController = UserController.getController();
+        userManager.logout();
         try {
-            userManager.logout();
             userManager.deleteUser("patientid");
+        } catch (NoSuchUserException e) {;}
+        try {
             userManager.deleteUser("caregiverid");
-            assertNull(UserController.getController().getUser());
-        } catch (NoSuchUserException e) {
-            ;
-        }
+        } catch (NoSuchUserException e){;}
+        assertNull(UserController.getController().getUser());
 
         /* Create a new caregiver, patient, problem, record and photo and connect them */
+        Photo photo = new Photo();
+        Record record = new Record("title");
+        record.addPhoto(photo);
+        Problem problem = new Problem("title", "description");
+        problem.addRecord(record);
+
+        /* Create patient and caregiver */
         String patientID = "patientid";
         String caregiverID = "caregiverid";
-        //userManager.createPatient(patientID, "phone", "email");
-        //userManager.createCaregiver(caregiverID, "phone", "email");
-        //Patient patient = userManager.
+        Patient patient = null;
+        Caregiver caregiver = null;
+        try {
+            patient = userManager.createPatient(patientID, "phone", "email");
+            caregiver = userManager.createCaregiver(caregiverID, "phone", "email");
+        } catch (UserIDNotAvailableException e) {
+            fail();
+        }
+
+        patient.addProblem(problem);
+        caregiver.addPatient(patient);
+
     }
 }
