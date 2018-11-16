@@ -1,5 +1,6 @@
 package com.example.mdbook;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -24,7 +25,13 @@ public class ListProblemActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //If the save button is clicked, direct the user to the add problem page
+                addProblem();
             }
         });
+    }
+
+    public void addProblem(){
+        Intent intent = new Intent(this, AddProblemActivity.class);
+        startActivity(intent);
     }
 }
