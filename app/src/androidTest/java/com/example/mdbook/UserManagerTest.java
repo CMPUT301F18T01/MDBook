@@ -1,7 +1,7 @@
 /*
  * UserManagerTest
  *
- * Version 0.0.1
+ * Version 1.1.0
  *
  * 2018-11-15
  *
@@ -20,11 +20,11 @@ import junit.framework.TestCase;
  * @author Jayanta Chattergee
  * @author James Aina
  *
- * @see com.example.mdbook.User
- * @see com.example.mdbook.UserController
- * @see com.example.mdbook.ElasticsearchController
+ * @see User
+ * @see UserController
+ * @see UserManager
  *
- * @version 0.0.1
+ * @version 1.1.0
  */
 public class UserManagerTest extends TestCase {
     /**
@@ -45,16 +45,15 @@ public class UserManagerTest extends TestCase {
      * Test creating a patient
      */
     public void testLoadSaveDeleteUser(){
-        // create new profile
+        /* Set up test environment */
         UserManager.initManager();
         UserManager um = UserManager.getManager();
-        /* Ensure that testing user doesn't already exist */
         try {
             um.logout();
             um.deleteUser("patientid");
             assertNull(UserController.getController().getUser());
         } catch (NoSuchUserException e) {
-            e.printStackTrace();
+            ;
         }
 
         /* create new user */
@@ -76,10 +75,11 @@ public class UserManagerTest extends TestCase {
             patient.setPhoneNumber("newphone");
             um.saveUser(patient);
 
-            //check changes were loaded
+            // check changes were loaded
             patient = (Patient) um.fetchUser("patientid");
 
             assertEquals("newphone", patient.getPhoneNumber());
+
              // delete profile
             um.deleteUser(patient.getUserID());
 
@@ -98,23 +98,24 @@ public class UserManagerTest extends TestCase {
      * test to make sure data isn't loaded into usercontroller upon failed login
      */
     public void testLoginFail(){
+        /* Set up testing environment */
         UserManager.initManager();
         UserManager um = UserManager.getManager();
-        /* Ensure that testing users don't already exist */
         try {
             um.logout();
             um.deleteUser("patientid");
-            um.deleteUser("patientid_");
+            um.deleteUser("caregiverid");
             assertNull(UserController.getController().getUser());
         } catch (NoSuchUserException e) {
-            e.printStackTrace();
+            ;
         }
 
         try {
-            um.createPatient("patientid", "userphone", "user@email.com");
+            // create new patient
+            um.createCaregiver("caregiverid", "userphone", "user@email.com");
 
             // test that login fails
-            assertFalse(um.login("patientid_"));
+            assertFalse(um.login("patientid"));
 
             //test that data is not loaded into usercontroller
             UserController userController = UserController.getController();
@@ -126,22 +127,29 @@ public class UserManagerTest extends TestCase {
     }
 
     /**
-     * test to make sure user data is loaded into user object upon login
+     * test to make sure user data is loaded into user object upon login and removed upon logout.
      */
     public void testUserLogin(){
-
-        //add 2 users
+        /* Set up testing environment */
         UserManager.initManager();
         UserManager um = UserManager.getManager();
+        UserController userController = UserController.getController();
+        try {
+            um.logout();
+            um.deleteUser("patientid");
+            um.deleteUser("patientid2");
+            assertNull(UserController.getController().getUser());
+        } catch (NoSuchUserException e) {
+            ;
+        }
 
         try {
+            // create 2 patients
             um.createPatient("patientid", "userphone",
                     "useremail@test.com");
 
             um.createPatient("patientid2", "userphone",
                     "useremail2@test.com");
-
-            UserController userController = UserController.getController();
 
              // test logging in to both accounts
             um.login("patientid");
@@ -149,47 +157,32 @@ public class UserManagerTest extends TestCase {
             um.logout();
             um.login("patientid2");
             assertEquals(userController.getUser().getUserID(), "patientid2");
-
             um.logout();
-        } catch (UserIDNotAvailableException e){
-            assert false;
-        }
-
-    }
-
-    /**
-     * test to make sure user data is removed from user object upon logout
-     */
-    public void testUserLogout(){
-        UserManager.initManager();
-        UserManager um = UserManager.getManager();
-        UserController userController = UserController.getController();
-        try {
-            um.createPatient("patientid", "userphone",
-                    "useremail@test.com");
-
-            um.login("patientid");
-            Patient patient1 = (Patient) userController.getUser();
-
-             // make sure login was successful
-            assertEquals(patient1.getUserID(), "patientid");
-
-            um.logout();
-
-            // make sure usercontroller is wiped on logout
             assertNull(userController.getUser());
-
         } catch (UserIDNotAvailableException e){
             assert false;
         }
+
     }
+
 
     /**
      * Test to make sure login cannot be completed without logging out first.
      */
     public void testInvalidLogin(){
+        /* Set up testing environment */
         UserManager.initManager();
         UserManager um = UserManager.getManager();
+        UserController userController = UserController.getController();
+        try {
+            um.logout();
+            um.deleteUser("patientid");
+            um.deleteUser("patientid1");
+            assertNull(UserController.getController().getUser());
+        } catch (NoSuchUserException e) {
+            ;
+        }
+
         try {
             um.createPatient("patientid", "userphone",
                     "useremail@test.com");
@@ -217,26 +210,63 @@ public class UserManagerTest extends TestCase {
      * Test fetching of contact information for user.
      */
     public void testContactUser(){
+        /* Set up testing environment */
         UserManager.initManager();
         UserManager userManager = UserManager.getManager();
+        UserController userController = UserController.getController();
+        try {
+            userManager.logout();
+            userManager.deleteUser("userid");
+            assertNull(UserController.getController().getUser());
+        } catch (NoSuchUserException e) {
+            ;
+        }
 
         try{
             String userID = "userid";
             String userPhone = "userPhone";
             String userEmail = "userEmail";
             userManager.createPatient(userID, userPhone, userEmail);
-
+            ContactUser user = userManager.fetchUserContact("userid");
+            assertEquals("userPhone", user.getPhoneNumber());
 
         } catch (UserIDNotAvailableException e) {
+            assert false;
+        } catch (NoSuchUserException e) {
             assert false;
         }
     }
 
     /**
      * Test creating a user with a taken userID
+     * Expecting a UserIDNotAvailable exception
      */
     public void testTakenUser(){
+        /* Set up testing environment */
         UserManager.initManager();
         UserManager userManager = UserManager.getManager();
+        UserController userController = UserController.getController();
+        try {
+            userManager.logout();
+            userManager.deleteUser("userid");
+            assertNull(UserController.getController().getUser());
+        } catch (NoSuchUserException e) {
+            ;
+        }
+
+        // Create two accounts with the same userid
+        // Ensure the first one is created successfully and the second one isn't.
+        try {
+            userManager.createCaregiver("userid", "phone", "email");
+        } catch (UserIDNotAvailableException e) {
+            assert false;
+        }
+
+        try {
+            userManager.createPatient("userid","phone", "email");
+            assert false;
+        } catch (UserIDNotAvailableException e) {
+            assert true;
+        }
     }
 }
