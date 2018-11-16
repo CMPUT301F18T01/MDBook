@@ -8,7 +8,7 @@
  * 2018-11-15
  *
  * Copyright (c) 2018. All rights reserved.
- **/
+ */
 
 package com.example.mdbook;
 

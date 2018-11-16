@@ -7,10 +7,10 @@
  *
  * Copyright (c) 2018. All rights reserved.
  */
-
+package com.example.mdbook;
 import junit.framework.TestCase;
 
-package com.example.mdbook;
+
 
 import junit.framework.TestCase;
 
