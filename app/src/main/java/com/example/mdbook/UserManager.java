@@ -1,7 +1,7 @@
 /*
  * UserManager
  *
- * Version 1.0.0
+ * Version 2.0.0
  *
  * 2018-11-13
  *
@@ -31,7 +31,7 @@ import java.util.HashMap;
  * @see User
  * @see UserController
  * @see ElasticsearchController
- * @version 1.0.0
+ * @version 2.0.0
  **/
 public class UserManager {
 
