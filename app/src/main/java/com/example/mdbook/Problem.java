@@ -24,6 +24,7 @@ class Problem {
     private String title;
     private String description;
     private ArrayList<String> comments;
+    private String problemID;
 
 
     /**
@@ -149,5 +150,19 @@ class Problem {
      */
     public String getTitle() {
         return this.title;
+    }
+
+    /**
+     * @return Problem ID, can be null.
+     */
+    public String getProblemID(){
+        return this.problemID;
+    }
+
+    /**
+     * @param problemID Problem ID
+     */
+    public void setProblemID(String problemID) {
+        this.problemID = problemID;
     }
 }
