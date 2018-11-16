@@ -17,8 +17,9 @@ public class UserManagerTest extends TestCase {
         assert(um == um2);
     }
 
-    // test loading and saving user data via elastisearch
-    // depends on elastisearch controller
+    /**
+     * Test creating a patient
+     */
     public void testLoadSaveDeleteUser(){
 
         UserManager.initManager();
@@ -55,8 +56,10 @@ public class UserManagerTest extends TestCase {
     }
 
 
-    // test for expected output when logging in
-    // test to make sure data isn't loaded into user object upon failed login
+    /**
+     * test for expected output when failing to login.
+     * test to make sure data isn't loaded into usercontroller upon failed login
+     */
     public void testLoginFail(){
         UserManager.initManager();
         UserManager um = UserManager.getManager();
@@ -74,8 +77,9 @@ public class UserManagerTest extends TestCase {
         }
     }
 
-    // test to make sure user data is loaded into user object upon login
-    // requires use of usercontroller singleton
+    /**
+     * test to make sure user data is loaded into user object upon login
+     */
     public void testUserLogin(){
         // add 2 users
         UserManager.initManager();
@@ -99,8 +103,9 @@ public class UserManagerTest extends TestCase {
 
     }
 
-    // test to make sure user data is removed from user object upon logout
-    // requires use of usercontroller singleton
+    /**
+     * test to make sure user data is removed from user object upon logout
+     */
     public void testUserLogout(){
         UserManager.initManager();
         UserManager um = UserManager.getManager();
@@ -120,7 +125,9 @@ public class UserManagerTest extends TestCase {
         }
     }
 
-    // test to make sure login cannot be completed before logging out
+    /**
+     * Test to make sure login cannot be completed without logging out first.
+     */
     public void testInvalidLogin(){
         UserManager.initManager();
         UserManager um = UserManager.getManager();
@@ -136,6 +143,35 @@ public class UserManagerTest extends TestCase {
             assertEquals("patientid", UserController.getController().getUser().getUserID());
         } catch (UserIDNotAvailableException e) {
             assert false;
+        }
+    }
+
+    /**
+     * Test fetching of contact information for user.
+     */
+    public void testContactUser(){
+        UserManager.initManager();
+        UserManager userManager = UserManager.getManager();
+
+        try{
+            String userID = "userid";
+            String userPhone = "userPhone";
+            String userEmail = "userEmail";
+            userManager.createPatient(userID, userPhone, userEmail);
+
+        } catch (UserIDNotAvailableException)
+    }
+
+    /**
+     * Test creating a user with a taken userID
+     */
+    public void testTakenUser(){
+        UserManager.initManager();
+        UserManager userManager = UserManager.getManager();
+
+        try {
+            userManager.createPatient("userid", "userphone","useremail");
+            userManager.c
         }
     }
 }
