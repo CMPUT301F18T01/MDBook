@@ -32,6 +32,7 @@ class Record {
     private BodyLocation bodyLocation;
     private ArrayList<Photo> photos;
     private String comment;
+    private int recordID = -1;
 
     /**
      * Generates a new Record object with date and title.
@@ -207,5 +208,26 @@ class Record {
         else {
             this.description = desc;
         }
+    }
+
+    /**
+     * @param geoLocation new geographic location
+     */
+    public void setGeoLocation(GeoLocation geoLocation) {
+        this.geoLocation = geoLocation;
+    }
+
+    /**
+     * @return Record ID for this record. Will be null if record hasn't already existed in storage.
+     */
+    public int getRecordID() {
+        return recordID;
+    }
+
+    /**
+     * @param recordID Set recordID, should be generated from database.
+     */
+    public void setRecordID(int recordID) {
+        this.recordID = recordID;
     }
 }

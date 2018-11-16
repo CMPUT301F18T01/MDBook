@@ -42,14 +42,22 @@ public class UserManagerTest extends TestCase {
     }
 
     /**
-     * test loading and saving user data via elastisearch
-     * depends on elastisearch controller
+     * Test creating a patient
      */
     public void testLoadSaveDeleteUser(){
         // create new profile
         UserManager.initManager();
         UserManager um = UserManager.getManager();
+        /* Ensure that testing user doesn't already exist */
+        try {
+            um.logout();
+            um.deleteUser("patientid");
+            assertNull(UserController.getController().getUser());
+        } catch (NoSuchUserException e) {
+            e.printStackTrace();
+        }
 
+        /* create new user */
         try {
             um.createPatient("patientid", "userphone",
                     "useremail@test.com");
@@ -77,6 +85,7 @@ public class UserManagerTest extends TestCase {
 
              //check to make sure patient doesn't exist
             assertFalse(um.login("patientid"));
+            assertNull(UserController.getController().getUser());
 
         } catch (NoSuchUserException e){
             assert false;
@@ -85,12 +94,22 @@ public class UserManagerTest extends TestCase {
 
 
     /**
-     *  test for expected output when logging in
-     *  test to make sure data isn't loaded into user object upon failed login
-      */
+     * test for expected output when failing to login.
+     * test to make sure data isn't loaded into usercontroller upon failed login
+     */
     public void testLoginFail(){
         UserManager.initManager();
         UserManager um = UserManager.getManager();
+        /* Ensure that testing users don't already exist */
+        try {
+            um.logout();
+            um.deleteUser("patientid");
+            um.deleteUser("patientid_");
+            assertNull(UserController.getController().getUser());
+        } catch (NoSuchUserException e) {
+            e.printStackTrace();
+        }
+
         try {
             um.createPatient("patientid", "userphone", "user@email.com");
 
@@ -100,16 +119,14 @@ public class UserManagerTest extends TestCase {
             //test that data is not loaded into usercontroller
             UserController userController = UserController.getController();
             User u = userController.getUser();
-            assertNotSame("patientid", u.getUserID());
-            assertNotSame("patientid_", u.getUserID());
+            assertNull(u);
         } catch (UserIDNotAvailableException e){
             assert false;
         }
     }
 
     /**
-     *  test to make sure user data is loaded into user object upon login
-     *  requires use of usercontroller singleton
+     * test to make sure user data is loaded into user object upon login
      */
     public void testUserLogin(){
 
@@ -141,9 +158,8 @@ public class UserManagerTest extends TestCase {
     }
 
     /**
-     *  test to make sure user data is removed from user object upon logout
-     *  requires use of usercontroller singleton
-      */
+     * test to make sure user data is removed from user object upon logout
+     */
     public void testUserLogout(){
         UserManager.initManager();
         UserManager um = UserManager.getManager();
@@ -169,8 +185,8 @@ public class UserManagerTest extends TestCase {
     }
 
     /**
-     *  test to make sure login cannot be completed before logging out
-      */
+     * Test to make sure login cannot be completed without logging out first.
+     */
     public void testInvalidLogin(){
         UserManager.initManager();
         UserManager um = UserManager.getManager();
@@ -195,5 +211,32 @@ public class UserManagerTest extends TestCase {
         } catch (UserIDNotAvailableException e) {
             assert false;
         }
+    }
+
+    /**
+     * Test fetching of contact information for user.
+     */
+    public void testContactUser(){
+        UserManager.initManager();
+        UserManager userManager = UserManager.getManager();
+
+        try{
+            String userID = "userid";
+            String userPhone = "userPhone";
+            String userEmail = "userEmail";
+            userManager.createPatient(userID, userPhone, userEmail);
+
+
+        } catch (UserIDNotAvailableException e) {
+            assert false;
+        }
+    }
+
+    /**
+     * Test creating a user with a taken userID
+     */
+    public void testTakenUser(){
+        UserManager.initManager();
+        UserManager userManager = UserManager.getManager();
     }
 }
