@@ -171,10 +171,5 @@ public class UserManagerTest extends TestCase {
     public void testTakenUser(){
         UserManager.initManager();
         UserManager userManager = UserManager.getManager();
-
-        try {
-            userManager.createPatient("userid", "userphone","useremail");
-            userManager.c
-        }
     }
 }
