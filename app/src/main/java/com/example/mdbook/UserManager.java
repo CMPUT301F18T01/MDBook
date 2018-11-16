@@ -65,7 +65,6 @@ public class UserManager {
      */
     private UserManager(){
         this.dataManager = DataManager.getDataManager();
-
     }
 
     /**

@@ -62,7 +62,7 @@ public class UserManagerTest extends TestCase {
                     "useremail@test.com");
 
         } catch (UserIDNotAvailableException e){
-            assert false;
+            fail();
         }
 
 
@@ -88,7 +88,7 @@ public class UserManagerTest extends TestCase {
             assertNull(UserController.getController().getUser());
 
         } catch (NoSuchUserException e){
-            assert false;
+            fail();
         }
     }
 
@@ -122,7 +122,7 @@ public class UserManagerTest extends TestCase {
             User u = userController.getUser();
             assertNull(u);
         } catch (UserIDNotAvailableException e){
-            assert false;
+            fail();
         }
     }
 
@@ -160,7 +160,7 @@ public class UserManagerTest extends TestCase {
             um.logout();
             assertNull(userController.getUser());
         } catch (UserIDNotAvailableException e){
-            assert false;
+            fail();
         }
 
     }
@@ -202,7 +202,7 @@ public class UserManagerTest extends TestCase {
                     .getUserID());
 
         } catch (UserIDNotAvailableException e) {
-            assert false;
+            fail();
         }
     }
 
@@ -231,9 +231,9 @@ public class UserManagerTest extends TestCase {
             assertEquals("userPhone", user.getPhoneNumber());
 
         } catch (UserIDNotAvailableException e) {
-            assert false;
+            fail();
         } catch (NoSuchUserException e) {
-            assert false;
+            fail();
         }
     }
 
@@ -259,14 +259,39 @@ public class UserManagerTest extends TestCase {
         try {
             userManager.createCaregiver("userid", "phone", "email");
         } catch (UserIDNotAvailableException e) {
-            assert false;
+            fail();
         }
 
         try {
             userManager.createPatient("userid","phone", "email");
-            assert false;
+            fail();
         } catch (UserIDNotAvailableException e) {
             assert true;
         }
+    }
+
+    /**
+     * Thorough test of user fetching, checking addition of problems, records and photos
+     */
+    public void testFetchUser(){
+        /* Set up testing environment */
+        UserManager.initManager();
+        UserManager userManager = UserManager.getManager();
+        UserController userController = UserController.getController();
+        try {
+            userManager.logout();
+            userManager.deleteUser("patientid");
+            userManager.deleteUser("caregiverid");
+            assertNull(UserController.getController().getUser());
+        } catch (NoSuchUserException e) {
+            ;
+        }
+
+        /* Create a new caregiver, patient, problem, record and photo and connect them */
+        String patientID = "patientid";
+        String caregiverID = "caregiverid";
+        //userManager.createPatient(patientID, "phone", "email");
+        //userManager.createCaregiver(caregiverID, "phone", "email");
+        //Patient patient = userManager.
     }
 }

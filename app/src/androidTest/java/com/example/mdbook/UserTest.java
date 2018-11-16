@@ -75,9 +75,9 @@ public class UserTest extends TestCase {
             Patient patient = new Patient("userid", "userphone",
                     "useremail@test.com");
 
-            assert(false);
+            fail();
         } catch (IllegalArgumentException e){
-            assert (true);
+            assertTrue(true);
         }
     }
 
