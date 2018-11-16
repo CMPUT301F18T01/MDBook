@@ -72,10 +72,11 @@ public class UserManager {
      * @param userID The unique ID of the new patient. Must be unique.
      * @param userPhone The phone number of the new patient.
      * @param userEmail The email of the new patient.
+     * @returns A new patient object with the given attributes.
      * @throws UserIDNotAvailableException Thrown if the userID is not unique
      * @throws IllegalArgumentException Thrown if the userID is less than 8 characters
      */
-    public void createPatient(String userID, String userPhone, String userEmail)
+    public Patient createPatient(String userID, String userPhone, String userEmail)
             throws UserIDNotAvailableException, IllegalArgumentException {
         /* Fetch fresh copy of patient list */
         HashMap patients = dataManager.getPatients();
@@ -104,6 +105,8 @@ public class UserManager {
             }
         }
 
+        Patient patient = new Patient(userID, userPhone, userEmail);
+        return patient;
     }
 
     /**
@@ -111,10 +114,11 @@ public class UserManager {
      * @param userID The unique ID of the new caregiver. Must be unique.
      * @param userPhone The phone number of the new caregiver.
      * @param userEmail The email of the new caregiver.
+     * @returns A new caregiver object with the given attributes.
      * @throws UserIDNotAvailableException Thrown if the userID is not unique
      * @throws IllegalArgumentException Thrown if the userID is less than 8 characters
      */
-    public void createCaregiver(String userID, String userPhone, String userEmail)
+    public Caregiver createCaregiver(String userID, String userPhone, String userEmail)
             throws UserIDNotAvailableException, IllegalArgumentException {
         /* Fetch fresh copy of patient list */
         HashMap caregivers = dataManager.getCaregivers();
@@ -143,7 +147,8 @@ public class UserManager {
                 throw new RuntimeException(e);
             }
         }
-
+        Caregiver caregiver = new Caregiver(userID, userPhone, userEmail);
+        return caregiver;
     }
 
     /**
