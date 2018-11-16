@@ -355,4 +355,80 @@ public class UserManagerTest extends TestCase {
         assertEquals(1, record.getPhotos().size());
 
     }
+
+    /**
+     * Test deleting user with data. No test implemented to search corners of database to see if
+     * data still exists, but we can test if 1) Everything crashes when you try to delete stuff and
+     * 2) if the data is at least detached from the user.
+     */
+    public void testDeleteData(){
+        /* Set up testing environment */
+        UserManager.initManager();
+        UserManager userManager = UserManager.getManager();
+        UserController userController = UserController.getController();
+        userManager.logout();
+        try {
+            userManager.deleteUser("patientid");
+        } catch (NoSuchUserException e) {;}
+        assertNull(UserController.getController().getUser());
+
+        /* Create a new patient, problem, record and photo and connect them */
+        Photo photo = new Photo();
+        Record record = new Record("recordtitle");
+        record.addPhoto(photo);
+        Problem problem = new Problem("problemtitle", "description");
+        problem.addRecord(record);
+
+        /* Create patient */
+        String patientID = "patientid";
+        Patient patient = null;
+        try {
+            patient = userManager.createPatient(patientID, "phone", "email");
+        } catch (UserIDNotAvailableException e) {
+            fail();
+        }
+        patient.addProblem(problem);
+
+        /* save changes */
+        try {
+            userManager.saveUser(patient);
+        } catch (NoSuchUserException e) {
+            fail();
+        }
+
+        /* delete the record */
+        problem.removeRecord(record);
+        /* save changes */
+        try {
+            userManager.saveUser(patient);
+        } catch (NoSuchUserException e) {
+            fail();
+        }
+
+        /* Check to see if changes are saved */
+        try {
+            patient = (Patient) userManager.fetchUser(patientID);
+        } catch (NoSuchUserException e) {
+            fail();
+        }
+        assertEquals(0, patient.getProblems().get(0).getRecords().size());
+
+        /* Delete user */
+        try {
+            userManager.deleteUser(patientID);
+        } catch (NoSuchUserException e) {
+            fail();
+        }
+
+        /* Check if user still exists */
+        try {
+            userManager.fetchUser(patientID);
+            fail();
+        } catch (NoSuchUserException e) {
+            assertTrue(true);
+        }
+
+
+    }
+
 }
