@@ -22,18 +22,18 @@ import java.util.ArrayList;
  **/
 class Caregiver extends User{
 
-    private ArrayList<Patient> patients;
+    private ArrayList<String> patientList;
 
     /**
      * Creates new Caregiver in same way as superclass User.
-     * Generates patients as an empty ArrayList.
+     * Generates patientList as an empty ArrayList of strings (patient IDs)
      * @param userID the unique user ID, as a string. This class does not check for uniqueness.
      * @param userPhone the phone number, as a string
      * @param userEmail the email address, as a string
      */
     public Caregiver(String userID, String userPhone, String userEmail){
         super(userID, userPhone, userEmail);
-        this.patients = new ArrayList<>();
+        this.patientList = new ArrayList<>();
     }
     
     /**
@@ -41,7 +41,7 @@ class Caregiver extends User{
      * @param patient The patient to add.
      */
     public void addPatient(Patient patient) {
-        this.patients.add(patient);
+        this.patientList.add(patient.getUserID());
     }
 
     /**
@@ -51,8 +51,8 @@ class Caregiver extends User{
      * @return True on successful removal, false if patient couldn't be found.
      */
     public boolean removePatient(Patient patient) {
-        if (this.patients.contains(patient)){
-            this.patients.remove(patient);
+        if (this.patientList.contains(patient.getUserID())){
+            this.patientList.remove(patient.getUserID());
             return true;
         }
         else {
@@ -61,9 +61,16 @@ class Caregiver extends User{
     }
 
     /**
-     * @return ArrayList of patients for this caregiver.
+     * @return ArrayList of patientIDs for this caregiver.
      */
-    public ArrayList<Patient> getPatients(){
-        return this.patients;
+    public ArrayList<String> getPatientList(){
+        return this.patientList;
+    }
+
+    /**
+     * @param patientList ArrayList of patient IDs. Sets patient list, does not append.
+     */
+    public void setPatientList(ArrayList<String> patientList){
+        this.patientList = patientList;
     }
 }

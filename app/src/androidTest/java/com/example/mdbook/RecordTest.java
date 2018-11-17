@@ -1,25 +1,52 @@
+/*
+ * RecordTest
+ *
+ * Version 0.0.1
+ *
+ * RecordTest
+ *
+ * 2018-11-15
+ *
+ * Copyright (c) 2018. All rights reserved.
+ */
+
 package com.example.mdbook;
-// tests record objects and by extension, photo, location and problem containment
 
 import junit.framework.TestCase;
 
 import java.util.Date;
 
+/**
+ * tests record objects and by extension, photo, location and problem containment
+ *
+ * @see com.example.mdbook.Problem
+ * @see com.example.mdbook.GeoLocation
+ * @see com.example.mdbook.BodyLocation
+ * @see com.example.mdbook.Photo
+ *
+ * @author Noah Burghardt
+ *
+ * @author James Aina
+ *
+ * @version 0.0.1
+ **/
+
 public class RecordTest extends TestCase {
-    // test record ability to hold items
+    /**
+     *  test record ability to hold item
+      */
     public void testCreateRecord(){
         String rTitle = "recordTitle";
         String rDesc = "recordDescription";
         Date rDate = new Date();
         Record record = new Record(rTitle, rDate, rDesc);
 
-        /* Add items */
-        // test location picker
+        //Add items
+        //test location picker
         GeoLocation geoLocation = new GeoLocation();
         record.setLocation(geoLocation);
         assertEquals(geoLocation, record.getLocation());
 
-        // test photos, record should be able to hold at least 10
         for(int i = 0; i<9;i++){
             record.addPhoto(new Photo());
         }
@@ -27,7 +54,7 @@ public class RecordTest extends TestCase {
         record.addPhoto(photo);
         assertTrue(record.getPhotos().contains(photo));
 
-        // test for body location
+
         BodyLocation bodyLocation = new BodyLocation("arm");
         record.setBodyLocation(bodyLocation);
         assertEquals(bodyLocation, record.getBodyLocation());
