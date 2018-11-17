@@ -23,7 +23,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ViewRecordActivity"></activity>
+        <activity android:name=".ViewRecordActivity" />
+        <activity android:name=".EditDetailsActivity" />
     </application>
 
 </manifest>
