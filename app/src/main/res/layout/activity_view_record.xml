@@ -7,6 +7,8 @@
     tools:context=".ViewRecordActivity"
     tools:layout_editor_absoluteY="81dp">
 
+
+
     <ListView
         android:id="@+id/recordListView"
         android:layout_width="368dp"
