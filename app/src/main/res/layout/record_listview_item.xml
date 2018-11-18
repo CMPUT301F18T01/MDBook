@@ -38,7 +38,16 @@
         android:text="TextView" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/addCommentButton"
+        android:layout_width="366dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Add Comment" />
+
+
+
+    <Button
+        android:id="@+id/viewLocationButton"
         android:layout_width="366dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
