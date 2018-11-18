@@ -10,6 +10,7 @@ import com.google.gson.reflect.TypeToken;
 import org.json.JSONObject;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -46,7 +47,7 @@ class LocalStorageController {
         String stringProblems = problems.toJson(dataManager.getProblems());
         String stringRecords = records.toJson(dataManager.getRecords());
         String stringPhotos = photos.toJson(dataManager.getPhotos());
-        String stringAvailableIDs = availableIDs.toJson(dataManager.getAvailableID());
+        String stringAvailableIDs = availableIDs.toJson(dataManager.getAvailableIDs());
         editor.putString("patients", stringPatients);
         editor.putString("caregivers", stringCaregivers);
         editor.putString("problems", stringProblems);
@@ -72,6 +73,7 @@ class LocalStorageController {
         Type typeString = new TypeToken<HashMap<String, JSONObject>>(){}.getType();
         Type typeInt = new TypeToken<HashMap<Integer, JSONObject>>(){}.getType();
         Type typePhoto = new TypeToken<HashMap<Integer, Photo>>(){}.getType();
+        Type typeArray = new TypeToken<ArrayList<Integer>>(){}.getType();
 
 
 
@@ -80,7 +82,7 @@ class LocalStorageController {
         HashMap<Integer, JSONObject> Problems = gson.fromJson(stringProblems,typeInt);
         HashMap<Integer, JSONObject> Records = gson.fromJson(stringRecords,typeInt);
         HashMap<Integer, Photo> Photos = gson.fromJson(stringPhotos,typePhoto);
-        //HashMap<String, JSONObject> AvailableIDs = gson.fromJson(stringAvailableIDs,type);
+        ArrayList<Integer> AvailableIDs = gson.fromJson(stringAvailableIDs,typeArray);
 
 
         dataManager.setPatients(Patients);
@@ -88,7 +90,7 @@ class LocalStorageController {
         dataManager.setProblems(Problems);
         dataManager.setRecords(Records);
         dataManager.setPhotos(Photos);
-        //dataManager.setAvailableIDs(AvailableIDs);
+        dataManager.setAvailableIDs(AvailableIDs);
 
 
     }
