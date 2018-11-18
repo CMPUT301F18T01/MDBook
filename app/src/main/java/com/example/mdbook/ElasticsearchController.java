@@ -45,6 +45,7 @@ class ElasticsearchController {
     private static JestClient client;
     private static String index = "cmput301f18t01test";
 
+
     /**
      * @return Singleton instance of ElasticSearchController
      */
@@ -60,6 +61,7 @@ class ElasticsearchController {
                     .maxTotalConnection(20)
                     .build());
             client = factory.getObject();
+
         }
         return elasticsearchController;
     }

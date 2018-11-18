@@ -45,8 +45,8 @@ public class DataManager {
     private HashMap<Integer, Photo> photos;
     private ArrayList<Integer> availableIDs;
     private int availableID = 0;
-    private ElasticsearchController elasticsearchController = ElasticsearchController.getController();
-    private LocalStorageController localStorageController = LocalStorageController.getController();
+    private ElasticsearchController elasticsearchController;
+    private LocalStorageController localStorageController;
 
 
     private static DataManager dataManager = null;
@@ -57,6 +57,8 @@ public class DataManager {
     public static DataManager getDataManager() {
         if (dataManager == null){
             dataManager = new DataManager();
+            dataManager.elasticsearchController = ElasticsearchController.getController();
+            dataManager.localStorageController = LocalStorageController.getController();
         }
         return dataManager;
     }

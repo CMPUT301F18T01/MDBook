@@ -40,7 +40,7 @@ public class ProblemTest extends TestCase {
         String testDesc = "Test Description";
         try {
             Problem problem = new Problem(longTitle, testDesc);
-            assert (false);
+            fail();
         }
         catch (IllegalArgumentException e){
             assert(true);
@@ -56,7 +56,7 @@ public class ProblemTest extends TestCase {
         String testDesc = "Test Description";
         try {
             Problem problem = new Problem("", testDesc);
-            assert (false);
+            fail();
         } catch (IllegalArgumentException e){
             assert (true);
         }
@@ -76,7 +76,7 @@ public class ProblemTest extends TestCase {
         }
         try {
             Problem problem = new Problem(title, testDesc);
-            assert (false);
+            fail();
         } catch (IllegalArgumentException e){
             assert (true);
         }
