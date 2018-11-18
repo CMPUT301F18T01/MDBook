@@ -49,7 +49,7 @@ class ElasticsearchController {
     private DataManager dataManager = DataManager.getDataManager();
     private static JestClient client;
     private static String index = "cmput301f18t01test";
-    private HashMap<String, ArrayList<String>> idlists;
+    private static HashMap<String, Object> idlists;
     private int availableID;
 
 
@@ -68,6 +68,17 @@ class ElasticsearchController {
                     .maxTotalConnection(20)
                     .build());
             client = factory.getObject();
+        }
+
+        if (idlists == null){
+            idlists = new HashMap<>();
+            idlists.put("patientIDs", new ArrayList<String>());
+            idlists.put("caregiverIDs", new ArrayList<String>());
+            idlists.put("problemIDs", new ArrayList<Integer>());
+            idlists.put("recordIDs", new ArrayList<Integer>());
+            idlists.put("photoIDs", new ArrayList<Integer>());
+            idlists.put("AvailableIDs", new ArrayList<Integer>());
+
         }
         return elasticsearchController;
     }
@@ -88,7 +99,7 @@ class ElasticsearchController {
         }
 
         /* Delete removed patients */
-        for (String patientID : this.idlists.get("patientIDs")){
+        for (String patientID : (ArrayList<String>) this.idlists.get("patientIDs")){
             if (!patientIDList.contains(patientID)){
                 try {
                     client.execute(new Delete.Builder(patientID)
@@ -100,6 +111,9 @@ class ElasticsearchController {
                 }
             }
         }
+
+        /* Update patientID list */
+        this.idlists.put("patientIDs", patientIDList);
     }
 
     private void pushCaregivers(){
