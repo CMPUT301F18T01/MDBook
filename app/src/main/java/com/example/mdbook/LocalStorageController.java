@@ -1,23 +1,40 @@
+/*
+ * LocalStorageController
+ *
+ * Version 1.0.0
+ *
+ * 2018-11-18
+ *
+ * Copyright (c) 2018. All rights reserved.
+ */
 package com.example.mdbook;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-
-
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-
 import org.json.JSONObject;
-
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import static android.content.Context.MODE_PRIVATE;
 
+
+/**
+ * Provide a singleton interface for managing local data storage.
+ *
+ *
+ *
+ * @author Thomas Chan
+ * @author Noah Burghardt
+ * @see DataManager
+ * @version 1.0.0
+ */
+
 class LocalStorageController {
 
-    private static ElasticsearchController elasticsearchController = null;
+
     private static LocalStorageController localStorageController = null;
     private DataManager dataManager = DataManager.getDataManager();
     private Gson patients = new Gson();
@@ -29,6 +46,18 @@ class LocalStorageController {
     private Context view;
 
 
+    /**
+     * @param view Sets the context in the local storage controller
+     */
+    public void setContext(Context view){
+        this.view = view;
+    }
+
+    /**
+     * Sets the localStorageController, If it is not found then it will create a new
+     * localStorageController.
+     * @return localStorageController singleton
+     */
 
     public static LocalStorageController getController() {
         if (localStorageController == null) {
@@ -39,8 +68,14 @@ class LocalStorageController {
 
     }
 
+
+    /**
+     * Saves all objects to Gson including:
+     * Patients, Caregivers, Problems, Records ,Photos and Available
+     */
     public void push() {
-        SharedPreferences sharedPreferences = view.getSharedPreferences("shared preferences", MODE_PRIVATE);
+        SharedPreferences sharedPreferences = view.getSharedPreferences("shared preferences",
+                MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         String stringPatients = patients.toJson(dataManager.getPatients());
         String stringCaregivers = caregivers.toJson(dataManager.getCaregivers());
@@ -59,8 +94,14 @@ class LocalStorageController {
 
     }
 
+    /**
+     *  Loads back data when the application starts, it does this by finding the String objects
+     *  and converts the string objects back to its regular type and then it will load the data
+     *  back to its containers.
+     */
     public void loadData(){
-        SharedPreferences sharedPreferences = view.getSharedPreferences("shared preferences",MODE_PRIVATE);
+        SharedPreferences sharedPreferences = view.getSharedPreferences("shared preferences",
+                MODE_PRIVATE);
         Gson gson = new Gson();
         String stringPatients = sharedPreferences.getString("patients", null);
         String stringCaregivers = sharedPreferences.getString("caregivers", null);

@@ -9,12 +9,10 @@ package com.example.mdbook;
  * Copyright (c) 2018. All rights reserved.
  */
 
-import android.os.AsyncTask;
-import android.util.Log;
 
 import com.searchly.jestdroid.DroidClientConfig;
 import com.searchly.jestdroid.JestClientFactory;
-import com.searchly.jestdroid.JestDroidClient;
+
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -22,17 +20,11 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import io.searchbox.client.JestClient;
-import io.searchbox.client.JestResult;
 import io.searchbox.core.Delete;
-import io.searchbox.core.DocumentResult;
 import io.searchbox.core.Index;
-import io.searchbox.core.Search;
-import io.searchbox.core.SearchResult;
-import io.searchbox.indices.mapping.PutMapping;
-import io.searchbox.indices.template.DeleteTemplate;
+
 
 /**
  * Keeps DataManager in sync with cloud storage.
