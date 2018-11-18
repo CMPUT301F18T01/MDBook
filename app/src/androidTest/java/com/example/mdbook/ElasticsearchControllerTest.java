@@ -12,6 +12,8 @@ package com.example.mdbook;
 
 import junit.framework.TestCase;
 
+import org.junit.Test;
+
 import java.security.InvalidKeyException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -25,5 +27,13 @@ import java.util.Date;
  *
  * @version 0.0.1
  **/
-public class ElasticsearchControllerTest extends TestCase {
+public class ElasticsearchControllerTest {
+
+    @Test
+    public void testAddPatientTask(){
+        Patient patient = new Patient("patientid", "userphone",
+                "useremail@test.com");
+        ElasticsearchController.AddPatientTask addPatient = new ElasticsearchController.AddPatientTask();
+        addPatient.execute(patient);
+    }
 }

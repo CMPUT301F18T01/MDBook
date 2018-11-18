@@ -11,6 +11,8 @@ package com.example.mdbook;
 
 import java.util.ArrayList;
 
+import io.searchbox.annotations.JestId;
+
 /**
  * Extends User into the patient class. Adds a problem list.
  * Provides methods for adding and removing problems.
@@ -23,6 +25,17 @@ import java.util.ArrayList;
  * @version 0.0.1
  **/
 class Patient extends User {
+
+    @JestId
+    private String id;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     private ArrayList<Problem> problems;
 
