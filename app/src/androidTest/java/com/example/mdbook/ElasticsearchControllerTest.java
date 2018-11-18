@@ -18,6 +18,8 @@ import java.security.InvalidKeyException;
 import java.util.ArrayList;
 import java.util.Date;
 
+import static junit.framework.TestCase.fail;
+
 /**
  * test for elasticsearchcontroller
  * tests are a bit wordy, most of this stuff will be wrapped up cleanly in usermanager
@@ -31,9 +33,15 @@ public class ElasticsearchControllerTest {
 
     @Test
     public void testAddPatientTask(){
-        Patient patient = new Patient("patientid", "userphone",
-                "useremail@test.com");
-        ElasticsearchController.AddPatientTask addPatient = new ElasticsearchController.AddPatientTask();
-        addPatient.execute(patient);
+        UserManager.initManager();
+        UserManager userManager = UserManager.getManager();
+        try {
+            Patient patient = userManager.createPatient("patientID", "phone", "email");
+        } catch (UserIDNotAvailableException e) {
+            fail();
+        }
+
+
+
     }
 }

@@ -9,7 +9,6 @@
  */
 package com.example.mdbook;
 
-import io.searchbox.annotations.JestId;
 
 /**
  * Holds contact information relevant to a user. Has no verification or online sync methods.
@@ -32,7 +31,6 @@ public abstract class User {
 
     private String phone;
     private String email;
-    @JestId
     protected String userID;
 
 

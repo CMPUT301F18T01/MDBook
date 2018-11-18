@@ -16,9 +16,13 @@ import com.searchly.jestdroid.DroidClientConfig;
 import com.searchly.jestdroid.JestClientFactory;
 import com.searchly.jestdroid.JestDroidClient;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
+import io.searchbox.client.JestClient;
 import io.searchbox.core.DocumentResult;
 import io.searchbox.core.Index;
 import io.searchbox.core.Search;
@@ -38,7 +42,8 @@ class ElasticsearchController {
 
     private static ElasticsearchController elasticsearchController = null;
     private DataManager dataManager = DataManager.getDataManager();
-    private static JestDroidClient client;
+    private static JestClient client;
+    private static String index = "cmput301f18t01test";
 
     /**
      * @return Singleton instance of ElasticSearchController
@@ -47,10 +52,23 @@ class ElasticsearchController {
     public static ElasticsearchController getController() {
         if (elasticsearchController == null) {
             elasticsearchController = new ElasticsearchController();
+            JestClientFactory factory = new JestClientFactory();
+            factory.setDroidClientConfig(new DroidClientConfig
+                    .Builder("http://cmput301.softwareprocess.es:8080")
+                    .multiThreaded(true)
+                    .defaultMaxTotalConnectionPerRoute(2)
+                    .maxTotalConnection(20)
+                    .build());
+            client = factory.getObject();
         }
         return elasticsearchController;
     }
 
+    private void pushPatients(){
+        HashMap<String, JSONObject> patients = dataManager.getPatients();
+
+    }
+    /*
 
     public static class AddPatientTask extends AsyncTask<Patient, Void, Void> {
 
@@ -79,7 +97,7 @@ class ElasticsearchController {
             return null;
         }
     }
-
+*/
     /*
     commented out for the time being for testing purposes
 
@@ -126,7 +144,7 @@ class ElasticsearchController {
     }
     */
 
-
+/*
 
     public static void verifySettings(){
         if (client == null){
@@ -139,7 +157,7 @@ class ElasticsearchController {
         }
     }
 
-
+*/
 
 
 
@@ -147,7 +165,7 @@ class ElasticsearchController {
 
     public void push() {
 
-
+        this.pushPatients();
     }
 
 
