@@ -4,9 +4,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+import java.util.ArrayList;
 
 public class AddProblemActivity extends AppCompatActivity {
 
+    ArrayList<String> problemArray = new ArrayList<String>();
     Button save;
     Button cancel;
     EditText title;
@@ -24,4 +26,6 @@ public class AddProblemActivity extends AppCompatActivity {
         description = findViewById(R.id.addDescription);
 
     }
+
+    //TODO: Add newly entered problem to the array
 }
