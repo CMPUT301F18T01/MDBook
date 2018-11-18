@@ -33,17 +33,21 @@ public class ElasticsearchControllerTest {
 
     @Test
     public void testAddPatientTask(){
+        /* Set up testing environment */
         UserManager.initManager();
         UserManager userManager = UserManager.getManager();
         ElasticsearchController elasticsearchController = ElasticsearchController.getController();
+
+        /* Create and push new patient */
         try {
-            Patient patient = userManager.createPatient("patientID", "dis a phone", "the email");
+            Patient patient = userManager.createPatient("patientID", "testphone", "testemail");
         } catch (UserIDNotAvailableException e) {
             fail();
         }
-
         elasticsearchController.push();
 
+        // TODO: set up jest controller in test
+        // verify the above patient is created at http://cmput301.softwareprocess.es:8080/cmput301f18t01test/patient/patientID
 
     }
 }
