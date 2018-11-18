@@ -116,6 +116,8 @@ class ElasticsearchController {
         this.idlists.put("patientIDs", patientIDList);
     }
 
+
+
     private void pushCaregivers(){
         HashMap<String, JSONObject> caregivers = dataManager.getCaregivers();
         for (String caregiversID : caregivers.keySet()){
@@ -207,8 +209,12 @@ class ElasticsearchController {
         } catch (JSONException e) {
             throw new RuntimeException();
         }
-
-        //Index IDindex = new Index.Builder(patients.get(patiendID)).index(index + "/MetaDataPatient/list").type("MetadataPatient").id(patiendID).build();
+        Index JestID = new Index.Builder(IDJSON).index(index).type("metadata").id("idlists").build();
+        try {
+            client.execute(JestID);
+        } catch (IOException e) {
+            throw new RuntimeException("Couldn't push id lists", e);
+        }
     }
 
     public void pull(){
