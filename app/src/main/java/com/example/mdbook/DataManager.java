@@ -112,6 +112,10 @@ public class DataManager {
         this.records = records;
     }
 
+    public void setAvailableIDs(ArrayList<Integer> availableIDs){
+        this.availableIDs = availableIDs;
+    }
+
     /**
      * If there are unused IDs preceding the currently available one, return and remove one of
      * those. Otherwise return fresh ID and increment counter.
@@ -129,6 +133,10 @@ public class DataManager {
         }
     }
 
+    public ArrayList<Integer> getAvailableIDs(){
+        return availableIDs;
+    }
+
     /**
      * Adds id number to list of available IDs. This indicates that the corresponding item has
      * been deleted.
@@ -139,6 +147,11 @@ public class DataManager {
     public void addAvailableID(int availableID){
         this.availableIDs.add(availableID);
     }
+
+
+
+
+
 
     public void push(){
         elasticsearchController.push();
