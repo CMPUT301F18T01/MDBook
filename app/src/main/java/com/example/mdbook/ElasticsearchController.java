@@ -16,6 +16,7 @@ import com.searchly.jestdroid.DroidClientConfig;
 import com.searchly.jestdroid.JestClientFactory;
 import com.searchly.jestdroid.JestDroidClient;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -25,6 +26,7 @@ import java.util.List;
 
 import io.searchbox.client.JestClient;
 import io.searchbox.client.JestResult;
+import io.searchbox.core.Delete;
 import io.searchbox.core.DocumentResult;
 import io.searchbox.core.Index;
 import io.searchbox.core.Search;
@@ -66,21 +68,36 @@ class ElasticsearchController {
                     .maxTotalConnection(20)
                     .build());
             client = factory.getObject();
-
         }
         return elasticsearchController;
     }
 
     private void pushPatients(){
         HashMap<String, JSONObject> patients = dataManager.getPatients();
-        for (String patiendID : patients.keySet()){
-            Index jestIndex = new Index.Builder(patients.get(patiendID)).index(index).type("patient").id(patiendID).build();
-            Index saveID = new Index.Builder(patients.get(patiendID)).index(index + "/MetaDataPatient/list").type("MetadataPatient").id(patiendID).build();
+        ArrayList<String> patientIDList = new ArrayList<>();
+
+        /* Upload new patients */
+        for (String patientID : patients.keySet()){
+            patientIDList.add(patientID);
+            Index jestIndex = new Index.Builder(patients.get(patientID)).index(index).type("patient").id(patientID).build();
             try {
                 client.execute(jestIndex);
-                client.execute(saveID);
             } catch (IOException e) {
-                throw new RuntimeException("Failed to upload patient " + patiendID, e);
+                throw new RuntimeException("Failed to upload patient " + patientID, e);
+            }
+        }
+
+        /* Delete removed patients */
+        for (String patientID : this.idlists.get("patientIDs")){
+            if (!patientIDList.contains(patientID)){
+                try {
+                    client.execute(new Delete.Builder(patientID)
+                    .index(index)
+                    .type("patient")
+                    .build());
+                } catch (IOException e) {
+                    throw new RuntimeException("Failed to delete patient" + patientID, e);
+                }
             }
         }
     }
@@ -143,12 +160,41 @@ class ElasticsearchController {
 
 
     public void push() {
+        /*
+         * Update objects
+         * Each method also updates its corresponding id list but doesn't push it
+         */
         this.pushPatients();
         this.pushCaregivers();
         this.pushProblems();
         this.pushRecords();
         this.pushPhotos();
 
+        /* push id lists */
+        this.pushIDLists();
+
+    }
+
+    /**
+     * IDindex structure:
+     * index/metadata/idlists:
+     *      patientIDs: list of strings
+     *      caregiverIDs: list of strings
+     *      problemIDs: list of ints
+     *      recordIDs: list of ints
+     *      photoIDs: list of ints
+     *      availableIDs: list of ints
+     *      availableID: int
+     */
+    private void pushIDLists() {
+        JSONObject IDJSON = new JSONObject(this.idlists);
+        try {
+            IDJSON.put("availableID", this.availableID);
+        } catch (JSONException e) {
+            throw new RuntimeException();
+        }
+
+        //Index IDindex = new Index.Builder(patients.get(patiendID)).index(index + "/MetaDataPatient/list").type("MetadataPatient").id(patiendID).build();
     }
 
     public void pull(){

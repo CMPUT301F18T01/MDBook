@@ -37,6 +37,7 @@ public class DataManager {
      *      "comment": String
      * PhotoID: Photo
      *
+     *
      */
     private HashMap<String, JSONObject> patients;
     private HashMap<String, JSONObject> caregivers;
@@ -44,7 +45,7 @@ public class DataManager {
     private HashMap<Integer, JSONObject> records;
     private HashMap<Integer, Photo> photos;
     private ArrayList<Integer> availableIDs;
-    private int availableID = 0;
+    private int availableID = 0; // An unused id number
     private ElasticsearchController elasticsearchController;
     private LocalStorageController localStorageController;
 

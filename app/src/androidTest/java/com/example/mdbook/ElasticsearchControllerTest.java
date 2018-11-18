@@ -12,14 +12,6 @@ package com.example.mdbook;
 
 import junit.framework.TestCase;
 
-import org.junit.Test;
-
-import java.security.InvalidKeyException;
-import java.util.ArrayList;
-import java.util.Date;
-
-import static junit.framework.TestCase.fail;
-
 /**
  * test for elasticsearchcontroller
  * tests are a bit wordy, most of this stuff will be wrapped up cleanly in usermanager
@@ -29,9 +21,8 @@ import static junit.framework.TestCase.fail;
  *
  * @version 0.0.1
  **/
-public class ElasticsearchControllerTest {
+public class ElasticsearchControllerTest extends  TestCase{
 
-    @Test
     public void testAddPatientTask(){
         /* Set up testing environment */
         UserManager.initManager();
