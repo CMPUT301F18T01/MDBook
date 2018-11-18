@@ -35,12 +35,14 @@ public class ElasticsearchControllerTest {
     public void testAddPatientTask(){
         UserManager.initManager();
         UserManager userManager = UserManager.getManager();
+        ElasticsearchController elasticsearchController = ElasticsearchController.getController();
         try {
-            Patient patient = userManager.createPatient("patientID", "phone", "email");
+            Patient patient = userManager.createPatient("patientID", "dis a phone", "the email");
         } catch (UserIDNotAvailableException e) {
             fail();
         }
 
+        elasticsearchController.push();
 
 
     }

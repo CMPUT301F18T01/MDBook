@@ -18,15 +18,18 @@ import com.searchly.jestdroid.JestDroidClient;
 
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import io.searchbox.client.JestClient;
+import io.searchbox.client.JestResult;
 import io.searchbox.core.DocumentResult;
 import io.searchbox.core.Index;
 import io.searchbox.core.Search;
 import io.searchbox.core.SearchResult;
+import io.searchbox.indices.mapping.PutMapping;
 
 /**
  * Keeps DataManager in sync with cloud storage.
@@ -68,7 +71,27 @@ class ElasticsearchController {
 
     private void pushPatients(){
         HashMap<String, JSONObject> patients = dataManager.getPatients();
-
+        for (String patiendID : patients.keySet()){
+            /*
+            PutMapping putMapping = new PutMapping.Builder(
+                    index,
+                    "patient",
+                    patients.get(patiendID).toString()
+            ).build();
+            try {
+                JestResult result = client.execute(putMapping);
+                System.out.print(result);
+            } catch (IOException e) {
+                throw new RuntimeException("Failed to upload patient " + patiendID, e);
+            }
+            */
+            Index jestIndex = new Index.Builder(patients.get(patiendID)).index(index).type("patient").id(patiendID).build();
+            try {
+                client.execute(jestIndex);
+            } catch (IOException e) {
+                throw new RuntimeException("Failed to upload patient " + patiendID, e);
+            }
+        }
     }
     /*
 
