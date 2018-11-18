@@ -32,6 +32,7 @@ import io.searchbox.core.Index;
 import io.searchbox.core.Search;
 import io.searchbox.core.SearchResult;
 import io.searchbox.indices.mapping.PutMapping;
+import io.searchbox.indices.template.DeleteTemplate;
 
 /**
  * Keeps DataManager in sync with cloud storage.
@@ -99,79 +100,152 @@ class ElasticsearchController {
         }
 
         /* Delete removed patients */
-        for (String patientID : (ArrayList<String>) this.idlists.get("patientIDs")){
+        for (String patientID : (ArrayList<String>) idlists.get("patientIDs")){
             if (!patientIDList.contains(patientID)){
                 try {
                     client.execute(new Delete.Builder(patientID)
-                    .index(index)
-                    .type("patient")
-                    .build());
+                            .index(index)
+                            .type("patient")
+                            .build());
                 } catch (IOException e) {
-                    throw new RuntimeException("Failed to delete patient" + patientID, e);
+                    throw new RuntimeException("Failed to delete patient " + patientID, e);
                 }
             }
         }
 
         /* Update patientID list */
-        this.idlists.put("patientIDs", patientIDList);
+        idlists.put("patientIDs", patientIDList);
     }
 
 
 
     private void pushCaregivers(){
         HashMap<String, JSONObject> caregivers = dataManager.getCaregivers();
-        for (String caregiversID : caregivers.keySet()){
-            Index jestIndex = new Index.Builder(caregivers.get(caregiversID)).index(index + "/caregiver").type("caregivers").id(caregiversID).build();
-            Index saveID = new Index.Builder(caregivers.get(caregiversID)).index(index + "/MetaDataCaregiver/list").type("MetadataCaregivers").id(caregiversID).build();
+        ArrayList<String> caregiverIDList = new ArrayList<>();
+        /* Upload new caregivers */
+        for (String caregiverID : caregivers.keySet()){
+            caregiverIDList.add(caregiverID);
+            Index jestIndex = new Index.Builder(caregivers.get(caregiverID)).index(index).type("caregiver").id(caregiverID).build();
             try{
                 client.execute(jestIndex);
-                client.execute(saveID);
             } catch (IOException e){
-                throw  new RuntimeException("Failed to upload caregives " + caregiversID, e);
+                throw  new RuntimeException("Failed to upload caregive " + caregiverID, e);
             }
         }
+
+        /* Delete removed caregivers */
+        for (String caregiverID : (ArrayList<String>) idlists.get("caregiverIDs")){
+            if (!caregiverIDList.contains(caregiverID)){
+                try{
+                    client.execute(new Delete.Builder(caregiverID)
+                            .index(index)
+                            .type("caregiver")
+                            .build());
+                } catch (IOException e){
+                    throw new RuntimeException("Failed to delete caregiver " + caregiverID, e);
+                }
+            }
+        }
+
+        /* Update caregiverID list */
+        idlists.put("caregiverIDs",caregiverIDList);
     }
 
     private void pushProblems(){
         HashMap<Integer, JSONObject> problems = dataManager.getProblems();
-        for (Integer problemsID : problems.keySet()){
-            Index jestIndex = new Index.Builder(problems.get(problemsID)).index(index + "/problems").type("problems").id(problemsID.toString()).build();
-            Index saveID = new Index.Builder(problems.get(problemsID)).index(index + "/MetaDataProblems/list").type("MetadataProblems").id(problemsID.toString()).build();
+        ArrayList<Integer> problemIDList = new ArrayList<>();
+        /* Upload new problems */
+        for (Integer problemID : problems.keySet()){
+            problemIDList.add(problemID);
+            Index jestIndex = new Index.Builder(problems.get(problemID)).index(index).type("problem").id(problemID.toString()).build();
             try{
                 client.execute(jestIndex);
-                client.execute(saveID);
             } catch (IOException e){
-                throw  new RuntimeException("Failed to upload problem " + problemsID.toString(), e);
+                throw  new RuntimeException("Failed to upload problem " + problemID.toString(), e);
             }
         }
+        /* Delete removed problems */
+        for (Integer problemID : (ArrayList<Integer>) idlists.get("problemIDs")){
+            if (!problemIDList.contains(problemID)){
+                try{
+                    client.execute(new Delete.Builder(problemID.toString())
+                            .index(index)
+                            .type("problem")
+                            .build());
+                } catch (IOException e){
+                    throw new RuntimeException("Failed to delete problem " + problemID.toString(), e);
+                }
+            }
+        }
+
+        /* Update problemID list */
+        idlists.put("problemIDs",problemIDList);
+
     }
 
     private void pushRecords(){
         HashMap<Integer, JSONObject> records = dataManager.getRecords();
-        for (Integer recordsID : records.keySet()){
-            Index jestIndex = new Index.Builder(records.get(recordsID)).index(index+"/records").type("records").id(recordsID.toString()).build();
-            Index saveID = new Index.Builder(records.get(recordsID)).index(index+"/MetaDataRecords/list").type("MetadataRecords").id(recordsID.toString()).build();
+        ArrayList<Integer> recordIDList = new ArrayList<>();
+        /* Upload new records */
+        for (Integer recordID : records.keySet()){
+            Index jestIndex = new Index.Builder(records.get(recordID)).index(index).type("record").id(recordID.toString()).build();
             try{
                 client.execute(jestIndex);
-                client.execute(saveID);
             } catch (IOException e){
-                throw  new RuntimeException("Failed to upload records" + recordsID.toString(), e);
+                throw  new RuntimeException("Failed to upload record" + recordID.toString(), e);
             }
         }
+        /* Delete removed records */
+        for (Integer recordID : (ArrayList<Integer>) idlists.get("recordIDs")){
+            if (!recordIDList.contains(recordID)){
+                try{
+                    client.execute(new Delete.Builder(recordID.toString())
+                            .index(index)
+                            .type("record")
+                            .build());
+                } catch (IOException e){
+                    throw new RuntimeException("Failed to delete record " + recordID.toString(), e);
+                }
+            }
+        }
+
+        /* Update recordID list */
+        idlists.put("recordIDs",recordIDList);
+
+
     }
 
+
+    /* TODO figure out how to upload photos to ES */
     private void pushPhotos(){
         HashMap<Integer, Photo> photos = dataManager.getPhotos();
-        for (Integer photosID : photos.keySet()){
-            Index jestIndex = new Index.Builder(photos.get(photosID)).index(index +"/photos").type("photos").id(photosID.toString()).build();
-            Index saveID = new Index.Builder(photos.get(photosID)).index(index + "MetaDataPhotos/list").type("MetadataPhotos").id(photosID.toString()).build();
+        ArrayList<Integer> photoIDList = new ArrayList<>();
+        /* Upload new photos */
+        for (Integer photoID : photos.keySet()){
+            Index jestIndex = new Index.Builder(photos.get(photoID)).index(index).type("photo").id(photoID.toString()).build();
             try{
                 client.execute(jestIndex);
-                client.execute(saveID);
             } catch (IOException e){
-                throw  new RuntimeException("Failed to upload photo " + photosID.toString(), e);
+                throw  new RuntimeException("Failed to upload photo " + photoID.toString(), e);
             }
         }
+        /* Delete removed photos */
+        for (Integer photoID : (ArrayList<Integer>) idlists.get("photoIDs")){
+            if (!photoIDList.contains(photoID)){
+                try{
+                    client.execute(new Delete.Builder(photoID.toString())
+                            .index(index)
+                            .type("photo")
+                            .build());
+                } catch (IOException e){
+                    throw new RuntimeException("Failed to delete photo " + photoID.toString(), e);
+                }
+            }
+        }
+
+        /* Update photoID list */
+        idlists.put("photoIDs",photoIDList);
+
     }
 
 
