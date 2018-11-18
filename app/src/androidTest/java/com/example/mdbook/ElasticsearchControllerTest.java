@@ -40,7 +40,7 @@ public class ElasticsearchControllerTest {
 
         /* Create and push new patient */
         try {
-            Patient patient = userManager.createPatient("patientID", "testphone", "testemail");
+            Patient patient = userManager.createPatient("patientID", "test-phone", "testemail");
         } catch (UserIDNotAvailableException e) {
             fail();
         }

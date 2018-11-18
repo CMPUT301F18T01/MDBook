@@ -47,6 +47,8 @@ class ElasticsearchController {
     private DataManager dataManager = DataManager.getDataManager();
     private static JestClient client;
     private static String index = "cmput301f18t01test";
+    private HashMap<String, ArrayList<String>> idlists;
+    private int availableID;
 
 
     /**
@@ -72,7 +74,7 @@ class ElasticsearchController {
     private void pushPatients(){
         HashMap<String, JSONObject> patients = dataManager.getPatients();
         for (String patiendID : patients.keySet()){
-            Index jestIndex = new Index.Builder(patients.get(patiendID)).index(index + "/patient").type("patient").id(patiendID).build();
+            Index jestIndex = new Index.Builder(patients.get(patiendID)).index(index).type("patient").id(patiendID).build();
             Index saveID = new Index.Builder(patients.get(patiendID)).index(index + "/MetaDataPatient/list").type("MetadataPatient").id(patiendID).build();
             try {
                 client.execute(jestIndex);
@@ -147,6 +149,10 @@ class ElasticsearchController {
         this.pushRecords();
         this.pushPhotos();
 
+    }
+
+    public void pull(){
+        ;
     }
 
 

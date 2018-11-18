@@ -116,12 +116,29 @@ public class DataManager {
         this.availableIDs = availableIDs;
     }
 
+    public ArrayList<Integer> getAvailableIDs(){
+        return availableIDs;
+    }
+
+    public void setAvailableID(int id){
+        this.availableID = id;
+    }
+
+    public int getAvaialbleID(){
+        return this.availableID;
+    }
+
+    public void push(){
+        elasticsearchController.push();
+        localStorageController.push();
+    }
+
     /**
      * If there are unused IDs preceding the currently available one, return and remove one of
      * those. Otherwise return fresh ID and increment counter.
      * @return
      */
-    public int getAvailableID(){
+    public int generateID(){
         if (availableIDs.size() == 0){
             availableID += 1;
             return availableID-1;
@@ -133,10 +150,6 @@ public class DataManager {
         }
     }
 
-    public ArrayList<Integer> getAvailableIDs(){
-        return availableIDs;
-    }
-
     /**
      * Adds id number to list of available IDs. This indicates that the corresponding item has
      * been deleted.
@@ -146,16 +159,6 @@ public class DataManager {
      */
     public void addAvailableID(int availableID){
         this.availableIDs.add(availableID);
-    }
-
-
-
-
-
-
-    public void push(){
-        elasticsearchController.push();
-        localStorageController.push();
     }
 
 }

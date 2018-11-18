@@ -492,7 +492,7 @@ public class UserManager {
 
         /* Generate problemID if needed */
         if (problem.getProblemID() == -1){
-            problem.setProblemID(dataManager.getAvailableID());
+            problem.setProblemID(dataManager.generateID());
             /* Problem is new, add empty recordID list */
         }
 
@@ -564,7 +564,7 @@ public class UserManager {
 
         /* Generate recordID if needed */
         if (record.getRecordID() == -1){
-            record.setRecordID(dataManager.getAvailableID());
+            record.setRecordID(dataManager.generateID());
         }
 
         /* Update photos */
@@ -587,7 +587,7 @@ public class UserManager {
             for (Photo photo : record.getPhotos()) {
                 int photoID = photo.getPhotoid();
                 if (photoID == -1) {
-                    photoID = dataManager.getAvailableID();
+                    photoID = dataManager.generateID();
                     photo.setPhotoid(photoID);
                     photoIDs.add(photoID);
                 }
