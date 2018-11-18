@@ -12,6 +12,6 @@ public class NewBodyLocationView extends AppCompatActivity {
 
 
 
-        
+
     }
 }

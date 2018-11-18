@@ -23,6 +23,7 @@ import android.widget.ListView;
  * Creates a view for the records to users problems
  *
  * @see com.example.mdbook.Record
+ * @see com.example.mdbook.CustomAdapter
  *
  * @author James Aina
  *
@@ -43,12 +44,10 @@ public class ViewRecordActivity extends AppCompatActivity {
             R.drawable.drake,
             R.drawable.donald_trump,
            };
-    // Commented these out because I'm not able to move their textview field to avoid overlap yet
-    /*
+
     String[] Comment = {"I have a headache", "My head hurts", "My Hand Hurts", "My nose hurts", "My finger hurts", "My eyes hurt"};
-    String[] Location = {"Edmonton", "Vancouver", "Sherwood Park", "England", "USA", "Vietnam"};
     String[] Date = {"08/09/18", "12/09/18", "16/09/18", "19/09/18", "21/09/18", "28/09/18"};
-    */
+
 
     /**
      * Creates a listview with an imageview
@@ -60,10 +59,8 @@ public class ViewRecordActivity extends AppCompatActivity {
         setContentView(R.layout.activity_view_record);
 
         mListView = (ListView) findViewById(R.id.recordListView);
-        // Custom Adapter takes in all the variables to be displayed on the listview
-        // I comment out the other variables because I can't move the testview down in the xml file
         CustomAdapter customAdapter = new CustomAdapter(ViewRecordActivity.this,
-                Title ,Images/*, Date, Comment, Location*/);
+                Title ,Images, Date, Comment);
         mListView.setAdapter(customAdapter);
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

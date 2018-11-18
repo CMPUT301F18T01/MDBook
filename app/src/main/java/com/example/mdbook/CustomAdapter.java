@@ -30,21 +30,17 @@ import android.widget.TextView;
 public class CustomAdapter extends ArrayAdapter {
     //
     String [] titles;
-
-
-    // String [] dates;
-    // String [] comments;
-    String [] locations;
+    String [] dates;
+    String [] comments;
     int [] images;
     Context mContext;
 
-    public CustomAdapter( Context context, String[] recordTitles, int[]recordImages/*, String[] recordDates, String [] recordComments, String [] recordLocations*/) {
+    public CustomAdapter( Context context, String[] recordTitles, int[]recordImages, String[] recordDates, String [] recordComments) {
         super(context, R.layout.record_listview_item);
         this.titles = recordTitles;
         this.images = recordImages;
-        //this.dates = recordDates;
-       // this.comments = recordComments;
-       // this.locations = recordLocations;
+        this.dates = recordDates;
+        this.comments = recordComments;
         this.mContext = context;
    }
 
@@ -71,10 +67,10 @@ public class CustomAdapter extends ArrayAdapter {
             convertView = mInflater.inflate(R.layout.record_listview_item, parent, false);
             //Store the images and title in a view holder
             mViewHolder.mImages = (ImageView) convertView.findViewById((R.id.imageView));
-            mViewHolder.mTitles = (TextView) convertView.findViewById(R.id.textView1);
-            // mViewHolder.mDates = (TextView) convertView.findViewById(R.id.textView2);
-            //  mViewHolder.mComments = (TextView) convertView.findViewById(R.id.textView3);
-            // mViewHolder.mLocations = (TextView) convertView.findViewById(R.id.textView4);
+            mViewHolder.mTitles = (TextView) convertView.findViewById(R.id.titleTextView);
+            mViewHolder.mDates = (TextView) convertView.findViewById(R.id.dateTextView);
+            mViewHolder.mComments = (TextView) convertView.findViewById(R.id.commentTextView);
+
             convertView.setTag(mViewHolder);
 
         }
@@ -82,9 +78,12 @@ public class CustomAdapter extends ArrayAdapter {
             mViewHolder = (ViewHolder)convertView.getTag();
         }
 
-            // Right now this only sets the text of the last viewholder
+            // Sett the viewholder
             mViewHolder.mImages.setImageResource(images[position]);
             mViewHolder.mTitles.setText(titles[position]);
+            mViewHolder.mComments.setText(comments[position]);
+            mViewHolder.mDates.setText(dates[position]);
+
         return convertView;
     }
 
@@ -94,8 +93,8 @@ public class CustomAdapter extends ArrayAdapter {
     static  class ViewHolder{
         ImageView mImages;
         TextView mTitles;
-        //TextView mDates;
-       // TextView mComments;
-       // TextView mLocations;
+        TextView mDates;
+        TextView mComments;
+
     }
 }
