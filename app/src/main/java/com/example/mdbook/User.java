@@ -9,6 +9,8 @@
  */
 package com.example.mdbook;
 
+import io.searchbox.annotations.JestId;
+
 /**
  * Holds contact information relevant to a user. Has no verification or online sync methods.
  * Class (and subclasses) should never be interacted with directly by the user or activities.
@@ -28,9 +30,11 @@ package com.example.mdbook;
  **/
 public abstract class User {
 
-    private String userID;
     private String phone;
     private String email;
+    @JestId
+    protected String userID;
+
 
     /**
      * Generates a new user object

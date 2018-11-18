@@ -65,7 +65,7 @@ class ElasticsearchController {
                     // where is the client?
                     DocumentResult result = client.execute(index);
                     if (result.isSucceeded()) {
-                        patient.setId(result.getId());
+                        patient.userID = result.getId();
                     }
                     else {
                         Log.i("Error", "Elasticsearch was not able to add the patient");
