@@ -23,6 +23,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+<<<<<<< HEAD
         <activity android:name=".ViewRecordActivity" />
         <activity android:name=".EditDetailsActivity" />
         <activity android:name=".ViewLocationActivity" />
@@ -31,6 +32,13 @@
         <activity android:name=".CaretakerViewRecordsActivity" />
         <activity android:name=".PatientSlideActivity" />
         <activity android:name=".AddRecordActivityView"></activity>
+=======
+<!--<<<<<<< HEAD -->
+<!--=======-->
+        <activity android:name=".ListProblemActivity" />
+        <activity android:name=".ViewAccountDetailActivity"></activity>
+<!-->>>>>>> 255f55b7ed46af6bdfd59299ae1d497079e6e2f6-->
+>>>>>>> ListProblem
     </application>
 
 </manifest>

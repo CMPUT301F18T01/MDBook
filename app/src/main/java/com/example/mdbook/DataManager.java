@@ -12,8 +12,6 @@ import java.util.HashMap;
  * @author Noah Burghardt
  * @version 0.0.1
  **/
-
-//TODO: add availableID/availableIDs setter
 public class DataManager {
     /**
      * PatientID:
