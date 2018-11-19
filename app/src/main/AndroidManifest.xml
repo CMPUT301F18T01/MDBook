@@ -28,7 +28,8 @@
         <activity android:name=".ViewLocationActivity" />
         <activity android:name=".AddProblemActivity" />
         <activity android:name=".NewBodyLocationView" />
-        <activity android:name=".CaretakerViewRecordsActivity"></activity>
+        <activity android:name=".CaretakerViewRecordsActivity" />
+        <activity android:name=".PatientSlideActivity"></activity>
     </application>
 
 </manifest>
