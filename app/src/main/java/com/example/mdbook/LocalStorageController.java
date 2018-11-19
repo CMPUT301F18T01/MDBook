@@ -75,7 +75,7 @@ class LocalStorageController {
      */
     public void push() {
         SharedPreferences sharedPreferences = view.getSharedPreferences("shared preferences",
-                MODE_PRIVATE);
+                view.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         String stringPatients = patients.toJson(dataManager.getPatients());
         String stringCaregivers = caregivers.toJson(dataManager.getCaregivers());
@@ -101,7 +101,7 @@ class LocalStorageController {
      */
     public void loadData(){
         SharedPreferences sharedPreferences = view.getSharedPreferences("shared preferences",
-                MODE_PRIVATE);
+                view.MODE_PRIVATE);
         Gson gson = new Gson();
         String stringPatients = sharedPreferences.getString("patients", null);
         String stringCaregivers = sharedPreferences.getString("caregivers", null);

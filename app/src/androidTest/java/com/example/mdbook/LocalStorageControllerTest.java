@@ -21,6 +21,7 @@ public class LocalStorageControllerTest extends TestCase {
             fail();
         }
         localStorageController.push();
+        localStorageController.loadData();
     }
 
 }
