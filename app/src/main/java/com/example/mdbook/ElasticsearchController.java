@@ -9,20 +9,22 @@ package com.example.mdbook;
  * Copyright (c) 2018. All rights reserved.
  */
 
-import android.os.AsyncTask;
-import android.util.Log;
 
 import com.searchly.jestdroid.DroidClientConfig;
 import com.searchly.jestdroid.JestClientFactory;
-import com.searchly.jestdroid.JestDroidClient;
 
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 
-import io.searchbox.core.DocumentResult;
+import io.searchbox.client.JestClient;
+import io.searchbox.core.Delete;
 import io.searchbox.core.Index;
-import io.searchbox.core.Search;
-import io.searchbox.core.SearchResult;
+
 
 /**
  * Keeps DataManager in sync with cloud storage.
@@ -38,7 +40,11 @@ class ElasticsearchController {
 
     private static ElasticsearchController elasticsearchController = null;
     private DataManager dataManager = DataManager.getDataManager();
-    private static JestDroidClient client;
+    private static JestClient client;
+    private static String index = "cmput301f18t01test";
+    private static HashMap<String, Object> idlists;
+    private int availableID;
+
 
     /**
      * @return Singleton instance of ElasticSearchController
@@ -47,107 +53,238 @@ class ElasticsearchController {
     public static ElasticsearchController getController() {
         if (elasticsearchController == null) {
             elasticsearchController = new ElasticsearchController();
+            JestClientFactory factory = new JestClientFactory();
+            factory.setDroidClientConfig(new DroidClientConfig
+                    .Builder("http://cmput301.softwareprocess.es:8080")
+                    .multiThreaded(true)
+                    .defaultMaxTotalConnectionPerRoute(2)
+                    .maxTotalConnection(20)
+                    .build());
+            client = factory.getObject();
+        }
+
+        if (idlists == null){
+            idlists = new HashMap<>();
+            idlists.put("patientIDs", new ArrayList<String>());
+            idlists.put("caregiverIDs", new ArrayList<String>());
+            idlists.put("problemIDs", new ArrayList<Integer>());
+            idlists.put("recordIDs", new ArrayList<Integer>());
+            idlists.put("photoIDs", new ArrayList<Integer>());
+            idlists.put("AvailableIDs", new ArrayList<Integer>());
+
         }
         return elasticsearchController;
     }
 
+    private void pushPatients(){
+        HashMap<String, JSONObject> patients = dataManager.getPatients();
+        ArrayList<String> patientIDList = new ArrayList<>();
 
-    public static class AddPatientTask extends AsyncTask<Patient, Void, Void> {
-
-        @Override
-        protected Void doInBackground(Patient... patients) {
-            verifySettings();
-
-            for (Patient patient : patients) {
-                Index index = new Index.Builder(patient).index("testing").type("patient").build();
-
-                try {
-                    // where is the client?
-                    DocumentResult result = client.execute(index);
-                    if (result.isSucceeded()) {
-                        patient.userID = result.getId();
-                    }
-                    else {
-                        Log.i("Error", "Elasticsearch was not able to add the patient");
-                    }
-                }
-                catch (Exception e) {
-                    Log.i("Error", "The application failed to build and send the patients");
-                }
-
-            }
-            return null;
-        }
-    }
-
-    /*
-    commented out for the time being for testing purposes
-
-
-    // TODO we need a function which gets tweets from elastic search
-    public static class GetTask extends AsyncTask<String, Void, ArrayList<NormalTweet>> {
-        @Override
-        protected ArrayList<NormalTweet> doInBackground(String... search_parameters) {
-            verifySettings();
-
-            ArrayList<NormalTweet> tweets = new ArrayList<NormalTweet>();
-
-            // TODO Build the query
-
-            //String query = "{ \"size\": 3, \"query\" : { \"term\" : { \"message\" : \""+ search_parameters[0] + "\"}}}";
-            String query = "{ \"size\": 3, \n" +
-                    "    \"query\" : {\n" +
-                    "        \"term\" : { \"message\" : \"" + search_parameters[0] + "\" }\n" +
-                    "    }\n" +
-                    "}" ;
-
-            Search search = new Search.Builder(query)
-                    .addIndex("testing")
-                    .addType("tweet")
-                    .build();
-
+        /* Upload new patients */
+        for (String patientID : patients.keySet()){
+            patientIDList.add(patientID);
+            Index jestIndex = new Index.Builder(patients.get(patientID)).index(index).type("patient").id(patientID).build();
             try {
-                // TODO get the results of the query
-                SearchResult result = client.execute(search);
-                if (result.isSucceeded()){
-                    List<NormalTweet> foundTweets = result.getSourceAsObjectList(NormalTweet.class);
-                    tweets.addAll(foundTweets);
-                }
-                else {
-                    Log.i("Error", "The search query failed to find any tweets that matched");
+                client.execute(jestIndex);
+            } catch (IOException e) {
+                throw new RuntimeException("Failed to upload patient " + patientID, e);
+            }
+        }
+
+        /* Delete removed patients */
+        for (String patientID : (ArrayList<String>) idlists.get("patientIDs")){
+            if (!patientIDList.contains(patientID)){
+                try {
+                    client.execute(new Delete.Builder(patientID)
+                            .index(index)
+                            .type("patient")
+                            .build());
+                } catch (IOException e) {
+                    throw new RuntimeException("Failed to delete patient " + patientID, e);
                 }
             }
-            catch (Exception e) {
-                Log.i("Error", "Something went wrong when we tried to communicate with the elasticsearch server!");
-            }
-
-            return tweets;
         }
-    }
-    */
 
-
-
-    public static void verifySettings(){
-        if (client == null){
-            DroidClientConfig.Builder builder = new DroidClientConfig.Builder("http://cmput301.softwareprocess.es:8080/cmput301f18t01");
-            DroidClientConfig config = builder.build();
-
-            JestClientFactory factory = new JestClientFactory();
-            factory.setDroidClientConfig(config);
-            client  = (JestDroidClient) factory.getObject();
-        }
+        /* Update patientID list */
+        idlists.put("patientIDs", patientIDList);
     }
 
 
 
+    private void pushCaregivers(){
+        HashMap<String, JSONObject> caregivers = dataManager.getCaregivers();
+        ArrayList<String> caregiverIDList = new ArrayList<>();
+        /* Upload new caregivers */
+        for (String caregiverID : caregivers.keySet()){
+            caregiverIDList.add(caregiverID);
+            Index jestIndex = new Index.Builder(caregivers.get(caregiverID)).index(index).type("caregiver").id(caregiverID).build();
+            try{
+                client.execute(jestIndex);
+            } catch (IOException e){
+                throw  new RuntimeException("Failed to upload caregive " + caregiverID, e);
+            }
+        }
+
+        /* Delete removed caregivers */
+        for (String caregiverID : (ArrayList<String>) idlists.get("caregiverIDs")){
+            if (!caregiverIDList.contains(caregiverID)){
+                try{
+                    client.execute(new Delete.Builder(caregiverID)
+                            .index(index)
+                            .type("caregiver")
+                            .build());
+                } catch (IOException e){
+                    throw new RuntimeException("Failed to delete caregiver " + caregiverID, e);
+                }
+            }
+        }
+
+        /* Update caregiverID list */
+        idlists.put("caregiverIDs",caregiverIDList);
+    }
+
+    private void pushProblems(){
+        HashMap<Integer, JSONObject> problems = dataManager.getProblems();
+        ArrayList<Integer> problemIDList = new ArrayList<>();
+        /* Upload new problems */
+        for (Integer problemID : problems.keySet()){
+            problemIDList.add(problemID);
+            Index jestIndex = new Index.Builder(problems.get(problemID)).index(index).type("problem").id(problemID.toString()).build();
+            try{
+                client.execute(jestIndex);
+            } catch (IOException e){
+                throw  new RuntimeException("Failed to upload problem " + problemID.toString(), e);
+            }
+        }
+        /* Delete removed problems */
+        for (Integer problemID : (ArrayList<Integer>) idlists.get("problemIDs")){
+            if (!problemIDList.contains(problemID)){
+                try{
+                    client.execute(new Delete.Builder(problemID.toString())
+                            .index(index)
+                            .type("problem")
+                            .build());
+                } catch (IOException e){
+                    throw new RuntimeException("Failed to delete problem " + problemID.toString(), e);
+                }
+            }
+        }
+
+        /* Update problemID list */
+        idlists.put("problemIDs",problemIDList);
+
+    }
+
+    private void pushRecords(){
+        HashMap<Integer, JSONObject> records = dataManager.getRecords();
+        ArrayList<Integer> recordIDList = new ArrayList<>();
+        /* Upload new records */
+        for (Integer recordID : records.keySet()){
+            Index jestIndex = new Index.Builder(records.get(recordID)).index(index).type("record").id(recordID.toString()).build();
+            try{
+                client.execute(jestIndex);
+            } catch (IOException e){
+                throw  new RuntimeException("Failed to upload record" + recordID.toString(), e);
+            }
+        }
+        /* Delete removed records */
+        for (Integer recordID : (ArrayList<Integer>) idlists.get("recordIDs")){
+            if (!recordIDList.contains(recordID)){
+                try{
+                    client.execute(new Delete.Builder(recordID.toString())
+                            .index(index)
+                            .type("record")
+                            .build());
+                } catch (IOException e){
+                    throw new RuntimeException("Failed to delete record " + recordID.toString(), e);
+                }
+            }
+        }
+
+        /* Update recordID list */
+        idlists.put("recordIDs",recordIDList);
 
 
+    }
+
+
+    /* TODO figure out how to upload photos to ES */
+    private void pushPhotos(){
+        HashMap<Integer, Photo> photos = dataManager.getPhotos();
+        ArrayList<Integer> photoIDList = new ArrayList<>();
+        /* Upload new photos */
+        for (Integer photoID : photos.keySet()){
+            Index jestIndex = new Index.Builder(photos.get(photoID)).index(index).type("photo").id(photoID.toString()).build();
+            try{
+                client.execute(jestIndex);
+            } catch (IOException e){
+                throw  new RuntimeException("Failed to upload photo " + photoID.toString(), e);
+            }
+        }
+        /* Delete removed photos */
+        for (Integer photoID : (ArrayList<Integer>) idlists.get("photoIDs")){
+            if (!photoIDList.contains(photoID)){
+                try{
+                    client.execute(new Delete.Builder(photoID.toString())
+                            .index(index)
+                            .type("photo")
+                            .build());
+                } catch (IOException e){
+                    throw new RuntimeException("Failed to delete photo " + photoID.toString(), e);
+                }
+            }
+        }
+
+        /* Update photoID list */
+        idlists.put("photoIDs",photoIDList);
+
+    }
 
 
     public void push() {
+        /*
+         * Update objects
+         * Each method also updates its corresponding id list but doesn't push it
+         */
+        this.pushPatients();
+        this.pushCaregivers();
+        this.pushProblems();
+        this.pushRecords();
+        this.pushPhotos();
 
+        /* push id lists */
+        this.pushIDLists();
 
+    }
+
+    /**
+     * IDindex structure:
+     * index/metadata/idlists:
+     *      patientIDs: list of strings
+     *      caregiverIDs: list of strings
+     *      problemIDs: list of ints
+     *      recordIDs: list of ints
+     *      photoIDs: list of ints
+     *      availableIDs: list of ints
+     *      availableID: int
+     */
+    private void pushIDLists() {
+        JSONObject IDJSON = new JSONObject(this.idlists);
+        try {
+            IDJSON.put("availableID", this.availableID);
+        } catch (JSONException e) {
+            throw new RuntimeException();
+        }
+        Index JestID = new Index.Builder(IDJSON).index(index).type("metadata").id("idlists").build();
+        try {
+            client.execute(JestID);
+        } catch (IOException e) {
+            throw new RuntimeException("Couldn't push id lists", e);
+        }
+    }
+
+    public void pull(){
+        ;
     }
 
 

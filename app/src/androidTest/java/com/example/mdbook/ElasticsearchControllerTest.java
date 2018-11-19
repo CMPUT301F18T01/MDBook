@@ -12,12 +12,6 @@ package com.example.mdbook;
 
 import junit.framework.TestCase;
 
-import org.junit.Test;
-
-import java.security.InvalidKeyException;
-import java.util.ArrayList;
-import java.util.Date;
-
 /**
  * test for elasticsearchcontroller
  * tests are a bit wordy, most of this stuff will be wrapped up cleanly in usermanager
@@ -27,13 +21,24 @@ import java.util.Date;
  *
  * @version 0.0.1
  **/
-public class ElasticsearchControllerTest {
+public class ElasticsearchControllerTest extends  TestCase{
 
-    @Test
     public void testAddPatientTask(){
-        Patient patient = new Patient("patientid", "userphone",
-                "useremail@test.com");
-        ElasticsearchController.AddPatientTask addPatient = new ElasticsearchController.AddPatientTask();
-        addPatient.execute(patient);
+        /* Set up testing environment */
+        UserManager.initManager();
+        UserManager userManager = UserManager.getManager();
+        ElasticsearchController elasticsearchController = ElasticsearchController.getController();
+
+        /* Create and push new patient */
+        try {
+            Patient patient = userManager.createPatient("patientID", "test-phone", "testemail");
+        } catch (UserIDNotAvailableException e) {
+            fail();
+        }
+        elasticsearchController.push();
+
+        // TODO: set up jest controller in test
+        // verify the above patient is created at http://cmput301.softwareprocess.es:8080/cmput301f18t01test/patient/patientID
+
     }
 }
