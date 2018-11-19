@@ -23,13 +23,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ListProblemActivity" />
         <activity android:name=".AddProblemActivity" />
-        <activity android:name=".ViewAccountDetailActivity" />
-        <activity
-            android:name=".PatientHomeActivity"
-            android:label="@string/title_activity_patient_home"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".ListProblemActivity"></activity>
     </application>
 
 </manifest>

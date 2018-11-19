@@ -70,23 +70,6 @@ public class ListProblemActivity extends AppCompatActivity {
 
 
 
-    //Menu on the action bar
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu){
-        getMenuInflater().inflate(R.menu.main_menu, menu);
-        return true;
-    }
-
-    //On Click the menu on the action bar
-    //@Override
-    public boolean onMenuItemSelected(MenuItem item){
-        if(item.getItemId() == R.id.settings){
-            Toast.makeText(this, "View Account Details", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(this, ViewAccountDetailActivity.class);
-            startActivity(intent);
-        }
-        return true;
-    }
 
 
     public void addProblem(){
