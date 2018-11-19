@@ -43,10 +43,6 @@ public class EditDetailsActivity extends AppCompatActivity {
         editLocation = (EditText) findViewById(R.id.editLocation);
         editComment = (EditText) findViewById(R.id.editComment);
 
-        Bundle mBundle = getIntent().getExtras();
-
-
-
     }
 
 }
