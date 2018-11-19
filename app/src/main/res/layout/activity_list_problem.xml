@@ -11,7 +11,7 @@
         android:id="@+id/problemList"
         android:layout_width="299dp"
         android:layout_height="333dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="4dp"
         android:layout_marginEnd="40dp"
         android:layout_marginRight="40dp"
         app:layout_constraintEnd_toEndOf="parent"

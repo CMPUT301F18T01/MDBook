@@ -15,6 +15,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 import java.util.ArrayList;
 import android.view.Menu;
+import android.widget.PopupMenu;
 
 public class ListProblemActivity extends AppCompatActivity {
 
@@ -40,15 +41,13 @@ public class ListProblemActivity extends AppCompatActivity {
         ListView problemListView = findViewById(R.id.problemList);
         problemListView.setAdapter(problemAdapter);
 
-        problemListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int spot, long l) {
-                //spot is the item clicked
-                Intent editRecord = new Intent(getApplicationContext(), //Jame's activity.class);
-                editRecord.putExtra("Problem", spot);
-                startActivity(editRecord);
-            }
-        });
+//        problemListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+//                //spot is the item clicked
+//                mCustomFragment = CustomFragment.newInstance(position);
+//            }
+//        });
 
         // When a user clicked search button
         search = findViewById(R.id.go);
@@ -79,8 +78,8 @@ public class ListProblemActivity extends AppCompatActivity {
     }
 
     //On Click the menu on the action bar
-    @Override
-    public boolean onOptionItemSelected(MenuItem item){
+    //@Override
+    public boolean onMenuItemSelected(MenuItem item){
         if(item.getItemId() == R.id.settings){
             Toast.makeText(this, "View Account Details", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(this, ViewAccountDetailActivity.class);
@@ -88,6 +87,7 @@ public class ListProblemActivity extends AppCompatActivity {
         }
         return true;
     }
+
 
     public void addProblem(){
         Intent intent = new Intent(this, AddProblemActivity.class);

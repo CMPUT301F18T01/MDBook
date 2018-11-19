@@ -345,7 +345,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     }
 
     public void openListProblem(){
-        Intent intent = new Intent(this, ListProblemActivity.class);
+        Intent intent = new Intent(this, PatientHomeActivity.class);
         startActivity(intent);
     }
 }
