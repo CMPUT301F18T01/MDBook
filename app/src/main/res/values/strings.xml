@@ -10,6 +10,19 @@
     <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_field_required">This field is required</string>
     <string name="permission_rationale">"Contacts permissions are needed for providing email
-        completions."
-    </string>
+        completions."</string>
+    <string name="switch_button">Caregiver</string>
+    <string name="register_text">Register here</string>
+    <string name="user_id">USER ID</string>
+    <string name="login_button">Log In</string>
+    <string name="phone_number">Phone number</string>
+    <string name="email_id">Email address</string>
+    <string name="register_button">Register</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+    <string name="add_patient">ADD PATIENT</string>
+    <string name="user_id_prompt">Enter patient\'s user ID </string>
+    <string name="cancel_button">CANCEL</string>
+    <string name="keyword">Search by keyword...</string>
 </resources>
+
