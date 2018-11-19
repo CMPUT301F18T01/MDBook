@@ -23,8 +23,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+<<<<<<< HEAD
         <activity android:name=".AddProblemActivity" />
         <activity android:name=".ListProblemActivity"></activity>
+=======
+        <activity android:name=".ListProblemActivity" />
+        <activity android:name=".AddProblemActivity" />
+        <activity android:name=".ViewAccountDetailActivity"></activity>
+>>>>>>> 255f55b7ed46af6bdfd59299ae1d497079e6e2f6
     </application>
 
 </manifest>

@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".ListProblemActivity">
 
+<<<<<<< HEAD
     <ListView
         android:id="@+id/problemList"
         android:layout_width="285dp"
@@ -26,11 +27,46 @@
         android:ems="10"
         android:hint="Enter Search Keyword"
         android:inputType="none"
+=======
+
+    <ListView
+        android:id="@+id/problemList"
+        android:layout_width="299dp"
+        android:layout_height="333dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginRight="40dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/search" />
+
+    <Button
+        android:id="@+id/problemButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="108dp"
+        android:layout_marginRight="108dp"
+        android:text="add a new problem"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/problemList" />
+
+    <EditText
+        android:id="@+id/search"
+        android:layout_width="263dp"
+        android:layout_height="42dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="76dp"
+        android:layout_marginRight="76dp"
+        android:ems="10"
+        android:hint="Enter search keyword"
+        android:inputType="text"
+>>>>>>> 255f55b7ed46af6bdfd59299ae1d497079e6e2f6
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/go"
+<<<<<<< HEAD
         android:layout_width="43dp"
         android:layout_height="51dp"
         android:layout_marginStart="12dp"
@@ -65,4 +101,15 @@
         android:text="Add New Problem"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+=======
+        android:layout_width="48dp"
+        android:layout_height="42dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="28dp"
+        android:layout_marginRight="28dp"
+        android:text="Go"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+>>>>>>> 255f55b7ed46af6bdfd59299ae1d497079e6e2f6
 </android.support.constraint.ConstraintLayout>

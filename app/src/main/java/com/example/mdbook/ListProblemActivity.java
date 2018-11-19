@@ -15,7 +15,10 @@ import android.widget.ListView;
 import android.widget.Toast;
 import java.util.ArrayList;
 import android.view.Menu;
+<<<<<<< HEAD
 import android.widget.PopupMenu;
+=======
+>>>>>>> 255f55b7ed46af6bdfd59299ae1d497079e6e2f6
 
 public class ListProblemActivity extends AppCompatActivity {
 
@@ -41,6 +44,7 @@ public class ListProblemActivity extends AppCompatActivity {
         ListView problemListView = findViewById(R.id.problemList);
         problemListView.setAdapter(problemAdapter);
 
+<<<<<<< HEAD
 //        problemListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 //            @Override
 //            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
@@ -48,6 +52,17 @@ public class ListProblemActivity extends AppCompatActivity {
 //                mCustomFragment = CustomFragment.newInstance(position);
 //            }
 //        });
+=======
+        problemListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int spot, long l) {
+                //spot is the item clicked
+                Intent editRecord = new Intent(getApplicationContext(), //Jame's activity.class);
+                editRecord.putExtra("Problem", spot);
+                startActivity(editRecord);
+            }
+        });
+>>>>>>> 255f55b7ed46af6bdfd59299ae1d497079e6e2f6
 
         // When a user clicked search button
         search = findViewById(R.id.go);
@@ -70,7 +85,27 @@ public class ListProblemActivity extends AppCompatActivity {
 
 
 
+<<<<<<< HEAD
 
+=======
+    //Menu on the action bar
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    //On Click the menu on the action bar
+    @Override
+    public boolean onOptionItemSelected(MenuItem item){
+        if(item.getItemId() == R.id.settings){
+            Toast.makeText(this, "View Account Details", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, ViewAccountDetailActivity.class);
+            startActivity(intent);
+        }
+        return true;
+    }
+>>>>>>> 255f55b7ed46af6bdfd59299ae1d497079e6e2f6
 
     public void addProblem(){
         Intent intent = new Intent(this, AddProblemActivity.class);
