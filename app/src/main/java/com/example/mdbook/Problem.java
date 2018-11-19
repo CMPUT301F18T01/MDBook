@@ -15,7 +15,6 @@ import java.util.ArrayList;
  * The Problem object holds the information about a Problem, including its records.
  *
  * @author Noah Burghardt
- * @see ProblemList
  * @see Record
  * @version 0.0.1
  **/
@@ -25,6 +24,7 @@ class Problem {
     private String title;
     private String description;
     private ArrayList<String> comments;
+    private int problemID = -1;
 
 
     /**
@@ -143,5 +143,26 @@ class Problem {
         }
 
         return photos;
+    }
+
+    /**
+     * @return problem title
+     */
+    public String getTitle() {
+        return this.title;
+    }
+
+    /**
+     * @return Problem ID, can be null.
+     */
+    public int getProblemID(){
+        return this.problemID;
+    }
+
+    /**
+     * @param problemID Problem ID
+     */
+    public void setProblemID(int problemID) {
+        this.problemID = problemID;
     }
 }
