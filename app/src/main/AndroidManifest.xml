@@ -24,7 +24,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".ListProblemActivity" />
-        <activity android:name=".AddProblemActivity"></activity>
+        <activity android:name=".AddProblemActivity" />
+        <activity android:name=".ViewAccountDetailActivity"></activity>
     </application>
 
 </manifest>

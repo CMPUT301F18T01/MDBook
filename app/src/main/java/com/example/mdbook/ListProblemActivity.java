@@ -3,8 +3,10 @@ package com.example.mdbook;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,17 +14,15 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 import java.util.ArrayList;
-
+import android.view.Menu;
 
 public class ListProblemActivity extends AppCompatActivity {
 
-    String problems[] = {"Problem A", "Problemn B", "Problem C", "Problem D"};
+    String problems[] = {"Problem A", "Problem B", "Problem C", "Problem D"};
     EditText searchBar;
     Button addProblemButton;
     Button search;
-    //ArrayAdapter problemAdapter = new ArrayAdapter();
     @Override
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_problem);
@@ -36,9 +36,19 @@ public class ListProblemActivity extends AppCompatActivity {
             }
         });
 
-        ArrayAdapter problemAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, problems);
-        ListView problemListView = (ListView)findViewById(R.id.problemList);
+        ArrayAdapter problemAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, problems);
+        ListView problemListView = findViewById(R.id.problemList);
         problemListView.setAdapter(problemAdapter);
+
+        problemListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int spot, long l) {
+                //spot is the item clicked
+                Intent editRecord = new Intent(getApplicationContext(), //Jame's activity.class);
+                editRecord.putExtra("Problem", spot);
+                startActivity(editRecord);
+            }
+        });
 
         // When a user clicked search button
         search = findViewById(R.id.go);
@@ -56,6 +66,27 @@ public class ListProblemActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+
+
+
+    //Menu on the action bar
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    //On Click the menu on the action bar
+    @Override
+    public boolean onOptionItemSelected(MenuItem item){
+        if(item.getItemId() == R.id.settings){
+            Toast.makeText(this, "View Account Details", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, ViewAccountDetailActivity.class);
+            startActivity(intent);
+        }
+        return true;
     }
 
     public void addProblem(){
