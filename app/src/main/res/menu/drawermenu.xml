@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/navOptions" android:title="Options" android:icon="@drawable/ic_info_black_24dp"></item>
+    <item android:id="@+id/navProfile" android:title="Profile" android:icon="@drawable/ic_account_box_black_24dp"></item>
+    <item android:id="@+id/navSettings" android:title="Settings" android:icon="@drawable/ic_settings_black_24dp"></item>
+    <item android:id="@+id/navLogOut" android:title="Log out" android:icon="@drawable/ic_log_out_24dp"></item>
+
+
+
+</menu>
