@@ -27,7 +27,7 @@ import android.widget.Toast;
  * @see com.example.mdbook.LoginActivity
  *
  *
- * @author .....
+ * @author Raj Kapadia
  * @author James Aina
  *
  * @version 0.0.1

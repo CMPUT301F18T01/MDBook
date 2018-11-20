@@ -25,6 +25,19 @@ import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
+/**
+ * Logs in user, if user exists.
+ *
+ *
+ * @see com.example.mdbook.LoginActivity
+ *
+ *
+ * @author Raj Kapadia
+ * @author James Aina
+ *
+ * @version 0.0.1
+ */
+
 public class LoginActivity extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener, View.OnClickListener {
 
     private Switch careGiverSwitch;
@@ -84,7 +97,6 @@ public class LoginActivity extends AppCompatActivity implements CompoundButton.O
                 {
                     if(etUserID.getText().toString().equals(dummyPatient) || userManager.login(etUserID.getText().toString())) {
                         Intent problemListActivityIntent = new Intent(this, ListProblemActivity.class);
-                        problemListActivityIntent.putExtra("activity", activity);
                         Toast.makeText(this, "Logging in " + dummyPatient, Toast.LENGTH_SHORT).show();
                         startActivity(problemListActivityIntent);
                     }

@@ -33,8 +33,6 @@ import android.widget.Button;
 public class NewBodyLocationView extends AppCompatActivity {
     Button save;
     Button cancel;
-    Button uploadFrontImage;
-    Button uploadBackImage;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,8 +40,6 @@ public class NewBodyLocationView extends AppCompatActivity {
         // set the views and buttons appropriately by id's
         save = findViewById(R.id.save);
         cancel = findViewById(R.id.cancel);
-        uploadFrontImage = findViewById(R.id.uploadFrontButton);
-        uploadBackImage = findViewById(R.id.uploadBackButton);
 
         //Intent intent = getIntent();
 
@@ -51,48 +47,27 @@ public class NewBodyLocationView extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //Todo: Save data into the user manager
-                BackToAddRecord();
+                BackToAddProblem();
+                //Go back to patient main page
+                //BackToAddProblem();
             }
         });
         // Switches to the add problem upon the click of the cancel button
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BackToAddRecord();
-            }
-        });
-
-        uploadFrontImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                uploadFrontClicked();
-            }
-        });
-
-        uploadBackImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                uploadBackClicked();
+                BackToAddProblem();
             }
         });
 
     }
 
-    public void uploadFrontClicked(){
-
-        //code to add here
-
-    }
-
-    public void uploadBackClicked(){
-
-        //code to add here
-
-    }
-
-
-    public void BackToAddRecord(){
-        this.finish();
+    /**
+     * Creates a new intent for switching to the ListProblemActivity
+     */
+    public void BackToAddProblem(){
+        Intent mainPage = new Intent(this, ListProblemActivity.class);
+        startActivity(mainPage);
     }
 
 }

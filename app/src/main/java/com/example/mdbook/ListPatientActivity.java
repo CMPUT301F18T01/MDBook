@@ -41,7 +41,7 @@ import java.util.List;
  * @see com.example.mdbook.Caregiver
  *
  *
- * @author .....
+ * @author Raj Kapadia
  * @author James Aina
  *
  * @version 0.0.1
@@ -114,9 +114,6 @@ public class ListPatientActivity extends AppCompatActivity implements View.OnCli
                 break;
             case R.id.viewProfileButton:
                 Toast.makeText(this, "View profile Activity", Toast.LENGTH_SHORT).show();
-                Intent viewProfileActivity = new Intent(ListPatientActivity.this, ViewAccountDetailActivity.class);
-                startActivity(viewProfileActivity);
-
                 break;
 
         }
