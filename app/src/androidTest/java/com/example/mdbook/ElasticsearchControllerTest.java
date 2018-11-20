@@ -90,7 +90,6 @@ public class ElasticsearchControllerTest extends  TestCase{
             fail();
         }
 
-        //TODO: verify that its ID is added to the patientIDs list
         try {
             result = client.execute(new Get.Builder(index, "idlists")
                     .type("metadata")
