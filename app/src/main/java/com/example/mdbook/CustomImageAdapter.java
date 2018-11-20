@@ -38,26 +38,43 @@ public class CustomImageAdapter extends PagerAdapter {
             R.drawable.drake,
             R.drawable.donald_trump,
     };
-    // Creates a context
+
+    // Set the context for the custom image adapter
     CustomImageAdapter(Context context) {
         mContext = context;
 
     }
-    // returns the length of the array
+    /**
+     *
+     * @return count
+     */
+
     @Override
     public int getCount() {
         return mSlideImages.length;
     }
 
-
+    /**
+     *
+     * @param view the view
+     * @param object the object
+     * @return boolean
+     */
     @Override
     public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
         return view == object;
     }
 
+    /**
+     *
+     * @param container the View Group container
+     * @param position The position for the item to be instantiated
+     * @return
+     */
     @NonNull
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
+        // set the view and butons appropriately by id's
         ImageView imageView = new ImageView(mContext);
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         imageView.setImageResource(mSlideImages[position]);
@@ -66,6 +83,12 @@ public class CustomImageAdapter extends PagerAdapter {
 
     }
 
+    /**
+     *
+     * @param container
+     * @param position
+     * @param object
+     */
     @Override
     public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
         container.removeView((ImageView) object);

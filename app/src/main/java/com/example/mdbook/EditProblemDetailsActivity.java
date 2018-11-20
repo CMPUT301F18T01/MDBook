@@ -1,13 +1,12 @@
 /*
- * CustomAdapter
+ * EditProblemDetailActivity
  *
  * Version 0.0.1
  *
- * 2018-11-17
+ * 2018-11-18
  *
  * Copyright (c) 2018. All rights reserved.
  */
-
 
 package com.example.mdbook;
 
@@ -41,7 +40,7 @@ public class EditProblemDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_problem_details);
-
+        // set the views and buttons appropriately by id's
         editTitle = findViewById(R.id.editTitle);
         editDate = findViewById(R.id.editDate);
         editLocation = findViewById(R.id.editLocation);
@@ -49,6 +48,7 @@ public class EditProblemDetailsActivity extends AppCompatActivity {
         save = findViewById(R.id.save);
         cancel = findViewById(R.id.cancel);
 
+        // Switches to the main activity upon the click of the save button
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,7 +56,7 @@ public class EditProblemDetailsActivity extends AppCompatActivity {
                 backToMainPage();
             }
         });
-
+        // Switches to the main activity upon the click of the cancel button
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,6 +65,10 @@ public class EditProblemDetailsActivity extends AppCompatActivity {
         });
     }
 
+
+    /**
+     * Creates a new intent for switching to the ListProblemActivity
+     */
     public void backToMainPage(){
         Intent goEditProblem = new Intent(this, ListProblemActivity.class);
         startActivity(goEditProblem);

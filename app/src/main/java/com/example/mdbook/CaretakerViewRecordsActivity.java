@@ -25,7 +25,6 @@ import android.widget.ListView;
  */
 public class CaretakerViewRecordsActivity extends AppCompatActivity {
     // Initialize dummy variables for debugging
-
     ListView CaregiverRecordListView;
     String[] Title1 = {"Justin Trudeau", "Barrack Obama", "Kanye West", "Beyonce Knowles",
             "Aubrey Drake", "Donald Trump"};
@@ -44,7 +43,7 @@ public class CaretakerViewRecordsActivity extends AppCompatActivity {
 
     /**
      * Creates a listview with an imageview
-     * @param savedInstanceState
+     * @param savedInstanceState the saved for onCreate method
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {

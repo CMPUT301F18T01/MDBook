@@ -1,3 +1,14 @@
+/*
+ * LoginActivity
+ *
+ * Version 0.0.1
+ *
+ * 2018-11-18
+ *
+ * Copyright (c) 2018. All rights reserved.
+ */
+
+
 package com.example.mdbook;
 
 import android.content.Intent;

@@ -1,3 +1,14 @@
+/*
+ * ListProblemActivity
+ *
+ * Version 0.0.1
+ *
+ * 2018-11-18
+ *
+ * Copyright (c) 2018. All rights reserved.
+ */
+
+
 package com.example.mdbook;
 
 import android.content.Intent;
@@ -79,13 +90,18 @@ public class ListProblemActivity extends AppCompatActivity {
         });
     }
 
-
-
+    /**
+     * Creates a new intent for switching to the ListProblemActivity
+     */
     public void addProblem(){
         Intent intent = new Intent(this, AddProblemActivity.class);
         startActivity(intent);
     }
 
+
+    /**
+     * Creates a new intent for switching to the ViewAccountDetailActivity
+     */
     public void goViewProfile(){
         Intent viewProfile = new Intent(this, ViewAccountDetailActivity.class);
         startActivity(viewProfile);
