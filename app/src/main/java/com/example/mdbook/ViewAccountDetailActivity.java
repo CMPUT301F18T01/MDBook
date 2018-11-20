@@ -36,6 +36,7 @@ public class ViewAccountDetailActivity extends AppCompatActivity {
     TextView phone;
     TextView email;
     Button editAccount;
+    Button logOutButton;
 //    private String previousIntent;
 //    private String newName ;
 //    private String newEmail ;
@@ -51,6 +52,7 @@ public class ViewAccountDetailActivity extends AppCompatActivity {
         phone = findViewById(R.id.viewPhone);
         email = findViewById(R.id.viewEmail);
         editAccount = findViewById(R.id.EditAccount);
+        logOutButton = findViewById(R.id.LogOutBtn);
 //        Intent getPreviousIntent = getIntent();
 //        previousIntent = getPreviousIntent.getExtras().getString("activity");
 //
@@ -70,6 +72,12 @@ public class ViewAccountDetailActivity extends AppCompatActivity {
                 goEditAccount();
             }
         });
+        logOutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToLogin();
+            }
+        });
     }
 
 
@@ -79,6 +87,13 @@ public class ViewAccountDetailActivity extends AppCompatActivity {
     public void goEditAccount(){
         Intent editAccount = new Intent(this, EditAccountDetailActivity.class);
         startActivity(editAccount);
+        this.finish();
+    }
+
+    public void goToLogin()
+    {
+        Intent logOutInent = new Intent(this, LoginActivity.class);
+        startActivity(logOutInent);
         this.finish();
     }
 
