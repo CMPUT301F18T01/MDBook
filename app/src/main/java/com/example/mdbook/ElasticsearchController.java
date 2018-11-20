@@ -2,9 +2,9 @@ package com.example.mdbook;
 /*
  * ElasticSearchController
  *
- * Version 0.0.1
+ * Version 1.0.2
  *
- * 2018-11-13
+ * 2018-11-20
  *
  * Copyright (c) 2018. All rights reserved.
  */
@@ -40,11 +40,9 @@ import io.searchbox.core.Index;
  * Keeps DataManager in sync with cloud storage.
  *
  * @author Noah Burghardt
- * @author ThomasChan
- * @version 0.0.2
+ * @author Thomas Chan
+ * @version 1.0.2
  **/
-
-
 class ElasticsearchController {
 
     private static ElasticsearchController elasticsearchController = null;
@@ -243,7 +241,7 @@ class ElasticsearchController {
 
 
     /**
-     * Pushes Photoes to Elastic search server
+     * Pushes Photos to Elastic search server
      */
     private void pushPhotos(){
         HashMap<Integer, Photo> photos = dataManager.getPhotos();
@@ -308,6 +306,8 @@ class ElasticsearchController {
      *      photoIDs: list of ints
      *      availableIDs: list of ints
      *      availableID: int
+     *
+     * Pushes ID lists to es server.
      */
     private void pushIDLists() {
         JSONObject IDJSON = new JSONObject(this.idlists);
@@ -329,7 +329,8 @@ class ElasticsearchController {
 
     /**
      * Pulls users from Elastic search server
-     * @return Hashmap of users
+     * @param string either "patient" or "caregiver" for the type of user you want to pull.
+     * @return HashMap of (userID, userJSON).
      */
     public HashMap<String, JSONObject> pullUsers(String string){
         HashMap<String, JSONObject> users = new HashMap<>();
@@ -350,6 +351,7 @@ class ElasticsearchController {
 
     /**
      * Pulls problems or records from Elastic search server
+     * @param "problem" or "record" depending on which you want to pull
      * @return Hashmap of problems or records
      */
     public HashMap<Integer, JSONObject> pullProblemsRecords(String string){
@@ -371,7 +373,7 @@ class ElasticsearchController {
 
     /**
      * Pulls photos from Elastic search server
-     * @return Hashmap of photos
+     * @return Hashmap of photo objects
      */
     public HashMap<Integer, Photo> pullPhotos(){
         HashMap<Integer, Photo> photos = new HashMap<>();
@@ -453,8 +455,6 @@ class ElasticsearchController {
         dataManager.setProblems(this.pullProblemsRecords("problem"));
         dataManager.setRecords(this.pullProblemsRecords("record"));
         dataManager.setPhotos(this.pullPhotos());
-
-
 
     }
 

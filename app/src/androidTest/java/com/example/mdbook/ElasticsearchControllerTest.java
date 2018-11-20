@@ -1,7 +1,7 @@
 /*
  * ElasticsearchControllerTest
  *
- * Version 0.0.1
+ * Version 1.0.0
  *
  * 2018-11-15
  *
@@ -10,40 +10,37 @@
 
 package com.example.mdbook;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonParser;
+
 import com.google.gson.internal.LinkedTreeMap;
 import com.searchly.jestdroid.DroidClientConfig;
 import com.searchly.jestdroid.JestClientFactory;
 
 import junit.framework.TestCase;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 
 import io.searchbox.client.JestClient;
 import io.searchbox.client.JestResult;
-import io.searchbox.core.DocumentResult;
 import io.searchbox.core.Get;
 import io.searchbox.core.Index;
-import io.searchbox.core.Update;
 
 /**
- * test for elasticsearchcontroller
+ * ElasticSearchControllerTest
+ *
+ * Tests ElasticSearchController functions by manually setting and checking data with
+ * the Jest Client.
  * tests are a bit wordy, most of this stuff will be wrapped up cleanly in usermanager
  * In order for tests to run, Elasticsearch index must be at cmput301f18t01test
  * @author Noah Burghardt
- * @author James Aina
+ * @author Thomas Chan
+ * @see ElasticsearchController
+ * @see UserManager
  *
- * @version 0.0.1
+ * @version 1.0.0
  **/
 public class ElasticsearchControllerTest extends  TestCase{
 
@@ -155,8 +152,6 @@ public class ElasticsearchControllerTest extends  TestCase{
             fail();
         }
 
-
-        // TODO: add patientID to idlist
         LinkedTreeMap<String, ArrayList<String>> patientIDListJSON = null;
         try {
             JestResult result = client.execute(new Get.Builder(index, "idlists")
