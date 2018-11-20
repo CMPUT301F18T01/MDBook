@@ -10,20 +10,25 @@
 
 package com.example.mdbook;
 
+import com.google.gson.internal.LinkedTreeMap;
 import com.searchly.jestdroid.DroidClientConfig;
 import com.searchly.jestdroid.JestClientFactory;
 
 import junit.framework.TestCase;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import io.searchbox.client.JestClient;
 import io.searchbox.client.JestResult;
 import io.searchbox.core.DocumentResult;
 import io.searchbox.core.Get;
+import io.searchbox.core.Index;
 
 /**
  * test for elasticsearchcontroller
@@ -85,7 +90,56 @@ public class ElasticsearchControllerTest extends  TestCase{
             fail();
         }
 
+        //TODO: verify that its ID is added to the patientIDs list
+        try {
+            result = client.execute(new Get.Builder(index, "idlists")
+                    .type("metadata")
+                    .build());
+            JSONObject idlistJSON = result.getSourceAsObject(JSONObject.class);
+            ArrayList<String> idlist = (ArrayList<String>) ((LinkedTreeMap) idlistJSON.get("patientIDs")).get("values");
 
+            assertTrue(idlist.contains(patientID));
+        } catch (IOException e) {
+            fail();
+        } catch (JSONException e) {
+            fail();
+        }
+
+
+    }
+
+    /**
+     * Tests that the patient object is fetched from the es server
+     */
+    public void testGetPatientTask(){
+        /* Set up testing environment */
+        UserManager.initManager();
+        UserManager userManager = UserManager.getManager();
+        ElasticsearchController elasticsearchController = ElasticsearchController.getController();
+        JestClient client = this.getJestClient();
+        /* Create and upload new patient */
+        String patientID = "testGetPatientID";
+        String testPhone = "testGetPhone";
+        String testEmail = "testGetEmail";
+
+        Index jestindex = new Index.Builder(patientID)
+                .index(index)
+                .type("patient")
+                .id(patientID)
+                .build();
+
+        try {
+            client.execute(jestindex);
+        } catch (IOException e) {
+            fail();
+        }
+        // TODO: add patientID to idlist
+
+        /* attempt to pull into datamanager/usermanager via esc */
+        elasticsearchController.pull();
+
+        /* verify data was loaded via the usermanager */
+        assertTrue(userManager.login(patientID));
     }
 
 }
