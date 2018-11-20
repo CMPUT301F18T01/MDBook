@@ -33,7 +33,7 @@ import android.widget.Toast;
  * @see com.example.mdbook.Patient
  * @see
  *
- * @author .....
+ * @author Raj Kapadia
  * @author James Aina
  *
  * @version 0.0.1
@@ -45,20 +45,13 @@ public class AddPatientActivity extends AppCompatActivity implements View.OnClic
     private Button cancelBtn;
     private EditText enterIDText;
     private String activity = "AddPatientActivity";
-//
-//    private DrawerLayout drawerLayout;
-//    private ActionBarDrawerToggle actionBarDrawerToggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_patient);
 
-//        drawerLayout = (DrawerLayout) findViewById(R.id.drawer);
-//        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close);
-//        drawerLayout.addDrawerListener(actionBarDrawerToggle);
-//        actionBarDrawerToggle.syncState();
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
         // set the view and butons appropriately by id's
         enterIDText = (EditText)findViewById(R.id.enterUserText);
@@ -71,14 +64,7 @@ public class AddPatientActivity extends AppCompatActivity implements View.OnClic
         cancelBtn.setOnClickListener(this);
     }
 
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        if(actionBarDrawerToggle.onOptionsItemSelected(item))
-//        {
-//            return true;
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
+
 
     @Override
     public void onClick(View v)
