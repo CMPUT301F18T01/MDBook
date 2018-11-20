@@ -31,12 +31,12 @@ import android.widget.ImageView;
  */
 public class CustomImageAdapter extends PagerAdapter {
     private Context mContext;
-    private int[] mSlideImages = new int[] {R.drawable.justin_trudeau,
-            R.drawable.obama,
-            R.drawable.kanye_west,
-            R.drawable.beyonce,
-            R.drawable.drake,
-            R.drawable.donald_trump,
+    private int[] mSlideImages = new int[] {R.drawable.donald_trump,
+            R.drawable.ears,
+            R.drawable.hand,
+            R.drawable.nose,
+            R.drawable.finger,
+            R.drawable.eye,
     };
 
     // Set the context for the custom image adapter
