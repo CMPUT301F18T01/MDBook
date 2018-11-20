@@ -1,7 +1,7 @@
 package com.example.mdbook;
 
 import android.content.Intent;
-import android.media.Image;
+//import android.media.Image;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -34,6 +34,53 @@ public class AddRecordActivity extends AppCompatActivity {
         save = findViewById(R.id.save);
         cancel = findViewById(R.id.cancel);
 
+        body.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goAddBodyLoc();
+            }
+        });
+
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Todo: Save data into the user manager
+                BackToAddProblem();
+                //Go back to patient main page
+                //BackToAddProblem();
+            }
+        });
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BackToAddProblem();
+            }
+        });
+
+        geo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openGeoLoc();
+            }
+        });
+
+
+    }
+
+    public void goAddBodyLoc(){
+        Intent addRecordPage = new Intent(this, NewBodyLocationView.class);
+        startActivity(addRecordPage);
+    }
+
+    public void BackToAddProblem(){
+        Intent mainPage = new Intent(this, ListProblemActivity.class);
+        startActivity(mainPage);
+    }
+
+    public void openGeoLoc(){
+        Intent geoLoc = new Intent(this, ViewLocationActivity.class);
+        startActivity(geoLoc);
     }
 
 }
