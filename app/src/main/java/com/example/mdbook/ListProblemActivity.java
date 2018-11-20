@@ -1,3 +1,14 @@
+/*
+ * ListProblemActivity
+ *
+ * Version 0.0.1
+ *
+ * 2018-11-18
+ *
+ * Copyright (c) 2018. All rights reserved.
+ */
+
+
 package com.example.mdbook;
 
 import android.content.Intent;
@@ -15,6 +26,8 @@ import android.widget.ListView;
 import android.widget.Toast;
 import java.util.ArrayList;
 import android.view.Menu;
+import android.widget.PopupMenu;
+
 
 public class ListProblemActivity extends AppCompatActivity {
 
@@ -22,6 +35,8 @@ public class ListProblemActivity extends AppCompatActivity {
     EditText searchBar;
     Button addProblemButton;
     Button search;
+    Button viewProfile;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,13 +55,13 @@ public class ListProblemActivity extends AppCompatActivity {
         ListView problemListView = findViewById(R.id.problemList);
         problemListView.setAdapter(problemAdapter);
 
+
         problemListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int spot, long l) {
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 //spot is the item clicked
-                Intent editRecord = new Intent(getApplicationContext(), //Jame's activity.class);
-                editRecord.putExtra("Problem", spot);
-                startActivity(editRecord);
+                Intent showOption = new Intent(ListProblemActivity.this, OptionsMenuActivity.class);
+                startActivity(showOption);
             }
         });
 
@@ -66,31 +81,29 @@ public class ListProblemActivity extends AppCompatActivity {
             }
         });
 
+        viewProfile = findViewById(R.id.viewProfile);
+        viewProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goViewProfile();
+            }
+        });
     }
 
-
-
-
-    //Menu on the action bar
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu){
-        getMenuInflater().inflate(R.menu.main_menu, menu);
-        return true;
-    }
-
-    //On Click the menu on the action bar
-    @Override
-    public boolean onOptionItemSelected(MenuItem item){
-        if(item.getItemId() == R.id.settings){
-            Toast.makeText(this, "View Account Details", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(this, ViewAccountDetailActivity.class);
-            startActivity(intent);
-        }
-        return true;
-    }
-
+    /**
+     * Creates a new intent for switching to the ListProblemActivity
+     */
     public void addProblem(){
         Intent intent = new Intent(this, AddProblemActivity.class);
         startActivity(intent);
+    }
+
+
+    /**
+     * Creates a new intent for switching to the ViewAccountDetailActivity
+     */
+    public void goViewProfile(){
+        Intent viewProfile = new Intent(this, ViewAccountDetailActivity.class);
+        startActivity(viewProfile);
     }
 }
