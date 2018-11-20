@@ -1,16 +1,23 @@
 package com.example.mdbook;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Switch;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,6 +27,7 @@ public class ListPatientActivity extends AppCompatActivity implements View.OnCli
 
     private FloatingActionButton fabAddPatient;
     private FloatingActionButton fabSearch;
+    private Button viewProfile;
 
     private ListView patientListContainer;
     private ArrayAdapter<String> patientListAdapter;
@@ -28,36 +36,31 @@ public class ListPatientActivity extends AppCompatActivity implements View.OnCli
 
     private String previousIntent;
 
-    private Boolean backFromAdd = false;
 
-    private DrawerLayout drawerLayout;
-    private ActionBarDrawerToggle actionBarDrawerToggle;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_patient);
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer);
-        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close);
-        drawerLayout.addDrawerListener(actionBarDrawerToggle);
-        actionBarDrawerToggle.syncState();
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        
+        viewProfile = findViewById(R.id.viewProfileButton);
+        viewProfile.setOnClickListener(this);
 
-        fabAddPatient = (FloatingActionButton)findViewById(R.id.fabAddPatient);
+        fabAddPatient = (FloatingActionButton) findViewById(R.id.fabAddPatient);
         fabAddPatient.setOnClickListener(this);
 
-        fabSearch = (FloatingActionButton)findViewById(R.id.fabSearchPatient);
+        fabSearch = (FloatingActionButton) findViewById(R.id.fabSearchPatient);
         fabSearch.setOnClickListener(this);
 
-        patientListContainer = (ListView)findViewById(R.id.listPatientContainer);
+        patientListContainer = (ListView) findViewById(R.id.listPatientContainer);
         patientListContainer.setOnItemClickListener(this);
         patientListContainer.setOnItemLongClickListener(this);
 
-        String[] patients = new String[] { "John Doe", "Jane Doe", "Some Random Guy", "Some Random Girl",
+        String[] patients = new String[]{"John Doe", "Jane Doe", "Some Random Guy", "Some Random Girl",
                 "Some Random Baby"};
-        Intent getPreviousInent = getIntent();
-        previousIntent = getPreviousInent.getExtras().getString("activity");
+        Intent getPreviousIntent = getIntent();
+        previousIntent = getPreviousIntent.getExtras().getString("activity");
 
-        if(previousIntent.equals("AddPatientActivity")){
+        if (previousIntent.equals("AddPatientActivity")) {
             Intent getUserFromAdd = getIntent();
             previousIntent = getUserFromAdd.getExtras().getString("userID");
             patients[patients.length - 1] = previousIntent;
@@ -67,26 +70,16 @@ public class ListPatientActivity extends AppCompatActivity implements View.OnCli
         patientList.addAll(Arrays.asList(patients));
 
 
-
         patientListAdapter = new ArrayAdapter<>(this, R.layout.simple_list, patientList);
         patientListAdapter.notifyDataSetChanged();
 
         patientListContainer.setAdapter(patientListAdapter);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if(actionBarDrawerToggle.onOptionsItemSelected(item))
-        {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId())
-        {
+        switch (v.getId()) {
             case R.id.fabAddPatient:
                 Intent addPatientActivity = new Intent(ListPatientActivity.this, AddPatientActivity.class);
                 startActivity(addPatientActivity);
@@ -95,14 +88,16 @@ public class ListPatientActivity extends AppCompatActivity implements View.OnCli
                 Intent searchPatientActivity = new Intent(ListPatientActivity.this, PatientSearchActivity.class);
                 startActivity(searchPatientActivity);
                 break;
+            case R.id.viewProfileButton:
+                Toast.makeText(this, "View profile Activity", Toast.LENGTH_SHORT).show();
+                break;
 
         }
     }
 
 
     @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-    {
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent viewPatientProblemsIntent = new Intent(this, ListPatientProblemActivity.class);
         nameOfPatient = (String) parent.getItemAtPosition(position);
         viewPatientProblemsIntent.putExtra("nameOfPatient", nameOfPatient);
@@ -113,4 +108,6 @@ public class ListPatientActivity extends AppCompatActivity implements View.OnCli
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
         return false;
     }
+
+
 }

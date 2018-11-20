@@ -17,7 +17,8 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class ListPatientProblemActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class ListPatientProblemActivity extends AppCompatActivity
+{
 
     private TextView headerPatientProblem;
     private ListView patientProblemsContainer;
@@ -35,11 +36,11 @@ public class ListPatientProblemActivity extends AppCompatActivity implements Nav
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_patient_problem);
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer);
-        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close);
-        drawerLayout.addDrawerListener(actionBarDrawerToggle);
-        actionBarDrawerToggle.syncState();
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        drawerLayout = (DrawerLayout) findViewById(R.id.drawer);
+//        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close);
+//        drawerLayout.addDrawerListener(actionBarDrawerToggle);
+//        actionBarDrawerToggle.syncState();
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         headerPatientProblem = (TextView)findViewById(R.id.headerPatientProblems);
 
@@ -56,35 +57,35 @@ public class ListPatientProblemActivity extends AppCompatActivity implements Nav
         Intent intent = getIntent();
         String nameOfPatient = intent.getExtras().getString("nameOfPatient");
         headerPatientProblem.setText("List of problems for: " + nameOfPatient);
-
-        navigationView = (NavigationView)findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+//
+//        navigationView = (NavigationView)findViewById(R.id.nav_view);
+//        navigationView.setNavigationItemSelectedListener(this);
 
 
 
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if(actionBarDrawerToggle.onOptionsItemSelected(item))
-        {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem)
-    {
-
-        switch(menuItem.getItemId()){
-            case R.id.navLogOut:
-//                Toast.makeText(this, "Logging out...", Toast.LENGTH_SHORT).show();
-                Intent logOutIntent = new Intent(this, LoginActivity.class);
-                startActivity(logOutIntent);
-                break;
-        }
-
-        return false;
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        if(actionBarDrawerToggle.onOptionsItemSelected(item))
+//        {
+//            return true;
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
+//
+//    @Override
+//    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem)
+//    {
+//
+//        switch(menuItem.getItemId()){
+//            case R.id.navLogout:
+////                Toast.makeText(this, "Logging out...", Toast.LENGTH_SHORT).show();
+//                Intent logOutIntent = new Intent(this, LoginActivity.class);
+//                startActivity(logOutIntent);
+//                break;
+//        }
+//
+//        return false;
+//    }
 }

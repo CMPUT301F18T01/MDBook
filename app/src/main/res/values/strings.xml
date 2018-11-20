@@ -24,5 +24,6 @@
     <string name="user_id_prompt">Enter patient\'s user ID </string>
     <string name="cancel_button">CANCEL</string>
     <string name="keyword">Search by keyword...</string>
+    <string name="viewProgile">View Profile</string>
 </resources>
 

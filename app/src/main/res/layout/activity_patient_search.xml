@@ -6,15 +6,15 @@
     android:id="@+id/drawer"
     tools:context=".ListPatientActivity">
 
-    <android.support.design.widget.NavigationView
-        app:headerLayout="@layout/header"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:background="@color/white"
-        app:menu="@menu/drawermenu"
-        android:layout_gravity="start">
+    <!--<android.support.design.widget.NavigationView-->
+        <!--app:headerLayout="@layout/header"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:background="@color/white"-->
+        <!--app:menu="@menu/drawermenu"-->
+        <!--android:layout_gravity="start">-->
 
-    </android.support.design.widget.NavigationView>
+    <!--</android.support.design.widget.NavigationView>-->
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="wrap_content"

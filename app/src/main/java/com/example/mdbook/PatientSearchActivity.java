@@ -12,8 +12,8 @@ import android.widget.Toast;
 
 public class PatientSearchActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private DrawerLayout drawerLayout;
-    private ActionBarDrawerToggle actionBarDrawerToggle;
+//    private DrawerLayout drawerLayout;
+//    private ActionBarDrawerToggle actionBarDrawerToggle;
     private FloatingActionButton fabSearchProblemBtn, fabSearchMapBtn, fabSearchUserBtn;
     private EditText etSearchBar;
 
@@ -22,11 +22,11 @@ public class PatientSearchActivity extends AppCompatActivity implements View.OnC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patient_search);
 
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer);
-        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close);
-        drawerLayout.addDrawerListener(actionBarDrawerToggle);
-        actionBarDrawerToggle.syncState();
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        drawerLayout = (DrawerLayout) findViewById(R.id.drawer);
+//        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close);
+//        drawerLayout.addDrawerListener(actionBarDrawerToggle);
+//        actionBarDrawerToggle.syncState();
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         fabSearchProblemBtn = (FloatingActionButton)findViewById(R.id.fabSearchProblem);
         fabSearchProblemBtn.setOnClickListener(this);
@@ -40,14 +40,14 @@ public class PatientSearchActivity extends AppCompatActivity implements View.OnC
 
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if(actionBarDrawerToggle.onOptionsItemSelected(item))
-        {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        if(actionBarDrawerToggle.onOptionsItemSelected(item))
+//        {
+//            return true;
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
 
     @Override
     public void onClick(View v)
