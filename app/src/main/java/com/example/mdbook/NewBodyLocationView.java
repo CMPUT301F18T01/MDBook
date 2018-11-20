@@ -21,24 +21,21 @@ public class NewBodyLocationView extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //Todo: Save data into the user manager
-                BackToAddProblem();
-                //Go back to patient main page
-                //BackToAddProblem();
+                BackToAddRecord();
             }
         });
 
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BackToAddProblem();
+                BackToAddRecord();
             }
         });
 
     }
 
-    public void BackToAddProblem(){
-        Intent mainPage = new Intent(this, ListProblemActivity.class);
-        startActivity(mainPage);
+    public void BackToAddRecord(){
+        this.finish();
     }
 
 }
