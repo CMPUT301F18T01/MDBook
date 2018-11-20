@@ -27,6 +27,7 @@ public class AddProblemActivity extends AppCompatActivity {
         title = findViewById(R.id.addTitle);
         date = findViewById(R.id.addDate);
         description = findViewById(R.id.addDescription);
+        addRecord = findViewById(R.id.addRecord);
 
         save.setOnClickListener(new View.OnClickListener() {
             @Override

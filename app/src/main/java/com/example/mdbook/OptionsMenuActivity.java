@@ -30,13 +30,25 @@ public class OptionsMenuActivity extends AppCompatActivity {
                 GoEditProblem();
             }
         });
-
         EditRecord.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 GoEditRecord();
             }
         });
+        RecordSlide.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RecordSlide();
+            }
+        });
+        GeoLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GeoLocation();
+            }
+        });
+
     }
 
     public void GoEditProblem(){
@@ -49,5 +61,13 @@ public class OptionsMenuActivity extends AppCompatActivity {
         startActivity(goEditProblem);
     }
 
+    public void RecordSlide(){
+        Intent ViewRecordSlide = new Intent(this, PatientSlideActivity.class);
+        startActivity(ViewRecordSlide);
+    }
 
+    public void GeoLocation(){
+        Intent ViewLocationActivity = new Intent(this, ViewLocationActivity.class);
+        startActivity(ViewLocationActivity);
+    }
 }
