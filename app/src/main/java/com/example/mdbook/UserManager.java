@@ -98,6 +98,7 @@ public class UserManager {
 
                 /* save data in patients table */
                 patients.put(userID, data);
+                dataManager.push();
 
             } catch (JSONException e){
                 throw new RuntimeException(e);
@@ -141,6 +142,7 @@ public class UserManager {
 
                 /* save data in patients table */
                 caregivers.put(userID, data);
+                dataManager.push();
 
             } catch (JSONException e){
                 throw new RuntimeException(e);
