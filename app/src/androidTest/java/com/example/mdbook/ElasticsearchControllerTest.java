@@ -49,6 +49,9 @@ public class ElasticsearchControllerTest extends  TestCase{
         return factory.getObject();
     }
 
+    /**
+     * Tests that the patient object is uploaded to the es server
+     */
     public void testAddPatientTask(){
         /* Set up testing environment */
         UserManager.initManager();
@@ -60,22 +63,20 @@ public class ElasticsearchControllerTest extends  TestCase{
         String testPhone = "testPhone";
         String testEmail = "testEmail";
         try {
-            Patient patient = userManager.createPatient(patientID, "test-phone", "testemail");
+            Patient patient = userManager.createPatient(patientID, testPhone, testEmail);
         } catch (UserIDNotAvailableException e) {
             fail();
         }
         elasticsearchController.push();
 
-        // TODO: set up jest controller in test
         // verify the above patient is created at http://cmput301.softwareprocess.es:8080/cmput301f18t01test/patient/patientID
         // fetch object at given url
-        DocumentResult result = null;
+        JestResult result = null;
         try {
-            result = client.execute(new Get.Builder(patientID,index)
+            result = client.execute(new Get.Builder(index, patientID)
                     .type("patient")
                     .build());
             JSONObject resultJSON = result.getSourceAsObject(JSONObject.class);
-
             assertEquals(testEmail, resultJSON.getString("email"));
             assertEquals(testPhone, resultJSON.getString("phone"));
         } catch (IOException e) {
