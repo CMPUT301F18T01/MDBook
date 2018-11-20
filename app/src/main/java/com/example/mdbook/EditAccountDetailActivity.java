@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import java.io.Serializable;
+
 public class EditAccountDetailActivity extends AppCompatActivity {
 
     EditText editName;
@@ -14,6 +16,10 @@ public class EditAccountDetailActivity extends AppCompatActivity {
     EditText editEmail;
     Button save;
     Button cancel;
+//    String newName = editName.getText().toString();
+//    String newEmail = editEmail.getText().toString();
+//    String newPhone = editPhone.getText().toString();
+//    private String activity = "EditAccountDetailActivity";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,21 +33,30 @@ public class EditAccountDetailActivity extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                backToMain();
+
+                save();
             }
         });
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                backToMain();
+                backToView();
             }
         });
     }
 
-    public void backToMain(){
+    public void save(){
+        Intent save = new Intent(this, ViewAccountDetailActivity.class);
+//        //String newName = editName.getText().toString();
+//        save.putExtra("newName", newName);
+//        save.putExtra("newEmail", newEmail);
+//        save.putExtra("newPhone", newPhone);
+//        save.putExtra("activity", activity);
+        startActivity(save);
+        backToView();
+    }
+    public void backToView(){
 
-        //Intent backToMain = new Intent(this, EditAccountDetailActivity.class);
-        //startActivity(backToMain);
         this.finish();
 
     }

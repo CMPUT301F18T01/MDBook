@@ -53,21 +53,22 @@ public class EditProblemDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //TODO: Save the data
-                backToMainPage();
+                backToPreviousPage();
             }
         });
 
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                backToMainPage();
+                backToPreviousPage();
             }
         });
     }
 
-    public void backToMainPage(){
-        Intent goEditProblem = new Intent(this, ListProblemActivity.class);
-        startActivity(goEditProblem);
+    public void backToPreviousPage(){
+        //Intent goViewProblem = new Intent(this, ListProblemActivity.class);
+        //startActivity(goViewProblem);
+        this.finish();
     }
 
 }

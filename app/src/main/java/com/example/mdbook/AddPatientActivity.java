@@ -68,10 +68,11 @@ public class AddPatientActivity extends AppCompatActivity implements View.OnClic
                 addToListPatientIntent.putExtra("userID", userID);
                 addToListPatientIntent.putExtra("activity", activity);
                 startActivity(addToListPatientIntent);
+                BackToPreviousActivity();
                 break;
 
             case R.id.cancelBtn:
-                CancelButtonPressed();
+                BackToPreviousActivity();
                 break;
 
             case R.id.enterUserText:
@@ -81,7 +82,7 @@ public class AddPatientActivity extends AppCompatActivity implements View.OnClic
         }
 
     }
-    public void CancelButtonPressed(){
+    public void BackToPreviousActivity(){
         this.finish();
     }
 }
