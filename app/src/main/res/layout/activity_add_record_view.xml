@@ -116,8 +116,8 @@
 
     <EditText
         android:id="@+id/editText3"
-        android:layout_width="385dp"
-        android:layout_height="136dp"
+        android:layout_width="338dp"
+        android:layout_height="53dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
