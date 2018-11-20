@@ -40,8 +40,9 @@ public class EditAccountDetailActivity extends AppCompatActivity {
 
     public void backToMain(){
 
-        Intent backToMain = new Intent(this, ListProblemActivity.class);
-        startActivity(backToMain);
+        //Intent backToMain = new Intent(this, EditAccountDetailActivity.class);
+        //startActivity(backToMain);
+        this.finish();
 
     }
 }
