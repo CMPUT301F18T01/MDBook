@@ -10,8 +10,11 @@
 
 package com.example.mdbook;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 /**
  * Creates a view of the users problem records
@@ -25,6 +28,7 @@ import android.widget.ListView;
  */
 public class CaretakerViewRecordsActivity extends AppCompatActivity {
     // Initialize dummy variables for debugging
+    Button ReturnButton;
     ListView CaregiverRecordListView;
     String[] Title1 = {"Head Issue", "Ear Issue", "Hand Issue",
             "Nose Issue", "Finger Issue", "Eye Issue"};
@@ -49,10 +53,26 @@ public class CaretakerViewRecordsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_caretaker_view_records);
+        ReturnButton = findViewById(R.id.ReturnButton);
+
+        // Switches to problem list view screen upon click of the save button
+        ReturnButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Todo: Save data into the user manager
+
+                BackToAddProblem();
+            }
+        });
 
         CaregiverRecordListView = (ListView) findViewById(R.id.recordListView);
         CustomAdapter customAdapter = new CustomAdapter(CaretakerViewRecordsActivity.this,
                 Title1 ,Images1, Date1, Comment1);
         CaregiverRecordListView.setAdapter(customAdapter);
+    }
+
+    public void BackToAddProblem(){
+
+        this.finish();
     }
 }
