@@ -65,7 +65,7 @@ public class ViewRecordActivity extends AppCompatActivity {
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent mIntent = new Intent(getApplicationContext(), EditDetailsActivity.class);
+                Intent mIntent = new Intent(getApplicationContext(), EditProblemDetailsActivity.class);
                 mIntent.putExtra("Titles", Title[i]);
                 mIntent.putExtra("Images", Images[i]);
                 startActivity(mIntent);
