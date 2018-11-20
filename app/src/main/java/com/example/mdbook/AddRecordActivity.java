@@ -11,7 +11,6 @@ import android.widget.ImageView;
 
 public class AddRecordActivity extends AppCompatActivity {
 
-    ImageView image;
     EditText headline;
     EditText date;
     EditText Description;
@@ -74,8 +73,9 @@ public class AddRecordActivity extends AppCompatActivity {
     }
 
     public void BackToAddProblem(){
-        Intent mainPage = new Intent(this, ListProblemActivity.class);
-        startActivity(mainPage);
+        //Intent mainPage = new Intent(this, ListProblemActivity.class);
+        //startActivity(mainPage);
+        this.finish();
     }
 
     public void openGeoLoc(){
