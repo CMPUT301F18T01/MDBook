@@ -30,7 +30,7 @@
         <activity android:name=".NewBodyLocationView" />
         <activity android:name=".CaretakerViewRecordsActivity" />
         <activity android:name=".PatientSlideActivity" />
-        <activity android:name=".AddRecordActivityView" />
+        <activity android:name=".AddRecordActivity" />
         <activity android:name=".ListProblemActivity" />
         <activity android:name=".ViewAccountDetailActivity" />
         <activity android:name=".OptionsMenuActivity"></activity>

@@ -45,7 +45,7 @@ public class OptionsMenuActivity extends AppCompatActivity {
     }
 
     public void GoEditRecord(){
-        Intent goEditProblem = new Intent(this, EditProblemDetailsActivity.class);
+        Intent goEditProblem = new Intent(this, ViewRecordActivity.class);
         startActivity(goEditProblem);
     }
 }

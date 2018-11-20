@@ -13,6 +13,7 @@ public class AddProblemActivity extends AppCompatActivity {
     ArrayList<String> problemArray = new ArrayList<String>();
     Button save;
     Button cancel;
+    Button addRecord;
     EditText title;
     EditText date;
     EditText description;
@@ -44,11 +45,26 @@ public class AddProblemActivity extends AppCompatActivity {
             }
         });
 
+
+        addRecord.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goAddRecord();
+            }
+        });
+
+
     }
 
     public void BackToAddProblem(){
         Intent mainPage = new Intent(this, ListProblemActivity.class);
         startActivity(mainPage);
+    }
+
+
+    public void goAddRecord(){
+        Intent addRecordPage = new Intent(this, AddRecordActivity.class);
+        startActivity(addRecordPage);
     }
 
 }
