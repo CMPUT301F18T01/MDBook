@@ -24,6 +24,7 @@ public class ListProblemActivity extends AppCompatActivity {
     EditText searchBar;
     Button addProblemButton;
     Button search;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,13 +44,14 @@ public class ListProblemActivity extends AppCompatActivity {
         problemListView.setAdapter(problemAdapter);
 
 
-//        problemListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-//                //spot is the item clicked
-//                mCustomFragment = CustomFragment.newInstance(position);
-//            }
-//        });
+        problemListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                //spot is the item clicked
+                Intent showOption = new Intent(ListProblemActivity.this, OptionsMenuActivity.class);
+                startActivity(showOption);
+            }
+        });
 //
 //        problemListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 //            @Override
