@@ -24,8 +24,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 import io.searchbox.client.JestClient;
 import io.searchbox.client.JestResult;
@@ -125,7 +127,7 @@ public class ElasticsearchControllerTest extends  TestCase{
         String patientID = "testGetPatientID";
         String testPhone = "testGetPhone";
         String testEmail = "testGetEmail";
-        JSONArray patientidlist = null;
+        ArrayList<String> patientidlist = null;
         JSONObject idlistJSON = null;
         JSONObject patientJSON = new JSONObject();
 
@@ -133,6 +135,7 @@ public class ElasticsearchControllerTest extends  TestCase{
         try {
             patientJSON.put("phone",testPhone);
             patientJSON.put("email",testEmail);
+            patientJSON.put("problems", new ArrayList<String>());
 
         } catch (JSONException e) {
             fail();
@@ -154,16 +157,17 @@ public class ElasticsearchControllerTest extends  TestCase{
 
 
         // TODO: add patientID to idlist
+        LinkedTreeMap<String, ArrayList<String>> patientIDListJSON = null;
         try {
             JestResult result = client.execute(new Get.Builder(index, "idlists")
                     .type("metadata")
                     .build());
 
             idlistJSON = result.getSourceAsObject(JSONObject.class);
+            patientIDListJSON = (LinkedTreeMap<String, ArrayList<String>>) idlistJSON.get("patientIDs");
+            patientidlist = patientIDListJSON.get("values");
 
-            patientidlist = (JSONArray) idlistJSON
-                    .getJSONObject("patientIDS")
-                    .get("values");
+
 
         } catch (JSONException e) {
             //throw new RuntimeException("failed here 2", e);
@@ -175,9 +179,10 @@ public class ElasticsearchControllerTest extends  TestCase{
 
 
         /*Add id to patient list then it should push this new list to ES*/
-        patientidlist.put(patientID);
+        patientidlist.add(patientID);
+        patientIDListJSON.put("values", patientidlist);
 
-        idlistJSON.put("patientIDs", patientidlist);
+        idlistJSON.put("patientIDs", patientIDListJSON);
         Index JestID1 = new Index.Builder(idlistJSON).index(index)
                 .type("metadata")
                 .id("idlists")
@@ -196,7 +201,7 @@ public class ElasticsearchControllerTest extends  TestCase{
         elasticsearchController.pull();
 
         /* verify data was loaded via the usermanager */
-        //assertTrue(userManager.login(patientID));
+        assertTrue(userManager.login(patientID));
     }
 
 }
