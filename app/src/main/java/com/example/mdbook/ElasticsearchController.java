@@ -10,6 +10,7 @@ package com.example.mdbook;
  */
 
 
+import com.google.gson.internal.LinkedTreeMap;
 import com.searchly.jestdroid.DroidClientConfig;
 import com.searchly.jestdroid.JestClientFactory;
 
@@ -22,7 +23,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import io.searchbox.client.JestClient;
+import io.searchbox.client.JestResult;
 import io.searchbox.core.Delete;
+import io.searchbox.core.Get;
 import io.searchbox.core.Index;
 
 
@@ -283,9 +286,96 @@ class ElasticsearchController {
         }
     }
 
-    public void pull(){
-        ;
+    public void pullPatients(){
+        HashMap<String, JSONObject> patients = new HashMap<>();
+        for (String patientID: (ArrayList<String>) idlists.get("patientIDs")) {
+            try {
+                JestResult result = client.execute(new Get.Builder(index, patientID)
+                        .type("patient")
+                        .build());
+                JSONObject resultJSON = result.getSourceAsObject(JSONObject.class);
+                patients.put(patientID, resultJSON);
+            } catch (IOException e) {
+                throw new RuntimeException("Failed to Pull Patients",e);
+            }
+        }
+        dataManager.setPatients(patients);
+
+
     }
 
+    public void pullCaregivers(){
+
+    }
+
+    public void pullProblems(){
+
+    }
+
+    public void pullRecords(){
+
+    }
+
+    public void pullPhotos(){
+
+    }
+
+    public void pullIDLists() {
+        JestResult result = null;
+        try {
+            result = client.execute(new Get.Builder(index, "idlists")
+                    .type("metadata")
+                    .build());
+            JSONObject idlistJSON = result.getSourceAsObject(JSONObject.class);
+            ArrayList<String> patientidlist = (ArrayList<String>) ((LinkedTreeMap) idlistJSON
+                    .get("patientIDs"))
+                    .get("values");
+            ArrayList<String> caregiveridlist = (ArrayList<String>) ((LinkedTreeMap) idlistJSON
+                    .get("caregiverIDs"))
+                    .get("values");
+            ArrayList<String> problemidlist = (ArrayList<String>) ((LinkedTreeMap) idlistJSON
+                    .get("problemIDs"))
+                    .get("values");
+            ArrayList<String> recordidlist = (ArrayList<String>) ((LinkedTreeMap) idlistJSON
+                    .get("recordIDs"))
+                    .get("values");
+            ArrayList<String> photoidlist = (ArrayList<String>) ((LinkedTreeMap) idlistJSON
+                    .get("photoIDs"))
+                    .get("values");
+            ArrayList<String> availableidlist = (ArrayList<String>) ((LinkedTreeMap) idlistJSON
+                    .get("availableIDs"))
+                    .get("values");
+            //Integer availableid = (Integer) ((LinkedTreeMap) idlistJSON.get("availableID")).get("values");
+
+            idlists.put("patientIDs", patientidlist);
+            idlists.put("caregiverIDs", caregiveridlist);
+            idlists.put("problemIDs", problemidlist);
+            idlists.put("recordIDs", recordidlist);
+            idlists.put("photoIDs", photoidlist);
+            idlists.put("AvailableIDs", availableidlist);
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+
+    public void pull() {
+        /*Execute this first to get ID list */
+        this.pullIDLists();
+
+        /*pull back data from ES */
+        this.pullPatients();
+        this.pullCaregivers();
+        this.pullProblems();
+        this.pullRecords();
+        this.pullPhotos();
+
+
+
+    }
 
 }
