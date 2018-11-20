@@ -24,6 +24,7 @@ public class ListProblemActivity extends AppCompatActivity {
     EditText searchBar;
     Button addProblemButton;
     Button search;
+    Button viewProfile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +70,13 @@ public class ListProblemActivity extends AppCompatActivity {
             }
         });
 
+        viewProfile = findViewById(R.id.viewProfile);
+        viewProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goViewProfile();
+            }
+        });
     }
 
 
@@ -76,5 +84,10 @@ public class ListProblemActivity extends AppCompatActivity {
     public void addProblem(){
         Intent intent = new Intent(this, AddProblemActivity.class);
         startActivity(intent);
+    }
+
+    public void goViewProfile(){
+        Intent viewProfile = new Intent(this, ViewAccountDetailActivity.class);
+        startActivity(viewProfile);
     }
 }

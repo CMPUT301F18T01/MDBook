@@ -34,7 +34,6 @@ public class AddRecordActivity extends AppCompatActivity {
         save = findViewById(R.id.save);
         cancel = findViewById(R.id.cancel);
 
-
     }
 
 }

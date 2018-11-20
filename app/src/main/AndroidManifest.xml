@@ -33,7 +33,8 @@
         <activity android:name=".AddRecordActivity" />
         <activity android:name=".ListProblemActivity" />
         <activity android:name=".ViewAccountDetailActivity" />
-        <activity android:name=".OptionsMenuActivity"></activity>
+        <activity android:name=".OptionsMenuActivity" />
+        <activity android:name=".EditAccountDetailActivity"></activity>
     </application>
 
 </manifest>
