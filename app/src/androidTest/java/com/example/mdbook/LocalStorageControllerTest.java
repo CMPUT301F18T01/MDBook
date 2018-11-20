@@ -15,13 +15,27 @@ public class LocalStorageControllerTest extends TestCase {
         UserManager.initManager();
         UserManager userManager = UserManager.getManager();
         localStorageController.setContext(context);
+        Patient patient = null;
         try {
-            Patient patient = userManager.createPatient("patientID", "test-phone", "testemail");
+            patient = userManager.createPatient("patientID", "test-phone", "testemail");
+            userManager.saveUser(patient);
         } catch (UserIDNotAvailableException e) {
+            fail();
+        } catch (NoSuchUserException e) {
             fail();
         }
         localStorageController.push();
+        try {
+            userManager.deleteUser("patientID");
+        } catch (NoSuchUserException e) {
+            fail();
+        }
         localStorageController.loadData();
+        try {
+            assert (userManager.fetchUser("patientID") == patient);
+        } catch (NoSuchUserException e) {
+            fail();
+        }
     }
 
 }
