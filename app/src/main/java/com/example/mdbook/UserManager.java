@@ -48,12 +48,13 @@ public class UserManager {
     }
 
     /**
+     * Auto initilaizes if not already done
      * @return Singleton instance of self.
-     * @throws IllegalStateException Thrown if initManager() has not already been called.
      */
     public static UserManager getManager() {
         if(userManager == null){
-            throw new IllegalStateException("UserManager has not been initialized!");
+            // throw new IllegalStateException("UserManager has not been initialized!");
+            initManager();
         }
         return userManager;
     }
