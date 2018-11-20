@@ -53,24 +53,25 @@ public class EditProblemDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //TODO: Save the data
-                backToPreviousPage();
+                backToMainPage();
             }
         });
         // Switches to the main activity upon the click of the cancel button
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                backToPreviousPage();
+                backToMainPage();
             }
         });
     }
 
 
-    public void backToPreviousPage(){
-        //Intent goViewProblem = new Intent(this, ListProblemActivity.class);
-        //startActivity(goViewProblem);
-        this.finish();
-
+    /**
+     * Creates a new intent for switching to the ListProblemActivity
+     */
+    public void backToMainPage(){
+        Intent goEditProblem = new Intent(this, ListProblemActivity.class);
+        startActivity(goEditProblem);
     }
 
 }
