@@ -52,17 +52,6 @@ public class ListProblemActivity extends AppCompatActivity {
                 startActivity(showOption);
             }
         });
-//
-//        problemListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int spot, long l) {
-//                //spot is the item clicked
-//                Intent editRecord = new Intent(getApplicationContext(), //Jame's activity.class);
-//                editRecord.putExtra("Problem", spot);
-//                startActivity(editRecord);
-//            }
-//        });
-
 
         // When a user clicked search button
         search = findViewById(R.id.go);
@@ -81,9 +70,6 @@ public class ListProblemActivity extends AppCompatActivity {
         });
 
     }
-
-
-
 
 
 
