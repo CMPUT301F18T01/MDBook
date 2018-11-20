@@ -16,6 +16,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 
 
@@ -31,6 +32,8 @@ import android.widget.ListView;
  */
 
 public class ViewRecordActivity extends AppCompatActivity {
+    Button save;
+    Button cancel;
     // Initialize dummy variables for debugging
     ListView mListView;
     String[] Title = {"Justin Trudeau", "Barrack Obama", "Kanye West", "Beyonce Knowles",
@@ -57,6 +60,29 @@ public class ViewRecordActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_record);
+        save = findViewById(R.id.SaveRecordButton);
+        cancel = findViewById(R.id.EditRecordButton);
+
+        // Switches to problem list view screen upon click of the save button
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Todo: Save data into the user manager
+                BackToAddProblem();
+                //Go back to patient main page
+                BackToAddProblem();
+            }
+        });
+
+        // Switches to problem list view screen upon click of the cancel button
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BackToAddProblem();
+            }
+        });
+
+
 
         mListView = (ListView) findViewById(R.id.recordListView);
         CustomAdapter customAdapter = new CustomAdapter(ViewRecordActivity.this,
@@ -72,5 +98,16 @@ public class ViewRecordActivity extends AppCompatActivity {
             }
         });
     }
+
+    /**
+     * Switches the activity back to the List problem activity view
+     */
+
+    public void BackToAddProblem(){
+        Intent mainPage = new Intent(this, ListProblemActivity.class);
+        startActivity(mainPage);
+    }
+
+
 }
 
