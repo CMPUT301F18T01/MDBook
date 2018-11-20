@@ -284,44 +284,67 @@ class ElasticsearchController {
         } catch (IOException e) {
             throw new RuntimeException("Couldn't push id lists", e);
         }
+
     }
 
-    public void pullPatients(){
-        HashMap<String, JSONObject> patients = new HashMap<>();
-        for (String patientID: (ArrayList<String>) idlists.get("patientIDs")) {
+
+    public HashMap<String, JSONObject> pullUsers(String string){
+        HashMap<String, JSONObject> users = new HashMap<>();
+        for (String userID: (ArrayList<String>) idlists.get(string +"IDs")) {
             try {
-                JestResult result = client.execute(new Get.Builder(index, patientID)
-                        .type("patient")
+                JestResult result = client.execute(new Get.Builder(index, userID)
+                        .type(string)
                         .build());
                 JSONObject resultJSON = result.getSourceAsObject(JSONObject.class);
-                patients.put(patientID, resultJSON);
+                users.put(userID, resultJSON);
             } catch (IOException e) {
-                throw new RuntimeException("Failed to Pull Patients",e);
+                throw new RuntimeException("Failed to Pull " + string + "s" ,e);
             }
         }
-        dataManager.setPatients(patients);
-
-
-    }
-
-    public void pullCaregivers(){
+        return users;
 
     }
 
-    public void pullProblems(){
+
+    public HashMap<Integer, JSONObject> pullProblemsRecords(String string){
+        HashMap<Integer, JSONObject> items = new HashMap<>();
+        for (Integer itemID: (ArrayList<Integer>) idlists.get(string +"IDs")) {
+            try {
+                JestResult result = client.execute(new Get.Builder(index, itemID.toString())
+                        .type(string)
+                        .build());
+                JSONObject resultJSON = result.getSourceAsObject(JSONObject.class);
+                items.put(itemID, resultJSON);
+            } catch (IOException e) {
+                throw new RuntimeException("Failed to Pull " + string + "s",e);
+            }
+        }
+        return items;
 
     }
 
-    public void pullRecords(){
+
+    public HashMap<Integer, Photo> pullPhotos(){
+        HashMap<Integer, Photo> photos = new HashMap<>();
+        for (Integer photoID: (ArrayList<Integer>) idlists.get("photoIDs")) {
+            try {
+                JestResult result = client.execute(new Get.Builder(index, photoID.toString())
+                        .type("photo")
+                        .build());
+                Photo resultPhoto = result.getSourceAsObject(Photo.class);
+                photos.put(photoID, resultPhoto);
+            } catch (IOException e) {
+                throw new RuntimeException("Failed to Pull photos",e);
+            }
+        }
+        return photos;
 
     }
 
-    public void pullPhotos(){
-
-    }
 
     public void pullIDLists() {
         JestResult result = null;
+
         try {
             result = client.execute(new Get.Builder(index, "idlists")
                     .type("metadata")
@@ -333,26 +356,29 @@ class ElasticsearchController {
             ArrayList<String> caregiveridlist = (ArrayList<String>) ((LinkedTreeMap) idlistJSON
                     .get("caregiverIDs"))
                     .get("values");
-            ArrayList<String> problemidlist = (ArrayList<String>) ((LinkedTreeMap) idlistJSON
+            ArrayList<Integer> problemidlist = (ArrayList<Integer>) ((LinkedTreeMap) idlistJSON
                     .get("problemIDs"))
                     .get("values");
-            ArrayList<String> recordidlist = (ArrayList<String>) ((LinkedTreeMap) idlistJSON
+            ArrayList<Integer> recordidlist = (ArrayList<Integer>) ((LinkedTreeMap) idlistJSON
                     .get("recordIDs"))
                     .get("values");
-            ArrayList<String> photoidlist = (ArrayList<String>) ((LinkedTreeMap) idlistJSON
+            ArrayList<Integer> photoidlist = (ArrayList<Integer>) ((LinkedTreeMap) idlistJSON
                     .get("photoIDs"))
                     .get("values");
-            ArrayList<String> availableidlist = (ArrayList<String>) ((LinkedTreeMap) idlistJSON
+            ArrayList<Integer> availableidlist = (ArrayList<Integer>) ((LinkedTreeMap) idlistJSON
                     .get("availableIDs"))
                     .get("values");
-            //Integer availableid = (Integer) ((LinkedTreeMap) idlistJSON.get("availableID")).get("values");
+            Integer availableID = (Integer) ((LinkedTreeMap) idlistJSON.get("availableID")).get("values");
 
             idlists.put("patientIDs", patientidlist);
             idlists.put("caregiverIDs", caregiveridlist);
             idlists.put("problemIDs", problemidlist);
             idlists.put("recordIDs", recordidlist);
             idlists.put("photoIDs", photoidlist);
-            idlists.put("AvailableIDs", availableidlist);
+            idlists.put("availableIDs", availableidlist);
+            idlists.put("availableID",availableID);
+            dataManager.setAvailableID(availableID);
+            dataManager.setAvailableIDs(availableidlist);
 
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -368,11 +394,11 @@ class ElasticsearchController {
         this.pullIDLists();
 
         /*pull back data from ES */
-        this.pullPatients();
-        this.pullCaregivers();
-        this.pullProblems();
-        this.pullRecords();
-        this.pullPhotos();
+        dataManager.setPatients(this.pullUsers("patient"));
+        dataManager.setCaregivers(this.pullUsers("caregiver"));
+        dataManager.setProblems(this.pullProblemsRecords("problem"));
+        dataManager.setRecords(this.pullProblemsRecords("record"));
+        dataManager.setPhotos(this.pullPhotos());
 
 
 
