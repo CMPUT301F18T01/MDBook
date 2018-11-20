@@ -157,6 +157,8 @@ public class UserManager {
      * user doesn't exist or there is already someone logged in.
      */
     public boolean login(String userid) {
+        /* Get the latest data */
+        dataManager.pull();
         UserController userController = UserController.getController();
         if (userController.getUser() != null){
             return false;
