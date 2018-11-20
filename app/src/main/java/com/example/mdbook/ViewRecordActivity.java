@@ -68,7 +68,7 @@ public class ViewRecordActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //Todo: Save data into the user manager
-                //BackToAddProblem();
+                BackToAddProblem();
                 //Go back to patient main page
                 BackToAddProblem();
             }
@@ -104,9 +104,8 @@ public class ViewRecordActivity extends AppCompatActivity {
      */
 
     public void BackToAddProblem(){
-        //Intent mainPage = new Intent(this, ListProblemActivity.class);
-        //startActivity(mainPage);
-        this.finish();
+        Intent mainPage = new Intent(this, ListProblemActivity.class);
+        startActivity(mainPage);
     }
 
 

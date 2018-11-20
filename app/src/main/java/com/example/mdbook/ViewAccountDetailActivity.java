@@ -36,10 +36,6 @@ public class ViewAccountDetailActivity extends AppCompatActivity {
     TextView phone;
     TextView email;
     Button editAccount;
-//    private String previousIntent;
-//    private String newName ;
-//    private String newEmail ;
-//    private String newPhone ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,19 +47,8 @@ public class ViewAccountDetailActivity extends AppCompatActivity {
         phone = findViewById(R.id.viewPhone);
         email = findViewById(R.id.viewEmail);
         editAccount = findViewById(R.id.EditAccount);
-//        Intent getPreviousIntent = getIntent();
-//        previousIntent = getPreviousIntent.getExtras().getString("activity");
-//
-//        if (previousIntent.equals("EditAccountDetailActivity")) {
-//            Intent getUserFromAdd = getIntent();
-//            newName = getUserFromAdd.getExtras().getString("newName");
-//            //name.setText(newName);
-//            newEmail = getUserFromAdd.getExtras().getString("newEmail");
-//            //email.setText(newEmail);
-//            newPhone = getUserFromAdd.getExtras().getString("newPhone");
-//            //phone.setText(newPhone);
-//        }
 
+        // Switches to the edit account details upon the click of the editbutton
         editAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,8 +64,6 @@ public class ViewAccountDetailActivity extends AppCompatActivity {
     public void goEditAccount(){
         Intent editAccount = new Intent(this, EditAccountDetailActivity.class);
         startActivity(editAccount);
-        this.finish();
     }
-
 
 }
