@@ -115,13 +115,25 @@ public class ElasticsearchControllerTest extends  TestCase{
         UserManager.initManager();
         UserManager userManager = UserManager.getManager();
         ElasticsearchController elasticsearchController = ElasticsearchController.getController();
+        elasticsearchController.push();
         JestClient client = this.getJestClient();
         /* Create and upload new patient */
         String patientID = "testGetPatientID";
         String testPhone = "testGetPhone";
         String testEmail = "testGetEmail";
 
-        Index jestindex = new Index.Builder(patientID)
+        JSONObject patientJSON = new JSONObject();
+        try {
+            patientJSON.put("phone",testPhone);
+            patientJSON.put("email",testEmail);
+
+        } catch (JSONException e) {
+            fail();
+        }
+
+
+        Index jestindex = new Index.Builder(patientJSON)
+
                 .index(index)
                 .type("patient")
                 .id(patientID)
@@ -130,9 +142,38 @@ public class ElasticsearchControllerTest extends  TestCase{
         try {
             client.execute(jestindex);
         } catch (IOException e) {
-            fail();
+            fail("failed here 0");
         }
         // TODO: add patientID to idlist
+        try {
+            JestResult result = client.execute(new Get.Builder(index, "idlists")
+                    .type("metadata")
+                    .build());
+            JSONObject idlistJSON = result.getSourceAsObject(JSONObject.class);
+            ArrayList<String> patientidlist = (ArrayList<String>) ((LinkedTreeMap) idlistJSON
+                    .get("patientIDs"))
+                    .get("values");
+
+            patientidlist.add(patientID);
+            idlistJSON.put("patientIDs",patientidlist);
+            Index JestID = new Index.Builder(idlistJSON).index(index).type("metadata").id("idlists").build();
+            try {
+                client.execute(JestID);
+            } catch (IOException e) {
+                //throw new RuntimeException("failed here 1", e);
+                fail();
+            }
+
+
+        } catch (JSONException e) {
+            //throw new RuntimeException("failed here 2", e);
+            fail();
+        } catch (IOException e) {
+            //throw new RuntimeException("failed here 3", e);
+            fail();
+        }
+
+
 
         /* attempt to pull into datamanager/usermanager via esc */
         elasticsearchController.pull();

@@ -73,7 +73,7 @@ class ElasticsearchController {
             idlists.put("problemIDs", new ArrayList<Integer>());
             idlists.put("recordIDs", new ArrayList<Integer>());
             idlists.put("photoIDs", new ArrayList<Integer>());
-            idlists.put("AvailableIDs", new ArrayList<Integer>());
+            idlists.put("availableIDs", new ArrayList<Integer>());
 
         }
         return elasticsearchController;
@@ -368,7 +368,7 @@ class ElasticsearchController {
             ArrayList<Integer> availableidlist = (ArrayList<Integer>) ((LinkedTreeMap) idlistJSON
                     .get("availableIDs"))
                     .get("values");
-            Integer availableID = (Integer) ((LinkedTreeMap) idlistJSON.get("availableID")).get("values");
+            Integer availableID = idlistJSON.getInt("availableID");
 
             idlists.put("patientIDs", patientidlist);
             idlists.put("caregiverIDs", caregiveridlist);
@@ -379,6 +379,7 @@ class ElasticsearchController {
             idlists.put("availableID",availableID);
             dataManager.setAvailableID(availableID);
             dataManager.setAvailableIDs(availableidlist);
+
 
         } catch (IOException e) {
             throw new RuntimeException(e);
