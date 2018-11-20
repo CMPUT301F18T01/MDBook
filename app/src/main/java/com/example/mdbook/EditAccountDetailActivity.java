@@ -27,19 +27,19 @@ public class EditAccountDetailActivity extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                backToView();
+                backToMain();
             }
         });
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                backToView();
+                backToMain();
             }
         });
     }
 
-    public void backToView(){
-        Intent backToView = new Intent(this, ViewAccountDetailActivity.class);
+    public void backToMain(){
+        Intent backToView = new Intent(this, ListProblemActivity.class);
         startActivity(backToView);
     }
 }
