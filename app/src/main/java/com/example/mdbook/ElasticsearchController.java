@@ -30,14 +30,20 @@ import io.searchbox.core.Index;
 
 
 /**
+ * Elastic search Servers
+ * http://cmput301.softwareprocess.es:8080/cmput301f18t01test
+ * http://cmput301.softwareprocess.es:8080/cmput301f18t01
+ */
+
+
+/**
  * Keeps DataManager in sync with cloud storage.
  *
  * @author Noah Burghardt
- * @version 0.0.1
+ * @author ThomasChan
+ * @version 0.0.2
  **/
 
-//http://cmput301.softwareprocess.es:8080/cmput301f18t01test
-//http://cmput301.softwareprocess.es:8080/cmput301f18t01
 
 class ElasticsearchController {
 
@@ -79,6 +85,9 @@ class ElasticsearchController {
         return elasticsearchController;
     }
 
+    /**
+     * Pushes Patients to Elastic search server
+     */
     private void pushPatients(){
         HashMap<String, JSONObject> patients = dataManager.getPatients();
         ArrayList<String> patientIDList = new ArrayList<>();
@@ -86,7 +95,10 @@ class ElasticsearchController {
         /* Upload new patients */
         for (String patientID : patients.keySet()){
             patientIDList.add(patientID);
-            Index jestIndex = new Index.Builder(patients.get(patientID)).index(index).type("patient").id(patientID).build();
+            Index jestIndex = new Index.Builder(patients.get(patientID)).index(index)
+                    .type("patient")
+                    .id(patientID)
+                    .build();
             try {
                 client.execute(jestIndex);
             } catch (IOException e) {
@@ -113,14 +125,19 @@ class ElasticsearchController {
     }
 
 
-
+    /**
+     * Pushes Caregivers to Elastic search server
+     */
     private void pushCaregivers(){
         HashMap<String, JSONObject> caregivers = dataManager.getCaregivers();
         ArrayList<String> caregiverIDList = new ArrayList<>();
         /* Upload new caregivers */
         for (String caregiverID : caregivers.keySet()){
             caregiverIDList.add(caregiverID);
-            Index jestIndex = new Index.Builder(caregivers.get(caregiverID)).index(index).type("caregiver").id(caregiverID).build();
+            Index jestIndex = new Index.Builder(caregivers.get(caregiverID)).index(index)
+                    .type("caregiver")
+                    .id(caregiverID)
+                    .build();
             try{
                 client.execute(jestIndex);
             } catch (IOException e){
@@ -146,13 +163,20 @@ class ElasticsearchController {
         idlists.put("caregiverIDs",caregiverIDList);
     }
 
+
+    /**
+     * Pushes Problems to Elastic search server
+     */
     private void pushProblems(){
         HashMap<Integer, JSONObject> problems = dataManager.getProblems();
         ArrayList<Integer> problemIDList = new ArrayList<>();
         /* Upload new problems */
         for (Integer problemID : problems.keySet()){
             problemIDList.add(problemID);
-            Index jestIndex = new Index.Builder(problems.get(problemID)).index(index).type("problem").id(problemID.toString()).build();
+            Index jestIndex = new Index.Builder(problems.get(problemID)).index(index)
+                    .type("problem")
+                    .id(problemID.toString())
+                    .build();
             try{
                 client.execute(jestIndex);
             } catch (IOException e){
@@ -178,12 +202,19 @@ class ElasticsearchController {
 
     }
 
+
+    /**
+     * Pushes records to Elastic search server
+     */
     private void pushRecords(){
         HashMap<Integer, JSONObject> records = dataManager.getRecords();
         ArrayList<Integer> recordIDList = new ArrayList<>();
         /* Upload new records */
         for (Integer recordID : records.keySet()){
-            Index jestIndex = new Index.Builder(records.get(recordID)).index(index).type("record").id(recordID.toString()).build();
+            Index jestIndex = new Index.Builder(records.get(recordID)).index(index)
+                    .type("record")
+                    .id(recordID.toString())
+                    .build();
             try{
                 client.execute(jestIndex);
             } catch (IOException e){
@@ -211,13 +242,18 @@ class ElasticsearchController {
     }
 
 
-    /* TODO figure out how to upload photos to ES */
+    /**
+     * Pushes Photoes to Elastic search server
+     */
     private void pushPhotos(){
         HashMap<Integer, Photo> photos = dataManager.getPhotos();
         ArrayList<Integer> photoIDList = new ArrayList<>();
         /* Upload new photos */
         for (Integer photoID : photos.keySet()){
-            Index jestIndex = new Index.Builder(photos.get(photoID)).index(index).type("photo").id(photoID.toString()).build();
+            Index jestIndex = new Index.Builder(photos.get(photoID)).index(index)
+                    .type("photo")
+                    .id(photoID.toString())
+                    .build();
             try{
                 client.execute(jestIndex);
             } catch (IOException e){
@@ -243,7 +279,9 @@ class ElasticsearchController {
 
     }
 
-
+    /**
+     * Calls all methods to push data to Elastic search server
+     */
     public void push() {
         /*
          * Update objects
@@ -278,7 +316,9 @@ class ElasticsearchController {
         } catch (JSONException e) {
             throw new RuntimeException();
         }
-        Index JestID = new Index.Builder(IDJSON).index(index).type("metadata").id("idlists").build();
+        Index JestID = new Index.Builder(IDJSON).index(index).type("metadata")
+                .id("idlists")
+                .build();
         try {
             client.execute(JestID);
         } catch (IOException e) {
@@ -287,7 +327,10 @@ class ElasticsearchController {
 
     }
 
-
+    /**
+     * Pulls users from Elastic search server
+     * @return Hashmap of users
+     */
     public HashMap<String, JSONObject> pullUsers(String string){
         HashMap<String, JSONObject> users = new HashMap<>();
         for (String userID: (ArrayList<String>) idlists.get(string +"IDs")) {
@@ -305,7 +348,10 @@ class ElasticsearchController {
 
     }
 
-
+    /**
+     * Pulls problems or records from Elastic search server
+     * @return Hashmap of problems or records
+     */
     public HashMap<Integer, JSONObject> pullProblemsRecords(String string){
         HashMap<Integer, JSONObject> items = new HashMap<>();
         for (Integer itemID: (ArrayList<Integer>) idlists.get(string +"IDs")) {
@@ -323,7 +369,10 @@ class ElasticsearchController {
 
     }
 
-
+    /**
+     * Pulls photos from Elastic search server
+     * @return Hashmap of photos
+     */
     public HashMap<Integer, Photo> pullPhotos(){
         HashMap<Integer, Photo> photos = new HashMap<>();
         for (Integer photoID: (ArrayList<Integer>) idlists.get("photoIDs")) {
@@ -341,7 +390,9 @@ class ElasticsearchController {
 
     }
 
-
+    /**
+     * Pulls a list of IDs from Elastic search server
+     */
     public void pullIDLists() {
         JestResult result = null;
 
@@ -389,7 +440,9 @@ class ElasticsearchController {
 
     }
 
-
+    /**
+     * Method that calls all other pull methods and sets data back in the dataManager
+     */
     public void pull() {
         /*Execute this first to get ID list */
         this.pullIDLists();
