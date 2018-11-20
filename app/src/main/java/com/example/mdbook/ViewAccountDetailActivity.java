@@ -1,3 +1,13 @@
+/*
+ * ViewAccountDetailActivity
+ *
+ * Version 0.0.1
+ *
+ * 2018-11-18
+ *
+ * Copyright (c) 2018. All rights reserved.
+ */
+
 package com.example.mdbook;
 
 import android.content.Intent;
@@ -7,6 +17,19 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+
+/**
+ * Creates an activity for the user to view their Account Details
+ *
+ *
+ * @see com.example.mdbook.LoginActivity
+ *
+ *
+ * @author .....
+ * @author James Aina
+ *
+ * @version 0.0.1
+ */
 public class ViewAccountDetailActivity extends AppCompatActivity {
 
     TextView name;
@@ -22,6 +45,8 @@ public class ViewAccountDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_account_detail);
+
+        // set the view and buttons appropriately by id's
         name = findViewById(R.id.viewName);
         phone = findViewById(R.id.viewPhone);
         email = findViewById(R.id.viewEmail);
@@ -47,6 +72,10 @@ public class ViewAccountDetailActivity extends AppCompatActivity {
         });
     }
 
+
+    /**
+     * Creates a new intent for switching to the EditAccountDetailActivity
+     */
     public void goEditAccount(){
         Intent editAccount = new Intent(this, EditAccountDetailActivity.class);
         startActivity(editAccount);

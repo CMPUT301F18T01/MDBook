@@ -1,3 +1,14 @@
+/*
+ * ListPatientProblemActivity
+ *
+ * Version 0.0.1
+ *
+ * 2018-11-18
+ *
+ * Copyright (c) 2018. All rights reserved.
+ */
+
+
 package com.example.mdbook;
 
 import android.content.Intent;
@@ -17,6 +28,18 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * Creates an activity that lists the Patients Problems
+ *
+ *
+ * @see com.example.mdbook.Patient
+ * @see com.example.mdbook.Problem
+ *
+ * @author .....
+ * @author James Aina
+ *
+ * @version 0.0.1
+ */
 public class ListPatientProblemActivity extends AppCompatActivity
 {
 

@@ -1,3 +1,15 @@
+/*
+ * AddPatientActivity
+ *
+ * Version 0.0.1
+ *
+ * 2018-11-18
+ *
+ * Copyright (c) 2018. All rights reserved.
+ */
+
+
+
 package com.example.mdbook;
 
 import android.content.Intent;
@@ -14,12 +26,24 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+/**
+ * Creates an activity for the user to add patients
+ * Displays a list of all the patients already added
+ *
+ * @see com.example.mdbook.Patient
+ * @see
+ *
+ * @author .....
+ * @author James Aina
+ *
+ * @version 0.0.1
+ */
+
 public class AddPatientActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Button addPatientBtn;
     private Button cancelBtn;
     private EditText enterIDText;
-
     private String activity = "AddPatientActivity";
 //
 //    private DrawerLayout drawerLayout;
@@ -36,7 +60,7 @@ public class AddPatientActivity extends AppCompatActivity implements View.OnClic
 //        actionBarDrawerToggle.syncState();
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-
+        // set the view and butons appropriately by id's
         enterIDText = (EditText)findViewById(R.id.enterUserText);
         enterIDText.setOnClickListener(this);
 
