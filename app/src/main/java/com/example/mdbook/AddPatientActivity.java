@@ -71,8 +71,7 @@ public class AddPatientActivity extends AppCompatActivity implements View.OnClic
                 break;
 
             case R.id.cancelBtn:
-                Intent patientListIntent = new Intent(AddPatientActivity.this, ListPatientActivity.class);
-                startActivity(patientListIntent);
+                CancelButtonPressed();
                 break;
 
             case R.id.enterUserText:
@@ -81,5 +80,8 @@ public class AddPatientActivity extends AppCompatActivity implements View.OnClic
 
         }
 
+    }
+    public void CancelButtonPressed(){
+        this.finish();
     }
 }
