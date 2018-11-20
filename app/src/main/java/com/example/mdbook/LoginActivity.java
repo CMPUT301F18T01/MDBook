@@ -118,4 +118,9 @@ public class LoginActivity extends AppCompatActivity implements CompoundButton.O
 
         }
     }
+
+    @Override
+    public void onBackPressed() {
+
+    }
 }

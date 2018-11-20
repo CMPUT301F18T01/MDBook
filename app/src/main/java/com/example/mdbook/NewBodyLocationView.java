@@ -23,7 +23,7 @@ import android.widget.Button;
  * @see com.example.mdbook.Patient
  * @see com.example.mdbook.Problem
  *
- * @author .....
+ * @author Jayanta Chatterjee
  * @author James Aina
  *
  * @version 0.0.1

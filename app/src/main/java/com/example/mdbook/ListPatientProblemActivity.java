@@ -19,6 +19,8 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Switch;
@@ -72,6 +74,15 @@ public class ListPatientProblemActivity extends AppCompatActivity
 
         problemListAdapter = new ArrayAdapter<String>(this, R.layout.simple_list, problemList);
         patientProblemsContainer.setAdapter(problemListAdapter);
+
+        patientProblemsContainer.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                //spot is the item clicked
+                Intent showRecords = new Intent(ListPatientProblemActivity.this, CaretakerViewRecordsActivity.class);
+                startActivity(showRecords);
+            }
+        });
 
         Intent intent = getIntent();
         String nameOfPatient = intent.getExtras().getString("nameOfPatient");

@@ -27,7 +27,7 @@ import android.widget.ImageView;
  * @see com.example.mdbook.Record
  *
  *
- * @author .....
+ * @author Jayanta Chatterjee
  * @author James Aina
  *
  * @version 0.0.1

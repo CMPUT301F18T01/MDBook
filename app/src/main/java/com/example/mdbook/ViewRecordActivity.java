@@ -36,19 +36,19 @@ public class ViewRecordActivity extends AppCompatActivity {
     Button cancel;
     // Initialize dummy variables for debugging
     ListView mListView;
-    String[] Title = {"Justin Trudeau", "Barrack Obama", "Kanye West", "Beyonce Knowles",
-            "Aubrey Drake", "Donald Trump"};
+    String[] Title = {"Head Issue", "Ear Issue", "Hand Issue",
+            "Nose Issue", "Finger Issue", "Eye Issue"};
 
 
-    int[] Images = {R.drawable.justin_trudeau,
-            R.drawable.obama,
-            R.drawable.kanye_west,
-            R.drawable.beyonce,
-            R.drawable.drake,
-            R.drawable.donald_trump,
+    int[] Images = {R.drawable.donald_trump,
+            R.drawable.ears,
+            R.drawable.hand,
+            R.drawable.nose,
+            R.drawable.finger,
+            R.drawable.eye,
            };
 
-    String[] Comment = {"I have a headache", "My head hurts", "My Hand Hurts", "My nose hurts", "My finger hurts", "My eyes hurt"};
+    String[] Comment = {"I have a headache", "My ear hurts", "My Hand Hurts", "My nose hurts", "My finger hurts", "My eye hurts"};
     String[] Date = {"08/09/18", "12/09/18", "16/09/18", "19/09/18", "21/09/18", "28/09/18"};
 
 
