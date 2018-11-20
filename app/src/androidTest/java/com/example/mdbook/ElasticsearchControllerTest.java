@@ -10,6 +10,9 @@
 
 package com.example.mdbook;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonParser;
 import com.google.gson.internal.LinkedTreeMap;
 import com.searchly.jestdroid.DroidClientConfig;
 import com.searchly.jestdroid.JestClientFactory;
@@ -64,6 +67,7 @@ public class ElasticsearchControllerTest extends  TestCase{
         UserManager userManager = UserManager.getManager();
         ElasticsearchController elasticsearchController = ElasticsearchController.getController();
         JestClient client = this.getJestClient();
+        elasticsearchController.pull();
         /* Create and push new patient */
         String patientID = "testPatientID";
         String testPhone = "testPhone";
@@ -116,13 +120,12 @@ public class ElasticsearchControllerTest extends  TestCase{
         UserManager.initManager();
         UserManager userManager = UserManager.getManager();
         ElasticsearchController elasticsearchController = ElasticsearchController.getController();
-        elasticsearchController.push();
         JestClient client = this.getJestClient();
         /* Create and upload new patient */
         String patientID = "testGetPatientID";
         String testPhone = "testGetPhone";
         String testEmail = "testGetEmail";
-        ArrayList<String> patientidlist = null;
+        JSONArray patientidlist = null;
         JSONObject idlistJSON = null;
         JSONObject patientJSON = new JSONObject();
 
@@ -146,7 +149,7 @@ public class ElasticsearchControllerTest extends  TestCase{
         try {
             client.execute(jestindex);
         } catch (IOException e) {
-            fail("failed here 0");
+            fail();
         }
 
 
@@ -155,10 +158,11 @@ public class ElasticsearchControllerTest extends  TestCase{
             JestResult result = client.execute(new Get.Builder(index, "idlists")
                     .type("metadata")
                     .build());
+
             idlistJSON = result.getSourceAsObject(JSONObject.class);
 
-            patientidlist = (ArrayList<String>) ((LinkedTreeMap) idlistJSON
-                    .get("patientIDs"))
+            patientidlist = (JSONArray) idlistJSON
+                    .getJSONObject("patientIDS")
                     .get("values");
 
         } catch (JSONException e) {
@@ -171,11 +175,10 @@ public class ElasticsearchControllerTest extends  TestCase{
 
 
         /*Add id to patient list then it should push this new list to ES*/
-        patientidlist.add(patientID);
-
+        patientidlist.put(patientID);
 
         idlistJSON.put("patientIDs", patientidlist);
-        Update JestID1 = new Update.Builder(idlistJSON).index(index)
+        Index JestID1 = new Index.Builder(idlistJSON).index(index)
                 .type("metadata")
                 .id("idlists")
                 .build();
