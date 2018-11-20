@@ -114,6 +114,9 @@ public class ListPatientActivity extends AppCompatActivity implements View.OnCli
                 break;
             case R.id.viewProfileButton:
                 Toast.makeText(this, "View profile Activity", Toast.LENGTH_SHORT).show();
+                Intent viewProfileActivity = new Intent(ListPatientActivity.this, ViewAccountDetailActivity.class);
+                startActivity(viewProfileActivity);
+
                 break;
 
         }

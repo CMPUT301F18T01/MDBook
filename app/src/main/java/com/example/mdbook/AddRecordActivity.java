@@ -33,6 +33,7 @@ import android.widget.ImageView;
  * @version 0.0.1
  */
 
+
 public class AddRecordActivity extends AppCompatActivity {
     // Initialize all the required imageViews ans Buttons
     ImageView image;
@@ -109,8 +110,9 @@ public class AddRecordActivity extends AppCompatActivity {
      * Creates a new intent for switch to the ListProblemActivity
      */
     public void BackToAddProblem(){
-        Intent mainPage = new Intent(this, ListProblemActivity.class);
-        startActivity(mainPage);
+        //Intent mainPage = new Intent(this, ListProblemActivity.class);
+        //startActivity(mainPage);
+        this.finish();
     }
     /**
      * Creates a new intent for switch to the ViewLocationActivity

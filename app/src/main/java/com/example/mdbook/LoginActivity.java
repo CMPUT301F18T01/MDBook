@@ -84,6 +84,7 @@ public class LoginActivity extends AppCompatActivity implements CompoundButton.O
                 {
                     if(etUserID.getText().toString().equals(dummyPatient) || userManager.login(etUserID.getText().toString())) {
                         Intent problemListActivityIntent = new Intent(this, ListProblemActivity.class);
+                        problemListActivityIntent.putExtra("activity", activity);
                         Toast.makeText(this, "Logging in " + dummyPatient, Toast.LENGTH_SHORT).show();
                         startActivity(problemListActivityIntent);
                     }

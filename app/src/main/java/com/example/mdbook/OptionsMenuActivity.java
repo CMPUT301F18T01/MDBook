@@ -64,6 +64,12 @@ public class OptionsMenuActivity extends AppCompatActivity {
                 GeoLocation();
             }
         });
+        DeleteProblem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DeleteProblem();
+            }
+        });
 
     }
     /**
@@ -94,5 +100,9 @@ public class OptionsMenuActivity extends AppCompatActivity {
     public void GeoLocation(){
         Intent ViewLocationActivity = new Intent(this, ViewLocationActivity.class);
         startActivity(ViewLocationActivity);
+    }
+
+    public void DeleteProblem(){
+        //Add code to delete problem here
     }
 }

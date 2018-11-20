@@ -40,6 +40,7 @@ public class AddProblemActivity extends AppCompatActivity {
     EditText title;
     EditText date;
     EditText description;
+    private String activity = "notit";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,9 +61,10 @@ public class AddProblemActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //Todo: Save data into the user manager
-                BackToAddProblem();
+                //BackToAddProblem();
                 //Go back to patient main page
-                BackToAddProblem();
+
+                BackToListProblem();
             }
         });
 
@@ -70,7 +72,7 @@ public class AddProblemActivity extends AppCompatActivity {
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BackToAddProblem();
+                BackToListProblem();
             }
         });
 
@@ -85,12 +87,13 @@ public class AddProblemActivity extends AppCompatActivity {
 
     }
 
-    /**
-     * Creates a new intent for switching to the ListProblemActivity
-     */
-    public void BackToAddProblem(){
-        Intent mainPage = new Intent(this, ListProblemActivity.class);
-        startActivity(mainPage);
+
+
+    public void BackToListProblem(){
+        //Intent mainPage = new Intent(this, ListProblemActivity.class);
+        //startActivity(mainPage);
+        this.finish();
+
     }
 
 

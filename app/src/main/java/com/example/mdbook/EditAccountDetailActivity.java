@@ -15,6 +15,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import java.io.Serializable;
+
 
 
 /**
@@ -36,6 +38,10 @@ public class EditAccountDetailActivity extends AppCompatActivity {
     EditText editEmail;
     Button save;
     Button cancel;
+//    String newName = editName.getText().toString();
+//    String newEmail = editEmail.getText().toString();
+//    String newPhone = editPhone.getText().toString();
+//    private String activity = "EditAccountDetailActivity";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,7 +57,8 @@ public class EditAccountDetailActivity extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                backToMain();
+
+                save();
             }
         });
 
@@ -59,19 +66,23 @@ public class EditAccountDetailActivity extends AppCompatActivity {
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                backToMain();
+                backToView();
             }
         });
     }
 
-
-    /**
-     * Creates a new intent for switching to the ListProblemActivity
-     */
-    public void backToMain(){
-
-        Intent backToMain = new Intent(this, ListProblemActivity.class);
-        startActivity(backToMain);
+    public void save(){
+        Intent save = new Intent(this, ViewAccountDetailActivity.class);
+//        //String newName = editName.getText().toString();
+//        save.putExtra("newName", newName);
+//        save.putExtra("newEmail", newEmail);
+//        save.putExtra("newPhone", newPhone);
+//        save.putExtra("activity", activity);
+        startActivity(save);
+        backToView();
+    }
+    public void backToView(){
+        this.finish();
 
     }
 }
