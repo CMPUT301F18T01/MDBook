@@ -72,9 +72,6 @@ class LocalStorageController {
 
     }
 
-    public LocalStorageController (){
-    }
-
 
     /**
      * Saves all objects to Gson including:
