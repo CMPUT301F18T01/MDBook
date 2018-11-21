@@ -52,10 +52,10 @@ public class LoginActivity extends AppCompatActivity implements CompoundButton.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         /* Initialize controllers */
-        UserManager.initManager();
         SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("shared preferences",
                 getApplicationContext().MODE_PRIVATE);
         LocalStorageController.init(sharedPreferences);
+        UserManager.initManager();
 
         setContentView(R.layout.activity_login);
 

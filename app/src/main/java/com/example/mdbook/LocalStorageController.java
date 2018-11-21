@@ -36,7 +36,7 @@ class LocalStorageController {
 
 
     private static LocalStorageController localStorageController = null;
-    private DataManager dataManager = DataManager.getDataManager();
+    private DataManager dataManager;
     private Gson patients = new Gson();
     private Gson caregivers = new Gson();
     private Gson problems = new Gson();
@@ -54,6 +54,7 @@ class LocalStorageController {
             localStorageController = new LocalStorageController();
         }
         localStorageController.sharedPreferences = sharedPreferences;
+        localStorageController.dataManager = DataManager.getDataManager();
     }
 
     /**
@@ -69,6 +70,9 @@ class LocalStorageController {
         return localStorageController;
 
 
+    }
+
+    public LocalStorageController (){
     }
 
 

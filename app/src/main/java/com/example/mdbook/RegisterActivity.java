@@ -69,9 +69,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public void onClick(View v)
     {
-
-        UserManager.initManager();
-        LocalStorageController.setContext(getApplicationContext());
         UserManager userManager = UserManager.getManager();
         switch (v.getId())
         {
