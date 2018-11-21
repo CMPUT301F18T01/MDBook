@@ -71,6 +71,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     {
 
         UserManager.initManager();
+        LocalStorageController.setContext(getApplicationContext());
         UserManager userManager = UserManager.getManager();
         switch (v.getId())
         {

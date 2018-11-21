@@ -43,14 +43,17 @@ class LocalStorageController {
     private Gson records = new Gson();
     private Gson photos = new Gson();
     private Gson availableIDs = new Gson();
-    private Context view;
+    private SharedPreferences sharedPreferences;
 
 
     /**
-     * @param view Sets the context in the local storage controller
+     * @param sharedPreferences Sets the context in the local storage controller
      */
-    public void setContext(Context view){
-        this.view = view;
+    public static void init(SharedPreferences sharedPreferences){
+        if (localStorageController == null) {
+            localStorageController = new LocalStorageController();
+        }
+        localStorageController.sharedPreferences = sharedPreferences;
     }
 
     /**
@@ -61,7 +64,7 @@ class LocalStorageController {
 
     public static LocalStorageController getController() {
         if (localStorageController == null) {
-            localStorageController = new LocalStorageController();
+            throw new RuntimeException("LocalStorageController has not been initialized!");
         }
         return localStorageController;
 
@@ -74,8 +77,6 @@ class LocalStorageController {
      * Patients, Caregivers, Problems, Records ,Photos and Available
      */
     public void push() {
-        SharedPreferences sharedPreferences = view.getSharedPreferences("shared preferences",
-                view.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         String stringPatients = patients.toJson(dataManager.getPatients());
         String stringCaregivers = caregivers.toJson(dataManager.getCaregivers());
@@ -100,8 +101,6 @@ class LocalStorageController {
      *  back to its containers.
      */
     public void loadData(){
-        SharedPreferences sharedPreferences = view.getSharedPreferences("shared preferences",
-                view.MODE_PRIVATE);
         Gson gson = new Gson();
         String stringPatients = sharedPreferences.getString("patients", null);
         String stringCaregivers = sharedPreferences.getString("caregivers", null);

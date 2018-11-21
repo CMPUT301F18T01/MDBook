@@ -12,6 +12,7 @@
 package com.example.mdbook;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -50,6 +51,12 @@ public class LoginActivity extends AppCompatActivity implements CompoundButton.O
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        /* Initialize controllers */
+        UserManager.initManager();
+        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("shared preferences",
+                getApplicationContext().MODE_PRIVATE);
+        LocalStorageController.init(sharedPreferences);
+
         setContentView(R.layout.activity_login);
 
         careGiverSwitch = findViewById(R.id.switchType);
@@ -73,7 +80,6 @@ public class LoginActivity extends AppCompatActivity implements CompoundButton.O
     @Override
     public void onClick(View v)
     {
-        UserManager.initManager();
         UserManager userManager = UserManager.getManager();
 
         switch (v.getId()){
