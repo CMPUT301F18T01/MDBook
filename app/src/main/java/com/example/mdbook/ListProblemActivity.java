@@ -1,6 +1,8 @@
 package com.example.mdbook;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -57,7 +59,7 @@ public class ListProblemActivity extends AppCompatActivity {
         problemListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                problems.remove(position);
+                showAlertDialog(view, position);
                 problemAdapter.notifyDataSetChanged();
                 return true;
             }
@@ -92,7 +94,28 @@ public class ListProblemActivity extends AppCompatActivity {
 
     }
 
+    public void showAlertDialog(View v, final int position){
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+            alert.setTitle("MDBook");
+            alert.setMessage("Are you sure you want to delete this problem?");
+            alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    problems.remove(position);
+                    problemAdapter.notifyDataSetChanged();
+                    Toast.makeText(ListProblemActivity.this, "Problem is deleted", Toast.LENGTH_SHORT).show();
+                }
+            });
+            alert.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    //Don't do anything
 
+                }
+            });
+            alert.create().show();
+
+    }
 
     public void addProblem(){
         Intent intent = new Intent(this, AddProblemActivity.class);
