@@ -3,28 +3,27 @@ package com.example.mdbook;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 import java.util.ArrayList;
-import android.view.Menu;
-import android.widget.PopupMenu;
+import java.util.Arrays;
+
 
 
 public class ListProblemActivity extends AppCompatActivity {
 
-    String problems[] = {"Problem A", "Problem B", "Problem C", "Problem D"};
+    ArrayList<String> problems =  new ArrayList<String>(Arrays.asList("Problem A", "Problem B", "Problem C", "Problem D"));
     EditText searchBar;
     Button addProblemButton;
     Button search;
     Button viewProfile;
+    ListView problemListView;
+    ArrayAdapter<String> problemAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,10 +39,10 @@ public class ListProblemActivity extends AppCompatActivity {
             }
         });
 
-        ArrayAdapter problemAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, problems);
-        ListView problemListView = findViewById(R.id.problemList);
+        problemAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, problems);
+        problemListView = findViewById(R.id.problemList);
         problemListView.setAdapter(problemAdapter);
-
+        problemAdapter.notifyDataSetChanged();
 
         problemListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -53,6 +52,17 @@ public class ListProblemActivity extends AppCompatActivity {
                 startActivity(showOption);
             }
         });
+
+
+        problemListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                problems.remove(position);
+                problemAdapter.notifyDataSetChanged();
+                return true;
+            }
+        });
+
 
         // When a user clicked search button
         search = findViewById(R.id.go);
@@ -77,6 +87,9 @@ public class ListProblemActivity extends AppCompatActivity {
                 goViewProfile();
             }
         });
+
+
+
     }
 
 

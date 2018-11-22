@@ -39,12 +39,8 @@ public class LoginActivity extends AppCompatActivity implements CompoundButton.O
         etUserID.setOnClickListener(this);
     }
 
-
     @Override
-    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
-    {
-
-    }
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked){}
 
     @Override
     public void onClick(View v)

@@ -55,10 +55,7 @@ public class AddProblemActivity extends AppCompatActivity {
                 goAddRecord();
             }
         });
-
-
     }
-
 
 
     public void BackToListProblem(){

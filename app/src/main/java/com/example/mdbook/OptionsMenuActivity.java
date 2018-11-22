@@ -48,13 +48,6 @@ public class OptionsMenuActivity extends AppCompatActivity {
                 GeoLocation();
             }
         });
-        DeleteProblem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DeleteProblem();
-            }
-        });
-
     }
 
     public void GoEditProblem(){
