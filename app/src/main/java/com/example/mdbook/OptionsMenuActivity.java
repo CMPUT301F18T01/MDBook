@@ -22,7 +22,6 @@ public class OptionsMenuActivity extends AppCompatActivity {
         EditRecord = findViewById(R.id.EditRecord);
         RecordSlide = findViewById(R.id.RecordSlide);
         GeoLocation = findViewById(R.id.GeoLocation);
-        DeleteProblem = findViewById(R.id.DeleteProblem);
 
         EditProblem.setOnClickListener(new View.OnClickListener() {
             @Override
