@@ -34,6 +34,9 @@
     <string name="cancel_button">CANCEL</string>
     <string name="keyword">Search by keyword...</string>
     <string name="viewProfile">View Profile</string>
+    <string name="title_activity_list_problem2">MDBook</string>
+    <string name="Profile">Profile</string>
+    <string name="Signout">Log out</string>
 
 </resources>
 

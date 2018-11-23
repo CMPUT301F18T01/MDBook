@@ -21,7 +21,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".ViewRecordActivity" />
         <activity android:name=".EditProblemDetailsActivity" />
         <activity android:name=".ViewLocationActivity" />
@@ -30,17 +29,18 @@
         <activity android:name=".CaretakerViewRecordsActivity" />
         <activity android:name=".PatientSlideActivity" />
         <activity android:name=".AddRecordActivity" />
-        <activity android:name=".ListProblemActivity" />
         <activity android:name=".ViewAccountDetailActivity" />
         <activity android:name=".OptionsMenuActivity" />
-        <activity android:name=".EditAccountDetailActivity"></activity>
-
+        <activity android:name=".EditAccountDetailActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".ListPatientActivity" />
         <activity android:name=".AddPatientActivity" />
         <activity android:name=".PatientSearchActivity" />
-        <activity android:name=".ListPatientProblemActivity"></activity>
-
+        <activity android:name=".ListPatientProblemActivity" />
+        <activity
+            android:name=".ListProblemActivity"
+            android:label="@string/title_activity_list_problem2"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

@@ -3,7 +3,6 @@ package com.example.mdbook;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -11,8 +10,6 @@ import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import org.w3c.dom.Text;
 
 public class LoginActivity extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener, View.OnClickListener {
 
@@ -72,6 +69,7 @@ public class LoginActivity extends AppCompatActivity implements CompoundButton.O
                         problemListActivityIntent.putExtra("activity", activity);
                         Toast.makeText(this, "Logging in " + dummyPatient, Toast.LENGTH_SHORT).show();
                         startActivity(problemListActivityIntent);
+                        this.finish();
                     }
                     else
                     {
@@ -90,5 +88,10 @@ public class LoginActivity extends AppCompatActivity implements CompoundButton.O
                 break;
 
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        Toast.makeText(this, "Can not go back", Toast.LENGTH_SHORT).show();
     }
 }
