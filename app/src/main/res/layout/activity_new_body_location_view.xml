@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".NewBodyLocationView">
 
-<<<<<<< HEAD
+
     <!--<ImageView-->
         <!--android:id="@+id/bodyFrontImage"-->
         <!--android:layout_width="168dp"-->
@@ -38,7 +38,6 @@
         <!--app:layout_constraintStart_toEndOf="@+id/bodyFrontImage"-->
         <!--app:layout_constraintTop_toTopOf="parent"-->
         <!--app:srcCompat="@drawable/body_cutout_back" />-->
-=======
     <ImageView
         android:id="@+id/imageView3"
         android:layout_width="168dp"
