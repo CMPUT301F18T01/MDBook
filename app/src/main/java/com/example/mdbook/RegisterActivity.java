@@ -61,9 +61,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         CGCheckbox.setOnCheckedChangeListener(this);
 
 
-
-
-
     }
 
     @Override

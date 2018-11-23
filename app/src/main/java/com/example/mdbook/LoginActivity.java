@@ -1,20 +1,8 @@
-/*
- * LoginActivity
- *
- * Version 0.0.1
- *
- * 2018-11-18
- *
- * Copyright (c) 2018. All rights reserved.
- */
-
-
 package com.example.mdbook;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -22,21 +10,6 @@ import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import org.w3c.dom.Text;
-
-/**
- * Logs in user, if user exists.
- *
- *
- * @see com.example.mdbook.LoginActivity
- *
- *
- * @author Raj Kapadia
- * @author James Aina
- *
- * @version 0.0.1
- */
 
 public class LoginActivity extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener, View.OnClickListener {
 
@@ -63,12 +36,8 @@ public class LoginActivity extends AppCompatActivity implements CompoundButton.O
         etUserID.setOnClickListener(this);
     }
 
-
     @Override
-    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
-    {
-
-    }
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked){}
 
     @Override
     public void onClick(View v)
@@ -97,8 +66,10 @@ public class LoginActivity extends AppCompatActivity implements CompoundButton.O
                 {
                     if(etUserID.getText().toString().equals(dummyPatient) || userManager.login(etUserID.getText().toString())) {
                         Intent problemListActivityIntent = new Intent(this, ListProblemActivity.class);
+                        problemListActivityIntent.putExtra("activity", activity);
                         Toast.makeText(this, "Logging in " + dummyPatient, Toast.LENGTH_SHORT).show();
                         startActivity(problemListActivityIntent);
+                        this.finish();
                     }
                     else
                     {
@@ -121,6 +92,6 @@ public class LoginActivity extends AppCompatActivity implements CompoundButton.O
 
     @Override
     public void onBackPressed() {
-
+        Toast.makeText(this, "Can not go back", Toast.LENGTH_SHORT).show();
     }
 }

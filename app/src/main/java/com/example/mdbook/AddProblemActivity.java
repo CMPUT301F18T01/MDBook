@@ -60,9 +60,9 @@ public class AddProblemActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //Todo: Save data into the user manager
-                BackToAddProblem();
+                BackToListProblem();
                 //Go back to patient main page
-                BackToAddProblem();
+                BackToListProblem();
             }
         });
 
@@ -70,7 +70,7 @@ public class AddProblemActivity extends AppCompatActivity {
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BackToAddProblem();
+                BackToListProblem();
             }
         });
 
@@ -81,25 +81,19 @@ public class AddProblemActivity extends AppCompatActivity {
                 goAddRecord();
             }
         });
-
-
-    }
-
-    /**
-     * Creates a new intent for switching to the ListProblemActivity
-     */
-    public void BackToAddProblem(){
-        Intent mainPage = new Intent(this, ListProblemActivity.class);
-        startActivity(mainPage);
     }
 
 
-    /**
-     * Creates a new intent for switching to the AddRecordActivity
-     */
+
+    public void BackToListProblem() {
+        //Intent mainPage = new Intent(this, ListProblemActivity.class);
+        //startActivity(mainPage);
+        this.finish();
+    }
+
     public void goAddRecord(){
-        Intent addRecordPage = new Intent(this, AddRecordActivity.class);
-        startActivity(addRecordPage);
+        Intent goAdd = new Intent(this, AddRecordActivity.class);
+        startActivity(goAdd);
     }
 
 }
