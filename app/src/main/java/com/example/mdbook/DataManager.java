@@ -37,6 +37,7 @@ public class DataManager {
      *      "comment": String
      * PhotoID: Photo
      *
+     *
      */
     private HashMap<String, JSONObject> patients;
     private HashMap<String, JSONObject> caregivers;
@@ -44,7 +45,7 @@ public class DataManager {
     private HashMap<Integer, JSONObject> records;
     private HashMap<Integer, Photo> photos;
     private ArrayList<Integer> availableIDs;
-    private int availableID = 0;
+    private int availableID = 0; // An unused id number
     private ElasticsearchController elasticsearchController;
     private LocalStorageController localStorageController;
 
@@ -112,12 +113,33 @@ public class DataManager {
         this.records = records;
     }
 
+    public void setAvailableIDs(ArrayList<Integer> availableIDs){
+        this.availableIDs = availableIDs;
+    }
+
+    public ArrayList<Integer> getAvailableIDs(){
+        return availableIDs;
+    }
+
+    public void setAvailableID(int id){
+        this.availableID = id;
+    }
+
+    public int getAvaialbleID(){
+        return this.availableID;
+    }
+
+    public void push(){
+        elasticsearchController.push();
+        localStorageController.push();
+    }
+
     /**
      * If there are unused IDs preceding the currently available one, return and remove one of
      * those. Otherwise return fresh ID and increment counter.
      * @return
      */
-    public int getAvailableID(){
+    public int generateID(){
         if (availableIDs.size() == 0){
             availableID += 1;
             return availableID-1;
@@ -138,11 +160,6 @@ public class DataManager {
      */
     public void addAvailableID(int availableID){
         this.availableIDs.add(availableID);
-    }
-
-    public void push(){
-        elasticsearchController.push();
-        localStorageController.push();
     }
 
 }

@@ -1,3 +1,13 @@
+/*
+ * ListPatientActivity
+ *
+ * Version 0.0.1
+ *
+ * 2018-11-18
+ *
+ * Copyright (c) 2018. All rights reserved.
+ */
+
 package com.example.mdbook;
 
 import android.content.Intent;
@@ -22,6 +32,20 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+/**
+ * Creates an activity that list all the patients for the Caregiver
+ *
+ *
+ * @see com.example.mdbook.Patient
+ * @see com.example.mdbook.Caregiver
+ *
+ *
+ * @author Raj Kapadia
+ * @author James Aina
+ *
+ * @version 0.0.1
+ */
 
 public class ListPatientActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
 
@@ -90,9 +114,6 @@ public class ListPatientActivity extends AppCompatActivity implements View.OnCli
                 break;
             case R.id.viewProfileButton:
                 Toast.makeText(this, "View profile Activity", Toast.LENGTH_SHORT).show();
-                Intent viewProfileActivity = new Intent(ListPatientActivity.this, ViewAccountDetailActivity.class);
-                startActivity(viewProfileActivity);
-
                 break;
 
         }
