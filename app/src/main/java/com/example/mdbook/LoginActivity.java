@@ -1,3 +1,14 @@
+/*
+ * LoginActivity
+ *
+ * Version 0.0.1
+ *
+ * 2018-11-18
+ *
+ * Copyright (c) 2018. All rights reserved.
+ */
+
+
 package com.example.mdbook;
 
 import android.content.Intent;
@@ -13,6 +24,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.w3c.dom.Text;
+
+/**
+ * Logs in user, if user exists.
+ *
+ *
+ * @see com.example.mdbook.LoginActivity
+ *
+ *
+ * @author Raj Kapadia
+ * @author James Aina
+ *
+ * @version 0.0.1
+ */
 
 public class LoginActivity extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener, View.OnClickListener {
 
@@ -69,7 +93,6 @@ public class LoginActivity extends AppCompatActivity implements CompoundButton.O
                 {
                     if(etUserID.getText().toString().equals(dummyPatient) || userManager.login(etUserID.getText().toString())) {
                         Intent problemListActivityIntent = new Intent(this, ListProblemActivity.class);
-                        problemListActivityIntent.putExtra("activity", activity);
                         Toast.makeText(this, "Logging in " + dummyPatient, Toast.LENGTH_SHORT).show();
                         startActivity(problemListActivityIntent);
                     }
@@ -90,5 +113,10 @@ public class LoginActivity extends AppCompatActivity implements CompoundButton.O
                 break;
 
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+
     }
 }

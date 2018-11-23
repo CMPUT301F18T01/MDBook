@@ -1,3 +1,14 @@
+/*
+ * RegisterActivity
+ *
+ * Version 0.0.1
+ *
+ * 2018-11-18
+ *
+ * Copyright (c) 2018. All rights reserved.
+ */
+
+
 package com.example.mdbook;
 
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +19,19 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Toast;
+
+/**
+ * Creates an activity for the user to register their account
+ *
+ *
+ * @see com.example.mdbook.LoginActivity
+ *
+ *
+ * @author Raj Kapadia
+ * @author James Aina
+ *
+ * @version 0.0.1
+ */
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
 
@@ -23,7 +47,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-
+        // set the view and butons appropriately by id's
         etUserID = findViewById(R.id.etUserID);
         etUserID.setOnClickListener(this);
         etEmailAddress = findViewById(R.id.etEmail);

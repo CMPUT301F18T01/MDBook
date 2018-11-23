@@ -1,3 +1,14 @@
+/*
+ * PatientSearchActivity
+ *
+ * Version 0.0.1
+ *
+ * 2018-11-18
+ *
+ * Copyright (c) 2018. All rights reserved.
+ */
+
+
 package com.example.mdbook;
 
 import android.support.design.widget.FloatingActionButton;
@@ -10,10 +21,24 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+
+/**
+ * Creates an activity for the user to view to search their problems
+ *
+ *
+ * @see com.example.mdbook.SearchController
+ *
+ *
+ * @author Raj Kapadia
+ * @author James Aina
+ *
+ * @version 0.0.1
+ */
+
+
 public class PatientSearchActivity extends AppCompatActivity implements View.OnClickListener {
 
-//    private DrawerLayout drawerLayout;
-//    private ActionBarDrawerToggle actionBarDrawerToggle;
+
     private FloatingActionButton fabSearchProblemBtn, fabSearchMapBtn, fabSearchUserBtn;
     private EditText etSearchBar;
 
@@ -22,12 +47,10 @@ public class PatientSearchActivity extends AppCompatActivity implements View.OnC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patient_search);
 
-//        drawerLayout = (DrawerLayout) findViewById(R.id.drawer);
-//        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close);
-//        drawerLayout.addDrawerListener(actionBarDrawerToggle);
-//        actionBarDrawerToggle.syncState();
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+
+
+        // set the view and butons appropriately by id's
         fabSearchProblemBtn = (FloatingActionButton)findViewById(R.id.fabSearchProblem);
         fabSearchProblemBtn.setOnClickListener(this);
         fabSearchMapBtn = (FloatingActionButton)findViewById(R.id.fabSearchMap);
@@ -40,15 +63,11 @@ public class PatientSearchActivity extends AppCompatActivity implements View.OnC
 
     }
 
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        if(actionBarDrawerToggle.onOptionsItemSelected(item))
-//        {
-//            return true;
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
 
+    /**
+     * Returns a toast message
+     * @param v view
+     */
     @Override
     public void onClick(View v)
     {
