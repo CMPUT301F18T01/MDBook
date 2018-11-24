@@ -58,15 +58,15 @@ public class ListProblemActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        /* For testing just list problems in the array */
-        problems =  new ArrayList<Problem>();
-        problems.add(new Problem("problem 1","test"));
-        problems.add(new Problem("problem 2","test"));
-        problems.add(new Problem("problem 3","test"));
-        problems.add(new Problem("problem 4","test"));
-        problems.add(new Problem("problem 5","test"));
-        problems.add(new Problem("problem 6","test"));
-        problems.add(new Problem("problem 7","test"));
+//        /* For testing just list problems in the array */
+//        problems =  new ArrayList<Problem>();
+//        problems.add(new Problem("problem 1","test"));
+//        problems.add(new Problem("problem 2","test"));
+//        problems.add(new Problem("problem 3","test"));
+//        problems.add(new Problem("problem 4","test"));
+//        problems.add(new Problem("problem 5","test"));
+//        problems.add(new Problem("problem 6","test"));
+//        problems.add(new Problem("problem 7","test"));
 
         /* Create recycler view */
         recyclerView = findViewById(R.id.recylerView);

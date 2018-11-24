@@ -40,6 +40,7 @@ public class AddProblemActivity extends AppCompatActivity {
     EditText title;
     EditText date;
     EditText description;
+    Problem problem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,9 +61,11 @@ public class AddProblemActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //Todo: Save data into the user manager
+                problem = new Problem(title.getText().toString(), description.getText().toString());
                 BackToListProblem();
                 //Go back to patient main page
-                BackToListProblem();
+//                BackToListProblem();
+
             }
         });
 
@@ -90,6 +93,8 @@ public class AddProblemActivity extends AppCompatActivity {
         //startActivity(mainPage);
         this.finish();
     }
+
+
 
     public void goAddRecord(){
         Intent goAdd = new Intent(this, AddRecordActivity.class);

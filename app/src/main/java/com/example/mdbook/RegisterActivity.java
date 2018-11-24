@@ -69,6 +69,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
         UserManager.initManager();
         UserManager userManager = UserManager.getManager();
+
+        DataManager dataManager = DataManager.getDataManager();
+
         switch (v.getId())
         {
             case R.id.etEmail:
@@ -84,30 +87,23 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 if(CGCheckbox.isChecked())
                 {
                     try {
-                        if(etUserID.getText().toString().equals("")){
 
-                            Toast.makeText(this, "Enter unique User ID", Toast.LENGTH_SHORT).show();
-                        }
-                        else{
-                            userManager.createCaregiver(etUserID.getText().toString(), etPhoneNumber.getText().toString(), etEmailAddress.getText().toString());
-                            Toast.makeText(this, "UserID created: " + etUserID.getText(), Toast.LENGTH_SHORT).show();
-
-                        }
+                        userManager.createCaregiver(etUserID.getText().toString(), etPhoneNumber.getText().toString(), etEmailAddress.getText().toString());
+//                        dataManager.push();
+                        Toast.makeText(this, "UserID created: " + etUserID.getText(), Toast.LENGTH_SHORT).show();
                     } catch (UserIDNotAvailableException e) {
-                        Toast.makeText(this, "UserID is taken", Toast.LENGTH_SHORT).show();
+
                         e.printStackTrace();
                     }
                 }
                 else
                     try {
-                        if (etUserID.getText().toString().equals("")) {
-                            Toast.makeText(this, "Enter unique User ID", Toast.LENGTH_SHORT).show();
-                        } else {
-                            userManager.createPatient(etUserID.getText().toString(), etPhoneNumber.getText().toString(), etEmailAddress.getText().toString());
-                            Toast.makeText(this, "UserID created: " + etUserID.getText(), Toast.LENGTH_SHORT).show();
-                        }
+//
+                        userManager.createPatient(etUserID.getText().toString(), etPhoneNumber.getText().toString(), etEmailAddress.getText().toString());
+//                        dataManager.push();
+                        Toast.makeText(this, "UserID created: " + etUserID.getText(), Toast.LENGTH_SHORT).show();
                     } catch (UserIDNotAvailableException e) {
-                        Toast.makeText(this, "UserID is taken", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(this, "UserID is taken", Toast.LENGTH_SHORT).show();
                         e.printStackTrace();
                     }
         }
