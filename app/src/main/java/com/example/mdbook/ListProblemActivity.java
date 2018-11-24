@@ -1,10 +1,12 @@
 package com.example.mdbook;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -20,6 +22,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.Toast;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Activity for displaying the users problems when logging in. It displays problems,
@@ -28,9 +31,10 @@ import java.util.ArrayList;
  * objects.
  *
  * @author Thomas Chan
+ * @author Vanessa Peng
  * @see Problem
  * @see ProblemAdapter
- * @version 1.0.0
+ * @version 2.0.0
 
  * **/
 
@@ -92,11 +96,10 @@ public class ListProblemActivity extends AppCompatActivity
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 if (direction == ItemTouchHelper.RIGHT){
-                    Snackbar.make(recyclerView,  problems.get(viewHolder.getAdapterPosition())
-                            .getTitle()+" removed", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
-                    problems.remove(viewHolder.getAdapterPosition());
-                    mAdapter.notifyDataSetChanged();
+//                    Snackbar.make(recyclerView,  problems.get(viewHolder.getAdapterPosition())
+//                            .getTitle()+" removed", Snackbar.LENGTH_LONG)
+//                            .setAction("Action", null).show();
+                    showAlertDialog(viewHolder);
                 }
 
             }
@@ -120,6 +123,27 @@ public class ListProblemActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+    }
+
+    public void showAlertDialog(final RecyclerView.ViewHolder position){
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+            alert.setTitle("MDBook");
+            alert.setMessage("Are you sure you want to delete this problem?");
+            alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    problems.remove(position.getAdapterPosition());
+                    mAdapter.notifyDataSetChanged();
+                    Toast.makeText(ListProblemActivity.this, "Problem Removed", Toast.LENGTH_SHORT).show();
+                }
+            });
+            alert.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    mAdapter.notifyDataSetChanged();
+                }
+            });
+            alert.create().show();
     }
 
     /**
