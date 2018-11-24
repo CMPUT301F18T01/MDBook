@@ -7,7 +7,6 @@
     tools:context=".NewBodyLocationView">
 
 
-
     <ImageView
         android:id="@+id/imageView3"
         android:layout_width="168dp"
@@ -22,7 +21,7 @@
         app:layout_constraintEnd_toStartOf="@+id/imageView4"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/beyonce" />
+        app:srcCompat="@drawable/body_cutout_front" />
 
     <ImageView
         android:id="@+id/imageView4"
@@ -38,8 +37,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageView3"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/drake"
-        tools:srcCompat="@drawable/beyonce" />
+        app:srcCompat="@drawable/body_cutout_back" />
 >>>>>>> caad6b467eb8ab8a07ee444d9c9cbdddf44a5ba8
 
     <Button
@@ -99,4 +97,36 @@
         app:layout_constraintHorizontal_bias="0.646"
         app:layout_constraintStart_toEndOf="@+id/textView3"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/uploadFrontBtn"
+        android:layout_width="98dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="Upload"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toTopOf="@+id/save"
+        app:layout_constraintEnd_toStartOf="@+id/uploadBackBtn"
+        app:layout_constraintHorizontal_bias="0.347"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+
+    <Button
+        android:id="@+id/uploadBackBtn"
+        android:layout_width="98dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="56dp"
+        android:layout_marginRight="56dp"
+        android:layout_marginBottom="8dp"
+        android:text="Upload"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toTopOf="@+id/cancel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView4" />
 </android.support.constraint.ConstraintLayout>

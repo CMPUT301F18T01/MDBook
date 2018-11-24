@@ -26,6 +26,7 @@ import android.widget.EditText;
  *
  * @author .....
  * @author James Aina
+ * @author Jayanta Chatterjee
  *
  * @version 0.0.1
  */
@@ -51,7 +52,7 @@ public class EditAccountDetailActivity extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                backToMain();
+                SaveBtnClicked();
             }
         });
 
@@ -59,19 +60,29 @@ public class EditAccountDetailActivity extends AppCompatActivity {
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                backToMain();
+                CancelBtnClicked();
             }
         });
     }
 
 
     /**
-     * Creates a new intent for switching to the ListProblemActivity
+     * Creates a new intent for switching to the EditAccountDetailsActivity
      */
-    public void backToMain(){
+    public void SaveBtnClicked(){
 
-        Intent backToMain = new Intent(this, ListProblemActivity.class);
-        startActivity(backToMain);
+        //TODO: Add code that saves the data
+
+        this.finish();
+
+    }
+
+    /**
+     * Finishes this activity and takes user back to the last active activity
+     */
+    public void CancelBtnClicked(){
+
+        this.finish();
 
     }
 }

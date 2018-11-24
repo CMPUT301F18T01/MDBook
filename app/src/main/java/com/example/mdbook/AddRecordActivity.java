@@ -72,7 +72,7 @@ public class AddRecordActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //Todo: Save data into the user manager
-                BackToAddProblem();
+                SaveBtnClicked();
                 //Go back to patient main page
                 //BackToAddProblem();
             }
@@ -82,7 +82,7 @@ public class AddRecordActivity extends AppCompatActivity {
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BackToAddProblem();
+                CancelBtnClicked();
             }
         });
 
@@ -108,9 +108,12 @@ public class AddRecordActivity extends AppCompatActivity {
     /**
      * Creates a new intent for switch to the ListProblemActivity
      */
-    public void BackToAddProblem(){
-        Intent mainPage = new Intent(this, ListProblemActivity.class);
-        startActivity(mainPage);
+    public void SaveBtnClicked(){
+        //TODO: Add code for saving data
+        this.finish();
+    }
+    public void CancelBtnClicked(){
+        this.finish();
     }
     /**
      * Creates a new intent for switch to the ViewLocationActivity

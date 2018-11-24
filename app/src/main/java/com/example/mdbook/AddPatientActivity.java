@@ -81,8 +81,7 @@ public class AddPatientActivity extends AppCompatActivity implements View.OnClic
                 break;
 
             case R.id.cancelBtn:
-                Intent patientListIntent = new Intent(AddPatientActivity.this, ListPatientActivity.class);
-                startActivity(patientListIntent);
+                this.finish();
                 break;
 
             case R.id.enterUserText:

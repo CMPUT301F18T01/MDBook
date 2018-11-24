@@ -31,32 +31,37 @@ import android.widget.Button;
 
 
 public class NewBodyLocationView extends AppCompatActivity {
+
+    Button uploadFront;
+    Button uploadBack;
     Button save;
     Button cancel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_body_location_view);
+
         // set the views and buttons appropriately by id's
+
         save = findViewById(R.id.save);
         cancel = findViewById(R.id.cancel);
-
-        //Intent intent = getIntent();
+        uploadFront = findViewById(R.id.uploadFrontBtn);
+        uploadBack = findViewById(R.id.uploadBackBtn);
 
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Todo: Save data into the user manager
-                BackToAddProblem();
-                //Go back to patient main page
-                //BackToAddProblem();
+                 SaveBtnPressed();
+
             }
         });
         // Switches to the add problem upon the click of the cancel button
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BackToAddProblem();
+                CancelBtnPressed();
             }
         });
 
@@ -65,9 +70,13 @@ public class NewBodyLocationView extends AppCompatActivity {
     /**
      * Creates a new intent for switching to the ListProblemActivity
      */
-    public void BackToAddProblem(){
-        Intent mainPage = new Intent(this, ListProblemActivity.class);
-        startActivity(mainPage);
+    public void CancelBtnPressed(){
+        this.finish();
+    }
+
+    public void SaveBtnPressed(){
+        //TODO: Add code for saving the selection
+        this.finish();
     }
 
 }

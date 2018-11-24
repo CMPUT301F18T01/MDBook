@@ -67,10 +67,9 @@ public class ViewRecordActivity extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Todo: Save data into the user manager
-                BackToAddProblem();
+
+                SaveBtnClicked();
                 //Go back to patient main page
-                BackToAddProblem();
             }
         });
 
@@ -78,7 +77,7 @@ public class ViewRecordActivity extends AppCompatActivity {
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BackToAddProblem();
+                CancelBtnClicked();
             }
         });
 
@@ -103,11 +102,16 @@ public class ViewRecordActivity extends AppCompatActivity {
      * Switches the activity back to the List problem activity view
      */
 
-    public void BackToAddProblem(){
-        Intent mainPage = new Intent(this, ListProblemActivity.class);
-        startActivity(mainPage);
+    public void SaveBtnClicked(){
+
+        //Todo: Save data into the user manager
+        this.finish();
     }
 
+    public void CancelBtnClicked(){
+
+        this.finish();
+    }
 
 }
 

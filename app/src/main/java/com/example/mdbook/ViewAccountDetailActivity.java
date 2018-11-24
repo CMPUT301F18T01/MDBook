@@ -83,8 +83,8 @@ public class ViewAccountDetailActivity extends AppCompatActivity {
 
     public void goToLogin()
     {
-        Intent logOutInent = new Intent(this, LoginActivity.class);
-        startActivity(logOutInent);
+        Intent logOutIntent = new Intent(this, LoginActivity.class);
+        startActivity(logOutIntent);
         this.finish();
     }
 

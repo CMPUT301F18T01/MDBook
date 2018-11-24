@@ -70,8 +70,7 @@ public class EditProblemDetailsActivity extends AppCompatActivity {
      * Creates a new intent for switching to the ListProblemActivity
      */
     public void backToMainPage(){
-        Intent goEditProblem = new Intent(this, ListProblemActivity.class);
-        startActivity(goEditProblem);
+        this.finish();
     }
 
 }
