@@ -28,7 +28,7 @@
         android:layout_marginTop="16dp"
         android:ems="10"
         android:hint="Problem Date"
-        android:inputType="textPersonName"
+        android:inputType="text|textPersonName|date"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/addTitle" />
 

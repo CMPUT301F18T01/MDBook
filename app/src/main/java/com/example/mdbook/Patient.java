@@ -41,6 +41,7 @@ class Patient extends User {
         this.problems = new ArrayList<Problem>();
     }
 
+
     /**
      * Convenience method to add problem to patient.
      * Can also be done via Patient.getProblems().addProblem(problem)

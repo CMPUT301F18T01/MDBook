@@ -399,7 +399,8 @@ public class UserManager {
                 JSONObject problemJSON = problems.get(problemID);
                 String title = problemJSON.getString("title");
                 String description = problemJSON.getString("description");
-                Problem problem = new Problem(title, description);
+                String date = problemJSON.getString("date");
+                Problem problem = new Problem(title, description, date);
                 problem.setProblemID(problemID);
 
                 /* Add comments */
