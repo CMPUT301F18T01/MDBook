@@ -16,30 +16,12 @@
         android:ems="10"
         android:hint="USER ID"
         android:inputType="textPersonName"
-        android:onClick="onClick"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.438" />
-
-    <Switch
-        android:id="@+id/switchType"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="53dp"
-        android:text="@string/switch_button"
-        app:layout_constraintBottom_toTopOf="@+id/register_text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginButton" />
 
     <Button
         android:id="@+id/loginButton"
@@ -48,11 +30,11 @@
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:text="@string/login_button"
-        app:layout_constraintBottom_toTopOf="@+id/switchType"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etUserID"
-        app:layout_constraintVertical_bias="0.666" />
+        app:layout_constraintVertical_bias="0.666"
+        android:onClick="onLoginClick"/>
 
     <TextView
         android:id="@+id/register_text"
@@ -63,9 +45,9 @@
         android:clickable="true"
         android:text="@string/register_text"
         android:textStyle="bold"
+        android:onClick="onRegisterClick"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/switchType"
         tools:text="Register here" />
 </android.support.constraint.ConstraintLayout>

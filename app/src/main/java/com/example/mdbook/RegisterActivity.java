@@ -66,8 +66,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public void onClick(View v)
     {
-
-        UserManager.initManager();
         UserManager userManager = UserManager.getManager();
         switch (v.getId())
         {
@@ -108,7 +106,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         }
                     } catch (UserIDNotAvailableException e) {
                         Toast.makeText(this, "UserID is taken", Toast.LENGTH_SHORT).show();
-                        e.printStackTrace();
+                    } catch (IllegalArgumentException e){
+                        Toast.makeText(this, "UserID must be at least 8 characters", Toast.LENGTH_SHORT).show();
                     }
         }
 

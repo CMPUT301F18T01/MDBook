@@ -48,12 +48,13 @@ public class UserManager {
     }
 
     /**
+     * Auto initilaizes if not already done
      * @return Singleton instance of self.
-     * @throws IllegalStateException Thrown if initManager() has not already been called.
      */
     public static UserManager getManager() {
         if(userManager == null){
-            throw new IllegalStateException("UserManager has not been initialized!");
+            // throw new IllegalStateException("UserManager has not been initialized!");
+            initManager();
         }
         return userManager;
     }
@@ -77,6 +78,7 @@ public class UserManager {
     public Patient createPatient(String userID, String userPhone, String userEmail)
             throws UserIDNotAvailableException, IllegalArgumentException {
         /* Fetch fresh copy of patient list */
+        dataManager.pull();
         HashMap patients = dataManager.getPatients();
 
         /* Ensure userID is unique */
@@ -97,6 +99,7 @@ public class UserManager {
 
                 /* save data in patients table */
                 patients.put(userID, data);
+                dataManager.push();
 
             } catch (JSONException e){
                 throw new RuntimeException(e);
@@ -119,6 +122,7 @@ public class UserManager {
     public Caregiver createCaregiver(String userID, String userPhone, String userEmail)
             throws UserIDNotAvailableException, IllegalArgumentException {
         /* Fetch fresh copy of patient list */
+        dataManager.pull();
         HashMap caregivers = dataManager.getCaregivers();
 
         /* Ensure userID is unique */
@@ -140,6 +144,7 @@ public class UserManager {
 
                 /* save data in patients table */
                 caregivers.put(userID, data);
+                dataManager.push();
 
             } catch (JSONException e){
                 throw new RuntimeException(e);
@@ -157,6 +162,8 @@ public class UserManager {
      * user doesn't exist or there is already someone logged in.
      */
     public boolean login(String userid) {
+        /* Get the latest data */
+        dataManager.pull();
         UserController userController = UserController.getController();
         if (userController.getUser() != null){
             return false;

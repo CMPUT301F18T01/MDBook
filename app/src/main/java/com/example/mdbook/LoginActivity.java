@@ -1,97 +1,69 @@
 package com.example.mdbook;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.Switch;
-import android.widget.TextView;
 import android.widget.Toast;
+/**
+ * Logs in user, if user exists.
+ *
+ *
+ * @see com.example.mdbook.LoginActivity
+ *
+ * @author Noah Burghardt
+ * @author Raj Kapadia
+ * @author James Aina
+ *
+ * @version 0.0.1
+ */
 
-public class LoginActivity extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener, View.OnClickListener {
+public class LoginActivity extends AppCompatActivity {
 
-    private Switch careGiverSwitch;
-    private Button logInBtn;
-    private TextView registerText;
     private EditText etUserID;
-    private String dummyCareGiver = "CG123", dummyPatient = "P123";
-    private String activity = "LoginActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        /* Initialize controllers */
+        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("shared preferences",
+                getApplicationContext().MODE_PRIVATE);
+        LocalStorageController.init(sharedPreferences);
+        UserManager.initManager();
+
         setContentView(R.layout.activity_login);
 
-        careGiverSwitch = findViewById(R.id.switchType);
-        logInBtn = findViewById(R.id.loginButton);
-        registerText = findViewById(R.id.register_text);
         etUserID = findViewById(R.id.etUserID);
-
-        careGiverSwitch.setOnCheckedChangeListener(this);
-        logInBtn.setOnClickListener(this);
-        registerText.setOnClickListener(this);
-        etUserID.setOnClickListener(this);
     }
 
-    @Override
-    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked){}
-
-    @Override
-    public void onClick(View v)
-    {
-        UserManager.initManager();
+    public void onLoginClick(View v) {
         UserManager userManager = UserManager.getManager();
-
-        switch (v.getId()){
-
-            case R.id.loginButton:
-                if(careGiverSwitch.isChecked())
-                {
-                    if(etUserID.getText().toString().equals(dummyCareGiver)|| userManager.login(etUserID.getText().toString())){
-                        Toast.makeText(this, "Logging in " + dummyCareGiver, Toast.LENGTH_SHORT).show();
-                        Intent careGiverIntent = new Intent(LoginActivity.this, ListPatientActivity.class);
-                        careGiverIntent.putExtra("activity", activity);
-                        startActivity(careGiverIntent);
-                    }
-                    else
-                    {
-                        Toast.makeText(this,  etUserID.getText() + ": invalid ID", Toast.LENGTH_SHORT).show();
-                    }
-
-                }
-                else
-                {
-                    if(etUserID.getText().toString().equals(dummyPatient) || userManager.login(etUserID.getText().toString())) {
-                        Intent problemListActivityIntent = new Intent(this, ListProblemActivity.class);
-                        problemListActivityIntent.putExtra("activity", activity);
-                        Toast.makeText(this, "Logging in " + dummyPatient, Toast.LENGTH_SHORT).show();
-                        startActivity(problemListActivityIntent);
-                        this.finish();
-                    }
-                    else
-                    {
-                        Toast.makeText(this,  etUserID.getText() + ": invalid ID", Toast.LENGTH_SHORT).show();
-                    }
-                }
-                break;
-
-            case R.id.register_text:
-                Intent registerIntent = new Intent(LoginActivity.this, RegisterActivity.class);
-                startActivity(registerIntent);
-                break;
-
-            case R.id.etUserID:
-                etUserID.setText("");
-                break;
-
+        if (userManager.login(etUserID.getText().toString())) {
+            Toast.makeText(this, "Login successful", Toast.LENGTH_SHORT).show();
+            User user = UserController.getController().getUser();
+            String activity = "LoginActivity";
+            if (user.getClass() == Patient.class) {
+                Intent patientIntent = new Intent(this, ListProblemActivity.class);
+                patientIntent.putExtra("activity", activity);
+                startActivity(patientIntent);
+            } else if (user.getClass() == Caregiver.class) {
+                Intent caregiverIntent = new Intent(this, ListPatientActivity.class);
+                caregiverIntent.putExtra("activity", activity);
+                startActivity(caregiverIntent);
+            }
         }
     }
 
-    @Override
-    public void onBackPressed() {
-        Toast.makeText(this, "Can not go back", Toast.LENGTH_SHORT).show();
+    public void onRegisterClick(View v) {
+        Intent registerIntent = new Intent(this, RegisterActivity.class);
+        startActivity(registerIntent);
+    }
+
+    public void onResume(){
+        super.onResume();
+        UserManager.getManager().logout();
     }
 }
