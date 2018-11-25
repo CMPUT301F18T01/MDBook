@@ -152,7 +152,7 @@ class ElasticsearchController {
     }
 
 
-    /** TODO
+    /**
      * Pushes Problems to Elastic search server
      */
     private void pushProblems() {
@@ -165,23 +165,16 @@ class ElasticsearchController {
                     .type("problem")
                     .id(problemID.toString())
                     .build();
-            try {
-                client.execute(jestIndex);
-            } catch (IOException e) {
-                throw new RuntimeException("Failed to upload problem " + problemID.toString(), e);
-            }
+            new jestIndexTask().execute(jestIndex);
         }
         /* Delete removed problems */
         for (Integer problemID : (ArrayList<Integer>) idlists.get("problemIDs")) {
-            if (!problemIDList.contains(problemID)) {
-                try {
-                    client.execute(new Delete.Builder(problemID.toString())
-                            .index(index)
-                            .type("problem")
-                            .build());
-                } catch (IOException e) {
-                    throw new RuntimeException("Failed to delete problem " + problemID.toString(), e);
-                }
+        if (!problemIDList.contains(problemID)) {
+                Delete delete = new Delete.Builder(problemID.toString())
+                        .index(index)
+                        .type("problem")
+                        .build();
+                new jestDeleteTask().execute(delete);
             }
         }
 
@@ -191,7 +184,7 @@ class ElasticsearchController {
     }
 
 
-    /** TODO
+    /**
      * Pushes records to Elastic search server
      */
     private void pushRecords() {
@@ -203,23 +196,16 @@ class ElasticsearchController {
                     .type("record")
                     .id(recordID.toString())
                     .build();
-            try {
-                client.execute(jestIndex);
-            } catch (IOException e) {
-                throw new RuntimeException("Failed to upload record" + recordID.toString(), e);
-            }
+            new jestIndexTask().execute(jestIndex);
         }
         /* Delete removed records */
         for (Integer recordID : (ArrayList<Integer>) idlists.get("recordIDs")) {
             if (!recordIDList.contains(recordID)) {
-                try {
-                    client.execute(new Delete.Builder(recordID.toString())
-                            .index(index)
-                            .type("record")
-                            .build());
-                } catch (IOException e) {
-                    throw new RuntimeException("Failed to delete record " + recordID.toString(), e);
-                }
+                Delete delete = new Delete.Builder(recordID.toString())
+                        .index(index)
+                        .type("record")
+                        .build();
+                new jestDeleteTask.execute(delete);
             }
         }
 
@@ -230,7 +216,7 @@ class ElasticsearchController {
     }
 
 
-    /** TODO
+    /**
      * Pushes Photos to Elastic search server
      */
     private void pushPhotos() {
@@ -242,23 +228,16 @@ class ElasticsearchController {
                     .type("photo")
                     .id(photoID.toString())
                     .build();
-            try {
-                client.execute(jestIndex);
-            } catch (IOException e) {
-                throw new RuntimeException("Failed to upload photo " + photoID.toString(), e);
-            }
+            new jestIndexTask().execute(jestIndex);
         }
         /* Delete removed photos */
         for (Integer photoID : (ArrayList<Integer>) idlists.get("photoIDs")) {
             if (!photoIDList.contains(photoID)) {
-                try {
-                    client.execute(new Delete.Builder(photoID.toString())
-                            .index(index)
-                            .type("photo")
-                            .build());
-                } catch (IOException e) {
-                    throw new RuntimeException("Failed to delete photo " + photoID.toString(), e);
-                }
+                Delete delete = new Delete.Builder(photoID.toString())
+                        .index(index)
+                        .type("photo")
+                        .build();
+                new jestDeleteTask().execute(delete);
             }
         }
 
