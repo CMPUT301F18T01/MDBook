@@ -22,7 +22,6 @@ public class OptionsMenuActivity extends AppCompatActivity {
     Button EditRecord;
     Button RecordSlide;
     Button GeoLocation;
-    Button DeleteProblem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +33,6 @@ public class OptionsMenuActivity extends AppCompatActivity {
         EditRecord = findViewById(R.id.EditRecord);
         RecordSlide = findViewById(R.id.RecordSlide);
         GeoLocation = findViewById(R.id.GeoLocation);
-        DeleteProblem = findViewById(R.id.DeleteProblem);
 
         // Switches to the edit problem activity upon the click of the edit problem button
         EditProblem.setOnClickListener(new View.OnClickListener() {
