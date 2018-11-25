@@ -88,9 +88,6 @@ public class ListProblemActivity extends AppCompatActivity
         recyclerView.setAdapter(mAdapter);
 
 
-
-
-
        // Toast.makeText(ListProblemActivity.this, user, Toast.LENGTH_SHORT).show();
 
         /* Opens options menu when problem is clicked */
@@ -140,6 +137,7 @@ public class ListProblemActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
     }
 
     public void showAlertDialog(final RecyclerView.ViewHolder position){

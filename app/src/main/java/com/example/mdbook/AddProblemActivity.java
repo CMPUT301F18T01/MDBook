@@ -61,40 +61,29 @@ public class AddProblemActivity extends AppCompatActivity {
         date = findViewById(R.id.addDate);
         description = findViewById(R.id.addDescription);
         addRecord = findViewById(R.id.addRecord);
-
-
-
-
-
-//        HashMap<Integer, JSONObject> problems = dataManager.getProblems();
-
-
+        UserManager.initManager();
+        final UserManager userManager = UserManager.getManager();
 
         // Switches to addProblemActivty upon the click of the save button
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UserManager.initManager();
-                UserManager userManager = UserManager.getManager();
 
                // Intent getPreviousIntent = getIntent();
-                Patient patient = (Patient) getIntent().getSerializableExtra("patient");
+                Patient patient = (Patient) UserController.getController().getUser();
 
                 //Patient patient = new Patient(user, null, null);
                 Problem problem = new Problem(title.getText().toString(), description.getText().toString(), date.getText().toString());
                 patient.addProblem(problem);
                 try{
                     userManager.saveUser(patient);
-                    Toast.makeText(AddProblemActivity.this, "saved user: " + patient + ", problem:" + title.getText().toString(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddProblemActivity.this, "saved problem: " + title.getText().toString(), Toast.LENGTH_SHORT).show();
                 }catch ( NoSuchUserException id)
                 {
                     Toast.makeText(AddProblemActivity.this, "No user", Toast.LENGTH_SHORT).show();
                 }
 
-
                 BackToListProblem();
-                //Go back to patient main page
-//                BackToListProblem();
 
             }
         });
@@ -119,8 +108,6 @@ public class AddProblemActivity extends AppCompatActivity {
 
 
     public void BackToListProblem() {
-        //Intent mainPage = new Intent(this, ListProblemActivity.class);
-        //startActivity(mainPage);
         this.finish();
     }
 
