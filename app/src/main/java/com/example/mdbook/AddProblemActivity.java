@@ -82,8 +82,6 @@ public class AddProblemActivity extends AppCompatActivity {
                     Toast.makeText(AddProblemActivity.this, "No user", Toast.LENGTH_SHORT).show();
                 }
 
-                Intent mainPage = new Intent(AddProblemActivity.this, ListProblemActivity.class);
-                startActivity(mainPage);
                 BackToListProblem();
 
 
@@ -110,6 +108,8 @@ public class AddProblemActivity extends AppCompatActivity {
 
 
     public void BackToListProblem() {
+        Intent mainPage = new Intent(AddProblemActivity.this, ListProblemActivity.class);
+        startActivity(mainPage);
         this.finish();
     }
 

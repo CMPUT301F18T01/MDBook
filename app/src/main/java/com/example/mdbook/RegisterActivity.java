@@ -11,6 +11,7 @@
 
 package com.example.mdbook;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -96,7 +97,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         e.printStackTrace();
                     }
                 }
-                else
+                else {
                     try {
 //
                         userManager.createPatient(etUserID.getText().toString(), etPhoneNumber.getText().toString(), etEmailAddress.getText().toString());
@@ -106,7 +107,13 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 //                        Toast.makeText(this, "UserID is taken", Toast.LENGTH_SHORT).show();
                         e.printStackTrace();
                     }
+
+                }
         }
+        Intent login = new Intent(this, LoginActivity.class);
+        startActivity(login);
+        this.finish();
+
 
     }
 

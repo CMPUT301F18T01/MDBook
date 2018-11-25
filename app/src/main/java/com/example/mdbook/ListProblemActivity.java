@@ -72,16 +72,14 @@ public class ListProblemActivity extends AppCompatActivity
 //        String user = getPreviousIntent.getExtras().getString("user ID");
 //        Patient patient = new Patient(user, null, null);
         Patient patient = (Patient) UserController.getController().getUser();
-        ArrayList<Problem> problems =  new ArrayList<>();
-        problems.addAll(patient.getProblems());
+        problems =  new ArrayList<>();
+        setProblems(patient);
         try {
             userManager.saveUser(patient);
         } catch (NoSuchUserException e) {
             e.printStackTrace();
         }
 
-//        ArrayAdapter listAdapter = new ArrayAdapter<Problem>(this, R.id.recylerView, problems);
-//        recyclerView.setAdapter(listAdapter);
 
         /* Create recycler view */
         recyclerView = findViewById(R.id.recylerView);
@@ -92,7 +90,6 @@ public class ListProblemActivity extends AppCompatActivity
         recyclerView.setAdapter(mAdapter);
 
 
-       // Toast.makeText(ListProblemActivity.this, user, Toast.LENGTH_SHORT).show();
 
         /* Opens options menu when problem is clicked */
         mAdapter.setOnItemClickListener(new ProblemAdapter.OnItemClickListener() {
@@ -230,9 +227,6 @@ public class ListProblemActivity extends AppCompatActivity
      * Starts the add problem activity
      */
     public void addProblem(){
-//        Intent getPreviousIntent = getIntent();
-//        String user = getPreviousIntent.getExtras().getString("user ID");
-
         Intent intent = new Intent(this, AddProblemActivity.class);
         startActivity(intent);
         this.finish();

@@ -60,7 +60,8 @@ public class LoginActivity extends AppCompatActivity implements CompoundButton.O
             case R.id.loginButton:
                     userManager.login(etUserID.getText().toString());
                     User user = new UserController().getController().getUser();
-                    if(user instanceof Patient)
+                    if (user != null)
+                    //if(user instanceof Patient)
                     {
                         Toast.makeText(this, "Is a patient", Toast.LENGTH_SHORT).show();
                         Intent problemListActivityIntent = new Intent(this, ListProblemActivity.class);
@@ -89,6 +90,7 @@ public class LoginActivity extends AppCompatActivity implements CompoundButton.O
             case R.id.register_text:
                 Intent registerIntent = new Intent(LoginActivity.this, RegisterActivity.class);
                 startActivity(registerIntent);
+                this.finish();
                 break;
 
             case R.id.etUserID:
