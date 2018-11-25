@@ -65,11 +65,11 @@ public class LoginActivity extends AppCompatActivity {
             User user = UserController.getController().getUser();
             String activity = "LoginActivity";
             if (user.getClass() == Patient.class) {
-                Intent patientIntent = new Intent(this, ListPatientActivity.class);
+                Intent patientIntent = new Intent(this, ListProblemActivity.class);
                 patientIntent.putExtra("activity", activity);
                 startActivity(patientIntent);
             } else if (user.getClass() == Caregiver.class) {
-                Intent caregiverIntent = new Intent(this, ListProblemActivity.class);
+                Intent caregiverIntent = new Intent(this, ListPatientActivity.class);
                 caregiverIntent.putExtra("activity", activity);
                 startActivity(caregiverIntent);
             }
@@ -81,8 +81,8 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(registerIntent);
     }
 
-    @Override
-    public void onResume(View v){
-
+    public void onResume(){
+        super.onResume();
+        UserManager.getManager().logout();
     }
 }
