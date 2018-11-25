@@ -39,14 +39,9 @@ import org.w3c.dom.Text;
  * @version 0.0.1
  */
 
-public class LoginActivity extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener, View.OnClickListener {
+public class LoginActivity extends AppCompatActivity {
 
-    private Switch careGiverSwitch;
-    private Button logInBtn;
-    private TextView registerText;
     private EditText etUserID;
-    private String dummyCareGiver = "CG123", dummyPatient = "P123";
-    private String activity = "LoginActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,77 +51,38 @@ public class LoginActivity extends AppCompatActivity implements CompoundButton.O
                 getApplicationContext().MODE_PRIVATE);
         LocalStorageController.init(sharedPreferences);
         UserManager.initManager();
+        DataManager.getDataManager().pull();
 
         setContentView(R.layout.activity_login);
 
-        careGiverSwitch = findViewById(R.id.switchType);
-        logInBtn = findViewById(R.id.loginButton);
-        registerText = findViewById(R.id.register_text);
         etUserID = findViewById(R.id.etUserID);
-
-        careGiverSwitch.setOnCheckedChangeListener(this);
-        logInBtn.setOnClickListener(this);
-        registerText.setOnClickListener(this);
-        etUserID.setOnClickListener(this);
     }
 
-
-    @Override
-    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
-    {
-
-    }
-
-    @Override
-    public void onClick(View v)
-    {
+    public void onLoginClick(View v) {
         UserManager userManager = UserManager.getManager();
-
-        switch (v.getId()){
-
-            case R.id.loginButton:
-                if(careGiverSwitch.isChecked())
-                {
-                    if(etUserID.getText().toString().equals(dummyCareGiver)|| userManager.login(etUserID.getText().toString())){
-                        Toast.makeText(this, "Logging in " + dummyCareGiver, Toast.LENGTH_SHORT).show();
-                        Intent careGiverIntent = new Intent(LoginActivity.this, ListPatientActivity.class);
-                        careGiverIntent.putExtra("activity", activity);
-                        startActivity(careGiverIntent);
-                    }
-                    else
-                    {
-                        Toast.makeText(this,  etUserID.getText() + ": invalid ID", Toast.LENGTH_SHORT).show();
-                    }
-
-                }
-                else
-                {
-                    if(etUserID.getText().toString().equals(dummyPatient) || userManager.login(etUserID.getText().toString())) {
-                        Intent problemListActivityIntent = new Intent(this, ListProblemActivity.class);
-                        Toast.makeText(this, "Logging in " + dummyPatient, Toast.LENGTH_SHORT).show();
-                        startActivity(problemListActivityIntent);
-                    }
-                    else
-                    {
-                        Toast.makeText(this,  etUserID.getText() + ": invalid ID", Toast.LENGTH_SHORT).show();
-                    }
-                }
-                break;
-
-            case R.id.register_text:
-                Intent registerIntent = new Intent(LoginActivity.this, RegisterActivity.class);
-                startActivity(registerIntent);
-                break;
-
-            case R.id.etUserID:
-                etUserID.setText("");
-                break;
-
+        if (userManager.login(etUserID.getText().toString())) {
+            Toast.makeText(this, "Login successful", Toast.LENGTH_SHORT).show();
+            User user = UserController.getController().getUser();
+            String activity = "LoginActivity";
+            if (user.getClass() == Patient.class) {
+                Intent patientIntent = new Intent(this, ListPatientActivity.class);
+                patientIntent.putExtra("activity", activity);
+                startActivity(patientIntent);
+            } else if (user.getClass() == Caregiver.class) {
+                Intent caregiverIntent = new Intent(this, ListProblemActivity.class);
+                caregiverIntent.putExtra("activity", activity);
+                startActivity(caregiverIntent);
+            }
         }
     }
 
+    public void onRegisterClick(View v) {
+        Intent registerIntent = new Intent(this, RegisterActivity.class);
+        startActivity(registerIntent);
+    }
+
     @Override
-    public void onBackPressed() {
+    public void onResume(View v){
 
     }
 }
