@@ -33,13 +33,12 @@ public class LoginActivity extends AppCompatActivity {
                 getApplicationContext().MODE_PRIVATE);
         LocalStorageController.init(sharedPreferences);
         UserManager.initManager();
-        DataManager.getDataManager().pull();
 
         setContentView(R.layout.activity_login);
 
         etUserID = findViewById(R.id.etUserID);
     }
-    
+
     public void onLoginClick(View v) {
         UserManager userManager = UserManager.getManager();
         if (userManager.login(etUserID.getText().toString())) {
