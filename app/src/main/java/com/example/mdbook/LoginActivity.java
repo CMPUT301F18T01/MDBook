@@ -21,7 +21,6 @@ public class LoginActivity extends AppCompatActivity implements CompoundButton.O
     private Button logInBtn;
     private TextView registerText;
     private EditText etUserID;
-    private String dummyCareGiver = "CG123", dummyPatient = "P123";
     private String activity = "LoginActivity";
 
 
@@ -50,35 +49,29 @@ public class LoginActivity extends AppCompatActivity implements CompoundButton.O
         UserManager.initManager();
         UserManager userManager = UserManager.getManager();
 
-//        DataManager.getDataManager().pull();
-
-
-
-
         switch (v.getId()){
 
             case R.id.loginButton:
                     userManager.login(etUserID.getText().toString());
                     User user = new UserController().getController().getUser();
+                    String userID = user.getUserID();
                     if (user != null)
                     //if(user instanceof Patient)
                     {
-                        Toast.makeText(this, "Is a patient", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "Patient " + userID + " logged in", Toast.LENGTH_SHORT).show();
                         Intent problemListActivityIntent = new Intent(this, ListProblemActivity.class);
 
                         problemListActivityIntent.putExtra("user ID", etUserID.getText().toString());
 
 
                         problemListActivityIntent.putExtra("activity", activity);
-                        Toast.makeText(this, "Logging in " + dummyPatient, Toast.LENGTH_SHORT).show();
                         startActivity(problemListActivityIntent);
                         this.finish();
 
                     }
                     else if(user instanceof Caregiver)
                     {
-                        Toast.makeText(this, "Is a caregiver", Toast.LENGTH_SHORT).show();
-                        Toast.makeText(this, "Logging in " + dummyCareGiver, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "Care Provider " + userID + " logged in", Toast.LENGTH_SHORT).show();
                         Intent careGiverIntent = new Intent(LoginActivity.this, ListPatientActivity.class);
                         careGiverIntent.putExtra("activity", activity);
                         startActivity(careGiverIntent);
