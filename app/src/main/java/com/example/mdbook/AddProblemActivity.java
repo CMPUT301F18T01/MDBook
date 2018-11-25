@@ -69,7 +69,6 @@ public class AddProblemActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-               // Intent getPreviousIntent = getIntent();
                 Patient patient = (Patient) UserController.getController().getUser();
 
                 //Patient patient = new Patient(user, null, null);
@@ -83,7 +82,10 @@ public class AddProblemActivity extends AppCompatActivity {
                     Toast.makeText(AddProblemActivity.this, "No user", Toast.LENGTH_SHORT).show();
                 }
 
+                Intent mainPage = new Intent(AddProblemActivity.this, ListProblemActivity.class);
+                startActivity(mainPage);
                 BackToListProblem();
+
 
             }
         });
@@ -110,7 +112,6 @@ public class AddProblemActivity extends AppCompatActivity {
     public void BackToListProblem() {
         this.finish();
     }
-
 
 
     public void goAddRecord(){

@@ -21,10 +21,12 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -70,7 +72,7 @@ public class ListProblemActivity extends AppCompatActivity
 //        String user = getPreviousIntent.getExtras().getString("user ID");
 //        Patient patient = new Patient(user, null, null);
         Patient patient = (Patient) UserController.getController().getUser();
-        problems =  new ArrayList<Problem>();
+        ArrayList<Problem> problems =  new ArrayList<>();
         problems.addAll(patient.getProblems());
         try {
             userManager.saveUser(patient);
@@ -78,6 +80,8 @@ public class ListProblemActivity extends AppCompatActivity
             e.printStackTrace();
         }
 
+//        ArrayAdapter listAdapter = new ArrayAdapter<Problem>(this, R.id.recylerView, problems);
+//        recyclerView.setAdapter(listAdapter);
 
         /* Create recycler view */
         recyclerView = findViewById(R.id.recylerView);
@@ -110,9 +114,6 @@ public class ListProblemActivity extends AppCompatActivity
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 if (direction == ItemTouchHelper.RIGHT){
-//                    Snackbar.make(recyclerView,  problems.get(viewHolder.getAdapterPosition())
-//                            .getTitle()+" removed", Snackbar.LENGTH_LONG)
-//                            .setAction("Action", null).show();
                     showAlertDialog(viewHolder);
                 }
 
@@ -229,13 +230,12 @@ public class ListProblemActivity extends AppCompatActivity
      * Starts the add problem activity
      */
     public void addProblem(){
-        Intent getPreviousIntent = getIntent();
-        String user = getPreviousIntent.getExtras().getString("user ID");
+//        Intent getPreviousIntent = getIntent();
+//        String user = getPreviousIntent.getExtras().getString("user ID");
 
         Intent intent = new Intent(this, AddProblemActivity.class);
-        Patient patient = (Patient) UserController.getController().getUser();
-        //intent.putExtra("patient", patient);
         startActivity(intent);
+        this.finish();
     }
     /**
      * Starts the option menu activity
