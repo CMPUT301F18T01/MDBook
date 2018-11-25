@@ -34,6 +34,7 @@ import android.widget.ListView;
 public class ViewRecordActivity extends AppCompatActivity {
     Button save;
     Button cancel;
+    Button add;
     // Initialize dummy variables for debugging
     ListView mListView;
     String[] Title = {"Head Issue", "Ear Issue", "Hand Issue",
@@ -62,6 +63,14 @@ public class ViewRecordActivity extends AppCompatActivity {
         setContentView(R.layout.activity_view_record);
         save = findViewById(R.id.SaveRecordButton);
         cancel = findViewById(R.id.EditRecordButton);
+        add = findViewById(R.id.add);
+
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goAddNewRecord();
+            }
+        });
 
         // Switches to problem list view screen upon click of the save button
         save.setOnClickListener(new View.OnClickListener() {
@@ -103,9 +112,15 @@ public class ViewRecordActivity extends AppCompatActivity {
      * Switches the activity back to the List problem activity view
      */
 
+    public void goAddNewRecord(){
+        Intent addRecord = new Intent(this, AddRecordActivity.class);
+        startActivity(addRecord);
+        this.finish();
+    }
     public void BackToAddProblem(){
         Intent mainPage = new Intent(this, ListProblemActivity.class);
         startActivity(mainPage);
+        this.finish();
     }
 
 

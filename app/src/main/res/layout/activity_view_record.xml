@@ -72,11 +72,11 @@
         android:text="Cancel"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/button"
+        app:layout_constraintStart_toEndOf="@+id/add"
         app:layout_constraintTop_toBottomOf="@+id/recordListView" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/add"
         android:layout_width="wrap_content"
         android:layout_height="47dp"
         android:layout_marginStart="8dp"
@@ -85,7 +85,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
-        android:text="Button"
+        android:text="Add New Record"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/EditRecordButton"
         app:layout_constraintHorizontal_bias="0.435"
