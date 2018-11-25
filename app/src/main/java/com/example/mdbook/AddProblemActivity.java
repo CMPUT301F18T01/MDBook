@@ -78,7 +78,8 @@ public class AddProblemActivity extends AppCompatActivity {
                 UserManager userManager = UserManager.getManager();
 
                // Intent getPreviousIntent = getIntent();
-                Patient patient = (Patient) getIntent().getSerializableExtra("patient");
+//                Patient patient = (Patient) getIntent().getSerializableExtra("patient");
+                Patient patient = (Patient) UserController.getController().getUser();
 
                 //Patient patient = new Patient(user, null, null);
                 Problem problem = new Problem(title.getText().toString(), description.getText().toString(), date.getText().toString());
@@ -90,8 +91,8 @@ public class AddProblemActivity extends AppCompatActivity {
                 {
                     Toast.makeText(AddProblemActivity.this, "No user", Toast.LENGTH_SHORT).show();
                 }
-
-
+                Intent mainPage = new Intent(AddProblemActivity.this, ListProblemActivity.class);
+                startActivity(mainPage);
                 BackToListProblem();
                 //Go back to patient main page
 //                BackToListProblem();
