@@ -15,6 +15,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
+
+import java.io.Serializable;
 
 public class OptionsMenuActivity extends AppCompatActivity {
 
@@ -33,6 +36,10 @@ public class OptionsMenuActivity extends AppCompatActivity {
         EditRecord = findViewById(R.id.EditRecord);
         RecordSlide = findViewById(R.id.RecordSlide);
         GeoLocation = findViewById(R.id.GeoLocation);
+
+//        Intent intent = new Intent();
+//        Problem problem = (Problem) getIntent().getExtras().getSerializable("problem");
+//        Toast.makeText(OptionsMenuActivity.this, problem.getTitle(), Toast.LENGTH_SHORT).show();
 
         // Switches to the edit problem activity upon the click of the edit problem button
         EditProblem.setOnClickListener(new View.OnClickListener() {
@@ -69,14 +76,20 @@ public class OptionsMenuActivity extends AppCompatActivity {
      */
     public void GoEditProblem(){
         Intent goEditProblem = new Intent(this, EditProblemDetailsActivity.class);
+       // Intent intent = new Intent();
+        Problem problem = (Problem) getIntent().getExtras().getSerializable("problem");
+//        Toast.makeText(OptionsMenuActivity.this, problem.getTitle(), Toast.LENGTH_SHORT).show();
+        goEditProblem.putExtra("problem", problem);
         startActivity(goEditProblem);
     }
     /**
      * Creates a new intent for switching to the ViewRecordActivity
      */
     public void GoEditRecord(){
-        Intent goEditProblem = new Intent(this, ViewRecordActivity.class);
-        startActivity(goEditProblem);
+        Intent goEditRecord = new Intent(this, ViewRecordActivity.class);
+        Problem problem = (Problem) getIntent().getExtras().getSerializable("problem");
+        goEditRecord.putExtra("problem", problem);
+        startActivity(goEditRecord);
     }
     /**
      * Creates a new intent for switching to the PatientSlideActivity

@@ -19,6 +19,8 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 
 /**
  * Tests the problem objects
@@ -29,11 +31,12 @@ import android.widget.TextView;
  **/
 public class CustomAdapter extends ArrayAdapter {
 
-    String [] titles;
-    String [] dates;
-    String [] comments;
-    int [] images;
+    ArrayList<String> titles;
+    ArrayList<String> dates;
+    ArrayList<String> comments;
+    ArrayList<Integer> photos;
     Context mContext;
+
 
     /**
      * Creates a custom adapter for takes in array containing record details
@@ -44,10 +47,10 @@ public class CustomAdapter extends ArrayAdapter {
      * @param recordDates the datestamp of the record
      * @param recordComments the comments attached to the record
      */
-    public CustomAdapter( Context context, String[] recordTitles, int[]recordImages, String[] recordDates, String [] recordComments) {
+    public CustomAdapter(Context context, ArrayList<String> recordTitles, ArrayList<Integer>recordImages,ArrayList<String>recordDates, ArrayList<String> recordComments) {
         super(context, R.layout.record_listview_item);
         this.titles = recordTitles;
-        this.images = recordImages;
+        this.photos = recordImages;
         this.dates = recordDates;
         this.comments = recordComments;
         this.mContext = context;
@@ -59,7 +62,7 @@ public class CustomAdapter extends ArrayAdapter {
      */
    @Override
    public int getCount() {
-       return titles.length;
+       return titles.size();
    }
 
     /**
@@ -94,10 +97,10 @@ public class CustomAdapter extends ArrayAdapter {
         }
 
             // Set the viewholder to hold the information
-            mViewHolder.mImages.setImageResource(images[position]);
-            mViewHolder.mTitles.setText(titles[position]);
-            mViewHolder.mComments.setText(comments[position]);
-            mViewHolder.mDates.setText(dates[position]);
+            mViewHolder.mImages.setImageResource(photos.get(position));
+            mViewHolder.mTitles.setText(titles.get(position));
+            mViewHolder.mComments.setText(comments.get(position));
+            mViewHolder.mDates.setText(dates.get(position));
 
         return convertView;
     }

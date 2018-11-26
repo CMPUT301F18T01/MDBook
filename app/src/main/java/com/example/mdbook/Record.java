@@ -10,6 +10,9 @@
 
 package com.example.mdbook;
 
+import android.widget.Toast;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -23,10 +26,10 @@ import java.util.Date;
  * @see com.example.mdbook.Photo
  * @version 0.0.1
  **/
-class Record {
+class Record implements Serializable {
 
     private String title;
-    private Date date;
+    private String date;
     private String description;
     private GeoLocation geoLocation;
     private BodyLocation bodyLocation;
@@ -49,7 +52,7 @@ class Record {
         }
         else {
             this.title = title;
-            this.date = new Date();
+            this.date = new Date().toString();
             this.description = "";
             this.geoLocation = null;
             this.bodyLocation = null;
@@ -67,7 +70,7 @@ class Record {
      *                    including anything that might set it apart from previous records
      * @throws IllegalArgumentException if title or description lengths are invalid
      */
-    public Record(String title, Date date, String description) throws IllegalArgumentException {
+    public Record(String title, String date, String description) throws IllegalArgumentException {
         if (title.length() < 1 || title.length() > 30 || description.length() > 300){
             throw new IllegalArgumentException();
         }
@@ -186,8 +189,8 @@ class Record {
     /**
      * @return The date the record was recorded on.
      */
-    public Date getDate() {
-        return this.date;
+    public String getDate() {
+        return this.date.toString();
     }
 
     /**

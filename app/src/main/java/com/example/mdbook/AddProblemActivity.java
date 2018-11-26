@@ -16,7 +16,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import org.apache.commons.lang3.ObjectUtils;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Creates an activity for the user to add a problem
@@ -40,6 +46,9 @@ public class AddProblemActivity extends AppCompatActivity {
     EditText title;
     EditText date;
     EditText description;
+    Problem problem;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,17 +61,30 @@ public class AddProblemActivity extends AppCompatActivity {
         date = findViewById(R.id.addDate);
         description = findViewById(R.id.addDescription);
         addRecord = findViewById(R.id.addRecord);
-
-
+        UserManager.initManager();
+        final UserManager userManager = UserManager.getManager();
 
         // Switches to addProblemActivty upon the click of the save button
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Todo: Save data into the user manager
+
+                Patient patient = (Patient) UserController.getController().getUser();
+
+                //Patient patient = new Patient(user, null, null);
+                Problem problem = new Problem(title.getText().toString(), description.getText().toString(), date.getText().toString());
+                patient.addProblem(problem);
+                try{
+                    userManager.saveUser(patient);
+                    Toast.makeText(AddProblemActivity.this, "saved problem: " + title.getText().toString(), Toast.LENGTH_SHORT).show();
+                }catch ( NoSuchUserException id)
+                {
+                    Toast.makeText(AddProblemActivity.this, "No user", Toast.LENGTH_SHORT).show();
+                }
+
                 BackToListProblem();
-                //Go back to patient main page
-                BackToListProblem();
+
+
             }
         });
 
@@ -86,10 +108,11 @@ public class AddProblemActivity extends AppCompatActivity {
 
 
     public void BackToListProblem() {
-        //Intent mainPage = new Intent(this, ListProblemActivity.class);
-        //startActivity(mainPage);
+        Intent mainPage = new Intent(AddProblemActivity.this, ListProblemActivity.class);
+        startActivity(mainPage);
         this.finish();
     }
+
 
     public void goAddRecord(){
         Intent goAdd = new Intent(this, AddRecordActivity.class);

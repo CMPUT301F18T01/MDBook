@@ -19,6 +19,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
+
+import java.util.Date;
 
 /**
  * Creates an activity for the user to add a record
@@ -58,6 +61,8 @@ public class AddRecordActivity extends AppCompatActivity {
         reminder = findViewById(R.id.reminder);
         save = findViewById(R.id.save);
         cancel = findViewById(R.id.cancel);
+        UserManager.initManager();
+        final  UserManager userManager = UserManager.getManager();
 
         // Switches to addBodyLocationActivity upon the click of the body button
         body.setOnClickListener(new View.OnClickListener() {
@@ -69,9 +74,21 @@ public class AddRecordActivity extends AppCompatActivity {
 
         // Switches to addBodyLocationActivity upon the click of the save button
         save.setOnClickListener(new View.OnClickListener() {
+
+
             @Override
             public void onClick(View v) {
-                //Todo: Save data into the user manager
+                Problem problem = (Problem)getIntent().getExtras().getSerializable("problem");
+                Patient patient = (Patient) UserController.getController().getUser();
+                Record record = new Record(headline.getText().toString(), date.getText().toString(), Description.getText().toString());
+                problem.addRecord(record);
+                try {
+                    userManager.saveUser(patient);
+                    Toast.makeText(AddRecordActivity.this, "Save new record: " + record.getTitle(), Toast.LENGTH_SHORT).show();
+                } catch (NoSuchUserException e) {
+                    Toast.makeText(AddRecordActivity.this, "user doesn't exist", Toast.LENGTH_SHORT);
+                    e.printStackTrace();
+                }
                 BackToAddProblem();
                 //Go back to patient main page
                 //BackToAddProblem();
@@ -103,14 +120,19 @@ public class AddRecordActivity extends AppCompatActivity {
     public void goAddBodyLoc(){
         Intent addRecordPage = new Intent(this, NewBodyLocationView.class);
         startActivity(addRecordPage);
+        this.finish();
     }
 
     /**
      * Creates a new intent for switch to the ListProblemActivity
      */
     public void BackToAddProblem(){
-        Intent mainPage = new Intent(this, ListProblemActivity.class);
+        Intent mainPage = new Intent(this, ViewRecordActivity.class);
+//        Record record = new Record(headline.getText().toString(), date.getText().toString(), Description.getText().toString());
+        Problem problem = (Problem)getIntent().getExtras().getSerializable("problem");
+        mainPage.putExtra("problem", problem);
         startActivity(mainPage);
+        this.finish();
     }
     /**
      * Creates a new intent for switch to the ViewLocationActivity
@@ -118,6 +140,10 @@ public class AddRecordActivity extends AppCompatActivity {
     public void openGeoLoc(){
         Intent geoLoc = new Intent(this, ViewLocationActivity.class);
         startActivity(geoLoc);
+        this.finish();
     }
 
+
+    public void goAddBodyLoc(View view) {
+    }
 }

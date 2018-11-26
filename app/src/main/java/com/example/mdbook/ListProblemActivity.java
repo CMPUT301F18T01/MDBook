@@ -3,6 +3,7 @@ package com.example.mdbook;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -20,8 +21,12 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 import android.widget.Toast;
+
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -47,6 +52,7 @@ public class ListProblemActivity extends AppCompatActivity
     private ProblemAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutmanager;
 
+
     /**
      * Initializes the activity
      * @param savedInstanceState
@@ -58,15 +64,22 @@ public class ListProblemActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        /* For testing just list problems in the array */
-        problems =  new ArrayList<Problem>();
-        problems.add(new Problem("problem 1","test"));
-        problems.add(new Problem("problem 2","test"));
-        problems.add(new Problem("problem 3","test"));
-        problems.add(new Problem("problem 4","test"));
-        problems.add(new Problem("problem 5","test"));
-        problems.add(new Problem("problem 6","test"));
-        problems.add(new Problem("problem 7","test"));
+        UserManager.initManager();
+        UserManager userManager = UserManager.getManager();
+
+//        /* For testing just list problems in the array */
+//        Intent getPreviousIntent = getIntent();
+//        String user = getPreviousIntent.getExtras().getString("user ID");
+//        Patient patient = new Patient(user, null, null);
+        Patient patient = (Patient) UserController.getController().getUser();
+        problems =  new ArrayList<>();
+        setProblems(patient);
+        try {
+            userManager.saveUser(patient);
+        } catch (NoSuchUserException e) {
+            e.printStackTrace();
+        }
+
 
         /* Create recycler view */
         recyclerView = findViewById(R.id.recylerView);
@@ -76,11 +89,14 @@ public class ListProblemActivity extends AppCompatActivity
         recyclerView.setLayoutManager(mLayoutmanager);
         recyclerView.setAdapter(mAdapter);
 
+
+
         /* Opens options menu when problem is clicked */
         mAdapter.setOnItemClickListener(new ProblemAdapter.OnItemClickListener() {
             @Override
             public void OnItemClick(int Position) {
-                OptionMenu();
+
+                OptionMenu(Position);
             }
         });
 
@@ -96,9 +112,6 @@ public class ListProblemActivity extends AppCompatActivity
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 if (direction == ItemTouchHelper.RIGHT){
-//                    Snackbar.make(recyclerView,  problems.get(viewHolder.getAdapterPosition())
-//                            .getTitle()+" removed", Snackbar.LENGTH_LONG)
-//                            .setAction("Action", null).show();
                     showAlertDialog(viewHolder);
                 }
 
@@ -123,6 +136,7 @@ public class ListProblemActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
     }
 
     public void showAlertDialog(final RecyclerView.ViewHolder position){
@@ -216,12 +230,15 @@ public class ListProblemActivity extends AppCompatActivity
     public void addProblem(){
         Intent intent = new Intent(this, AddProblemActivity.class);
         startActivity(intent);
+        this.finish();
     }
     /**
      * Starts the option menu activity
      */
-    public void OptionMenu(){
+    public void OptionMenu(int Position){
         Intent intent = new Intent(this, OptionsMenuActivity.class);
+//        Toast.makeText(ListProblemActivity.this, problems.get(Position).getTitle(), Toast.LENGTH_SHORT).show();
+        intent.putExtra("problem", problems.get(Position));
         startActivity(intent);
     }
     /**

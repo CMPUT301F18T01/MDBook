@@ -37,6 +37,7 @@ public class ViewAccountDetailActivity extends AppCompatActivity {
     TextView email;
     Button editAccount;
 
+
     Button logOutButton;
 
 
@@ -54,6 +55,8 @@ public class ViewAccountDetailActivity extends AppCompatActivity {
         editAccount = findViewById(R.id.EditAccount);
 
         logOutButton = findViewById(R.id.LogOutBtn);
+
+
 
 
         // Switches to the edit account details upon the click of the editbutton
@@ -83,8 +86,11 @@ public class ViewAccountDetailActivity extends AppCompatActivity {
 
     public void goToLogin()
     {
-        Intent logOutInent = new Intent(this, LoginActivity.class);
-        startActivity(logOutInent);
+        UserManager.initManager();
+        UserManager userManager = UserManager.getManager();
+        Intent logOutIntent = new Intent(this, LoginActivity.class);
+        startActivity(logOutIntent);
+        userManager.logout();
         this.finish();
     }
 

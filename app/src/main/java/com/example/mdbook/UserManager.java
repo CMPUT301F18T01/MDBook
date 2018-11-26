@@ -407,7 +407,8 @@ public class UserManager {
                 JSONObject problemJSON = problems.get(problemID);
                 String title = problemJSON.getString("title");
                 String description = problemJSON.getString("description");
-                Problem problem = new Problem(title, description);
+                String date = problemJSON.getString("date");
+                Problem problem = new Problem(title, description, date);
                 problem.setProblemID(problemID);
 
                 /* Add comments */
@@ -443,7 +444,7 @@ public class UserManager {
                 JSONObject recordJSON = records.get(recordID);
                 /* Fetch data */
                 String title = recordJSON.getString("title");
-                Date date = (Date) recordJSON.get("date");
+                String date = (String) recordJSON.get("date");
                 String description = recordJSON.getString("description");
                 String comment = recordJSON.getString("comment");
 

@@ -9,7 +9,9 @@
  */
 package com.example.mdbook;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * The Problem object holds the information about a Problem, including its records.
@@ -18,13 +20,14 @@ import java.util.ArrayList;
  * @see Record
  * @version 0.0.1
  **/
-class Problem {
+class Problem implements Serializable {
 
     private ArrayList<Record> records;
     private String title;
     private String description;
     private ArrayList<String> comments;
     private int problemID = -1;
+    private String date;
 
 
     /**
@@ -33,7 +36,7 @@ class Problem {
      * @param description Problem description (<= 300 chars)
      * @throws IllegalArgumentException thrown if title or description are of invalid length
      */
-    public Problem(String title, String description) throws IllegalArgumentException  {
+    public Problem(String title, String description, String date) throws IllegalArgumentException  {
         if (title.length() < 1 || title.length() > 30 || description.length() > 300){
             throw new IllegalArgumentException();
         }
@@ -42,6 +45,7 @@ class Problem {
             this.title = title;
             this.description = description;
             this.comments = new ArrayList<>();
+            this.date = date;
         }
     }
 
