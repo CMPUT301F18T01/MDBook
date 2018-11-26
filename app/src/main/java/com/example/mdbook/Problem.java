@@ -27,7 +27,7 @@ class Problem implements Serializable {
     private String description;
     private ArrayList<String> comments;
     private int problemID = -1;
-    private Date date;
+
 
 
     /**
@@ -36,7 +36,7 @@ class Problem implements Serializable {
      * @param description Problem description (<= 300 chars)
      * @throws IllegalArgumentException thrown if title or description are of invalid length
      */
-    public Problem(String title, String description, Date date) throws IllegalArgumentException  {
+    public Problem(String title, String description) throws IllegalArgumentException  {
         if (title.length() < 1 || title.length() > 30 || description.length() > 300){
             throw new IllegalArgumentException();
         }
@@ -45,7 +45,6 @@ class Problem implements Serializable {
             this.title = title;
             this.description = description;
             this.comments = new ArrayList<>();
-            this.date = date;
         }
     }
 

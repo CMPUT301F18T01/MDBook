@@ -407,8 +407,7 @@ public class UserManager {
                 JSONObject problemJSON = problems.get(problemID);
                 String title = problemJSON.getString("title");
                 String description = problemJSON.getString("description");
-                Date date = (Date) problemJSON.get("date");
-                Problem problem = new Problem(title, description, date);
+                Problem problem = new Problem(title, description);
                 problem.setProblemID(problemID);
 
                 /* Add comments */

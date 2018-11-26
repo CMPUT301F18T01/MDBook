@@ -19,19 +19,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/addProblemTextView" />
 
-    <EditText
-        android:id="@+id/addDate"
-        android:layout_width="304dp"
-        android:layout_height="49dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
-        android:ems="10"
-        android:hint="Date: dd/mm/yyyy"
-        android:inputType="text|textPersonName|date"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addTitle" />
-
     <TextView
         android:id="@+id/addProblemTextView"
         android:layout_width="184dp"
@@ -50,12 +37,12 @@
         android:layout_height="178dp"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="28dp"
         android:ems="10"
         android:hint="Problem Description "
         android:inputType="textPersonName"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addDate" />
+        app:layout_constraintTop_toBottomOf="@+id/addTitle" />
 
     <Button
         android:id="@+id/saveButton"
@@ -63,10 +50,12 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="64dp"
         android:layout_marginLeft="64dp"
+        android:layout_marginTop="8dp"
         android:layout_marginBottom="28dp"
         android:text="Save"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addRecord" />
 
     <Button
         android:id="@+id/cancelButton"
@@ -74,6 +63,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginLeft="20dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="64dp"
         android:layout_marginRight="64dp"
         android:layout_marginBottom="28dp"
@@ -81,7 +71,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.886"
-        app:layout_constraintStart_toEndOf="@+id/saveButton" />
+        app:layout_constraintStart_toEndOf="@+id/saveButton"
+        app:layout_constraintTop_toBottomOf="@+id/addRecord" />
 
     <Button
         android:id="@+id/addRecord"
@@ -89,7 +80,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="28dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:text="Add New Record"

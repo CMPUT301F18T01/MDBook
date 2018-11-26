@@ -51,7 +51,6 @@ public class AddProblemActivity extends AppCompatActivity {
     EditText date;
     EditText description;
     Problem problem;
-    Date problemDate;
 
 
 
@@ -63,7 +62,6 @@ public class AddProblemActivity extends AppCompatActivity {
         save = findViewById(R.id.saveButton);
         cancel = findViewById(R.id.cancelButton);
         title = findViewById(R.id.addTitle);
-        date = findViewById(R.id.addDate);
         description = findViewById(R.id.addDescription);
         addRecord = findViewById(R.id.addRecord);
         UserManager.initManager();
@@ -77,15 +75,10 @@ public class AddProblemActivity extends AppCompatActivity {
                 Patient patient = (Patient) UserController.getController().getUser();
 
                 //Patient patient = new Patient(user, null, null);
-                DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-                try {
-                    problemDate =  formatter.parse(date.getText().toString());
-                    Problem problem = new Problem(title.getText().toString(), description.getText().toString(), problemDate);
+
+                    Problem problem = new Problem(title.getText().toString(), description.getText().toString());
                     patient.addProblem(problem);
-                } catch (ParseException e) {
-                    Toast.makeText(AddProblemActivity.this, "WRONG DATE FORMAT", Toast.LENGTH_SHORT).show();
-                    e.printStackTrace();
-                }
+
 
                 try{
                     userManager.saveUser(patient);
