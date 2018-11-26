@@ -189,8 +189,8 @@ class Record implements Serializable {
     /**
      * @return The date the record was recorded on.
      */
-    public String getDate() {
-        return this.date.toString();
+    public Date getDate() {
+        return this.date;
     }
 
     /**
