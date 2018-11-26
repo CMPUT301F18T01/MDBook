@@ -52,12 +52,12 @@ public class LoginActivity extends AppCompatActivity implements CompoundButton.O
         switch (v.getId()){
 
             case R.id.loginButton:
-                    userManager.login(etUserID.getText().toString());
-                    User user = new UserController().getController().getUser();
-                    String userID = user.getUserID();
-                    if (user != null)
+                    if (userManager.login(etUserID.getText().toString()))
                     {
-                        if(user instanceof Patient)
+                        User user = new UserController().getController().getUser();
+                        String userID = user.getUserID();
+                        //Toast.makeText(LoginActivity.this, userID, Toast.LENGTH_SHORT);
+                        if(user.getClass() == Patient.class)
                         {
                             Toast.makeText(this, "Patient " + userID + " logged in", Toast.LENGTH_SHORT).show();
                             Intent problemListActivityIntent = new Intent(this, ListProblemActivity.class);
@@ -70,7 +70,7 @@ public class LoginActivity extends AppCompatActivity implements CompoundButton.O
                             this.finish();
 
                         }
-                        else if(user instanceof Caregiver)
+                        else if(user.getClass() == Caregiver.class)
                         {
                             Toast.makeText(this, "Care Provider " + userID + " logged in", Toast.LENGTH_SHORT).show();
                             Intent careGiverIntent = new Intent(LoginActivity.this, ListPatientActivity.class);

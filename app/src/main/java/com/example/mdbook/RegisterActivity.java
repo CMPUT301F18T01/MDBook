@@ -61,6 +61,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         CGCheckbox = findViewById(R.id.cgCheckBox);
         CGCheckbox.setOnCheckedChangeListener(this);
 
+        UserManager.initManager();
+
+
 
     }
 
@@ -68,10 +71,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     public void onClick(View v)
     {
 
-        UserManager.initManager();
         UserManager userManager = UserManager.getManager();
 
-        DataManager dataManager = DataManager.getDataManager();
 
         switch (v.getId())
         {
@@ -90,7 +91,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     try {
 
                         userManager.createCaregiver(etUserID.getText().toString(), etPhoneNumber.getText().toString(), etEmailAddress.getText().toString());
-//                        dataManager.push();
                         Toast.makeText(this, "UserID created: " + etUserID.getText(), Toast.LENGTH_SHORT).show();
                     } catch (UserIDNotAvailableException e) {
 
@@ -99,12 +99,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 }
                 else {
                     try {
-//
+
                         userManager.createPatient(etUserID.getText().toString(), etPhoneNumber.getText().toString(), etEmailAddress.getText().toString());
-//                        dataManager.push();
                         Toast.makeText(this, "UserID created: " + etUserID.getText(), Toast.LENGTH_SHORT).show();
                     } catch (UserIDNotAvailableException e) {
-//                        Toast.makeText(this, "UserID is taken", Toast.LENGTH_SHORT).show();
                         e.printStackTrace();
                     }
 
