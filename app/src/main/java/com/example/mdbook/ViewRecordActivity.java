@@ -18,6 +18,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
 
 
 /**
@@ -35,10 +38,13 @@ public class ViewRecordActivity extends AppCompatActivity {
     Button save;
     Button cancel;
     Button add;
-    // Initialize dummy variables for debugging
+//     Initialize dummy variables for debugging
     ListView mListView;
-    String[] Title = {"Head Issue", "Ear Issue", "Hand Issue",
-            "Nose Issue", "Finger Issue", "Eye Issue"};
+
+    ArrayList<Record> records  = new ArrayList<>();
+    ArrayList<String> title = new ArrayList<>();
+
+
 
 
     int[] Images = {R.drawable.donald_trump,
@@ -49,8 +55,8 @@ public class ViewRecordActivity extends AppCompatActivity {
             R.drawable.eye,
            };
 
-    String[] Comment = {"I have a headache", "My ear hurts", "My Hand Hurts", "My nose hurts", "My finger hurts", "My eye hurts"};
-    String[] Date = {"08/09/18", "12/09/18", "16/09/18", "19/09/18", "21/09/18", "28/09/18"};
+    String[] Comment = {};
+    String[] Date = {};
 
 
     /**
@@ -65,6 +71,13 @@ public class ViewRecordActivity extends AppCompatActivity {
         cancel = findViewById(R.id.EditRecordButton);
         add = findViewById(R.id.add);
 
+        Problem problem = (Problem) getIntent().getExtras().getSerializable("problem");
+        records = problem.getRecords();
+
+
+
+
+
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,37 +85,21 @@ public class ViewRecordActivity extends AppCompatActivity {
             }
         });
 
-        // Switches to problem list view screen upon click of the save button
-        save.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Todo: Save data into the user manager
-                BackToAddProblem();
-                //Go back to patient main page
-                BackToAddProblem();
-            }
-        });
-
-        // Switches to problem list view screen upon click of the cancel button
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                BackToAddProblem();
-            }
-        });
-
-
 
         mListView = (ListView) findViewById(R.id.recordListView);
+        for (int r = 0; r < records.size(); r++)
+        {
+            title.add(records.get(r).getTitle());
+        }
         CustomAdapter customAdapter = new CustomAdapter(ViewRecordActivity.this,
-                Title ,Images, Date, Comment);
+                title ,null, null, null);
         mListView.setAdapter(customAdapter);
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent mIntent = new Intent(getApplicationContext(), EditProblemDetailsActivity.class);
-                mIntent.putExtra("Titles", Title[i]);
-                mIntent.putExtra("Images", Images[i]);
+//                mIntent.putExtra("Titles", Title[i]);
+//                mIntent.putExtra("Images", Images[i]);
                 startActivity(mIntent);
             }
         });
@@ -114,6 +111,9 @@ public class ViewRecordActivity extends AppCompatActivity {
 
     public void goAddNewRecord(){
         Intent addRecord = new Intent(this, AddRecordActivity.class);
+        Problem problem = (Problem)getIntent().getExtras().getSerializable("problem");
+        Toast.makeText(ViewRecordActivity.this, problem.getTitle(), Toast.LENGTH_SHORT).show();
+        addRecord.putExtra("problem", problem);
         startActivity(addRecord);
         this.finish();
     }

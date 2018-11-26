@@ -9,6 +9,7 @@
  */
 package com.example.mdbook;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -19,7 +20,7 @@ import java.util.Date;
  * @see Record
  * @version 0.0.1
  **/
-class Problem {
+class Problem implements Serializable {
 
     private ArrayList<Record> records;
     private String title;

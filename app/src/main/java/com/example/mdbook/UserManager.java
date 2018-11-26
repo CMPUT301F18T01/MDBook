@@ -436,7 +436,7 @@ public class UserManager {
                 JSONObject recordJSON = records.get(recordID);
                 /* Fetch data */
                 String title = recordJSON.getString("title");
-                Date date = (Date) recordJSON.get("date");
+                String date = (String) recordJSON.get("date");
                 String description = recordJSON.getString("description");
                 String comment = recordJSON.getString("comment");
 

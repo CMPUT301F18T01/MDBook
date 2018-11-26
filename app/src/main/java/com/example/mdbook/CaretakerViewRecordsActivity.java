@@ -30,20 +30,20 @@ public class CaretakerViewRecordsActivity extends AppCompatActivity {
     // Initialize dummy variables for debugging
     Button ReturnButton;
     ListView CaregiverRecordListView;
-    String[] Title1 = {"Head Issue", "Ear Issue", "Hand Issue",
-            "Nose Issue", "Finger Issue", "Eye Issue"};
+//    String[] Title1 = {"Head Issue", "Ear Issue", "Hand Issue",
+//            "Nose Issue", "Finger Issue", "Eye Issue"};
 
 
-    int[] Images1 = {R.drawable.donald_trump,
-            R.drawable.ears,
-            R.drawable.hand,
-            R.drawable.nose,
-            R.drawable.finger,
-            R.drawable.eye,
-    };
+//    int[] Images1 = {R.drawable.donald_trump,
+//            R.drawable.ears,
+//            R.drawable.hand,
+//            R.drawable.nose,
+//            R.drawable.finger,
+//            R.drawable.eye,
+//    };
 
-    String[] Comment1 = {"I have a headache", "My ear hurts", "My Hand Hurts", "My nose hurts", "My finger hurts", "My eye hurts"};
-    String[] Date1 = {"08/09/18", "12/09/18", "16/09/18", "19/09/18", "21/09/18", "28/09/18"};
+//    String[] Comment1 = {"I have a headache", "My ear hurts", "My Hand Hurts", "My nose hurts", "My finger hurts", "My eye hurts"};
+//    String[] Date1 = {"08/09/18", "12/09/18", "16/09/18", "19/09/18", "21/09/18", "28/09/18"};
 
     /**
      * Creates a listview with an imageview
@@ -67,7 +67,7 @@ public class CaretakerViewRecordsActivity extends AppCompatActivity {
 
         CaregiverRecordListView = (ListView) findViewById(R.id.recordListView);
         CustomAdapter customAdapter = new CustomAdapter(CaretakerViewRecordsActivity.this,
-                Title1 ,Images1, Date1, Comment1);
+                null ,null, null, null);
         CaregiverRecordListView.setAdapter(customAdapter);
     }
 

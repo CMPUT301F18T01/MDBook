@@ -95,7 +95,8 @@ public class ListProblemActivity extends AppCompatActivity
         mAdapter.setOnItemClickListener(new ProblemAdapter.OnItemClickListener() {
             @Override
             public void OnItemClick(int Position) {
-                OptionMenu();
+
+                OptionMenu(Position);
             }
         });
 
@@ -234,8 +235,10 @@ public class ListProblemActivity extends AppCompatActivity
     /**
      * Starts the option menu activity
      */
-    public void OptionMenu(){
+    public void OptionMenu(int Position){
         Intent intent = new Intent(this, OptionsMenuActivity.class);
+//        Toast.makeText(ListProblemActivity.this, problems.get(Position).getTitle(), Toast.LENGTH_SHORT).show();
+        intent.putExtra("problem", problems.get(Position));
         startActivity(intent);
     }
     /**

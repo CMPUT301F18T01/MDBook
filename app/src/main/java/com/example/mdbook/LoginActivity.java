@@ -56,26 +56,48 @@ public class LoginActivity extends AppCompatActivity implements CompoundButton.O
                     User user = new UserController().getController().getUser();
                     String userID = user.getUserID();
                     if (user != null)
-                    //if(user instanceof Patient)
                     {
-                        Toast.makeText(this, "Patient " + userID + " logged in", Toast.LENGTH_SHORT).show();
-                        Intent problemListActivityIntent = new Intent(this, ListProblemActivity.class);
+                        if(user instanceof Patient)
+                        {
+                            Toast.makeText(this, "Patient " + userID + " logged in", Toast.LENGTH_SHORT).show();
+                            Intent problemListActivityIntent = new Intent(this, ListProblemActivity.class);
 
-                        problemListActivityIntent.putExtra("user ID", etUserID.getText().toString());
+                            problemListActivityIntent.putExtra("user ID", etUserID.getText().toString());
 
 
-                        problemListActivityIntent.putExtra("activity", activity);
-                        startActivity(problemListActivityIntent);
-                        this.finish();
+                            problemListActivityIntent.putExtra("activity", activity);
+                            startActivity(problemListActivityIntent);
+                            this.finish();
 
+                        }
+                        else if(user instanceof Caregiver)
+                        {
+                            Toast.makeText(this, "Care Provider " + userID + " logged in", Toast.LENGTH_SHORT).show();
+                            Intent careGiverIntent = new Intent(LoginActivity.this, ListPatientActivity.class);
+                            careGiverIntent.putExtra("activity", activity);
+                            startActivity(careGiverIntent);
+                        }
                     }
-                    else if(user instanceof Caregiver)
-                    {
-                        Toast.makeText(this, "Care Provider " + userID + " logged in", Toast.LENGTH_SHORT).show();
-                        Intent careGiverIntent = new Intent(LoginActivity.this, ListPatientActivity.class);
-                        careGiverIntent.putExtra("activity", activity);
-                        startActivity(careGiverIntent);
-                    }
+//                    if(user instanceof Patient)
+//                    {
+//                        Toast.makeText(this, "Patient " + userID + " logged in", Toast.LENGTH_SHORT).show();
+//                        Intent problemListActivityIntent = new Intent(this, ListProblemActivity.class);
+//
+//                        problemListActivityIntent.putExtra("user ID", etUserID.getText().toString());
+//
+//
+//                        problemListActivityIntent.putExtra("activity", activity);
+//                        startActivity(problemListActivityIntent);
+//                        this.finish();
+//
+//                    }
+//                    else if(user instanceof Caregiver)
+//                    {
+//                        Toast.makeText(this, "Care Provider " + userID + " logged in", Toast.LENGTH_SHORT).show();
+//                        Intent careGiverIntent = new Intent(LoginActivity.this, ListPatientActivity.class);
+//                        careGiverIntent.putExtra("activity", activity);
+//                        startActivity(careGiverIntent);
+//                    }
 
                 break;
 
