@@ -69,7 +69,7 @@ public class ViewRecordActivity extends AppCompatActivity {
         setContentView(R.layout.activity_view_record);
         save = findViewById(R.id.SaveRecordButton);
         cancel = findViewById(R.id.EditRecordButton);
-        add = findViewById(R.id.add);
+        add = findViewById(R.id.addButton);
 
         Problem problem = (Problem) getIntent().getExtras().getSerializable("problem");
         records = problem.getRecords();

@@ -21,7 +21,11 @@ import android.widget.Toast;
 import org.apache.commons.lang3.ObjectUtils;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 /**
@@ -47,6 +51,7 @@ public class AddProblemActivity extends AppCompatActivity {
     EditText date;
     EditText description;
     Problem problem;
+    Date problemDate;
 
 
 
@@ -72,8 +77,16 @@ public class AddProblemActivity extends AppCompatActivity {
                 Patient patient = (Patient) UserController.getController().getUser();
 
                 //Patient patient = new Patient(user, null, null);
-                Problem problem = new Problem(title.getText().toString(), description.getText().toString(), date.getText().toString());
-                patient.addProblem(problem);
+                DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+                try {
+                    problemDate =  formatter.parse(date.getText().toString());
+                    Problem problem = new Problem(title.getText().toString(), description.getText().toString(), problemDate);
+                    patient.addProblem(problem);
+                } catch (ParseException e) {
+                    Toast.makeText(AddProblemActivity.this, "WRONG DATE FORMAT", Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();
+                }
+
                 try{
                     userManager.saveUser(patient);
                     Toast.makeText(AddProblemActivity.this, "saved problem: " + title.getText().toString(), Toast.LENGTH_SHORT).show();

@@ -20,6 +20,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 
 /**
@@ -32,7 +33,7 @@ import java.util.ArrayList;
 public class CustomAdapter extends ArrayAdapter {
 
     ArrayList<String> titles;
-    ArrayList<String> dates;
+    ArrayList<Date> dates;
     ArrayList<String> comments;
     ArrayList<Integer> photos;
     Context mContext;
@@ -47,7 +48,7 @@ public class CustomAdapter extends ArrayAdapter {
      * @param recordDates the datestamp of the record
      * @param recordComments the comments attached to the record
      */
-    public CustomAdapter(Context context, ArrayList<String> recordTitles, ArrayList<Integer>recordImages,ArrayList<String>recordDates, ArrayList<String> recordComments) {
+    public CustomAdapter(Context context, ArrayList<String> recordTitles, ArrayList<Integer>recordImages, ArrayList<Date>recordDates, ArrayList<String> recordComments) {
         super(context, R.layout.record_listview_item);
         this.titles = recordTitles;
         this.photos = recordImages;
@@ -100,7 +101,7 @@ public class CustomAdapter extends ArrayAdapter {
             mViewHolder.mImages.setImageResource(photos.get(position));
             mViewHolder.mTitles.setText(titles.get(position));
             mViewHolder.mComments.setText(comments.get(position));
-            mViewHolder.mDates.setText(dates.get(position));
+            mViewHolder.mDates.setText((CharSequence) dates.get(position));
 
         return convertView;
     }

@@ -111,7 +111,7 @@
         android:layout_marginTop="8dp"
         android:ems="10"
         android:hint="dd/mm/yyyy"
-        android:inputType="text"
+        android:inputType="date"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/headline" />
 

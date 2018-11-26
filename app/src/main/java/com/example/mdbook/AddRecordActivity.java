@@ -21,6 +21,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -47,6 +50,8 @@ public class AddRecordActivity extends AppCompatActivity {
     Button reminder;
     Button save;
     Button cancel;
+    Record record;
+    Date recordDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,8 +85,16 @@ public class AddRecordActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Problem problem = (Problem)getIntent().getExtras().getSerializable("problem");
                 Patient patient = (Patient) UserController.getController().getUser();
-                Record record = new Record(headline.getText().toString(), date.getText().toString(), Description.getText().toString());
-                problem.addRecord(record);
+                DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+                try {
+                    recordDate =  formatter.parse(date.getText().toString());
+                    record = new Record(headline.getText().toString(), recordDate,Description.getText().toString());
+                    problem.addRecord(record);
+                } catch (ParseException e) {
+                    Toast.makeText(AddRecordActivity.this, "WRONG DATE FORMAT", Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();
+                }
+
                 try {
                     userManager.saveUser(patient);
                     Toast.makeText(AddRecordActivity.this, "Save new record: " + record.getTitle(), Toast.LENGTH_SHORT).show();
