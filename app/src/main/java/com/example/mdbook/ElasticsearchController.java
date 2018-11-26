@@ -50,7 +50,7 @@ import io.searchbox.core.Index;
 class ElasticsearchController {
 
     private static ElasticsearchController elasticsearchController = null;
-    private DataManager dataManager = DataManager.getDataManager();
+    private DataManager dataManager;
     private static JestClient client;
     private static String index = "cmput301f18t01test";
     private static HashMap<String, Object> idlists;
@@ -64,6 +64,7 @@ class ElasticsearchController {
     public static ElasticsearchController getController() {
         if (elasticsearchController == null) {
             elasticsearchController = new ElasticsearchController();
+            elasticsearchController.dataManager = DataManager.getDataManager();
             JestClientFactory factory = new JestClientFactory();
             factory.setDroidClientConfig(new DroidClientConfig
                     .Builder("http://cmput301.softwareprocess.es:8080")
