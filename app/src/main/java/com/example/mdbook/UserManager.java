@@ -44,6 +44,7 @@ public class UserManager {
     public static void initManager() {
         if (userManager == null){
             userManager = new UserManager();
+            userManager.dataManager = DataManager.getDataManager();
         }
     }
 

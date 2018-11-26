@@ -125,13 +125,19 @@ class LocalStorageController {
         HashMap<Integer, Photo> Photos = gson.fromJson(stringPhotos,typePhoto);
         ArrayList<Integer> AvailableIDs = gson.fromJson(stringAvailableIDs,typeArray);
 
-
-        dataManager.setPatients(Patients);
-        dataManager.setCaregivers(Caregivers);
-        dataManager.setProblems(Problems);
-        dataManager.setRecords(Records);
-        dataManager.setPhotos(Photos);
-        dataManager.setAvailableIDs(AvailableIDs);
+        if (Patients != null) {
+            dataManager.setPatients(Patients);
+        } if (Caregivers != null) {
+            dataManager.setCaregivers(Caregivers);
+        } if (Problems != null) {
+            dataManager.setProblems(Problems);
+        } if (Records != null) {
+            dataManager.setRecords(Records);
+        } if (Photos != null) {
+            dataManager.setPhotos(Photos);
+        } if (AvailableIDs != null) {
+            dataManager.setAvailableIDs(AvailableIDs);
+        }
 
 
     }
