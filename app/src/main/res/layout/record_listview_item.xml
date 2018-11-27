@@ -1,56 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/LocationButton"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="5dp">
+    android:background="@drawable/white_border"
+
+    android:elevation="3dp"
+
+   >
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="63dp"
-        android:layout_height="58dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:padding="5dp"
+        android:background="@drawable/roundcorners"
+        android:outlineProvider="background"
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
         android:id="@+id/titleTextView"
-        android:layout_width="384dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="5dp"
+        android:layout_toRightOf="@id/imageView"
+        android:textColor="#000000"
+        android:textSize="18dp"
+        android:textStyle="bold"
         android:text="TextView" />
 
 
     <TextView
         android:id="@+id/dateTextView"
-        android:layout_width="384dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="5dp"
+        android:layout_toRightOf="@id/imageView"
+        android:layout_below="@id/titleTextView"
+        android:layout_marginLeft="5dp"
+        android:textSize="10dp"
+
         android:text="TextView" />
 
     <TextView
         android:id="@+id/commentTextView"
-        android:layout_width="384dp"
-        android:layout_height="71dp"
-        android:padding="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_toRightOf="@id/imageView"
+        android:layout_below="@id/dateTextView"
+        android:layout_marginLeft="5dp"
         android:text="TextView" />
 
     <Button
         android:id="@+id/addCommentButton"
-        android:layout_width="366dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/commentTextView"
+        android:layout_toRightOf="@id/imageView"
+        android:layout_marginRight="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="10dp"
         android:layout_weight="1"
+        android:background="@drawable/buttontemplate"
         android:text="Add Comment" />
 
-
-
-    <Button
-        android:id="@+id/viewLocationButton"
-        android:layout_width="366dp"
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="View Location" />
+        android:layout_below="@+id/imageView"
+        android:layout_toLeftOf="@id/commentTextView"
+        android:layout_alignParentLeft="true"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
 
-</LinearLayout>
+        android:background="@drawable/buttontemplate"
+        app:srcCompat="@drawable/ic_location" />
+
+
+</RelativeLayout>
