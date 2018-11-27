@@ -14,6 +14,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -45,6 +46,8 @@ public class NewBodyLocationView extends AppCompatActivity {
     Button uploadBack;
     Button save;
     Button cancel;
+    int counter;
+
     private static final String DEBUGTAG = "JAYC";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +66,9 @@ public class NewBodyLocationView extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //upload activity handled here
+                counter = 1;
                 ChooseUploadMethod();
+
             }
         });
 
@@ -71,7 +76,9 @@ public class NewBodyLocationView extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //upload activity handled here
+                counter = 2;
                 ChooseUploadMethod();
+
             }
         });
 
@@ -103,8 +110,7 @@ public class NewBodyLocationView extends AppCompatActivity {
      */
     
     public void BackToAddProblem(){
-        Intent mainPage = new Intent(this, ListProblemActivity.class);
-        startActivity(mainPage);
+        this.finish();
     }
 
     public void ChooseUploadMethod(){
@@ -115,21 +121,23 @@ public class NewBodyLocationView extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         if (requestCode == 1) {
-            if(resultCode == RESULT_OK){
+            if(resultCode == RESULT_OK) {
                 String uri = data.getStringExtra("uri");
 
                 Bitmap myBitmap = BitmapFactory.decodeFile(uri);
 
-                bodyFront.setImageBitmap(myBitmap);
-//                Toast toast = Toast.makeText(getApplicationContext(),result,Toast.LENGTH_SHORT);
-//                toast.show();
-                //bodyFront.setImageDrawable(Drawable.createFromPath(result));
+                if (counter == 1) {
+                    bodyFront.setImageBitmap(myBitmap);
+                }
 
+                if (counter == 2) {
+                    bodyBack.setImageBitmap(myBitmap);
+                }
             }
+
             if (resultCode == RESULT_CANCELED) {
                 //Write your code if there's no result
             }
         }
     }
-
 }
