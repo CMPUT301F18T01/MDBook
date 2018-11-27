@@ -37,6 +37,7 @@
     <string name="title_activity_list_problem2">MDBook</string>
     <string name="Profile">Profile</string>
     <string name="Signout">Log out</string>
+    <string name="apikey">AIzaSyC87hg2QtwH0d4NAmWTyytBC8ZH9hSj71I</string>
 
 </resources>
 

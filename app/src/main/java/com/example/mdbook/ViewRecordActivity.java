@@ -11,13 +11,19 @@
 
 package com.example.mdbook;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
+
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 
 
 /**
@@ -32,11 +38,14 @@ import android.widget.ListView;
  */
 
 public class ViewRecordActivity extends AppCompatActivity {
-    Button save;
-    Button cancel;
+    private static final String TAG = "ViewRecordActivity";
+    private static final int ERROR_DIALOG_REQUEST = 9001;
+
+    private Button save;
+    private Button cancel;
     // Initialize dummy variables for debugging
-    ListView mListView;
-    String[] Title = {"Head Issue", "Ear Issue", "Hand Issue",
+    private ListView mListView;
+    private String[] Title = {"Head Issue", "Ear Issue", "Hand Issue",
             "Nose Issue", "Finger Issue", "Eye Issue"};
 
 
@@ -99,6 +108,31 @@ public class ViewRecordActivity extends AppCompatActivity {
         });
     }
 
+    public boolean isServicesOK(){
+        Log.d(TAG,"isServicesOK: checking Google Services version");
+        int available = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(ViewRecordActivity.this);
+        if(available == ConnectionResult.SUCCESS){
+            //Everything is fine and user can make map requests
+            Log.d(TAG, "isServicesOK: Google Play Services is working");
+            return true;
+        }
+        else if (GoogleApiAvailability.getInstance().isUserResolvableError(available)){
+            //Error occured but is fixable
+            Log.d(TAG,"isServicesOK: an error has occured but is fixable");
+            Dialog dialog = GoogleApiAvailability.getInstance().getErrorDialog(ViewRecordActivity
+                    .this,available , ERROR_DIALOG_REQUEST);
+            dialog.show();
+        }
+        else{
+            Toast.makeText(this, "You cant make map request", Toast.LENGTH_SHORT).show();
+        }
+        return false;
+    }
+
+
+
+
+
     /**
      * Switches the activity back to the List problem activity view
      */
@@ -106,6 +140,11 @@ public class ViewRecordActivity extends AppCompatActivity {
     public void BackToAddProblem(){
         Intent mainPage = new Intent(this, ListProblemActivity.class);
         startActivity(mainPage);
+    }
+
+    public void launchmap(){
+        Intent launchmap= new Intent(this, MapActivity.class);
+        startActivity(launchmap);
     }
 
 

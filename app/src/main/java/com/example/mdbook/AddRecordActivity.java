@@ -11,14 +11,20 @@
 
 package com.example.mdbook;
 
+import android.app.Dialog;
 import android.content.Intent;
 //import android.media.Image;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
+
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 
 /**
  * Creates an activity for the user to add a record
@@ -34,16 +40,18 @@ import android.widget.ImageView;
  */
 
 public class AddRecordActivity extends AppCompatActivity {
+    private static final String TAG = "AddRecordActivity";
+    private static final int ERROR_DIALOG_REQUEST = 9001;
     // Initialize all the required imageViews ans Buttons
-    ImageView image;
-    EditText headline;
-    EditText date;
-    EditText Description;
-    Button geo;
-    Button body;
-    Button reminder;
-    Button save;
-    Button cancel;
+    private ImageView image;
+    private EditText headline;
+    private EditText date;
+    private EditText Description;
+    private Button geo;
+    private Button body;
+    private Button reminder;
+    private Button save;
+    private Button cancel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,8 +124,29 @@ public class AddRecordActivity extends AppCompatActivity {
      * Creates a new intent for switch to the ViewLocationActivity
      */
     public void openGeoLoc(){
-        Intent geoLoc = new Intent(this, ViewLocationActivity.class);
-        startActivity(geoLoc);
+        Intent launchmap= new Intent(this, MapActivity.class);
+        startActivity(launchmap);
+    }
+
+    public boolean isServicesOK(){
+        Log.d(TAG,"isServicesOK: checking Google Services version");
+        int available = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(AddRecordActivity.this);
+        if(available == ConnectionResult.SUCCESS){
+            //Everything is fine and user can make map requests
+            Log.d(TAG, "isServicesOK: Google Play Services is working");
+            return true;
+        }
+        else if (GoogleApiAvailability.getInstance().isUserResolvableError(available)){
+            //Error occured but is fixable
+            Log.d(TAG,"isServicesOK: an error has occured but is fixable");
+            Dialog dialog = GoogleApiAvailability.getInstance().getErrorDialog(AddRecordActivity
+                    .this,available , ERROR_DIALOG_REQUEST);
+            dialog.show();
+        }
+        else{
+            Toast.makeText(this, "You cant make map request", Toast.LENGTH_SHORT).show();
+        }
+        return false;
     }
 
 }
