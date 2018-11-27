@@ -10,7 +10,7 @@
 
     android:elevation="3dp"
 
-   >
+    >
 
     <ImageView
         android:id="@+id/imageView"
