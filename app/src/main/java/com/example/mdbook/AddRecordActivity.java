@@ -34,6 +34,7 @@ import java.util.Date;
  *
  *
  * @author Jayanta Chatterjee
+ * @author Raj Kapadia
  * @author James Aina
  *
  * @version 0.0.1
@@ -124,6 +125,13 @@ public class AddRecordActivity extends AppCompatActivity {
             }
         });
 
+        reminder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goAddReminder();
+            }
+        });
+
 
     }
 
@@ -133,6 +141,16 @@ public class AddRecordActivity extends AppCompatActivity {
     public void goAddBodyLoc(){
         Intent addRecordPage = new Intent(this, NewBodyLocationView.class);
         startActivity(addRecordPage);
+        this.finish();
+    }
+
+    /**
+     * Creates a new intent for switch to the AddReminderActivity
+     */
+    public void goAddReminder()
+    {
+        Intent addReminderIntent = new Intent(this, AddReminderActivity.class);
+        startActivity(addReminderIntent);
         this.finish();
     }
 
