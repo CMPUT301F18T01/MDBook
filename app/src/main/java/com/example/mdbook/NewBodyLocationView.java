@@ -46,7 +46,7 @@ public class NewBodyLocationView extends AppCompatActivity {
     Button uploadBack;
     Button save;
     Button cancel;
-    int counter;
+    String location;
 
     private static final String DEBUGTAG = "JAYC";
     @Override
@@ -66,7 +66,7 @@ public class NewBodyLocationView extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //upload activity handled here
-                counter = 1;
+                location = "Front";
                 ChooseUploadMethod();
 
             }
@@ -76,7 +76,7 @@ public class NewBodyLocationView extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //upload activity handled here
-                counter = 2;
+                location = "Back";
                 ChooseUploadMethod();
 
             }
@@ -126,11 +126,11 @@ public class NewBodyLocationView extends AppCompatActivity {
 
                 Bitmap myBitmap = BitmapFactory.decodeFile(uri);
 
-                if (counter == 1) {
+                if (location == "Front") {
                     bodyFront.setImageBitmap(myBitmap);
                 }
 
-                if (counter == 2) {
+                if (location == "Back") {
                     bodyBack.setImageBitmap(myBitmap);
                 }
             }
