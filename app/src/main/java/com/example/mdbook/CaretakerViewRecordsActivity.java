@@ -67,7 +67,7 @@ public class CaretakerViewRecordsActivity extends AppCompatActivity {
 
         CaregiverRecordListView = (ListView) findViewById(R.id.recordListView);
         CustomAdapter customAdapter = new CustomAdapter(CaretakerViewRecordsActivity.this,
-                Title1 ,Images1, Date1, Comment1);
+                Title1 ,Images1, Date1, Comment1,CaretakerViewRecordsActivity.this);
         CaregiverRecordListView.setAdapter(customAdapter);
     }
 
