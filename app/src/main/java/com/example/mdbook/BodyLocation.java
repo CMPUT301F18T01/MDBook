@@ -18,11 +18,11 @@ class BodyLocation {
 
     }
 
-    public void addBodyLocation(BodyLocation bodyLocation){
+    public void addBodyLocationPhoto(){
 
     }
 
-    public void removeBodyLocation(BodyLocation bodyLocation){
+    public void removeBodyLocationPhoto(){
 
     }
     //public void addLabel(String label, BodyLocation bodyLocation){}
