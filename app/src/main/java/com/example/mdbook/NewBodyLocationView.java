@@ -37,6 +37,8 @@ public class NewBodyLocationView extends AppCompatActivity {
 
     ImageView bodyFront;
     ImageView bodyBack;
+    Button uploadFront;
+    Button uploadBack;
     Button save;
     Button cancel;
     private static final String DEBUGTAG = "JAYC";
@@ -48,6 +50,24 @@ public class NewBodyLocationView extends AppCompatActivity {
         // set the views and buttons appropriately by id's
         save = findViewById(R.id.save);
         cancel = findViewById(R.id.cancel);
+        uploadFront = findViewById(R.id.uploadFront);
+        uploadBack = findViewById(R.id.uploadBack);
+
+        uploadFront.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //upload activity handled here
+                ChooseUploadMethod();
+            }
+        });
+
+        uploadBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //upload activity handled here
+                ChooseUploadMethod();
+            }
+        });
 
         //Intent intent = getIntent();
 
@@ -68,6 +88,8 @@ public class NewBodyLocationView extends AppCompatActivity {
             }
         });
 
+
+
     }
 
     /**
@@ -77,6 +99,11 @@ public class NewBodyLocationView extends AppCompatActivity {
     public void BackToAddProblem(){
         Intent mainPage = new Intent(this, ListProblemActivity.class);
         startActivity(mainPage);
+    }
+
+    public void ChooseUploadMethod(){
+        Intent chooseUpload = new Intent(this, ChooseUploadActivity.class);
+        startActivity(chooseUpload);
     }
 
 }
