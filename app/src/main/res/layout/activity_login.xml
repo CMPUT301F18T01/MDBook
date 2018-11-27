@@ -16,7 +16,7 @@
         android:background="@drawable/texttemplate"
         android:ems="10"
         android:hint="USER ID"
-        android:inputType="textPersonName"
+        android:inputType="textPersonName|textCapWords"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
