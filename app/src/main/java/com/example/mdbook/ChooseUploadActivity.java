@@ -41,8 +41,6 @@ public class ChooseUploadActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
-                StrictMode.setVmPolicy(builder.build());
                 takeAPhoto();
 
             }
@@ -51,6 +49,8 @@ public class ChooseUploadActivity extends AppCompatActivity {
 
     public void takeAPhoto() {
 
+        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+        StrictMode.setVmPolicy(builder.build());
         String folder = Environment.getExternalStorageDirectory().getAbsolutePath() + "/tmp";
         File folderF = new File(folder);
         if (!folderF.exists()) {
