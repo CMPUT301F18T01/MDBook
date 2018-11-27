@@ -10,6 +10,8 @@ package com.example.mdbook;
  */
 
 
+import android.os.AsyncTask;
+
 import com.google.gson.internal.LinkedTreeMap;
 import com.searchly.jestdroid.DroidClientConfig;
 import com.searchly.jestdroid.JestClientFactory;
@@ -21,10 +23,12 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.concurrent.ExecutionException;
 
 import io.searchbox.client.JestClient;
 import io.searchbox.client.JestResult;
 import io.searchbox.core.Delete;
+import io.searchbox.core.DocumentResult;
 import io.searchbox.core.Get;
 import io.searchbox.core.Index;
 
@@ -46,7 +50,7 @@ import io.searchbox.core.Index;
 class ElasticsearchController {
 
     private static ElasticsearchController elasticsearchController = null;
-    private DataManager dataManager = DataManager.getDataManager();
+    private DataManager dataManager;
     private static JestClient client;
     private static String index = "cmput301f18t01test";
     private static HashMap<String, Object> idlists;
@@ -60,6 +64,7 @@ class ElasticsearchController {
     public static ElasticsearchController getController() {
         if (elasticsearchController == null) {
             elasticsearchController = new ElasticsearchController();
+            elasticsearchController.dataManager = DataManager.getDataManager();
             JestClientFactory factory = new JestClientFactory();
             factory.setDroidClientConfig(new DroidClientConfig
                     .Builder("http://cmput301.softwareprocess.es:8080")
@@ -70,7 +75,7 @@ class ElasticsearchController {
             client = factory.getObject();
         }
 
-        if (idlists == null){
+        if (idlists == null) {
             idlists = new HashMap<>();
             idlists.put("patientIDs", new ArrayList<String>());
             idlists.put("caregiverIDs", new ArrayList<String>());
@@ -86,35 +91,28 @@ class ElasticsearchController {
     /**
      * Pushes Patients to Elastic search server
      */
-    private void pushPatients(){
+    private void pushPatients() {
         HashMap<String, JSONObject> patients = dataManager.getPatients();
         ArrayList<String> patientIDList = new ArrayList<>();
 
         /* Upload new patients */
-        for (String patientID : patients.keySet()){
+        for (String patientID : patients.keySet()) {
             patientIDList.add(patientID);
             Index jestIndex = new Index.Builder(patients.get(patientID)).index(index)
                     .type("patient")
                     .id(patientID)
                     .build();
-            try {
-                client.execute(jestIndex);
-            } catch (IOException e) {
-                throw new RuntimeException("Failed to upload patient " + patientID, e);
-            }
+            new jestIndexTask().execute(jestIndex);
         }
 
         /* Delete removed patients */
-        for (String patientID : (ArrayList<String>) idlists.get("patientIDs")){
-            if (!patientIDList.contains(patientID)){
-                try {
-                    client.execute(new Delete.Builder(patientID)
-                            .index(index)
-                            .type("patient")
-                            .build());
-                } catch (IOException e) {
-                    throw new RuntimeException("Failed to delete patient " + patientID, e);
-                }
+        for (String patientID : (ArrayList<String>) idlists.get("patientIDs")) {
+            if (!patientIDList.contains(patientID)) {
+                Delete delete = new Delete.Builder(patientID)
+                        .index(index)
+                        .type("patient")
+                        .build();
+                new jestDeleteTask().execute(delete);
             }
         }
 
@@ -126,77 +124,63 @@ class ElasticsearchController {
     /**
      * Pushes Caregivers to Elastic search server
      */
-    private void pushCaregivers(){
+    private void pushCaregivers() {
         HashMap<String, JSONObject> caregivers = dataManager.getCaregivers();
         ArrayList<String> caregiverIDList = new ArrayList<>();
         /* Upload new caregivers */
-        for (String caregiverID : caregivers.keySet()){
+        for (String caregiverID : caregivers.keySet()) {
             caregiverIDList.add(caregiverID);
             Index jestIndex = new Index.Builder(caregivers.get(caregiverID)).index(index)
                     .type("caregiver")
                     .id(caregiverID)
                     .build();
-            try{
-                client.execute(jestIndex);
-            } catch (IOException e){
-                throw  new RuntimeException("Failed to upload caregive " + caregiverID, e);
-            }
+            new jestIndexTask().execute(jestIndex);
         }
 
         /* Delete removed caregivers */
-        for (String caregiverID : (ArrayList<String>) idlists.get("caregiverIDs")){
-            if (!caregiverIDList.contains(caregiverID)){
-                try{
-                    client.execute(new Delete.Builder(caregiverID)
-                            .index(index)
-                            .type("caregiver")
-                            .build());
-                } catch (IOException e){
-                    throw new RuntimeException("Failed to delete caregiver " + caregiverID, e);
-                }
+        for (String caregiverID : (ArrayList<String>) idlists.get("caregiverIDs")) {
+            if (!caregiverIDList.contains(caregiverID)) {
+                Delete delete = new Delete.Builder(caregiverID)
+                        .index(index)
+                        .type("caregiver")
+                        .build();
+                new jestDeleteTask().execute(delete);
             }
         }
 
         /* Update caregiverID list */
-        idlists.put("caregiverIDs",caregiverIDList);
+        idlists.put("caregiverIDs", caregiverIDList);
     }
 
 
     /**
      * Pushes Problems to Elastic search server
      */
-    private void pushProblems(){
+    private void pushProblems() {
         HashMap<Integer, JSONObject> problems = dataManager.getProblems();
         ArrayList<Integer> problemIDList = new ArrayList<>();
         /* Upload new problems */
-        for (Integer problemID : problems.keySet()){
+        for (Integer problemID : problems.keySet()) {
             problemIDList.add(problemID);
             Index jestIndex = new Index.Builder(problems.get(problemID)).index(index)
                     .type("problem")
                     .id(problemID.toString())
                     .build();
-            try{
-                client.execute(jestIndex);
-            } catch (IOException e){
-                throw  new RuntimeException("Failed to upload problem " + problemID.toString(), e);
-            }
+            new jestIndexTask().execute(jestIndex);
         }
         /* Delete removed problems */
-        for (Integer problemID : (ArrayList<Integer>) idlists.get("problemIDs")){
-            if (!problemIDList.contains(problemID)){
-                try{
-                    client.execute(new Delete.Builder(problemID.toString())
-                            .index(index)
-                            .type("problem")
-                            .build());
-                } catch (IOException e){
-                    throw new RuntimeException("Failed to delete problem " + problemID.toString(), e);
-                }
+        for (Integer problemID : (ArrayList<Integer>) idlists.get("problemIDs")) {
+        if (!problemIDList.contains(problemID)) {
+                Delete delete = new Delete.Builder(problemID.toString())
+                        .index(index)
+                        .type("problem")
+                        .build();
+                new jestDeleteTask().execute(delete);
             }
         }
 
         /* Update problemID list */
-        idlists.put("problemIDs",problemIDList);
+        idlists.put("problemIDs", problemIDList);
 
     }
 
@@ -204,37 +188,30 @@ class ElasticsearchController {
     /**
      * Pushes records to Elastic search server
      */
-    private void pushRecords(){
+    private void pushRecords() {
         HashMap<Integer, JSONObject> records = dataManager.getRecords();
         ArrayList<Integer> recordIDList = new ArrayList<>();
         /* Upload new records */
-        for (Integer recordID : records.keySet()){
+        for (Integer recordID : records.keySet()) {
             Index jestIndex = new Index.Builder(records.get(recordID)).index(index)
                     .type("record")
                     .id(recordID.toString())
                     .build();
-            try{
-                client.execute(jestIndex);
-            } catch (IOException e){
-                throw  new RuntimeException("Failed to upload record" + recordID.toString(), e);
-            }
+            new jestIndexTask().execute(jestIndex);
         }
         /* Delete removed records */
-        for (Integer recordID : (ArrayList<Integer>) idlists.get("recordIDs")){
-            if (!recordIDList.contains(recordID)){
-                try{
-                    client.execute(new Delete.Builder(recordID.toString())
-                            .index(index)
-                            .type("record")
-                            .build());
-                } catch (IOException e){
-                    throw new RuntimeException("Failed to delete record " + recordID.toString(), e);
-                }
+        for (Integer recordID : (ArrayList<Integer>) idlists.get("recordIDs")) {
+            if (!recordIDList.contains(recordID)) {
+                Delete delete = new Delete.Builder(recordID.toString())
+                        .index(index)
+                        .type("record")
+                        .build();
+                new jestDeleteTask().execute(delete);
             }
         }
 
         /* Update recordID list */
-        idlists.put("recordIDs",recordIDList);
+        idlists.put("recordIDs", recordIDList);
 
 
     }
@@ -243,37 +220,30 @@ class ElasticsearchController {
     /**
      * Pushes Photos to Elastic search server
      */
-    private void pushPhotos(){
+    private void pushPhotos() {
         HashMap<Integer, Photo> photos = dataManager.getPhotos();
         ArrayList<Integer> photoIDList = new ArrayList<>();
         /* Upload new photos */
-        for (Integer photoID : photos.keySet()){
+        for (Integer photoID : photos.keySet()) {
             Index jestIndex = new Index.Builder(photos.get(photoID)).index(index)
                     .type("photo")
                     .id(photoID.toString())
                     .build();
-            try{
-                client.execute(jestIndex);
-            } catch (IOException e){
-                throw  new RuntimeException("Failed to upload photo " + photoID.toString(), e);
-            }
+            new jestIndexTask().execute(jestIndex);
         }
         /* Delete removed photos */
-        for (Integer photoID : (ArrayList<Integer>) idlists.get("photoIDs")){
-            if (!photoIDList.contains(photoID)){
-                try{
-                    client.execute(new Delete.Builder(photoID.toString())
-                            .index(index)
-                            .type("photo")
-                            .build());
-                } catch (IOException e){
-                    throw new RuntimeException("Failed to delete photo " + photoID.toString(), e);
-                }
+        for (Integer photoID : (ArrayList<Integer>) idlists.get("photoIDs")) {
+            if (!photoIDList.contains(photoID)) {
+                Delete delete = new Delete.Builder(photoID.toString())
+                        .index(index)
+                        .type("photo")
+                        .build();
+                new jestDeleteTask().execute(delete);
             }
         }
 
         /* Update photoID list */
-        idlists.put("photoIDs",photoIDList);
+        idlists.put("photoIDs", photoIDList);
 
     }
 
@@ -293,20 +263,19 @@ class ElasticsearchController {
 
         /* push id lists */
         this.pushIDLists();
-
     }
 
     /**
      * IDindex structure:
      * index/metadata/idlists:
-     *      patientIDs: list of strings
-     *      caregiverIDs: list of strings
-     *      problemIDs: list of ints
-     *      recordIDs: list of ints
-     *      photoIDs: list of ints
-     *      availableIDs: list of ints
-     *      availableID: int
-     *
+     * patientIDs: list of strings
+     * caregiverIDs: list of strings
+     * problemIDs: list of ints
+     * recordIDs: list of ints
+     * photoIDs: list of ints
+     * availableIDs: list of ints
+     * availableID: int
+     * <p>
      * Pushes ID lists to es server.
      */
     private void pushIDLists() {
@@ -319,30 +288,34 @@ class ElasticsearchController {
         Index JestID = new Index.Builder(IDJSON).index(index).type("metadata")
                 .id("idlists")
                 .build();
-        try {
-            client.execute(JestID);
-        } catch (IOException e) {
-            throw new RuntimeException("Couldn't push id lists", e);
-        }
+        new jestIndexTask().execute(JestID);
 
     }
 
     /**
      * Pulls users from Elastic search server
+     *
      * @param string either "patient" or "caregiver" for the type of user you want to pull.
      * @return HashMap of (userID, userJSON).
      */
-    public HashMap<String, JSONObject> pullUsers(String string){
+    public HashMap<String, JSONObject> pullUsers(String string) {
         HashMap<String, JSONObject> users = new HashMap<>();
-        for (String userID: (ArrayList<String>) idlists.get(string +"IDs")) {
+        for (String userID : (ArrayList<String>) idlists.get(string + "IDs")) {
             try {
-                JestResult result = client.execute(new Get.Builder(index, userID)
+                Get get = new Get.Builder(index, userID)
                         .type(string)
-                        .build());
+                        .build();
+
+                jestGetTask jgt = new jestGetTask();
+                jgt.execute(get);
+                JestResult result = jgt.get();
+
                 JSONObject resultJSON = result.getSourceAsObject(JSONObject.class);
                 users.put(userID, resultJSON);
-            } catch (IOException e) {
-                throw new RuntimeException("Failed to Pull " + string + "s" ,e);
+            }catch (InterruptedException e) {
+                throw new RuntimeException("Failed to Pull " + string + "s", e);
+            } catch (ExecutionException e) {
+                throw new RuntimeException("Failed to Pull " + string + "s", e);
             }
         }
         return users;
@@ -351,20 +324,28 @@ class ElasticsearchController {
 
     /**
      * Pulls problems or records from Elastic search server
+     *
      * @param "problem" or "record" depending on which you want to pull
      * @return Hashmap of problems or records
      */
-    public HashMap<Integer, JSONObject> pullProblemsRecords(String string){
+    public HashMap<Integer, JSONObject> pullProblemsRecords(String string) {
         HashMap<Integer, JSONObject> items = new HashMap<>();
-        for (Integer itemID: (ArrayList<Integer>) idlists.get(string +"IDs")) {
+        for (Integer itemID : (ArrayList<Integer>) idlists.get(string + "IDs")) {
             try {
-                JestResult result = client.execute(new Get.Builder(index, itemID.toString())
+                Get get = new Get.Builder(index, itemID.toString())
                         .type(string)
-                        .build());
+                        .build();
+
+                jestGetTask jgt = new jestGetTask();
+                jgt.execute(get);
+                JestResult result = jgt.get();
+
                 JSONObject resultJSON = result.getSourceAsObject(JSONObject.class);
                 items.put(itemID, resultJSON);
-            } catch (IOException e) {
-                throw new RuntimeException("Failed to Pull " + string + "s",e);
+            } catch (InterruptedException e) {
+                throw new RuntimeException("Failed to Pull " + string + "s", e);
+            } catch (ExecutionException e) {
+                throw new RuntimeException("Failed to Pull " + string + "s", e);
             }
         }
         return items;
@@ -373,19 +354,27 @@ class ElasticsearchController {
 
     /**
      * Pulls photos from Elastic search server
+     *
      * @return Hashmap of photo objects
      */
-    public HashMap<Integer, Photo> pullPhotos(){
+    public HashMap<Integer, Photo> pullPhotos() {
         HashMap<Integer, Photo> photos = new HashMap<>();
-        for (Integer photoID: (ArrayList<Integer>) idlists.get("photoIDs")) {
+        for (Integer photoID : (ArrayList<Integer>) idlists.get("photoIDs")) {
             try {
-                JestResult result = client.execute(new Get.Builder(index, photoID.toString())
+                Get get = new Get.Builder(index, photoID.toString())
                         .type("photo")
-                        .build());
+                        .build();
+
+                jestGetTask jgt = new jestGetTask();
+                jgt.execute(get);
+                JestResult result = jgt.get();
+
                 Photo resultPhoto = result.getSourceAsObject(Photo.class);
                 photos.put(photoID, resultPhoto);
-            } catch (IOException e) {
-                throw new RuntimeException("Failed to Pull photos",e);
+            } catch (InterruptedException e) {
+                throw new RuntimeException("Failed to Pull photos", e);
+            } catch (ExecutionException e) {
+                throw new RuntimeException("Failed to Pull photos", e);
             }
         }
         return photos;
@@ -396,12 +385,17 @@ class ElasticsearchController {
      * Pulls a list of IDs from Elastic search server
      */
     public void pullIDLists() {
-        JestResult result = null;
+        JestResult result;
 
         try {
-            result = client.execute(new Get.Builder(index, "idlists")
+            Get get = new Get.Builder(index, "idlists")
                     .type("metadata")
-                    .build());
+                    .build();
+
+            jestGetTask jgt = new jestGetTask();
+            jgt.execute(get);
+            result = jgt.get();
+
             JSONObject idlistJSON = result.getSourceAsObject(JSONObject.class);
             ArrayList<String> patientidlist = (ArrayList<String>) ((LinkedTreeMap) idlistJSON
                     .get("patientIDs"))
@@ -429,15 +423,17 @@ class ElasticsearchController {
             idlists.put("recordIDs", recordidlist);
             idlists.put("photoIDs", photoidlist);
             idlists.put("availableIDs", availableidlist);
-            idlists.put("availableID",availableID);
+            idlists.put("availableID", availableID);
             dataManager.setAvailableID(availableID);
             dataManager.setAvailableIDs(availableidlist);
 
 
-        } catch (IOException e) {
+        }catch (JSONException e) {
             throw new RuntimeException(e);
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
         }
 
     }
@@ -456,6 +452,51 @@ class ElasticsearchController {
         dataManager.setRecords(this.pullProblemsRecords("record"));
         dataManager.setPhotos(this.pullPhotos());
 
+    }
+
+    private static class jestIndexTask extends AsyncTask<Index, Void, DocumentResult> {
+
+        @Override
+        protected DocumentResult doInBackground(Index... indices) {
+            for (Index index : indices) {
+                try {
+                    return client.execute(index);
+                } catch (IOException e) {
+                    return null;
+                }
+            }
+            return null;
+        }
+    }
+
+    private static class jestDeleteTask extends AsyncTask<Delete, Void, DocumentResult> {
+
+        @Override
+        protected DocumentResult doInBackground(Delete... deletes) {
+            for (Delete delete : deletes) {
+                try {
+                    return client.execute(delete);
+                } catch (IOException e) {
+                    return null;
+                }
+            }
+            return null;
+        }
+    }
+
+    private static class jestGetTask extends AsyncTask<Get, Void, DocumentResult> {
+
+        @Override
+        protected DocumentResult doInBackground(Get... gets) {
+            for (Get get : gets) {
+                try {
+                    return client.execute(get);
+                } catch (IOException e) {
+                    return null;
+                }
+            }
+            return null;
+        }
     }
 
 }
