@@ -11,6 +11,9 @@
 package com.example.mdbook;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,6 +21,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 /**
  * Creates an activity that add/view a body location
@@ -52,6 +56,8 @@ public class NewBodyLocationView extends AppCompatActivity {
         cancel = findViewById(R.id.cancel);
         uploadFront = findViewById(R.id.uploadFront);
         uploadBack = findViewById(R.id.uploadBack);
+        bodyFront = findViewById(R.id.body_front);
+        bodyBack = findViewById(R.id.body_back);
 
         uploadFront.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,7 +109,27 @@ public class NewBodyLocationView extends AppCompatActivity {
 
     public void ChooseUploadMethod(){
         Intent chooseUpload = new Intent(this, ChooseUploadActivity.class);
-        startActivity(chooseUpload);
+        startActivityForResult(chooseUpload,1);
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (requestCode == 1) {
+            if(resultCode == RESULT_OK){
+                String uri = data.getStringExtra("uri");
+
+                Bitmap myBitmap = BitmapFactory.decodeFile(uri);
+
+                bodyFront.setImageBitmap(myBitmap);
+//                Toast toast = Toast.makeText(getApplicationContext(),result,Toast.LENGTH_SHORT);
+//                toast.show();
+                //bodyFront.setImageDrawable(Drawable.createFromPath(result));
+
+            }
+            if (resultCode == RESULT_CANCELED) {
+                //Write your code if there's no result
+            }
+        }
     }
 
 }

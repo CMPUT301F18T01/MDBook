@@ -3,6 +3,8 @@ package com.example.mdbook;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Environment;
@@ -15,6 +17,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import java.io.File;
 
@@ -70,10 +73,20 @@ public class ChooseUploadActivity extends AppCompatActivity {
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
             //TextView tv = (TextView) findViewById(R.id.status);
             if (resultCode == RESULT_OK) {
-                //tv.setText("Photo OK!");
+//                Toast toast = Toast.makeText(getApplicationContext(),"Photo OK!",Toast.LENGTH_SHORT);
+//                toast.show();
                 ImageView image = findViewById(R.id.body_front);
-                image.setImageDrawable(Drawable.createFromPath(imageFileUri.getPath()));
-                this.finish();
+                //image.setImageDrawable(Drawable.createFromPath(imageFileUri.getPath()));
+                String uri = imageFileUri.getPath();
+                Intent intent = new Intent();
+                intent.putExtra("uri", uri);
+                setResult(RESULT_OK, intent);
+                finish();
+
+//                Bitmap myBitmap = BitmapFactory.decodeFile(uri);
+//
+//                image.setImageBitmap(myBitmap);
+                //this.finish();
             } else if (resultCode == RESULT_CANCELED) {
                 this.finish();
                 //tv.setText("Photo canceled");
