@@ -7,9 +7,8 @@
     tools:context=".NewBodyLocationView">
 
 
-
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/body_front"
         android:layout_width="168dp"
         android:layout_height="343dp"
         android:layout_marginStart="8dp"
@@ -19,13 +18,13 @@
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@+id/save"
-        app:layout_constraintEnd_toStartOf="@+id/imageView4"
+        app:layout_constraintEnd_toStartOf="@+id/body_back"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/beyonce" />
+        app:srcCompat="@drawable/body_cutout_front" />
 
     <ImageView
-        android:id="@+id/imageView4"
+        android:id="@+id/body_back"
         android:layout_width="166dp"
         android:layout_height="343dp"
         android:layout_marginStart="8dp"
@@ -36,10 +35,9 @@
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@+id/cancel"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imageView3"
+        app:layout_constraintStart_toEndOf="@+id/body_front"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/drake"
-        tools:srcCompat="@drawable/beyonce" />
+        app:srcCompat="@drawable/body_cutout_back" />
 >>>>>>> caad6b467eb8ab8a07ee444d9c9cbdddf44a5ba8
 
     <Button
@@ -56,7 +54,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/cancel"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+        app:layout_constraintTop_toBottomOf="@+id/body_front" />
 
     <Button
         android:id="@+id/cancel"
@@ -72,7 +70,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/save"
-        app:layout_constraintTop_toBottomOf="@+id/imageView4" />
+        app:layout_constraintTop_toBottomOf="@+id/body_back" />
 
     <TextView
         android:id="@+id/textView3"

@@ -13,8 +13,11 @@ package com.example.mdbook;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 /**
  * Creates an activity that add/view a body location
@@ -31,12 +34,17 @@ import android.widget.Button;
 
 
 public class NewBodyLocationView extends AppCompatActivity {
+
+    ImageView bodyFront;
+    ImageView bodyBack;
     Button save;
     Button cancel;
+    private static final String DEBUGTAG = "JAYC";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_body_location_view);
+
         // set the views and buttons appropriately by id's
         save = findViewById(R.id.save);
         cancel = findViewById(R.id.cancel);
@@ -65,6 +73,7 @@ public class NewBodyLocationView extends AppCompatActivity {
     /**
      * Creates a new intent for switching to the ListProblemActivity
      */
+    
     public void BackToAddProblem(){
         Intent mainPage = new Intent(this, ListProblemActivity.class);
         startActivity(mainPage);
