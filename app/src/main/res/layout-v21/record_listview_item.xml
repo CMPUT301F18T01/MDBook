@@ -19,7 +19,7 @@
         android:padding="5dp"
         android:background="@drawable/roundcorners"
         android:outlineProvider="background"
-        android:elevation="10dp"
+        android:elevation="5dp"
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
@@ -64,8 +64,7 @@
         android:layout_marginTop="5dp"
         android:layout_marginBottom="10dp"
         android:layout_weight="1"
-        android:background="@drawable/buttontemplate"
-        android:elevation="8dp"
+        android:elevation="10dp"
         android:text="Add Comment" />
 
     <ImageButton
@@ -77,7 +76,7 @@
         android:layout_alignParentLeft="true"
         android:layout_marginRight="20dp"
         android:layout_marginLeft="20dp"
-        android:elevation="8dp"
+        android:elevation="10dp"
         android:background="@drawable/buttontemplate"
         app:srcCompat="@drawable/ic_location" />
 
