@@ -1,22 +1,14 @@
 package com.example.mdbook;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Environment;
 import android.os.StrictMode;
 import android.provider.MediaStore;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.io.File;
@@ -51,8 +43,10 @@ public class ChooseUploadActivity extends AppCompatActivity {
 
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
+
         String folder = Environment.getExternalStorageDirectory().getAbsolutePath() + "/tmp";
         File folderF = new File(folder);
+
         if (!folderF.exists()) {
             folderF.mkdir();
         }
@@ -70,29 +64,31 @@ public class ChooseUploadActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
-            //TextView tv = (TextView) findViewById(R.id.status);
+
             if (resultCode == RESULT_OK) {
-//                Toast toast = Toast.makeText(getApplicationContext(),"Photo OK!",Toast.LENGTH_SHORT);
-//                toast.show();
-                ImageView image = findViewById(R.id.body_front);
-                //image.setImageDrawable(Drawable.createFromPath(imageFileUri.getPath()));
+
+                Toast toast = Toast.makeText(getApplicationContext(),"Photo OK!", Toast.LENGTH_SHORT);
+                toast.show();
                 String uri = imageFileUri.getPath();
                 Intent intent = new Intent();
                 intent.putExtra("uri", uri);
                 setResult(RESULT_OK, intent);
                 finish();
 
-//                Bitmap myBitmap = BitmapFactory.decodeFile(uri);
-//
-//                image.setImageBitmap(myBitmap);
-                //this.finish();
             } else if (resultCode == RESULT_CANCELED) {
+
+                Toast toast = Toast.makeText(getApplicationContext(),"Process was cancelled", Toast.LENGTH_SHORT);
+                toast.show();
                 this.finish();
-                //tv.setText("Photo canceled");
+
             } else {
+
+                Toast toast = Toast.makeText(getApplicationContext(),"An unknown error occurred", Toast.LENGTH_SHORT);
+                toast.show();
                 this.finish();
-                //tv.setText("Not sure what happened!" + resultCode);
+
             }
         }
     }

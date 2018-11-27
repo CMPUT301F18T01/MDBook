@@ -88,6 +88,8 @@ public class NewBodyLocationView extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //Todo: Save data into the user manager
+                Toast toast = Toast.makeText(getApplicationContext(), "Body Location successfully added!", Toast.LENGTH_SHORT);
+                toast.show();
                 BackToAddProblem();
                 //Go back to patient main page
                 //BackToAddProblem();
@@ -136,8 +138,10 @@ public class NewBodyLocationView extends AppCompatActivity {
             }
 
             if (resultCode == RESULT_CANCELED) {
-                //Write your code if there's no result
+                Toast toast = Toast.makeText(getApplicationContext(),"No image URI found",Toast.LENGTH_SHORT);
+                toast.show();
             }
+
         }
     }
 }
