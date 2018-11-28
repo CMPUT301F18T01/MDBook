@@ -64,7 +64,7 @@ public class ViewRecordActivity extends AppCompatActivity {
             R.drawable.finger,
             R.drawable.eye,
            };
-    
+
 
     public ViewRecordActivity() {
         date = new ArrayList<>();
