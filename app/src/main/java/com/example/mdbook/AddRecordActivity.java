@@ -26,6 +26,12 @@ import android.widget.Toast;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+
 /**
  * Creates an activity for the user to add a record
  * Displays a list of all the problems already added
@@ -43,6 +49,11 @@ public class AddRecordActivity extends AppCompatActivity {
     private static final String TAG = "AddRecordActivity";
     private static final int ERROR_DIALOG_REQUEST = 9001;
     // Initialize all the required imageViews ans Buttons
+
+    private ArrayList<Record> recordList;
+    private Integer problemPos;
+    private DateFormat format;
+    private Date recordDate;
     private ImageView image;
     private EditText headline;
     private EditText date;
@@ -67,6 +78,14 @@ public class AddRecordActivity extends AppCompatActivity {
         save = findViewById(R.id.save);
         cancel = findViewById(R.id.cancel);
 
+        UserManager.initManager();
+        final UserManager userManager = UserManager.getManager();
+        recordList = new ArrayList<>();
+        final Patient patient = (Patient) UserController.getController().getUser();
+        problemPos = getIntent().getExtras().getInt("problemPos");
+
+        format = new SimpleDateFormat("dd/MM/yy");
+
         // Switches to addBodyLocationActivity upon the click of the body button
         body.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,10 +98,29 @@ public class AddRecordActivity extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Todo: Save data into the user manager
-                BackToAddProblem();
-                //Go back to patient main page
-                //BackToAddProblem();
+                try {
+                    recordDate = format.parse(date.getText().toString());
+                    Record record = new Record(headline.getText().toString(),recordDate,Description.getText().toString());
+                    patient.getProblems().get(problemPos).addRecord(record);
+                } catch (ParseException e) {
+                    Toast.makeText(AddRecordActivity.this,"WRONG DATE FORMAT", Toast.LENGTH_SHORT).show();
+                }
+
+                try{
+                    userManager.saveUser(patient);
+                    Toast.makeText(AddRecordActivity.this
+                            ,"Record " + headline.getText().toString() + " Added"
+                            ,Toast.LENGTH_SHORT).show();
+
+                } catch (NoSuchUserException e) {
+                    Toast.makeText(AddRecordActivity.this
+                            , "User does not exist"
+                            , Toast.LENGTH_SHORT).show();
+                }
+
+
+                endActivity();
+
             }
         });
 
@@ -90,7 +128,7 @@ public class AddRecordActivity extends AppCompatActivity {
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BackToAddProblem();
+               endActivity();
             }
         });
 
@@ -116,9 +154,10 @@ public class AddRecordActivity extends AppCompatActivity {
     /**
      * Creates a new intent for switch to the ListProblemActivity
      */
-    public void BackToAddProblem(){
-        Intent mainPage = new Intent(this, ListProblemActivity.class);
-        startActivity(mainPage);
+    public void endActivity(){
+        //Intent mainPage = new Intent(this, ViewRecordActivity2.class);
+        //startActivity(mainPage);
+        this.finish();
     }
     /**
      * Creates a new intent for switch to the ViewLocationActivity

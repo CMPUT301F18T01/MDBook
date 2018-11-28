@@ -16,6 +16,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
 import java.util.ArrayList;
 
 /**
@@ -33,13 +35,14 @@ import java.util.ArrayList;
 
 public class AddProblemActivity extends AppCompatActivity {
 
-    ArrayList<String> problemArray = new ArrayList<String>();
-    Button save;
-    Button cancel;
-    Button addRecord;
-    EditText title;
-    EditText date;
-    EditText description;
+    private ArrayList<Problem> problems;
+    private int problemPos;
+    private Button save;
+    private Button cancel;
+    private Button addRecord;
+    private EditText title;
+    private EditText date;
+    private EditText description;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,15 +56,33 @@ public class AddProblemActivity extends AppCompatActivity {
         description = findViewById(R.id.addDescription);
         addRecord = findViewById(R.id.addRecord);
 
+        UserManager.initManager();
+        final UserManager userManager = UserManager.getManager();
+
+        problems = new ArrayList<>();
+        final Patient patient = (Patient) UserController.getController().getUser();
+        problems = patient.getProblems();
+
 
 
         // Switches to addProblemActivty upon the click of the save button
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Todo: Save data into the user manager
-                BackToListProblem();
-                //Go back to patient main page
+                Problem problem = new Problem(title.getText().toString(), description.getText().toString());
+                problems.add(0,problem);
+                problemPos = problems.size()-1;
+                try{
+                    userManager.saveUser(patient);
+                    Toast.makeText(AddProblemActivity.this
+                            ,"Problem " + title.getText().toString() + " Added"
+                            ,Toast.LENGTH_SHORT).show();
+
+                } catch (NoSuchUserException e) {
+                    Toast.makeText(AddProblemActivity.this
+                            , "User does not exist"
+                            , Toast.LENGTH_SHORT).show();
+                }
                 BackToListProblem();
             }
         });
@@ -78,6 +99,17 @@ public class AddProblemActivity extends AppCompatActivity {
         addRecord.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                try{
+                    userManager.saveUser(patient);
+                    Toast.makeText(AddProblemActivity.this
+                            ,"Problem " + title.getText().toString() + " Added"
+                            ,Toast.LENGTH_SHORT).show();
+
+                } catch (NoSuchUserException e) {
+                    Toast.makeText(AddProblemActivity.this
+                            , "User does not exist"
+                            , Toast.LENGTH_SHORT).show();
+                }
                 goAddRecord();
             }
         });
@@ -93,6 +125,7 @@ public class AddProblemActivity extends AppCompatActivity {
 
     public void goAddRecord(){
         Intent goAdd = new Intent(this, AddRecordActivity.class);
+        goAdd.putExtra("problemPos",problemPos);
         startActivity(goAdd);
     }
 

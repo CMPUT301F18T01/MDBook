@@ -21,6 +21,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.Toast;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,16 +59,11 @@ public class ListProblemActivity extends AppCompatActivity
         setContentView(R.layout.activity_list_problem);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        UserManager.initManager();
+        UserManager userManager = UserManager.getManager();
 
-        /* For testing just list problems in the array */
-        problems =  new ArrayList<Problem>();
-        problems.add(new Problem("problem 1","test"));
-        problems.add(new Problem("problem 2","test"));
-        problems.add(new Problem("problem 3","test"));
-        problems.add(new Problem("problem 4","test"));
-        problems.add(new Problem("problem 5","test"));
-        problems.add(new Problem("problem 6","test"));
-        problems.add(new Problem("problem 7","test"));
+        Patient patient = (Patient) UserController.getController().getUser();
+        problems = patient.getProblems();
 
         /* Create recycler view */
         recyclerView = findViewById(R.id.recylerView);
@@ -80,7 +77,7 @@ public class ListProblemActivity extends AppCompatActivity
         mAdapter.setOnItemClickListener(new ProblemAdapter.OnItemClickListener() {
             @Override
             public void OnItemClick(int Position) {
-                OptionMenu();
+                OptionMenu(Position);
             }
         });
 
@@ -144,6 +141,17 @@ public class ListProblemActivity extends AppCompatActivity
                 }
             });
             alert.create().show();
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        UserManager.initManager();
+        UserManager userManager = UserManager.getManager();
+        Patient patient = (Patient) UserController.getController().getUser();
+        problems = patient.getProblems();
+        mAdapter.notifyDataSetChanged();
     }
 
     /**
@@ -220,8 +228,9 @@ public class ListProblemActivity extends AppCompatActivity
     /**
      * Starts the option menu activity
      */
-    public void OptionMenu(){
+    public void OptionMenu(int position){
         Intent intent = new Intent(this, OptionsMenuActivity.class);
+        intent.putExtra("problemPos",position);
         startActivity(intent);
     }
     /**

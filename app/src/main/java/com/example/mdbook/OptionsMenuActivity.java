@@ -84,7 +84,9 @@ public class OptionsMenuActivity extends AppCompatActivity {
      * Creates a new intent for switching to the ViewRecordActivity
      */
     public void GoEditRecord(){
-        Intent goEditProblem = new Intent(this, ViewRecordActivity.class);
+        Intent goEditProblem = new Intent(this, ViewRecordActivity2.class);
+        goEditProblem.putExtra("problemPos", getIntent().getExtras()
+                .getInt("problemPos"));
         startActivity(goEditProblem);
     }
     /**
@@ -99,8 +101,10 @@ public class OptionsMenuActivity extends AppCompatActivity {
      * Creates a new intent for switching to the ViewLocationActivity
      */
     public void GeoLocation(){
-        Intent launchmap= new Intent(this, ViewMapActivity.class);
-        startActivity(launchmap);
+        if (isServicesOK()) {
+            Intent launchmap = new Intent(this, ViewMapActivity.class);
+            startActivity(launchmap);
+        }
     }
 
     public boolean isServicesOK(){

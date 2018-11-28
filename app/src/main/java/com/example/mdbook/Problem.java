@@ -9,6 +9,7 @@
  */
 package com.example.mdbook;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -18,7 +19,7 @@ import java.util.ArrayList;
  * @see Record
  * @version 0.0.1
  **/
-class Problem {
+class Problem implements Serializable {
 
     private ArrayList<Record> records;
     private String title;
@@ -112,7 +113,7 @@ class Problem {
      * @param record Record object to be added.
      */
     public void addRecord(Record record) {
-        this.records.add(record);
+        this.records.add(0,record);
     }
 
     /**

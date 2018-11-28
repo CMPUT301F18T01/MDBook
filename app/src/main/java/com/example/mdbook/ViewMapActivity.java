@@ -183,12 +183,15 @@ public class ViewMapActivity extends AppCompatActivity implements OnMapReadyCall
                 GeoList.add(record.getLocation());
             }
         }
-        for (int i =0; i < GeoList.size();i++){
-            ArrayList<Address> addressList = GeoList.get(i).getAddressList();
-            for (int j = 0 ; j < addressList.size();j++){
-                myAddress.add(addressList.get(i));
+        for (int i = 0; i < GeoList.size(); i++) {
+            if (GeoList.get(i) != null) {
+                ArrayList<Address> addressList = GeoList.get(i).getAddressList();
+                for (int j = 0; j < addressList.size(); j++) {
+                    myAddress.add(addressList.get(i));
+                }
             }
         }
+
     }
 
 
