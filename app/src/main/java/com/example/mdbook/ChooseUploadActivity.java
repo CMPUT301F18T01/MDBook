@@ -1,8 +1,11 @@
 package com.example.mdbook;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Environment;
 import android.os.StrictMode;
@@ -11,18 +14,23 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 public class ChooseUploadActivity extends AppCompatActivity {
 
     Button uploadFromGallery;
     Button openCamera;
     Uri imageFileUri;
-    private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
+    String uri;
+    public static final int GET_FROM_GALLERY_REQUEST_CODE = 1;
+    private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,12 +40,23 @@ public class ChooseUploadActivity extends AppCompatActivity {
         uploadFromGallery = findViewById(R.id.openGallery);
         openCamera = findViewById(R.id.openCamera);
 
+        uploadFromGallery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                checkPermission();
+                viewGallery();
+
+            }
+        });
+
         openCamera.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
 
                 checkPermission();
+                takeAPhoto();
 
             }
         });
@@ -68,14 +87,20 @@ public class ChooseUploadActivity extends AppCompatActivity {
         }
     }
 
+    public void viewGallery(){
+
+        Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+        photoPickerIntent.setType("image/*");
+        startActivityForResult(photoPickerIntent, GET_FROM_GALLERY_REQUEST_CODE);
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
 
             if (resultCode == RESULT_OK) {
 
-                Toast toast = Toast.makeText(getApplicationContext(),"Photo OK!", Toast.LENGTH_SHORT);
+                Toast toast = Toast.makeText(getApplicationContext(), "Photo OK!", Toast.LENGTH_SHORT);
                 toast.show();
                 String uri = imageFileUri.getPath();
                 Intent intent = new Intent();
@@ -85,28 +110,33 @@ public class ChooseUploadActivity extends AppCompatActivity {
 
             } else if (resultCode == RESULT_CANCELED) {
 
-                Toast toast = Toast.makeText(getApplicationContext(),"Process was cancelled", Toast.LENGTH_SHORT);
+                Toast toast = Toast.makeText(getApplicationContext(), "Process was cancelled", Toast.LENGTH_SHORT);
                 toast.show();
                 this.finish();
 
             } else {
 
-                Toast toast = Toast.makeText(getApplicationContext(),"An unknown error occurred", Toast.LENGTH_SHORT);
+                Toast toast = Toast.makeText(getApplicationContext(), "An unknown error occurred", Toast.LENGTH_SHORT);
                 toast.show();
                 this.finish();
 
             }
         }
+
+
     }
+
+
 
     public void checkPermission(){
 
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
         }
 
         else{
-            takeAPhoto();
+            //takeAPhoto();
+            return;
         }
     }
 
@@ -116,8 +146,8 @@ public class ChooseUploadActivity extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults){
         switch (requestCode){
             case CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE: {
-                for (int grantResult:
-                     grantResults){
+                for (int grantResult :
+                        grantResults) {
                     if (grantResults.length > 0 && grantResult == PackageManager.PERMISSION_GRANTED) {
                         takeAPhoto();
                     } else {
@@ -126,6 +156,18 @@ public class ChooseUploadActivity extends AppCompatActivity {
                     return;
                 }
             }
+            case GET_FROM_GALLERY_REQUEST_CODE: {
+                for (int grantResult :
+                        grantResults) {
+                    if (grantResults.length > 0 && grantResult == PackageManager.PERMISSION_GRANTED) {
+                        viewGallery();
+                    } else {
+                        this.finish();
+                    }
+                    return;
+                }
+            }
+
         }
     }
 

@@ -14,7 +14,9 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.preference.PreferenceManager;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,6 +25,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import java.io.IOException;
 
 /**
  * Creates an activity that add/view a body location
@@ -47,6 +51,9 @@ public class NewBodyLocationView extends AppCompatActivity {
     Button save;
     Button cancel;
     String location;
+    int cameraCode = 1;
+    int galleryCode = 2;
+    Bitmap myBitmap;
 
     private static final String DEBUGTAG = "JAYC";
     @Override
@@ -123,10 +130,11 @@ public class NewBodyLocationView extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         if (requestCode == 1) {
-            if(resultCode == RESULT_OK) {
+            if (resultCode == RESULT_OK) {
                 String uri = data.getStringExtra("uri");
 
-                Bitmap myBitmap = BitmapFactory.decodeFile(uri);
+                myBitmap = BitmapFactory.decodeFile(uri);
+
 
                 if (location == "Front") {
                     bodyFront.setImageBitmap(myBitmap);
@@ -137,11 +145,14 @@ public class NewBodyLocationView extends AppCompatActivity {
                 }
             }
 
+
             if (resultCode == RESULT_CANCELED) {
-                Toast toast = Toast.makeText(getApplicationContext(),"No image URI found",Toast.LENGTH_SHORT);
+                Toast toast = Toast.makeText(getApplicationContext(), "No image URI found", Toast.LENGTH_SHORT);
                 toast.show();
             }
-
         }
+
     }
+
 }
+

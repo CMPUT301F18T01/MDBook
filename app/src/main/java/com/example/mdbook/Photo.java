@@ -1,10 +1,15 @@
 package com.example.mdbook;
 
-// class to hold photo objects
-class Photo {
-    private int photoid = -1;
-    public Photo(){
+import android.graphics.Bitmap;
 
+// class to hold photo objects
+class Photo{
+
+    private int photoid;
+    public Bitmap image;
+
+    public Photo(Bitmap image){
+        this.image = image;
     }
 
     public int getPhotoid() {
