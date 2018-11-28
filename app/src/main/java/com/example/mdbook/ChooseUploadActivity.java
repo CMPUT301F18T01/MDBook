@@ -1,11 +1,9 @@
 package com.example.mdbook;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Environment;
@@ -19,20 +17,18 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
-
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Calendar;
+
 
 public class ChooseUploadActivity extends AppCompatActivity {
 
     Button uploadFromGallery;
     Button openCamera;
-    Uri imageFileUri;
-    String uri;
+
     public static final int GET_FROM_GALLERY_REQUEST_CODE = 1;
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 2;
 
@@ -41,6 +37,8 @@ public class ChooseUploadActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_upload);
 
+        checkPermission();
+
         uploadFromGallery = findViewById(R.id.openGallery);
         openCamera = findViewById(R.id.openCamera);
 
@@ -48,7 +46,6 @@ public class ChooseUploadActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                checkPermission();
                 viewGallery();
 
             }
@@ -59,7 +56,6 @@ public class ChooseUploadActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                checkPermission();
                 takeAPhoto();
 
             }
@@ -68,32 +64,18 @@ public class ChooseUploadActivity extends AppCompatActivity {
 
     public void takeAPhoto() {
 
-        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
-        StrictMode.setVmPolicy(builder.build());
+        //StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+        //StrictMode.setVmPolicy(builder.build());
 
-        String folder = Environment.getExternalStorageDirectory().getAbsolutePath() + "/tmp";
-        File folderF = new File(folder);
-
-        if (!folderF.exists()) {
-            folderF.mkdir();
-        }
-
-        String imageFilePath = folder + "/" + String.valueOf(System.currentTimeMillis()) + ".jpg";
-        File imageFile = new File(imageFilePath);
-        imageFileUri = Uri.fromFile(imageFile);
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-
-        if(intent.resolveActivity(getPackageManager())!= null) {
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, imageFileUri);
-
-            startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+        Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
 
         }
-    }
+
 
     public void viewGallery(){
 
-        Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+        Intent photoPickerIntent = new Intent(Intent.ACTION_GET_CONTENT);
         photoPickerIntent.setType("image/*");
         startActivityForResult(photoPickerIntent, GET_FROM_GALLERY_REQUEST_CODE);
     }
@@ -106,11 +88,13 @@ public class ChooseUploadActivity extends AppCompatActivity {
 
                 Toast toast = Toast.makeText(getApplicationContext(), "Photo OK!", Toast.LENGTH_SHORT);
                 toast.show();
-                String uri = imageFileUri.getPath();
+                Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
+                String path = saveImage(thumbnail);
                 Intent intent = new Intent();
-                intent.putExtra("uri", uri);
+                intent.putExtra("uri", path);
                 setResult(RESULT_OK, intent);
                 finish();
+
 
             } else if (resultCode == RESULT_CANCELED) {
 
@@ -143,11 +127,6 @@ public class ChooseUploadActivity extends AppCompatActivity {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                //String uri = selectedImage.getPath();
-//                Intent intent = new Intent();
-//                intent.putExtra("uri", path);
-//                setResult(RESULT_OK, intent);
-//                finish();
 
             }
         }
@@ -162,37 +141,43 @@ public class ChooseUploadActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
         }
 
-        else{
-            //takeAPhoto();
-            return;
+        else if(ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, GET_FROM_GALLERY_REQUEST_CODE);
         }
-    }
+
+        else{
+            return;
+
+        }
+
+        }
+
 
 
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults){
+
         switch (requestCode){
             case CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE: {
                 for (int grantResult :
                         grantResults) {
                     if (grantResults.length > 0 && grantResult == PackageManager.PERMISSION_GRANTED) {
-                        takeAPhoto();
+                        return;
                     } else {
                         this.finish();
                     }
-                    return;
+                    //return;
                 }
             }
             case GET_FROM_GALLERY_REQUEST_CODE: {
-                for (int grantResult :
-                        grantResults) {
+                for (int grantResult : grantResults) {
                     if (grantResults.length > 0 && grantResult == PackageManager.PERMISSION_GRANTED) {
-                        viewGallery();
+                        return;
                     } else {
                         this.finish();
                     }
-                    return;
+                    //return;
                 }
             }
 
