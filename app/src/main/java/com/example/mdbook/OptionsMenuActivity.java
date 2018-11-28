@@ -84,7 +84,7 @@ public class OptionsMenuActivity extends AppCompatActivity {
      * Creates a new intent for switching to the ViewRecordActivity
      */
     public void GoEditRecord(){
-        Intent goEditProblem = new Intent(this, ViewRecordActivity2.class);
+        Intent goEditProblem = new Intent(this, ListRecordActivity.class);
         goEditProblem.putExtra("problemPos", getIntent().getExtras()
                 .getInt("problemPos"));
         startActivity(goEditProblem);

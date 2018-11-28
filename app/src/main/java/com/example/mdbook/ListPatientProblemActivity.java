@@ -79,8 +79,8 @@ public class ListPatientProblemActivity extends AppCompatActivity
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 //spot is the item clicked
-                Intent showRecords = new Intent(ListPatientProblemActivity.this, CaretakerViewRecordsActivity.class);
-                startActivity(showRecords);
+                //Intent showRecords = new Intent(ListPatientProblemActivity.this, CaretakerViewRecordsActivity.class);
+                //startActivity(showRecords);
             }
         });
 

@@ -36,11 +36,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ViewRecordActivity" />
         <activity android:name=".EditProblemDetailsActivity" />
         <activity android:name=".AddProblemActivity" />
         <activity android:name=".NewBodyLocationView" />
-        <activity android:name=".CaretakerViewRecordsActivity" />
         <activity android:name=".PatientSlideActivity" />
         <activity android:name=".AddRecordActivity" />
         <activity android:name=".ViewAccountDetailActivity" />
@@ -55,7 +53,7 @@
         <activity android:name=".ViewMapActivity" />
         <activity
             android:name=".ListProblemActivity"
-            android:label="@string/title_activity_list_problem2"
+            android:label="@string/MDBook"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <uses-library
@@ -63,8 +61,8 @@
             android:required="false" />
 
         <activity
-            android:name=".ViewRecordActivity2"
-            android:label="@string/title_activity_view_record2"
+            android:name=".ListRecordActivity"
+            android:label="@string/MDBook"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

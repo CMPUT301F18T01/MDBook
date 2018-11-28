@@ -155,7 +155,7 @@ public class AddRecordActivity extends AppCompatActivity {
      * Creates a new intent for switch to the ListProblemActivity
      */
     public void endActivity(){
-        //Intent mainPage = new Intent(this, ViewRecordActivity2.class);
+        //Intent mainPage = new Intent(this, ListRecordActivity.class);
         //startActivity(mainPage);
         this.finish();
     }
