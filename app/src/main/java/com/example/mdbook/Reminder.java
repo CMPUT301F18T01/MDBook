@@ -28,8 +28,17 @@ import android.support.annotation.RequiresApi;
 
 import static android.app.NotificationManager.IMPORTANCE_DEFAULT;
 
-public class AlarmService extends BroadcastReceiver{
+public class Reminder extends BroadcastReceiver{
     private static final String CHANNEL_ID = "com.rkkapadi.reminderservice.channelId";
+
+    private Long timeInMilis;
+    private String frequency;
+
+    public Reminder(Long timeInMilis, String frequency)
+    {
+        this.timeInMilis = timeInMilis;
+        this.frequency = frequency;
+    }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override

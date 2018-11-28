@@ -50,12 +50,7 @@
             android:required="false" />
 
         <activity android:name=".AddReminderActivity" />
-        <activity android:name=".NotificationActivity"></activity>
-        <receiver android:name=".AlarmService">
-            <intent-filter>
-                <action android:name=".DISPLAY_NOTIFICATION" />
-            </intent-filter>
-        </receiver>
+       <receiver android:name=".NotificationActivity"/>
     </application>
 
 </manifest>
