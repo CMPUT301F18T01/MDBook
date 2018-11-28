@@ -12,6 +12,7 @@
 package com.example.mdbook;
 
 import android.content.Intent;
+import android.graphics.PathEffect;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -21,6 +22,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 
 /**
@@ -40,9 +42,17 @@ public class ViewRecordActivity extends AppCompatActivity {
     Button add;
 //     Initialize dummy variables for debugging
     ListView mListView;
+    Problem problem;
+    Patient patient;
+    int problemPos;
+    Record record;
+    String extra;
 
-    ArrayList<Record> records  = new ArrayList<>();
+    ArrayList<Record> records = new ArrayList<>();
     ArrayList<String> title = new ArrayList<>();
+    ArrayList<Integer> images = new ArrayList<>();
+    ArrayList<String> comments = new ArrayList<>();
+    ArrayList<Date> date = new ArrayList<>();
 
 
 
@@ -54,9 +64,11 @@ public class ViewRecordActivity extends AppCompatActivity {
             R.drawable.finger,
             R.drawable.eye,
            };
+    
 
-    String[] Comment = {};
-    String[] Date = {};
+    public ViewRecordActivity() {
+        date = new ArrayList<>();
+    }
 
 
     /**
@@ -71,8 +83,31 @@ public class ViewRecordActivity extends AppCompatActivity {
         cancel = findViewById(R.id.EditRecordButton);
         add = findViewById(R.id.addButton);
 
-        Problem problem = (Problem) getIntent().getExtras().getSerializable("problem");
-        records = problem.getRecords();
+        extra = "first";
+
+        patient = (Patient)UserController.getController().getUser();
+        problemPos = getIntent().getExtras().getInt("position");
+        problem = patient.getProblems().get(problemPos);
+
+        //To check if activity is returned form addRecord or initially run, if initial, do nothing
+        if(getIntent().getStringExtra("return") == null)
+        {
+            Toast.makeText(ViewRecordActivity.this, "first", Toast.LENGTH_LONG).show();
+        }
+        //if returns from addRecord, proceed
+        else{
+            try{
+                record = (Record) getIntent().getExtras().getSerializable("record");
+                problem.addRecord(record);
+                records.addAll(problem.getRecords());
+            }
+            catch (NullPointerException id)
+            {
+                records = new ArrayList<>();
+            }
+        }
+
+
 
 
 
@@ -90,16 +125,19 @@ public class ViewRecordActivity extends AppCompatActivity {
         for (int r = 0; r < records.size(); r++)
         {
             title.add(records.get(r).getTitle());
+            images.add(Images[r]);
+            comments.add(records.get(r).getComment());
+            date.add(records.get(r).getDate());
         }
         CustomAdapter customAdapter = new CustomAdapter(ViewRecordActivity.this,
-                title ,null, null, null);
+                title ,images, date, comments);
         mListView.setAdapter(customAdapter);
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent mIntent = new Intent(getApplicationContext(), EditProblemDetailsActivity.class);
-//                mIntent.putExtra("Titles", Title[i]);
-//                mIntent.putExtra("Images", Images[i]);
+//                mIntent.putExtra("Titles", title[i]);
+                mIntent.putExtra("Images", Images[i]);
                 startActivity(mIntent);
             }
         });

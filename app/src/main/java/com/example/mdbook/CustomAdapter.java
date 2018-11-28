@@ -101,7 +101,7 @@ public class CustomAdapter extends ArrayAdapter {
             mViewHolder.mImages.setImageResource(photos.get(position));
             mViewHolder.mTitles.setText(titles.get(position));
             mViewHolder.mComments.setText(comments.get(position));
-            mViewHolder.mDates.setText((CharSequence) dates.get(position));
+            mViewHolder.mDates.setText(dates.get(position).toString());
 
         return convertView;
     }

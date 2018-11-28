@@ -239,6 +239,7 @@ public class ListProblemActivity extends AppCompatActivity
         Intent intent = new Intent(this, OptionsMenuActivity.class);
 //        Toast.makeText(ListProblemActivity.this, problems.get(Position).getTitle(), Toast.LENGTH_SHORT).show();
         intent.putExtra("problem", problems.get(Position));
+        intent.putExtra("position", Position);
         startActivity(intent);
     }
     /**

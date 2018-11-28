@@ -53,6 +53,10 @@ public class AddRecordActivity extends AppCompatActivity {
     Button cancel;
     Record record;
     Date recordDate;
+    Problem problem;
+    Patient patient;
+    DateFormat formatter;
+    String goBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +72,7 @@ public class AddRecordActivity extends AppCompatActivity {
         save = findViewById(R.id.save);
         cancel = findViewById(R.id.cancel);
         UserManager.initManager();
-        final  UserManager userManager = UserManager.getManager();
+        final UserManager userManager = UserManager.getManager();
 
         // Switches to addBodyLocationActivity upon the click of the body button
         body.setOnClickListener(new View.OnClickListener() {
@@ -84,9 +88,9 @@ public class AddRecordActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                Problem problem = (Problem)getIntent().getExtras().getSerializable("problem");
-                Patient patient = (Patient) UserController.getController().getUser();
-                DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+                problem = (Problem)getIntent().getExtras().getSerializable("problem");
+                patient = (Patient) UserController.getController().getUser();
+                formatter = new SimpleDateFormat("dd/MM/yyyy");
                 try {
                     recordDate =  formatter.parse(date.getText().toString());
                     record = new Record(headline.getText().toString(), recordDate,Description.getText().toString());
@@ -160,6 +164,9 @@ public class AddRecordActivity extends AppCompatActivity {
     public void BackToAddProblem(){
         Intent mainPage = new Intent(this, ViewRecordActivity.class);
 //        Record record = new Record(headline.getText().toString(), date.getText().toString(), Description.getText().toString());
+        mainPage.putExtra("record", record);
+        goBack = "return";
+        mainPage.putExtra("return",goBack);
         Problem problem = (Problem)getIntent().getExtras().getSerializable("problem");
         mainPage.putExtra("problem", problem);
         startActivity(mainPage);

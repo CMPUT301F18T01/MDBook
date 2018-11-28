@@ -88,7 +88,9 @@ public class OptionsMenuActivity extends AppCompatActivity {
     public void GoEditRecord(){
         Intent goEditRecord = new Intent(this, ViewRecordActivity.class);
         Problem problem = (Problem) getIntent().getExtras().getSerializable("problem");
+        int position = getIntent().getExtras().getInt("position");
         goEditRecord.putExtra("problem", problem);
+        goEditRecord.putExtra("position", position);
         startActivity(goEditRecord);
     }
     /**
