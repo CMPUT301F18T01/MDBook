@@ -8,11 +8,24 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+/**
+ * Creates an activity for the user to add patients
+ * Displays a list of all the patients already added
+ *
+ * @see com.example.mdbook.Patient
+ * @see
+ *
+ * @author Raj Kapadia
+ * @author Thomas Chan
+ *
+ * @version 0.0.1
+ */
 
 public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.PatientAdapterHolder> {
 
     private ArrayList<String> patientIDs;
     private PatientAdapter.OnItemClickListener mListener;
+    private UserManager userManager;
 
     /**
      * Sets the global problems array list
@@ -96,10 +109,18 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.PatientA
      */
     @Override
     public void onBindViewHolder(@NonNull PatientAdapter.PatientAdapterHolder patientAdapterHolder, int i) {
+        UserManager.initManager();
+        UserManager userManager = UserManager.getManager();
         Caregiver caregiver = (Caregiver) UserController.getController().getUser();
         String currentitem = patientIDs.get(i);
-        patientAdapterHolder.patientName.setText(currentitem);
-        patientAdapterHolder.patientProblems.setText(caregiver.getPatientList().size());
+        patientAdapterHolder.patientName.setText("Patient: " + currentitem);
+        try {
+            Patient patient = (Patient) userManager.fetchUser(currentitem);
+            patientAdapterHolder.patientProblems.setText("# of problems: " + patient.getProblems().size());
+        } catch (NoSuchUserException e) {
+            e.printStackTrace();
+        }
+
     }
 
     /**
@@ -108,6 +129,6 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.PatientA
      */
     @Override
     public int getItemCount() {
-        return patientIDs.size();
+       return patientIDs.size();
     }
 }

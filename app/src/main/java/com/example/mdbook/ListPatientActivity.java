@@ -49,7 +49,7 @@ import java.util.List;
  *
  *
  * @author Raj Kapadia
- * @author James Aina
+ * @author Thomas Chan
  *
  * @version 0.0.1
  */
@@ -60,6 +60,7 @@ public class ListPatientActivity extends AppCompatActivity implements Navigation
     private RecyclerView recyclerView;
     private PatientAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutmanager;
+    private String patientID;
 
 
     @Override
@@ -75,6 +76,25 @@ public class ListPatientActivity extends AppCompatActivity implements Navigation
         Caregiver caregiver = (Caregiver) UserController.getController().getUser();
         patientIDs = caregiver.getPatientList();
 
+//        if(getIntent().getExtras().getString("TAG") != null)
+//        {
+//
+//            patientID = getIntent().getExtras().getString("patientID");
+//            patientIDs.add(patientID);
+//            try {
+//                userManager.fetchUser(patientID);
+//            } catch (NoSuchUserException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//        else{
+//            patientIDs = caregiver.getPatientList();
+//            Toast.makeText(ListPatientActivity.this, "has no patients", Toast.LENGTH_LONG).show();
+//        }
+
+
+
+
         /* Create recycler view */
         recyclerView = findViewById(R.id.recylerView);
         recyclerView.setHasFixedSize(true);
@@ -82,6 +102,8 @@ public class ListPatientActivity extends AppCompatActivity implements Navigation
         mAdapter = new PatientAdapter(patientIDs);
         recyclerView.setLayoutManager(mLayoutmanager);
         recyclerView.setAdapter(mAdapter);
+
+
 
         /* Opens options menu when problem is clicked */
         mAdapter.setOnItemClickListener(new PatientAdapter.OnItemClickListener() {
