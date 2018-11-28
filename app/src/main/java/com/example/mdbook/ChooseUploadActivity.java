@@ -7,7 +7,6 @@ import android.graphics.Bitmap;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Environment;
-import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -64,9 +63,6 @@ public class ChooseUploadActivity extends AppCompatActivity {
 
     public void takeAPhoto() {
 
-        //StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
-        //StrictMode.setVmPolicy(builder.build());
-
         Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
 
@@ -78,6 +74,7 @@ public class ChooseUploadActivity extends AppCompatActivity {
         Intent photoPickerIntent = new Intent(Intent.ACTION_GET_CONTENT);
         photoPickerIntent.setType("image/*");
         startActivityForResult(photoPickerIntent, GET_FROM_GALLERY_REQUEST_CODE);
+
     }
 
     @Override
@@ -212,6 +209,5 @@ public class ChooseUploadActivity extends AppCompatActivity {
         }
         return "";
     }
-
-
+    
 }
