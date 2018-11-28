@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Environment;
 import android.os.StrictMode;
@@ -19,9 +20,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Calendar;
 
 public class ChooseUploadActivity extends AppCompatActivity {
 
@@ -122,7 +126,31 @@ public class ChooseUploadActivity extends AppCompatActivity {
 
             }
         }
+        if (requestCode == GET_FROM_GALLERY_REQUEST_CODE) {
 
+            if (resultCode == RESULT_OK) {
+
+                Toast toast = Toast.makeText(getApplicationContext(), "Photo OK!", Toast.LENGTH_SHORT);
+                toast.show();
+                Uri selectedImage = data.getData();
+                try {
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
+                    String path = saveImage(bitmap);
+                    Intent intent = new Intent();
+                    intent.putExtra("uri", path);
+                    setResult(RESULT_OK, intent);
+                    finish();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                //String uri = selectedImage.getPath();
+//                Intent intent = new Intent();
+//                intent.putExtra("uri", path);
+//                setResult(RESULT_OK, intent);
+//                finish();
+
+            }
+        }
 
     }
 
@@ -169,6 +197,35 @@ public class ChooseUploadActivity extends AppCompatActivity {
             }
 
         }
+    }
+
+    public String saveImage(Bitmap myBitmap) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        myBitmap.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
+        File wallpaperDirectory = new File(
+                Environment.getExternalStorageDirectory() + "/tmp");
+        // have the object build the directory structure, if needed.
+        if (!wallpaperDirectory.exists()) {
+            wallpaperDirectory.mkdirs();
+        }
+
+        try {
+            File f = new File(wallpaperDirectory, Calendar.getInstance()
+                    .getTimeInMillis() + ".jpg");
+            f.createNewFile();
+            FileOutputStream fo = new FileOutputStream(f);
+            fo.write(bytes.toByteArray());
+            MediaScannerConnection.scanFile(this,
+                    new String[]{f.getPath()},
+                    new String[]{"image/jpeg"}, null);
+            fo.close();
+            Log.d("TAG", "File Saved::--->" + f.getAbsolutePath());
+
+            return f.getAbsolutePath();
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+        return "";
     }
 
 

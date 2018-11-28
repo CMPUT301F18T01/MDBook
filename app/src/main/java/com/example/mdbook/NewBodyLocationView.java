@@ -133,6 +133,7 @@ public class NewBodyLocationView extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 String uri = data.getStringExtra("uri");
 
+
                 myBitmap = BitmapFactory.decodeFile(uri);
 
 
