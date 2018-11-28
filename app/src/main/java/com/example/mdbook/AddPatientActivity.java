@@ -46,6 +46,7 @@ public class AddPatientActivity extends AppCompatActivity implements View.OnClic
     private EditText enterIDText;
     private String activity = "AddPatientActivity";
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,12 +73,7 @@ public class AddPatientActivity extends AppCompatActivity implements View.OnClic
         switch (v.getId())
         {
             case R.id.addPatientBtn:
-                String userID = enterIDText.getText().toString();
-                Toast.makeText(this, userID + ": added", Toast.LENGTH_SHORT);
-                Intent addToListPatientIntent = new Intent(this, ListPatientActivity.class);
-                addToListPatientIntent.putExtra("userID", userID);
-                addToListPatientIntent.putExtra("activity", activity);
-                startActivity(addToListPatientIntent);
+                goAddPatient();
                 break;
 
             case R.id.cancelBtn:
@@ -91,5 +87,15 @@ public class AddPatientActivity extends AppCompatActivity implements View.OnClic
 
         }
 
+    }
+
+    public void goAddPatient()
+    {
+        String userID = enterIDText.getText().toString();
+        Toast.makeText(this, userID + ": added", Toast.LENGTH_SHORT);
+        Intent addToListPatientIntent = new Intent(this, ListPatientActivity.class);
+        addToListPatientIntent.putExtra("userID", userID);
+        addToListPatientIntent.putExtra("activity", activity);
+        startActivity(addToListPatientIntent);
     }
 }

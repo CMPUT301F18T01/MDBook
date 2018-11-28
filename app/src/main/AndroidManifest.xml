@@ -45,7 +45,9 @@
         <activity android:name=".OptionsMenuActivity" />
         <activity android:name=".EditAccountDetailActivity" />
         <activity android:name=".RegisterActivity" />
-        <activity android:name=".ListPatientActivity" />
+        <activity android:name=".ListPatientActivity"
+            android:label="@string/MDBook"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".AddPatientActivity" />
         <activity android:name=".PatientSearchActivity" />
         <activity android:name=".ListPatientProblemActivity" />
