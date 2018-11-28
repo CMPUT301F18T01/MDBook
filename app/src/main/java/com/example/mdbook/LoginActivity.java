@@ -54,8 +54,9 @@ public class LoginActivity extends AppCompatActivity {
                         actionId == EditorInfo.IME_ACTION_DONE ||
                         event.getAction() == KeyEvent.ACTION_DOWN ||
                         event.getAction() == KeyEvent.KEYCODE_ENTER){
-                    onLoginClick(v);
                     hideSoftKeyboard();
+                    onLoginClick(v);
+
                 }
                 return false;
             }
