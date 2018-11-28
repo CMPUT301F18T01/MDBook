@@ -79,7 +79,7 @@ public class UserManager {
     public Patient createPatient(String userID, String userPhone, String userEmail)
             throws UserIDNotAvailableException, IllegalArgumentException {
         /* Fetch fresh copy of patient list */
-        dataManager.pull();
+        //dataManager.pull();
         HashMap patients = dataManager.getPatients();
 
         /* Ensure userID is unique */
@@ -123,7 +123,7 @@ public class UserManager {
     public Caregiver createCaregiver(String userID, String userPhone, String userEmail)
             throws UserIDNotAvailableException, IllegalArgumentException {
         /* Fetch fresh copy of patient list */
-        dataManager.pull();
+        //dataManager.pull();
         HashMap caregivers = dataManager.getCaregivers();
 
         /* Ensure userID is unique */
@@ -164,7 +164,7 @@ public class UserManager {
      */
     public boolean login(String userid) {
         /* Get the latest data */
-        dataManager.pull();
+        //dataManager.pull();
         UserController userController = UserController.getController();
         if (userController.getUser() != null){
             return false;
