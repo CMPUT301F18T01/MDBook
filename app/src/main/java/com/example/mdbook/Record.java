@@ -10,6 +10,9 @@
 
 package com.example.mdbook;
 
+import android.widget.Toast;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -23,7 +26,7 @@ import java.util.Date;
  * @see com.example.mdbook.Photo
  * @version 0.0.1
  **/
-class Record {
+class Record implements Serializable {
 
     private String title;
     private Date date;
