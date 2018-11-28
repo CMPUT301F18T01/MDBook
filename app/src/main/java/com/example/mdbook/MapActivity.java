@@ -69,7 +69,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         mGps = (ImageView) findViewById(R.id.gpscenter);
 
 
-
         getLocationPermission();
     }
 
@@ -112,7 +111,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         if (list.size() > 0){
             address = list.get(0);
             Toast.makeText(this, address.toString(), Toast.LENGTH_SHORT).show();
-
             moveCamera(new LatLng(address.getLatitude(), address.getLongitude()),DEFAULT_ZOOM, address.getAddressLine(0));
         }
     }

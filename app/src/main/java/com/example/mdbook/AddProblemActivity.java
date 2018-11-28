@@ -36,6 +36,7 @@ import java.util.ArrayList;
 public class AddProblemActivity extends AppCompatActivity {
 
     private ArrayList<Problem> problems;
+    private Problem problem;
     private int problemPos;
     private Button save;
     private Button cancel;
@@ -69,21 +70,23 @@ public class AddProblemActivity extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Problem problem = new Problem(title.getText().toString(), description.getText().toString());
-                problems.add(0,problem);
-                problemPos = problems.size()-1;
+                if (problem == null) {
+                    problem = new Problem(title.getText().toString(), description.getText().toString());
+                    problems.add(0, problem);
+                    problemPos = 0;
+                }
                 try{
                     userManager.saveUser(patient);
                     Toast.makeText(AddProblemActivity.this
                             ,"Problem " + title.getText().toString() + " Added"
                             ,Toast.LENGTH_SHORT).show();
+                    BackToListProblem();
 
                 } catch (NoSuchUserException e) {
                     Toast.makeText(AddProblemActivity.this
                             , "User does not exist"
                             , Toast.LENGTH_SHORT).show();
                 }
-                BackToListProblem();
             }
         });
 
@@ -99,6 +102,11 @@ public class AddProblemActivity extends AppCompatActivity {
         addRecord.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (problem == null) {
+                    problem = new Problem(title.getText().toString(), description.getText().toString());
+                    problems.add(0, problem);
+                    problemPos = 0;
+                }
                 try{
                     userManager.saveUser(patient);
                     Toast.makeText(AddProblemActivity.this
@@ -115,11 +123,12 @@ public class AddProblemActivity extends AppCompatActivity {
         });
     }
 
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
 
     public void BackToListProblem() {
-        //Intent mainPage = new Intent(this, ListProblemActivity.class);
-        //startActivity(mainPage);
         this.finish();
     }
 

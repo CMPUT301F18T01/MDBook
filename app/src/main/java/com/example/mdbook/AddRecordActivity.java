@@ -102,24 +102,19 @@ public class AddRecordActivity extends AppCompatActivity {
                     recordDate = format.parse(date.getText().toString());
                     Record record = new Record(headline.getText().toString(),recordDate,Description.getText().toString());
                     patient.getProblems().get(problemPos).addRecord(record);
-                } catch (ParseException e) {
-                    Toast.makeText(AddRecordActivity.this,"WRONG DATE FORMAT", Toast.LENGTH_SHORT).show();
-                }
-
-                try{
                     userManager.saveUser(patient);
                     Toast.makeText(AddRecordActivity.this
                             ,"Record " + headline.getText().toString() + " Added"
                             ,Toast.LENGTH_SHORT).show();
+                    endActivity();
 
                 } catch (NoSuchUserException e) {
                     Toast.makeText(AddRecordActivity.this
-                            , "User does not exist"
+                            , "Unable to add record."
                             , Toast.LENGTH_SHORT).show();
+                } catch (ParseException e) {
+                    Toast.makeText(AddRecordActivity.this,"WRONG DATE FORMAT", Toast.LENGTH_SHORT).show();
                 }
-
-
-                endActivity();
 
             }
         });
