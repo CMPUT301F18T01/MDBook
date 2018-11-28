@@ -102,23 +102,29 @@ public class ChooseUploadActivity extends AppCompatActivity {
     public void checkPermission(){
 
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
         }
+
         else{
             takeAPhoto();
         }
     }
 
+
+
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults){
         switch (requestCode){
-            case CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE:{
-                if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                    takeAPhoto();
-                } else {
-                    this.finish();
+            case CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE: {
+                for (int grantResult:
+                     grantResults){
+                    if (grantResults.length > 0 && grantResult == PackageManager.PERMISSION_GRANTED) {
+                        takeAPhoto();
+                    } else {
+                        this.finish();
+                    }
+                    return;
                 }
-                return;
             }
         }
     }
