@@ -8,6 +8,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 public class AddCommentActivity extends AppCompatActivity {
 
     private Button addComment;
@@ -15,11 +17,13 @@ public class AddCommentActivity extends AppCompatActivity {
     private String comment;
     private Integer problemPos;
     private String patientID;
+    private ArrayList<Record> recordList;
     private Record commentRecord;
     private Problem problem;
     private Patient patient;
-    private String patientPos;
+    private Integer patientPos;
     private String TAG;
+    Caregiver caregiver;
 
 
     @Override
@@ -28,7 +32,12 @@ public class AddCommentActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_comment);
 
         UserManager.initManager();
-        UserManager userManager = UserManager.getManager();
+        final UserManager userManager = UserManager.getManager();
+
+        caregiver = (Caregiver)UserController.getController().getUser();
+//        caregiver.getPatientList().get(patientPos);
+
+        commentRecord = new Record("Caregiver says: ");
 
 
         addComment = findViewById(R.id.addCommentBtn);
@@ -39,16 +48,25 @@ public class AddCommentActivity extends AppCompatActivity {
 
 
 
+
+
+
         try {
             patient = (Patient) userManager.fetchUser(patientID);
             problem = patient.getProblems().get(problemPos);
+            recordList = problem.getRecords();
             addComment.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     comment = (etComment.getText().toString());
-                    commentRecord = new Record("Caregiver says: ");
                     commentRecord.setComment(comment);
                     problem.addRecord(commentRecord);
+                    try {
+                        userManager.saveUser(patient);
+                        userManager.saveUser(caregiver);
+                    } catch (NoSuchUserException e) {
+                        e.printStackTrace();
+                    }
                     backToRecord();
                 }
             });
@@ -65,7 +83,6 @@ public class AddCommentActivity extends AppCompatActivity {
     public void backToRecord()
     {
         TAG = "coming back";
-        patientPos = getIntent().getExtras().getString("patientPos");
         Intent backIntent = new Intent(AddCommentActivity.this, ListRecordsCGActivity.class);
         backIntent.putExtra("problemPos", problemPos);
         backIntent.putExtra("patientPos", patientPos);
