@@ -128,7 +128,7 @@ public class AddRecordActivity extends AppCompatActivity {
             }
         });
 
-        // Switches to AddProblemsActivity upon the click of the geolocstion button
+        // Switches to AddProblemsActivity upon the click of the geolocation button
         geo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

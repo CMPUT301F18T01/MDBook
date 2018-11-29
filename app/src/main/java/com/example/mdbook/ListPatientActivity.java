@@ -60,7 +60,7 @@ public class ListPatientActivity extends AppCompatActivity implements Navigation
     private RecyclerView recyclerView;
     private PatientAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutmanager;
-    private String patientID;
+
 
 
     @Override
@@ -75,24 +75,6 @@ public class ListPatientActivity extends AppCompatActivity implements Navigation
 
         Caregiver caregiver = (Caregiver) UserController.getController().getUser();
         patientIDs = caregiver.getPatientList();
-
-//        if(getIntent().getExtras().getString("TAG") != null)
-//        {
-//
-//            patientID = getIntent().getExtras().getString("patientID");
-//            patientIDs.add(patientID);
-//            try {
-//                userManager.fetchUser(patientID);
-//            } catch (NoSuchUserException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//        else{
-//            patientIDs = caregiver.getPatientList();
-//            Toast.makeText(ListPatientActivity.this, "has no patients", Toast.LENGTH_LONG).show();
-//        }
-
-
 
 
         /* Create recycler view */
@@ -158,7 +140,7 @@ public class ListPatientActivity extends AppCompatActivity implements Navigation
     public void showAlertDialog(final RecyclerView.ViewHolder position){
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setTitle("MDBook");
-        alert.setMessage("Are you sure you want to delete this problem?");
+        alert.setMessage("Are you sure you want to delete this patient?");
         alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -220,8 +202,8 @@ public class ListPatientActivity extends AppCompatActivity implements Navigation
 
 
     public void OptionMenu(int position){
-        Intent intent = new Intent(this, OptionsMenuActivity.class);
-        intent.putExtra("problemPos",position);
+        Intent intent = new Intent(this, ListPatientProblemActivity.class);
+        intent.putExtra("patientPos",position);
         startActivity(intent);
     }
 

@@ -50,7 +50,9 @@
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".AddPatientActivity" />
         <activity android:name=".PatientSearchActivity" />
-        <activity android:name=".ListPatientProblemActivity" />
+        <activity android:name=".ListPatientProblemActivity"
+            android:label="@string/MDBook"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".MapActivity" />
         <activity android:name=".ViewMapActivity" />
         <activity
