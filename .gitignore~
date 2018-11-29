@@ -70,4 +70,3 @@ fastlane/readme.md
 # Api.keys
 api.keys
 *.keys
-*.keys~
