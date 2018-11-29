@@ -26,6 +26,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 /**
@@ -52,6 +55,9 @@ public class NewBodyLocationView extends AppCompatActivity {
     Button cancel;
     String location;
     Bitmap myBitmap;
+    String uri;
+    String uriFront;
+    String uriBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +71,12 @@ public class NewBodyLocationView extends AppCompatActivity {
         uploadBack = findViewById(R.id.uploadBack);
         bodyFront = findViewById(R.id.body_front);
         bodyBack = findViewById(R.id.body_back);
+        if(uriFront!= null){
+            loadImage(uriFront, bodyFront);
+        }
+        if(uriFront!= null){
+            loadImage(uriFront, bodyFront);
+        }
 
         uploadFront.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -123,25 +135,38 @@ public class NewBodyLocationView extends AppCompatActivity {
         startActivityForResult(chooseUpload,1);
     }
 
+    public void loadImage(String path, ImageView img){
+
+        myBitmap = BitmapFactory.decodeFile(path);
+        img.setImageBitmap(myBitmap);
+
+    }
+
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         if (requestCode == 1) {
             if (resultCode == RESULT_OK) {
-                String uri = data.getStringExtra("uri");
+                uri = data.getStringExtra("uri");
 
 
-                myBitmap = BitmapFactory.decodeFile(uri);
+
 
 
 
                 if (location == "Front") {
 
+                    uriFront = uri;
 
-                    bodyFront.setImageBitmap(myBitmap);
+                    loadImage(uri, bodyFront);
+
                 }
 
                 if (location == "Back") {
-                    bodyBack.setImageBitmap(myBitmap);
+
+                    uriBack = uri;
+
+                    loadImage(uri, bodyBack);
+
                 }
             }
 
