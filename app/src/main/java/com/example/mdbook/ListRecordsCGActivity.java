@@ -1,6 +1,7 @@
 package com.example.mdbook;
 
 import android.content.Intent;
+import android.nfc.Tag;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -26,7 +27,8 @@ public class ListRecordsCGActivity extends AppCompatActivity {
     private Integer problemPos;
     private String patientID;
     private  Patient patient;
-
+    private Record commentRecord;
+    private String TAG;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,20 +41,41 @@ public class ListRecordsCGActivity extends AppCompatActivity {
 
         Caregiver caregiver = (Caregiver) UserController.getController().getUser();
 
-        if (problemPos == null || patientPos == null) {
-            problemPos = getIntent().getExtras().getInt("problemPos");
-            patientPos = getIntent().getExtras().getInt("patientPos");
-        }
+        TAG = getIntent().getExtras().getString("TAG");
 
-        patientID =  caregiver.getPatientList().get(patientPos);
-        try {
-            patient = (Patient)userManager.fetchUser(patientID);
-            recordList = patient.getProblems().get(problemPos).getRecords();
+        addToList(TAG, caregiver, userManager);
 
-        } catch (NoSuchUserException e) {
-            Toast.makeText(ListRecordsCGActivity.this, "No user found", Toast.LENGTH_LONG).show();
-            e.printStackTrace();
-        }
+//        if ( TAG == null) {
+//            problemPos = getIntent().getExtras().getInt("problemPos");
+//            patientPos = getIntent().getExtras().getInt("patientPos");
+//            patientID =  caregiver.getPatientList().get(patientPos);
+//            try {
+//                patient = (Patient)userManager.fetchUser(patientID);
+//                recordList = patient.getProblems().get(problemPos).getRecords();
+//
+//            } catch (NoSuchUserException e) {
+//                Toast.makeText(ListRecordsCGActivity.this, "No user found", Toast.LENGTH_LONG).show();
+//                e.printStackTrace();
+//            }
+//        }
+//        else{
+//            problemPos = getIntent().getExtras().getInt("problemPos");
+//            patientPos = getIntent().getExtras().getInt("patientPos");
+//            patientID =  caregiver.getPatientList().get(patientPos);
+//            commentRecord = (Record) getIntent().getExtras().getSerializable("record");
+//            try {
+//                patient = (Patient)userManager.fetchUser(patientID);
+//                recordList = patient.getProblems().get(problemPos).getRecords();
+//
+//            } catch (NoSuchUserException e) {
+//                Toast.makeText(ListRecordsCGActivity.this, "No user found", Toast.LENGTH_LONG).show();
+//                e.printStackTrace();
+//            }
+//            recordList.add(commentRecord);
+//
+//        }
+
+
 //        recordList = patient.getProblems().get(problemPos).getRecords();
 
 
@@ -79,23 +102,53 @@ public class ListRecordsCGActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-        super.onResume();
+      super.onResume();
+        Caregiver caregiver = (Caregiver) UserController.getController().getUser();
         UserManager.initManager();
         UserManager userManager = UserManager.getManager();
-        recordList = patient.getProblems().get(problemPos).getRecords();
+        addToList(TAG, caregiver, userManager);
         mAdapter.notifyDataSetChanged();
     }
 
-    public void AddComment(){
-        Intent addRecord = new Intent(this, AddRecordActivity.class);
+    public void AddComment() {
+        Intent addRecord = new Intent(this, AddCommentActivity.class);
         addRecord.putExtra("problemPos", problemPos);
+        addRecord.putExtra("patientID", patientID);
+        addRecord.putExtra("patientPos", patientPos);
         startActivity(addRecord);
-
-        //this.finish();
     }
 
-//    @Override
-//    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-//        return false;
-//    }
+    public void addToList(String TAG, Caregiver caregiver, UserManager userManager)
+    {
+        if ( TAG == null) {
+            problemPos = getIntent().getExtras().getInt("problemPos");
+            patientPos = getIntent().getExtras().getInt("patientPos");
+            patientID =  caregiver.getPatientList().get(patientPos);
+            try {
+                patient = (Patient)userManager.fetchUser(patientID);
+                recordList = patient.getProblems().get(problemPos).getRecords();
+
+            } catch (NoSuchUserException e) {
+                Toast.makeText(ListRecordsCGActivity.this, "No user found", Toast.LENGTH_LONG).show();
+                e.printStackTrace();
+            }
+        }
+        else{
+            problemPos = getIntent().getExtras().getInt("problemPos");
+            patientPos = getIntent().getExtras().getInt("patientPos");
+            patientID =  caregiver.getPatientList().get(patientPos);
+            commentRecord = (Record) getIntent().getExtras().getSerializable("record");
+            try {
+                patient = (Patient)userManager.fetchUser(patientID);
+                recordList = patient.getProblems().get(problemPos).getRecords();
+                recordList.add(commentRecord);
+
+            } catch (NoSuchUserException e) {
+                Toast.makeText(ListRecordsCGActivity.this, "No user found", Toast.LENGTH_LONG).show();
+                e.printStackTrace();
+            }
+
+
+        }
+    }
 }

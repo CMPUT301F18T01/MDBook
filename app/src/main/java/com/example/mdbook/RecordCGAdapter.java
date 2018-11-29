@@ -2,6 +2,7 @@ package com.example.mdbook;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -25,6 +26,7 @@ public class RecordCGAdapter extends RecyclerView.Adapter<RecordCGAdapter.Record
     private static final int ERROR_DIALOG_REQUEST = 9001;
     private ArrayList<Record> mrecordList;
     private Activity mActivity;
+    public Record currentRecord;
 
 
     public static class RecordCGViewholder extends RecyclerView.ViewHolder{
@@ -34,6 +36,7 @@ public class RecordCGAdapter extends RecyclerView.Adapter<RecordCGAdapter.Record
         public TextView mDate;
         public TextView mComment;
         public ImageButton mAddComment;
+
 
 
 
@@ -56,6 +59,8 @@ public class RecordCGAdapter extends RecyclerView.Adapter<RecordCGAdapter.Record
     }
 
 
+
+
     @NonNull
     @Override
     public RecordCGViewholder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -68,16 +73,22 @@ public class RecordCGAdapter extends RecyclerView.Adapter<RecordCGAdapter.Record
 
     @Override
     public void onBindViewHolder(@NonNull RecordCGViewholder recordCGViewholder, int position) {
-        Record currentRecord = mrecordList.get(position);
+        currentRecord = mrecordList.get(position);
 
         //recordViewholder.mImageView.setImageResource(currentRecord.getPhotos().get(0).getPhotoid());
         recordCGViewholder.mTitle.setText(currentRecord.getTitle());
         recordCGViewholder.mDate.setText(currentRecord.getDate().toString());
         recordCGViewholder.mComment.setText(currentRecord.getComment());
-
-
-
     }
+
+//    private View.OnClickListener addComment = new View.OnClickListener() {
+//        @Override
+//        public void onClick(View v) {
+//            Intent commentIntent = new Intent(mActivity, AddCommentActivity.class);
+//            commentIntent.putExtra("record", currentRecord);
+//            mActivity.startActivity(commentIntent);
+//        }
+//    };
 
     public boolean isServicesOK(){
         Log.d(TAG,"isServicesOK: checking Google Services version");
