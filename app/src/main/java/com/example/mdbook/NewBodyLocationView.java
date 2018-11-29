@@ -51,11 +51,8 @@ public class NewBodyLocationView extends AppCompatActivity {
     Button save;
     Button cancel;
     String location;
-    int cameraCode = 1;
-    int galleryCode = 2;
     Bitmap myBitmap;
 
-    private static final String DEBUGTAG = "JAYC";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,8 +95,7 @@ public class NewBodyLocationView extends AppCompatActivity {
                 Toast toast = Toast.makeText(getApplicationContext(), "Body Location successfully added!", Toast.LENGTH_SHORT);
                 toast.show();
                 BackToAddProblem();
-                //Go back to patient main page
-                //BackToAddProblem();
+
             }
         });
         // Switches to the add problem upon the click of the cancel button
@@ -137,7 +133,10 @@ public class NewBodyLocationView extends AppCompatActivity {
                 myBitmap = BitmapFactory.decodeFile(uri);
 
 
+
                 if (location == "Front") {
+
+
                     bodyFront.setImageBitmap(myBitmap);
                 }
 

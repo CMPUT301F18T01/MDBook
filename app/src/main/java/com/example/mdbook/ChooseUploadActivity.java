@@ -80,7 +80,7 @@ public class ChooseUploadActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
-
+            checkPermission();
             if (resultCode == RESULT_OK) {
 
                 Toast toast = Toast.makeText(getApplicationContext(), "Photo OK!", Toast.LENGTH_SHORT);
@@ -108,7 +108,7 @@ public class ChooseUploadActivity extends AppCompatActivity {
             }
         }
         if (requestCode == GET_FROM_GALLERY_REQUEST_CODE) {
-
+            checkPermission();
             if (resultCode == RESULT_OK) {
 
                 Toast toast = Toast.makeText(getApplicationContext(), "Photo OK!", Toast.LENGTH_SHORT);
