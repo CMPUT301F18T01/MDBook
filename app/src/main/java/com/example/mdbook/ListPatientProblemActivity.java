@@ -60,6 +60,7 @@ public class ListPatientProblemActivity extends AppCompatActivity implements Nav
     private int patientPos;
     private String patientID;
     private Patient patient;
+    private String problemPos;
 
 
 
@@ -211,8 +212,9 @@ public class ListPatientProblemActivity extends AppCompatActivity implements Nav
 
 
     public void OptionMenu(int position){
-        Intent intent = new Intent(this, ListPatientProblemActivity.class);
-        intent.putExtra("patientPos",position);
+        Intent intent = new Intent(this, ListRecordsCGActivity.class);
+        intent.putExtra("problemPos", position);
+        intent.putExtra("patientPos",patientPos);
         startActivity(intent);
     }
 
