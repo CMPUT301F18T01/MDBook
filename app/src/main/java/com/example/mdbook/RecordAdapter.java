@@ -24,6 +24,7 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
     private static final String TAG = "RecordAdapter";
     private static final int ERROR_DIALOG_REQUEST = 9001;
     private ArrayList<Record> mrecordList;
+    private Record currentRecord;
     private Activity mActivity;
 
 
@@ -68,8 +69,7 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
 
     @Override
     public void onBindViewHolder(@NonNull RecordViewholder recordViewholder, int position) {
-        Record currentRecord = mrecordList.get(position);
-
+        currentRecord = mrecordList.get(position);
         //recordViewholder.mImageView.setImageResource(currentRecord.getPhotos().get(0).getPhotoid());
         recordViewholder.mTitle.setText(currentRecord.getTitle());
         recordViewholder.mDate.setText(currentRecord.getDate().toString());
@@ -89,9 +89,13 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
     private View.OnClickListener mOnLocationClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-
-            Intent launchmap = new Intent(mActivity, ViewMapActivity.class);
-            mActivity.startActivity(launchmap);
+            if (isServicesOK()) {
+                if (currentRecord != null) {
+                    Intent launchmap = new Intent(mActivity, ViewMapActivity.class);
+                    launchmap.putExtra("record", currentRecord);
+                    mActivity.startActivity(launchmap);
+                }
+            }
 
         }
     };

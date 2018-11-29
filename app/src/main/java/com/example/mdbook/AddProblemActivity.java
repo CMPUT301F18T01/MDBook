@@ -126,6 +126,7 @@ public class AddProblemActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
     }
 
     public void BackToListProblem() {

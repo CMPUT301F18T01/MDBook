@@ -14,6 +14,7 @@ package com.example.mdbook;
 import android.app.Dialog;
 import android.content.Intent;
 //import android.media.Image;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -26,6 +27,7 @@ import android.widget.Toast;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -48,9 +50,12 @@ import java.util.Date;
 public class AddRecordActivity extends AppCompatActivity {
     private static final String TAG = "AddRecordActivity";
     private static final int ERROR_DIALOG_REQUEST = 9001;
+    private static final Integer MAP_ACTIVITY_REQUEST_CODE = 0;
     // Initialize all the required imageViews ans Buttons
 
     private ArrayList<Record> recordList;
+    private Intent launchmap;
+    private Record record;
     private Integer problemPos;
     private DateFormat format;
     private Date recordDate;
@@ -99,9 +104,13 @@ public class AddRecordActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    recordDate = format.parse(date.getText().toString());
-                    Record record = new Record(headline.getText().toString(),recordDate,Description.getText().toString());
+                    if (record == null) {
+                        recordDate = format.parse(date.getText().toString());
+                        record = new Record(headline.getText().toString(), recordDate, Description.getText().toString());
+                    }
+
                     patient.getProblems().get(problemPos).addRecord(record);
+
                     userManager.saveUser(patient);
                     Toast.makeText(AddRecordActivity.this
                             ,"Record " + headline.getText().toString() + " Added"
@@ -131,11 +140,30 @@ public class AddRecordActivity extends AppCompatActivity {
         geo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (record == null) {
+                    try {
+                        recordDate = format.parse(date.getText().toString());
+                        record = new Record(headline.getText().toString(), recordDate, Description.getText().toString());
+                        //patient.getProblems().get(problemPos).addRecord(record);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
+                }
                 openGeoLoc();
             }
         });
 
+    }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == MAP_ACTIVITY_REQUEST_CODE){
+            if (resultCode == RESULT_OK){
+                record =(Record) data.getParcelableExtra("newRecord");
+            }
+        }
     }
 
     /**
@@ -158,8 +186,11 @@ public class AddRecordActivity extends AppCompatActivity {
      * Creates a new intent for switch to the ViewLocationActivity
      */
     public void openGeoLoc(){
-        Intent launchmap= new Intent(this, MapActivity.class);
-        startActivity(launchmap);
+        if (record != null) {
+            launchmap = new Intent(this, MapActivity.class);
+            launchmap.putExtra("record", record);
+            startActivityForResult(launchmap,MAP_ACTIVITY_REQUEST_CODE);
+        }
     }
 
     public boolean isServicesOK(){

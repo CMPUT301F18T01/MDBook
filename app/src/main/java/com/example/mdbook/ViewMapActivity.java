@@ -50,6 +50,7 @@ public class ViewMapActivity extends AppCompatActivity implements OnMapReadyCall
     private List<Address> myAddress;
     private Boolean mLocationPermissionGranted = false;
     private GoogleMap mMap;
+    private Record record;
     private UserManager userManager;
     private ArrayList<Problem> problems;
     private ArrayList<Record> records;
@@ -61,8 +62,11 @@ public class ViewMapActivity extends AppCompatActivity implements OnMapReadyCall
         setContentView(R.layout.activity_view_map);
         UserManager.initManager();
         userManager = UserManager.getManager();
-        getProblemLocation();
+        record = (Record) getIntent().getSerializableExtra("record");
+        //getProblemLocation();
         getLocationPermission();
+        viewRecordLocation();
+        init();
     }
 
     private void init(){
@@ -84,7 +88,6 @@ public class ViewMapActivity extends AppCompatActivity implements OnMapReadyCall
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom));
             }
         }
-
         MarkerOptions options = new MarkerOptions().position(latLng).title(title);
         mMap.addMarker(options);
 
@@ -169,6 +172,11 @@ public class ViewMapActivity extends AppCompatActivity implements OnMapReadyCall
         }
     }
 
+    public void viewRecordLocation(){
+        myAddress = record.getLocation().getAddressList();
+    }
+
+    /*
     public void getProblemLocation(){
         Patient patient = (Patient) UserController.getController().getUser();
         problems = patient.getProblems();
@@ -192,7 +200,7 @@ public class ViewMapActivity extends AppCompatActivity implements OnMapReadyCall
             }
         }
 
-    }
+    }*/
 
 
     @Override

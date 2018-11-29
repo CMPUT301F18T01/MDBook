@@ -40,6 +40,7 @@
     <string name="apikey">AIzaSyC87hg2QtwH0d4NAmWTyytBC8ZH9hSj71I</string>
     <string name="title_activity_view_record2">ViewRecordActivity2</string>
     <string name="MDBook">MDBook</string>
+    <string name="unable_save_address">Unable to save address</string>
 
 </resources>
 

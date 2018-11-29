@@ -10,6 +10,10 @@
 
 package com.example.mdbook;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -23,7 +27,7 @@ import java.util.Date;
  * @see com.example.mdbook.Photo
  * @version 0.0.1
  **/
-class Record {
+class Record implements Parcelable {
 
     private String title;
     private Date date;
@@ -51,7 +55,7 @@ class Record {
             this.title = title;
             this.date = new Date();
             this.description = "";
-            this.geoLocation = null;
+            this.geoLocation = new GeoLocation();
             this.bodyLocation = null;
             this.photos = new ArrayList<>();
             this.comment = "";
@@ -75,12 +79,46 @@ class Record {
             this.title = title;
             this.date = date;
             this.description = description;
-            this.geoLocation = null;
+            this.geoLocation = new GeoLocation();
             this.bodyLocation = null;
             this.photos = new ArrayList<>();
             this.comment = "";
         }
     }
+
+    protected Record(Parcel in) {
+        title = in.readString();
+        description = in.readString();
+        geoLocation = in.readParcelable(GeoLocation.class.getClassLoader());
+        comment = in.readString();
+        recordID = in.readInt();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(title);
+        dest.writeString(description);
+        dest.writeParcelable(geoLocation, flags);
+        dest.writeString(comment);
+        dest.writeInt(recordID);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<Record> CREATOR = new Creator<Record>() {
+        @Override
+        public Record createFromParcel(Parcel in) {
+            return new Record(in);
+        }
+
+        @Override
+        public Record[] newArray(int size) {
+            return new Record[size];
+        }
+    };
 
     /**
      * Add a geographic location to a record

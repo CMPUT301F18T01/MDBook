@@ -61,8 +61,8 @@ public class ListRecordActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
+    protected void onPostResume() {
+        super.onPostResume();
         UserManager.initManager();
         UserManager userManager = UserManager.getManager();
         Patient patient = (Patient) UserController.getController().getUser();
