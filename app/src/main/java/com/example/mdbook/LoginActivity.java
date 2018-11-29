@@ -1,8 +1,10 @@
 package com.example.mdbook;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -37,13 +39,17 @@ public class LoginActivity extends AppCompatActivity {
         /* Initialize controllers */
         SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("shared preferences",
                 getApplicationContext().MODE_PRIVATE);
+        ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
         LocalStorageController.init(sharedPreferences);
+        ElasticsearchController.init(connectivityManager);
         UserManager.initManager();
 
         setContentView(R.layout.activity_login);
 
         etUserID = findViewById(R.id.etUserID);
-
+        if (ElasticsearchController.getController().isConnected()){
+            Toast.makeText(this,"Connected to internet", Toast.LENGTH_SHORT).show();
+        }
         etUserID.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {

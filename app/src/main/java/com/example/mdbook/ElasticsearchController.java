@@ -10,6 +10,9 @@ package com.example.mdbook;
  */
 
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 
 import com.google.gson.internal.LinkedTreeMap;
@@ -50,16 +53,27 @@ import io.searchbox.core.Index;
 class ElasticsearchController {
 
     private static ElasticsearchController elasticsearchController = null;
+    private ConnectivityManager connectivityManager;
     private DataManager dataManager;
     private static JestClient client;
     private static String index = "cmput301f18t01test";
     private static HashMap<String, Object> idlists;
+    private Context context;
     private int availableID;
 
 
     /**
      * @return Singleton instance of ElasticSearchController
      */
+
+    public static void init(ConnectivityManager connectivityManager){
+        if (elasticsearchController == null) {
+            ElasticsearchController.getController();
+        }
+        elasticsearchController.connectivityManager = connectivityManager;
+        elasticsearchController.dataManager = DataManager.getDataManager();
+    }
+
 
     public static ElasticsearchController getController() {
         if (elasticsearchController == null) {
@@ -442,15 +456,17 @@ class ElasticsearchController {
      * Method that calls all other pull methods and sets data back in the dataManager
      */
     public void pull() {
-        /*Execute this first to get ID list */
-        this.pullIDLists();
+        if (isConnected()) {
+            /*Execute this first to get ID list */
+            this.pullIDLists();
+            /*pull back data from ES */
 
-        /*pull back data from ES */
-        dataManager.setPatients(this.pullUsers("patient"));
-        dataManager.setCaregivers(this.pullUsers("caregiver"));
-        dataManager.setProblems(this.pullProblemsRecords("problem"));
-        dataManager.setRecords(this.pullProblemsRecords("record"));
-        dataManager.setPhotos(this.pullPhotos());
+            dataManager.setPatients(this.pullUsers("patient"));
+            dataManager.setCaregivers(this.pullUsers("caregiver"));
+            dataManager.setProblems(this.pullProblemsRecords("problem"));
+            dataManager.setRecords(this.pullProblemsRecords("record"));
+            dataManager.setPhotos(this.pullPhotos());
+        }
 
     }
 
@@ -497,6 +513,15 @@ class ElasticsearchController {
             }
             return null;
         }
+    }
+
+    public boolean isConnected() {
+        if (connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
+            //we are connected to a network
+            return true;
+        } else
+            return false;
     }
 
 }
