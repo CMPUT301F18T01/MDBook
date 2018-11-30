@@ -53,8 +53,8 @@ public class DataManager {
         if (dataManager == null){
             dataManager = new DataManager();
             dataManager.localStorageController = LocalStorageController.getController();
-            dataManager.setQueue(LocalStorageController.getController().loadQueue());
-            //dataManager.setMe(LocalStorageController.getMe());
+            dataManager.setPushQueue(LocalStorageController.getController().loadQueue());
+            //dataManager.setMe(LocalStorageController.loadMe());
         }
         return dataManager;
     }
@@ -63,6 +63,10 @@ public class DataManager {
     public void addToQueue(User user){
         pushQueue.add(user);
         localStorageController.saveQueue(pushQueue);
+    }
+
+    public void setPushQueue(ArrayList<User> pushQueue) {
+        this.pushQueue = pushQueue;
     }
 
     public void removeFromQueue(User user){

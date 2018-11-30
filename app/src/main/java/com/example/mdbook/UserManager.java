@@ -137,8 +137,6 @@ public class UserManager {
             throw new NetworkErrorException("No internet access!");
         }
 
-        UserController userController = UserController.getController();
-
         /* Attempt login */
         if (userController.getUser() != null){
             return false;
@@ -152,6 +150,31 @@ public class UserManager {
         } catch (NoSuchUserException e){
             return false;
         }
+    }
+
+    /**
+     * Attempt to login based on local data
+     * @return
+     */
+    public boolean localLogin() {
+        User localUser = localStorageController.loadMe();
+        if (localUser != null){
+            if(elasticsearchController.isConnected()){
+                try {
+                    localUser = this.fetchUser(localUser.getUserID());
+                } catch (NoSuchUserException e) {
+                    this.logout();
+                    return false;
+                } catch (NetworkErrorException e) {
+                    this.logout();
+                    return false;
+                }
+            }
+            dataManager.saveMe(localUser);
+            userController.loadUser(localUser);
+            return true;
+        }
+        return false;
     }
 
     /**

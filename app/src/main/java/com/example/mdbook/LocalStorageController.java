@@ -142,5 +142,23 @@ class LocalStorageController {
 
     }
 
+    // TODO
+    public ArrayList<User> loadQueue() {
+        return new ArrayList<>();
+    }
+    //TODO
+    public User loadMe(){
+        return null;
+    }
+    // TODO
+    public void saveQueue(ArrayList<User> pushQueue) {
+    }
 
+    // TODO
+    public void saveMe(User me) {
+    }
+
+    // TODO
+    public void clearMe() {
+    }
 }
