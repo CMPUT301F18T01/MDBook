@@ -39,15 +39,12 @@ public class DataManager {
      *
      *
      */
-    private HashMap<String, JSONObject> patients;
-    private HashMap<String, JSONObject> caregivers;
-    private HashMap<Integer, JSONObject> problems;
-    private HashMap<Integer, JSONObject> records;
-    private HashMap<Integer, Photo> photos;
-    private ArrayList<Integer> availableIDs;
-    private int availableID = 0; // An unused id number
-    private ElasticsearchController elasticsearchController;
-    private LocalStorageController localStorageController;
+    private JSONObject user;
+    private HashMap<String, JSONObject> problems;
+    private HashMap<String, JSONObject> records;
+    private HashMap<String, Photo> photos;
+    private ArrayList<String> availableIDs;
+    private String availableID = "0"; // An unused id number
 
 
     private static DataManager dataManager = null;
@@ -58,47 +55,36 @@ public class DataManager {
     public static DataManager getDataManager() {
         if (dataManager == null){
             dataManager = new DataManager();
-            dataManager.elasticsearchController = ElasticsearchController.getController();
-            dataManager.localStorageController = LocalStorageController.getController();
         }
         return dataManager;
     }
 
     private DataManager(){
-        this.patients = new HashMap<>();
-        this.caregivers = new HashMap<>();
+        this.user = new JSONObject();
         this.problems = new HashMap<>();
         this.records = new HashMap<>();
         this.photos = new HashMap<>();
         this.availableIDs = new ArrayList<>();
     }
 
-    public HashMap<String, JSONObject> getCaregivers() {
-        return caregivers;
+    public JSONObject getUser(){
+        return user;
     }
 
-    public HashMap<String, JSONObject> getPatients() {
-        return patients;
-    }
-
-    public HashMap<Integer, JSONObject> getProblems() {
+    public HashMap<String, JSONObject> getProblems() {
         return problems;
     }
 
-    public HashMap<Integer, JSONObject> getRecords() {
+    public HashMap<String, JSONObject> getRecords() {
         return records;
     }
 
-    public HashMap<Integer, Photo> getPhotos() {
+    public HashMap<String, Photo> getPhotos() {
         return photos;
     }
 
-    public void setCaregivers(HashMap<String, JSONObject> caregivers) {
-        this.caregivers = caregivers;
-    }
-
-    public void setPatients(HashMap<String, JSONObject> patients) {
-        this.patients = patients;
+    public void setUser(JSONObject user) {
+        this.user = user;
     }
 
     public void setPhotos(HashMap<Integer, Photo> photos) {
@@ -113,19 +99,19 @@ public class DataManager {
         this.records = records;
     }
 
-    public void setAvailableIDs(ArrayList<Integer> availableIDs){
+    public void setAvailableIDs(ArrayList<String> availableIDs){
         this.availableIDs = availableIDs;
     }
 
-    public ArrayList<Integer> getAvailableIDs(){
+    public ArrayList<String> getAvailableIDs(){
         return availableIDs;
     }
 
-    public void setAvailableID(int id){
+    public void setAvailableID(String id){
         this.availableID = id;
     }
 
-    public int getAvailableID(){
+    public String getAvailableID(){
         return this.availableID;
     }
 
@@ -150,13 +136,14 @@ public class DataManager {
      * those. Otherwise return fresh ID and increment counter.
      * @return
      */
-    public int generateID(){
+    public String generateID(){
         if (availableIDs.size() == 0){
-            availableID += 1;
-            return availableID-1;
+            String oldid = availableID;
+            availableID = Integer.toString(Integer.getInteger(availableID) + 1) ;
+            return oldid;
         }
         else {
-            int id = availableIDs.get(0);
+            String id = availableIDs.get(0);
             availableIDs.remove(0);
             return id;
         }
@@ -169,7 +156,7 @@ public class DataManager {
      *                    be eventually overwritten but is not guaranteed to happen immediately or
      *                    at all.
      */
-    public void addAvailableID(int availableID){
+    public void addAvailableID(String availableID){
         this.availableIDs.add(availableID);
     }
 

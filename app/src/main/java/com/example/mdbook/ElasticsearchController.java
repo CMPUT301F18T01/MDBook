@@ -560,8 +560,11 @@ class ElasticsearchController {
         return null;
     }
 
+    // TODO
+    public void setPatient(String userID, JSONObject patientJSON) {
+    }
 
-    
+
     private static class jestIndexTask extends AsyncTask<Index, Void, DocumentResult> {
 
         @Override

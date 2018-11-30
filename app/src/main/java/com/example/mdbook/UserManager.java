@@ -93,7 +93,7 @@ public class UserManager {
             try {
                 data.put("phone", userPhone);
                 data.put("email", userEmail);
-                data.put("problems", new ArrayList<Integer>());
+                data.put("problems", new ArrayList<String>());
 
                 /* Push to elastic search */
                 elasticsearchController.addPatient(userID, data);
@@ -133,7 +133,7 @@ public class UserManager {
             try {
                 data.put("phone", userPhone);
                 data.put("email", userEmail);
-                data.put("problems", new ArrayList<Integer>());
+                data.put("patients", new ArrayList<String>());
 
                 /* Push to elastic search */
                 elasticsearchController.addCaregiver(userID, data);
@@ -197,14 +197,11 @@ public class UserManager {
                 String email = patientJSON.getString("email");
 
                 /* Change JSONObject stringids into ints */
-                ArrayList<Integer> problemIDs = new ArrayList<>();
-                for (String s : (ArrayList<String>) patientJSON.get("problems")){
-                    problemIDs.add(Integer.parseInt(s));
-                }
+                ArrayList<String> problemIDs = (ArrayList<String>) patientJSON.get("problems");
                 Patient patient = new Patient(userID, phone, email);
 
                 /* Get problem method also loads in records, photos, etc */
-                for (int problemID : problemIDs){
+                for (String problemID : problemIDs){
                     patient.addProblem(getProblem(problemID));
                 }
 
@@ -222,6 +219,7 @@ public class UserManager {
             try {
                 /* load basic data into caregiver */
                 JSONObject caregiverJSON = elasticsearchController.getCaregiver(userID);
+
                 String phone = caregiverJSON.getString("phone");
                 String email = caregiverJSON.getString("email");
                 ArrayList<String> patientIDs = (ArrayList<String>) caregiverJSON.get("patients");
@@ -250,17 +248,11 @@ public class UserManager {
      * caregiver, e.g. a ContactUser.
      */
     public void saveUser(User user) throws NoSuchUserException, IllegalArgumentException {
-        HashMap<String, JSONObject> patients = dataManager.getPatients();
-        HashMap<String, JSONObject> caregivers = dataManager.getCaregivers();
-
-        /* Check to make sure user exists */
-        if (!patients.containsKey(user.getUserID()) && !caregivers.containsKey(user.getUserID())){
-            throw new NoSuchUserException();
-        }
 
         if (user.getClass() == Patient.class) {
             /* Update contact info */
-            JSONObject patientJSON = patients.get(user.getUserID());
+            JSONObject patientJSON = elasticsearchController.getPatient(user.getUserID());
+
             try {
                 patientJSON.put("phone", user.getPhoneNumber());
                 patientJSON.put("email", user.getEmail());
@@ -269,28 +261,29 @@ public class UserManager {
             }
 
             /* Update problems, update/add/remove records transitively */
+
             /* Get pre-existing problemID list from user object */
-            ArrayList<Integer> problemIDList = new ArrayList<>();
+            ArrayList<String> problemIDList = new ArrayList<>();
             for (Problem problem : ((Patient) user).getProblems()){
-                if (problem.getProblemID() != -1) {
+                if (problem.getProblemID() != "-1") {
                     problemIDList.add(problem.getProblemID());
                 }
             }
 
-            /* Remove problems not present in user (must convert to int) */
+            /* Remove problems not present in user from elastic search */
             try {
-                for (Double problemID : (ArrayList<Double>) patientJSON.get("problems")){
-                    if (!problemIDList.contains(problemID.intValue())){
-                        deleteProblem(problemID.intValue());
+                for (String problemID : (ArrayList<String>) patientJSON.get("problems")){
+                    if (!problemIDList.contains(problemID)){
+                        deleteProblem(problemID);
                     }
                 }
             } catch (JSONException e) {
                 throw new RuntimeException("Patient problem data is corrupt", e);
             }
 
-            /* Update new and already existing problems */
+            /* Add new and already existing problems to elasticsearch */
             for (Problem problem : ((Patient) user).getProblems()){
-                int problemID = setProblem(problem);
+                String problemID = setProblem(problem);
 
                 /* Add new problemIDs to problemID list */
                 if (!problemIDList.contains(problemID)) {
@@ -298,14 +291,15 @@ public class UserManager {
                 }
             }
 
-            /* Update stored problemID list */
+            /* Update local problemID list */
             try {
                 patientJSON.put("problems", problemIDList);
             } catch (JSONException e) {
                 throw new RuntimeException("User problem ID list is corrupt", e);
             }
 
-            patients.put(user.getUserID(), patientJSON);
+            /* update patient object in elastic search */
+            elasticsearchController.setPatient(user.getUserID(), patientJSON);
         }
 
         else if (user.getClass() == Caregiver.class){
