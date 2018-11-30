@@ -168,4 +168,8 @@ public class DataManager {
     public boolean needsPush() {
         return needsPush;
     }
+
+    // TODO
+    public void loadUser(User user) {
+    }
 }

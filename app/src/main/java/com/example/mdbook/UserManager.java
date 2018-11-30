@@ -89,7 +89,8 @@ public class UserManager {
         if (userID.length() < 8) {
             throw new IllegalArgumentException();
         } else {
-
+            Patient patient = new Patient(userID, userPhone, userEmail);
+            UserDecomposer.Decomposition decomposition = new UserDecomposer().decompose(patient);
             /* Create JSON representation */
             JSONObject data = new JSONObject();
             try {
@@ -168,7 +169,9 @@ public class UserManager {
         try {
             User user = this.fetchUser(userid);
             userController.loadUser(user);
+            dataManager.loadUser(user);
             return true;
+
         } catch (NoSuchUserException e){
             return false;
         }

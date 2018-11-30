@@ -564,6 +564,10 @@ class ElasticsearchController {
     public void setPatient(String userID, JSONObject patientJSON) {
     }
 
+    //TODO
+    public String generateID() {
+    }
+
 
     private static class jestIndexTask extends AsyncTask<Index, Void, DocumentResult> {
 
