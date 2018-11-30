@@ -16,7 +16,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 import java.util.ArrayList;
+
+
 
 /**
  * Creates an activity for the user to add a problem
@@ -25,7 +28,8 @@ import java.util.ArrayList;
  * @see com.example.mdbook.Problem
  *
  *
- * @author .....
+ * @author Vanessa Peng
+ * @author Raj
  * @author James Aina
  *
  * @version 0.0.1
@@ -36,10 +40,13 @@ public class AddProblemActivity extends AppCompatActivity {
     ArrayList<String> problemArray = new ArrayList<String>();
     Button save;
     Button cancel;
-    Button addRecord;
+
     EditText title;
     EditText date;
     EditText description;
+    Problem problem;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,20 +56,32 @@ public class AddProblemActivity extends AppCompatActivity {
         save = findViewById(R.id.saveButton);
         cancel = findViewById(R.id.cancelButton);
         title = findViewById(R.id.addTitle);
-        date = findViewById(R.id.addDate);
         description = findViewById(R.id.addDescription);
-        addRecord = findViewById(R.id.addRecord);
-
-
+        UserManager.initManager();
+        final UserManager userManager = UserManager.getManager();
 
         // Switches to addProblemActivty upon the click of the save button
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Todo: Save data into the user manager
+
+                Patient patient = (Patient) UserController.getController().getUser();
+
+                //Patient patient = new Patient(user, null, null);
+
+                    Problem problem = new Problem(title.getText().toString(), description.getText().toString());
+                    patient.addProblem(problem);
+                try{
+                    userManager.saveUser(patient);
+                    Toast.makeText(AddProblemActivity.this, "saved problem: " + title.getText().toString(), Toast.LENGTH_SHORT).show();
+                }catch ( NoSuchUserException id)
+                {
+                    Toast.makeText(AddProblemActivity.this, "No user", Toast.LENGTH_SHORT).show();
+                }
+
                 BackToListProblem();
-                //Go back to patient main page
-                BackToListProblem();
+
+
             }
         });
 
@@ -74,22 +93,16 @@ public class AddProblemActivity extends AppCompatActivity {
             }
         });
 
-        // Switches to addRecordActivity upon the click of the save button
-        addRecord.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                goAddRecord();
-            }
-        });
     }
 
 
 
     public void BackToListProblem() {
-        //Intent mainPage = new Intent(this, ListProblemActivity.class);
-        //startActivity(mainPage);
+        Intent mainPage = new Intent(AddProblemActivity.this, ListProblemActivity.class);
+        startActivity(mainPage);
         this.finish();
     }
+
 
     public void goAddRecord(){
         Intent goAdd = new Intent(this, AddRecordActivity.class);

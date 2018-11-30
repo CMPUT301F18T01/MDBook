@@ -5,12 +5,14 @@
     android:layout_margin="8dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="4dp"
-    app:cardElevation="13dp">
+    app:cardElevation="13dp"
+    app:cardBackgroundColor="#FFFFFF">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="15dp">
+        android:layout_margin="15dp"
+        android:background="@color/white">
 
         <TextView
             android:id="@+id/mtext"

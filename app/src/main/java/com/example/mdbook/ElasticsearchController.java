@@ -328,7 +328,7 @@ class ElasticsearchController {
     private void pushIDLists() {
         JSONObject IDJSON = new JSONObject(this.idlists);
         try {
-            IDJSON.put("availableID", this.availableID);
+            IDJSON.put("availableID", dataManager.getAvailableID());
         } catch (JSONException e) {
             throw new RuntimeException();
         }
@@ -444,24 +444,45 @@ class ElasticsearchController {
             result = jgt.get();
 
             JSONObject idlistJSON = result.getSourceAsObject(JSONObject.class);
+
             ArrayList<String> patientidlist = (ArrayList<String>) ((LinkedTreeMap) idlistJSON
                     .get("patientIDs"))
                     .get("values");
+
             ArrayList<String> caregiveridlist = (ArrayList<String>) ((LinkedTreeMap) idlistJSON
                     .get("caregiverIDs"))
                     .get("values");
-            ArrayList<Integer> problemidlist = (ArrayList<Integer>) ((LinkedTreeMap) idlistJSON
+
+            ArrayList<Integer> problemidlist = new ArrayList<>();
+            for (Double val : (ArrayList<Double>) ((LinkedTreeMap) idlistJSON
                     .get("problemIDs"))
-                    .get("values");
-            ArrayList<Integer> recordidlist = (ArrayList<Integer>) ((LinkedTreeMap) idlistJSON
+                    .get("values")){
+                problemidlist.add(val.intValue());
+            }
+            ArrayList<Integer> recordidlist = new ArrayList<>();
+            for (Double val : (ArrayList<Double>) ((LinkedTreeMap) idlistJSON
                     .get("recordIDs"))
-                    .get("values");
-            ArrayList<Integer> photoidlist = (ArrayList<Integer>) ((LinkedTreeMap) idlistJSON
+                    .get("values")){
+                recordidlist.add(val.intValue());
+
+            }
+
+            ArrayList<Integer> photoidlist = new ArrayList<>();
+            for (Double val : (ArrayList<Double>) ((LinkedTreeMap) idlistJSON
                     .get("photoIDs"))
-                    .get("values");
-            ArrayList<Integer> availableidlist = (ArrayList<Integer>) ((LinkedTreeMap) idlistJSON
+                    .get("values")){
+                photoidlist.add(val.intValue());
+
+            }
+
+            ArrayList<Integer> availableidlist = new ArrayList<>();
+            for (Double val : (ArrayList<Double>) ((LinkedTreeMap) idlistJSON
                     .get("availableIDs"))
-                    .get("values");
+                    .get("values")){
+                availableidlist.add(val.intValue());
+
+            }
+
             Integer availableID = idlistJSON.getInt("availableID");
 
             idlists.put("patientIDs", patientidlist);
@@ -539,6 +560,9 @@ class ElasticsearchController {
         return null;
     }
 
+    // inidicates if the esc has internet
+    // TODO
+    
     private static class jestIndexTask extends AsyncTask<Index, Void, DocumentResult> {
 
         @Override

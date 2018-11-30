@@ -9,13 +9,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
+
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.CompoundButton;
+
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
 /**
  * Logs in user, if user exists.
  *
@@ -81,11 +84,14 @@ public class LoginActivity extends AppCompatActivity {
                 Intent patientIntent = new Intent(this, ListProblemActivity.class);
                 patientIntent.putExtra("activity", activity);
                 startActivity(patientIntent);
+                this.finish();
             } else if (user.getClass() == Caregiver.class) {
                 Intent caregiverIntent = new Intent(this, ListPatientActivity.class);
                 caregiverIntent.putExtra("activity", activity);
                 startActivity(caregiverIntent);
+                this.finish();
             }
+
         }
     }
 
