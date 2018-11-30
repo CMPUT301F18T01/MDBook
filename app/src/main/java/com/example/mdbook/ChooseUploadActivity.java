@@ -27,6 +27,7 @@ public class ChooseUploadActivity extends AppCompatActivity {
 
     Button uploadFromGallery;
     Button openCamera;
+    Photo photo;
 
     public static final int GET_FROM_GALLERY_REQUEST_CODE = 1;
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 2;
@@ -87,6 +88,8 @@ public class ChooseUploadActivity extends AppCompatActivity {
                 toast.show();
                 Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
                 String path = saveImage(thumbnail);
+                photo = new Photo(thumbnail);
+                photo.setPath(path);
                 Intent intent = new Intent();
                 intent.putExtra("uri", path);
                 setResult(RESULT_OK, intent);

@@ -7,6 +7,7 @@ class Photo{
 
     private int photoid;
     public Bitmap image;
+    public String path;
 
     public Photo(Bitmap image){
         this.image = image;
@@ -18,6 +19,14 @@ class Photo{
 
     public void setPhotoid(int photoid) {
         this.photoid = photoid;
+    }
+
+    public String getPath(){
+        return path;
+    }
+
+    public void setPath(String path){
+        this.path = path;
     }
 }
 

@@ -71,10 +71,10 @@ public class NewBodyLocationView extends AppCompatActivity {
         uploadBack = findViewById(R.id.uploadBack);
         bodyFront = findViewById(R.id.body_front);
         bodyBack = findViewById(R.id.body_back);
-        if(uriFront!= null){
+        if(uriFront != null){
             loadImage(uriFront, bodyFront);
         }
-        if(uriFront!= null){
+        if(uriFront != null){
             loadImage(uriFront, bodyFront);
         }
 
