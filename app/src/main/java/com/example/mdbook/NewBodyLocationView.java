@@ -57,7 +57,7 @@ public class NewBodyLocationView extends AppCompatActivity {
     String location;
     Bitmap myBitmap;
     String uri;
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
