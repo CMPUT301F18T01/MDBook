@@ -71,7 +71,6 @@ public class UserManager {
      * @param userID The unique ID of the new patient. Must be unique.
      * @param userPhone The phone number of the new patient.
      * @param userEmail The email of the new patient.
-     * @returns A new patient object with the given attributes.
      * @throws UserIDNotAvailableException Thrown if the userID is not unique
      * @throws IllegalArgumentException Thrown if the userID is less than 8 characters
      * @throws NetworkErrorException Thrown if there were any network issues creating the user
@@ -90,9 +89,6 @@ public class UserManager {
             throw new IllegalArgumentException();
         } else {
 
-            /* Create patient */
-            Patient patient = new Patient(userID, userPhone, userEmail);
-
             /* Create JSON representation */
             JSONObject data = new JSONObject();
             try {
@@ -100,6 +96,7 @@ public class UserManager {
                 data.put("email", userEmail);
                 data.put("problems", new ArrayList<Integer>());
 
+                /* Push to elastic search */
                 elasticsearchController.addPatient(userID, data);
 
             } catch (JSONException e) {
@@ -113,7 +110,6 @@ public class UserManager {
      * @param userID The unique ID of the new caregiver. Must be unique.
      * @param userPhone The phone number of the new caregiver.
      * @param userEmail The email of the new caregiver.
-     * @returns A new caregiver object with the given attributes.
      * @throws UserIDNotAvailableException Thrown if the userID is not unique
      * @throws IllegalArgumentException Thrown if the userID is less than 8 characters
      * @throws NetworkErrorException Thrown if there were any network issues creating the user
@@ -133,9 +129,6 @@ public class UserManager {
 
         else {
 
-            /* Create caregiver */
-            Caregiver caregiver = new Caregiver(userID, userPhone, userEmail);
-
             /* Create JSON representation */
             JSONObject data = new JSONObject();
             try {
@@ -143,10 +136,12 @@ public class UserManager {
                 data.put("email", userEmail);
                 data.put("problems", new ArrayList<Integer>());
 
+                /* Push to elastic search */
                 elasticsearchController.addCaregiver(userID, data);
 
             } catch (JSONException e) {
                 throw new IllegalArgumentException("Unable to parse data into JSON object", e);
+            }
         }
     }
 
