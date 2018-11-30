@@ -1,6 +1,7 @@
 package com.example.mdbook;
 
 import android.graphics.Bitmap;
+import android.location.Address;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -63,5 +64,13 @@ class Photo implements Parcelable {
             return new Photo[size];
         }
     };
+
+    public ArrayList<Photo> getPhotoList(){
+        return this.photoList;
+    }
+
+    public void addPhoto(Photo photo){
+        photoList.add(photo);
+    }
 }
 
