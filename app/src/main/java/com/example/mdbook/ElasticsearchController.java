@@ -515,6 +515,30 @@ class ElasticsearchController {
     public void addCaregiver(String userID, JSONObject data) throws  NetworkErrorException {
     }
 
+    //TODO
+    // indicates if given userID is an existing patient
+    public boolean existsPatient(String userID) {
+        return false;
+    }
+
+    //TODO
+    // indicates if given userID is an existing caregiver
+    public boolean existsCaregiver(String userID) {
+        return false;
+    }
+
+    //TODO
+    // Returns corresponding json of patient from patients table
+    public JSONObject getPatient(String userID) {
+        return null;
+    }
+
+    //TODO
+    // Returns corresponding json of patient from caregivers table
+    public JSONObject getCaregiver(String userID) {
+        return null;
+    }
+
     private static class jestIndexTask extends AsyncTask<Index, Void, DocumentResult> {
 
         @Override

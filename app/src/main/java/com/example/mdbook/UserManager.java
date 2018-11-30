@@ -183,14 +183,12 @@ public class UserManager {
      * @throws NoSuchUserException Thrown if there is no user with the given userID in the database.
      */
     public User fetchUser (String userID) throws NoSuchUserException {
-        //HashMap<String, JSONObject> patients = dataManager.getPatients();
-        //HashMap<String, JSONObject> caregivers = dataManager.getCaregivers();
 
         /* Check if userID corresponds with a patient */
-        if (patients.containsKey(userID)){
+        if (elasticsearchController.existsPatient(userID)){
             try {
                 /* load basic data into patient */
-                JSONObject patientJSON = patients.get(userID);
+                JSONObject patientJSON = elasticsearchController.getPatient(userID);
                 String phone = patientJSON.getString("phone");
                 String email = patientJSON.getString("email");
                 ArrayList<Integer> problemIDs = (ArrayList<Integer>) patientJSON.get("problems");
@@ -204,17 +202,17 @@ public class UserManager {
                 return patient;
 
             } catch (JSONException e){
-                throw new RuntimeException(e);
+                throw new NoSuchUserException("User data is corrupt, unable to load user", e);
             } catch (InvalidKeyException e) {
-                throw new RuntimeException("The user data is corrupt", e);
+                throw new NoSuchUserException("User data is corrupt, unable to load user", e);
             }
         }
 
         /* Check if userID corresponds with a caregiver */
-        else if (caregivers.containsKey(userID)){
+        else if (elasticsearchController.existsCaregiver(userID)){
             try {
                 /* load basic data into caregiver */
-                JSONObject caregiverJSON = caregivers.get(userID);
+                JSONObject caregiverJSON = elasticsearchController.getCaregiver(userID);
                 String phone = caregiverJSON.getString("phone");
                 String email = caregiverJSON.getString("email");
                 ArrayList<String> patientIDs = (ArrayList<String>) caregiverJSON.get("patients");
@@ -223,8 +221,7 @@ public class UserManager {
                 return caregiver;
 
             } catch (JSONException e){
-                e.printStackTrace();
-                throw new RuntimeException("User attributes are corrupt.", e);
+                throw new NoSuchUserException("User data is corrupt, unable to load user", e);
             }
         }
 
