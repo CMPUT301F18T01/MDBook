@@ -9,6 +9,7 @@
  */
 package com.example.mdbook;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import io.searchbox.annotations.JestId;
@@ -40,6 +41,7 @@ class Patient extends User {
         super(userID, userPhone, userEmail);
         this.problems = new ArrayList<Problem>();
     }
+
 
     /**
      * Convenience method to add problem to patient.

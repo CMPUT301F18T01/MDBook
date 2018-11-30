@@ -16,6 +16,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import org.w3c.dom.Text;
 
 /**
  * Creates a view for editing the problems details
@@ -29,9 +33,9 @@ import android.widget.EditText;
  **/
 public class EditProblemDetailsActivity extends AppCompatActivity {
 
-    EditText editTitle;
-    EditText editDate;
-    EditText editComment;
+    TextView showTitle;
+    TextView showDate;
+    EditText editDescription;
     EditText editLocation;
     Button save;
     Button cancel;
@@ -41,18 +45,31 @@ public class EditProblemDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_problem_details);
         // set the views and buttons appropriately by id's
-        editTitle = findViewById(R.id.editTitle);
-        editDate = findViewById(R.id.editDate);
-        editLocation = findViewById(R.id.editLocation);
-        editComment = findViewById(R.id.editComment);
+        showTitle = findViewById(R.id.showTitle);
+        showDate = findViewById(R.id.showDate);
+        editDescription = findViewById(R.id.editDescription);
         save = findViewById(R.id.save);
         cancel = findViewById(R.id.cancel);
+        UserManager.initManager();
+        final UserManager userManager = UserManager.getManager();
+
 
         // Switches to the main activity upon the click of the save button
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //TODO: Save the data
+                Patient patient = (Patient) UserController.getController().getUser();
+                Problem problem = (Problem) getIntent().getExtras().getSerializable("problem");
+                problem.setDescription(editDescription.getText().toString());
+                try {
+                     userManager.saveUser(patient);
+                } catch (NoSuchUserException e) {
+                    Toast.makeText(EditProblemDetailsActivity.this, "No user exist", Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();
+                }
+
+
                 backToMainPage();
             }
         });
@@ -70,8 +87,9 @@ public class EditProblemDetailsActivity extends AppCompatActivity {
      * Creates a new intent for switching to the ListProblemActivity
      */
     public void backToMainPage(){
-        Intent goEditProblem = new Intent(this, ListProblemActivity.class);
-        startActivity(goEditProblem);
+        Intent intent = new Intent(EditProblemDetailsActivity.this, ListProblemActivity.class);
+        startActivity(intent);
+        this.finish();
     }
 
 }

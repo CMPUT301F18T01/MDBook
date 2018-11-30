@@ -17,7 +17,7 @@ import android.os.Bundle;
  * Lets the user have a slideshow
  *
  * @see com.example.mdbook.Record
- * @see com.example.mdbook.CustomImageAdapter
+ * @see com.example.mdbook.ImageAdapter
  *
  * @author James Aina
  *
@@ -33,7 +33,7 @@ public class PatientSlideActivity extends AppCompatActivity {
         setContentView(R.layout.activity_patient_slide);
 
         ViewPager viewPager = findViewById(R.id.viewPager);
-        CustomImageAdapter adapter = new CustomImageAdapter(this);
+        ImageAdapter adapter = new ImageAdapter(this);
         viewPager.setAdapter(adapter);
     }
 }

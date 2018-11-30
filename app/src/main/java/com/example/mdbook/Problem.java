@@ -9,7 +9,9 @@
  */
 package com.example.mdbook;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * The Problem object holds the information about a Problem, including its records.
@@ -18,13 +20,14 @@ import java.util.ArrayList;
  * @see Record
  * @version 0.0.1
  **/
-class Problem {
+class Problem implements Serializable {
 
     private ArrayList<Record> records;
     private String title;
     private String description;
     private ArrayList<String> comments;
     private int problemID = -1;
+
 
 
     /**
@@ -112,7 +115,7 @@ class Problem {
      * @param record Record object to be added.
      */
     public void addRecord(Record record) {
-        this.records.add(record);
+        this.records.add(0,record);
     }
 
     /**
