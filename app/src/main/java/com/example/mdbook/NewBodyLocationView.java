@@ -46,6 +46,7 @@ public class NewBodyLocationView extends AppCompatActivity {
     Button cancel;
     String location;
     Bitmap myBitmap;
+    private UserManager userManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,8 +122,10 @@ public class NewBodyLocationView extends AppCompatActivity {
 
         if (requestCode == 1) {
             if (resultCode == RESULT_OK) {
-                String uri = data.getStringExtra("uri");
+                //String uri = data.getStringExtra("uri");
+                Photo photo = (Photo) getIntent().getSerializableExtra("uri");
 
+                String uri = photo.getFilepath();
 
                 myBitmap = BitmapFactory.decodeFile(uri);
 
@@ -135,6 +138,7 @@ public class NewBodyLocationView extends AppCompatActivity {
                 }
 
                 if (location == "Back") {
+
                     bodyBack.setImageBitmap(myBitmap);
                 }
             }
