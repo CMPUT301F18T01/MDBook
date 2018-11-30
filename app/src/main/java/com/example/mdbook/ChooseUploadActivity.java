@@ -66,7 +66,7 @@ public class ChooseUploadActivity extends AppCompatActivity {
         Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
 
-        }
+    }
 
 
     public void viewGallery(){
@@ -87,13 +87,8 @@ public class ChooseUploadActivity extends AppCompatActivity {
                 toast.show();
                 Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
                 String path = saveImage(thumbnail);
-
-                //creating new photo object and assigning it it's filepath
-                Photo photo = new Photo(path);
-
-                //creating intent to pass data to previous activity
                 Intent intent = new Intent();
-                intent.putExtra("serialized_data", photo);
+                intent.putExtra("uri", path);
                 setResult(RESULT_OK, intent);
                 finish();
 
@@ -122,16 +117,10 @@ public class ChooseUploadActivity extends AppCompatActivity {
                 try {
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
                     String path = saveImage(bitmap);
-
-                    //Creating new photo object and assigning file path
-                    Photo photo = new Photo(path);
-
-                    //sending data to previous activity
                     Intent intent = new Intent();
-                    intent.putExtra("serialized_data", photo);
+                    intent.putExtra("uri", path);
                     setResult(RESULT_OK, intent);
                     finish();
-
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -158,7 +147,7 @@ public class ChooseUploadActivity extends AppCompatActivity {
 
         }
 
-        }
+    }
 
 
 
@@ -192,7 +181,6 @@ public class ChooseUploadActivity extends AppCompatActivity {
         }
     }
 
-    //Method used for saving a photo as jpg in tmp folder then returning it's file path
     public String saveImage(Bitmap myBitmap) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         myBitmap.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
@@ -207,7 +195,6 @@ public class ChooseUploadActivity extends AppCompatActivity {
             File f = new File(wallpaperDirectory, Calendar.getInstance()
                     .getTimeInMillis() + ".jpg");
             f.createNewFile();
-
             FileOutputStream fo = new FileOutputStream(f);
             fo.write(bytes.toByteArray());
             MediaScannerConnection.scanFile(this,

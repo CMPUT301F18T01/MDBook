@@ -13,24 +13,14 @@ package com.example.mdbook;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
-import android.preference.PreferenceManager;
-import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.Serializable;
 
 /**
  * Creates an activity that add/view a body location
@@ -56,7 +46,6 @@ public class NewBodyLocationView extends AppCompatActivity {
     Button cancel;
     String location;
     Bitmap myBitmap;
-    String uri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,7 +107,7 @@ public class NewBodyLocationView extends AppCompatActivity {
     /**
      * Creates a new intent for switching to the ListProblemActivity
      */
-    
+
     public void BackToAddProblem(){
         this.finish();
     }
@@ -128,49 +117,37 @@ public class NewBodyLocationView extends AppCompatActivity {
         startActivityForResult(chooseUpload,1);
     }
 
-    /*takes the string path and imageView
-    then set's the imageView image to the image referenced by the FilePath
-     */
-    public void loadImage(String path, ImageView img){
-
-        myBitmap = BitmapFactory.decodeFile(path);
-        img.setImageBitmap(myBitmap);
-
-    }
-
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        if (requestCode == 1 & data != null) {
+        if (requestCode == 1) {
             if (resultCode == RESULT_OK) {
+                String uri = data.getStringExtra("uri");
 
-                //receives photo object from ChooseUploadActivity
-                Photo photo = (Photo) getIntent().getSerializableExtra("serialized_data");
 
-                //assigns string uri to the file path assigned to the photo object
-                uri = photo.getFilepath();
+                myBitmap = BitmapFactory.decodeFile(uri);
+
+
 
                 if (location == "Front") {
 
-                    loadImage(uri, bodyFront);
 
+                    bodyFront.setImageBitmap(myBitmap);
                 }
 
                 if (location == "Back") {
-
-                    loadImage(uri, bodyBack);
-
+                    bodyBack.setImageBitmap(myBitmap);
                 }
             }
 
 
-            if (resultCode == RESULT_CANCELED || data == null) {
+            if (resultCode == RESULT_CANCELED) {
                 Toast toast = Toast.makeText(getApplicationContext(), "No image URI found", Toast.LENGTH_SHORT);
                 toast.show();
             }
         }
-    }
 
     }
 
+}
 
 
