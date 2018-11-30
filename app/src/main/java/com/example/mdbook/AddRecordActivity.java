@@ -73,7 +73,7 @@ public class AddRecordActivity extends AppCompatActivity {
         Description = findViewById(R.id.description);
         geo = findViewById(R.id.geo);
         body = findViewById(R.id.body);
-
+        image = findViewById(R.id.addImage);
         save = findViewById(R.id.save);
         cancel = findViewById(R.id.cancel);
 
@@ -84,6 +84,12 @@ public class AddRecordActivity extends AppCompatActivity {
         problemPos = getIntent().getExtras().getInt("problemPos");
 
 
+        image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(AddRecordActivity.this, "Add photo", Toast.LENGTH_LONG).show();
+            }
+        });
         // Switches to addBodyLocationActivity upon the click of the body button
         body.setOnClickListener(new View.OnClickListener() {
             @Override
