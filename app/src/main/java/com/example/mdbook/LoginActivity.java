@@ -83,6 +83,7 @@ public class LoginActivity extends AppCompatActivity {
                 caregiverIntent.putExtra("activity", activity);
                 startActivity(caregiverIntent);
             }
+
         }
     }
 

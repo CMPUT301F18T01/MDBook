@@ -10,6 +10,7 @@
 
 package com.example.mdbook;
 
+import android.support.annotation.NonNull;
 import android.widget.Toast;
 
 import java.io.Serializable;
@@ -36,6 +37,7 @@ class Record implements Serializable {
     private ArrayList<Photo> photos;
     private String comment;
     private int recordID = -1;
+
 
     /**
      * Generates a new Record object with date and title.
@@ -233,4 +235,5 @@ class Record implements Serializable {
     public void setRecordID(int recordID) {
         this.recordID = recordID;
     }
+
 }

@@ -120,6 +120,12 @@ public class AddRecordActivity extends AppCompatActivity {
             }
         });
 
+        reminder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addReminder();
+            }
+        });
         // Switches to AddProblemsActivity upon the click of the cancel button
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -161,6 +167,10 @@ public class AddRecordActivity extends AppCompatActivity {
     public void openGeoLoc(){
         Intent launchmap= new Intent(this, MapActivity.class);
         startActivity(launchmap);
+    }
+    public void addReminder(){
+        Intent reminder= new Intent(this, AddReminderActivity.class);
+        startActivity(reminder);
     }
 
     public boolean isServicesOK(){

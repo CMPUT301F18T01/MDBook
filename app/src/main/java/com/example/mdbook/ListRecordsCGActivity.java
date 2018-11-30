@@ -91,12 +91,19 @@ public class ListRecordsCGActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        this.finish();
+    }
+
     public void AddComment() {
         Intent addRecord = new Intent(this, AddCommentActivity.class);
         addRecord.putExtra("problemPos", problemPos);
         addRecord.putExtra("patientID", patientID);
         addRecord.putExtra("patientPos", patientPos);
         startActivity(addRecord);
+        this.finish();
     }
 
 }
