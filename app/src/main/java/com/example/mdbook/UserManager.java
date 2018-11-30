@@ -282,12 +282,11 @@ public class UserManager {
      * @param recordID The record ID number
      * @return A fully filled out problem object
      */
-    private Record getRecord(int recordID) throws InvalidKeyException{
-        HashMap<Integer, JSONObject> records = dataManager.getRecords();
-        HashMap<Integer, Photo> photos = dataManager.getPhotos();
+    private Record getRecord(String recordID) throws InvalidKeyException{
         try {
-            if (records.containsKey(recordID)){
-                JSONObject recordJSON = records.get(recordID);
+            JSONObject recordJSON = elasticsearchController.getRecord(recordID);
+            if (recordJSON != null){
+
                 /* Fetch data */
                 String title = recordJSON.getString("title");
                 Date date = (Date) recordJSON.get("date");
@@ -298,6 +297,7 @@ public class UserManager {
 
                 record.setComment(comment);
                 record.setRecordID(recordID);
+
                 if (recordJSON.has("geoLocation")){
                     GeoLocation geoLocation = (GeoLocation) recordJSON.get("geoLocation");
                     record.setGeoLocation(geoLocation);
@@ -307,9 +307,9 @@ public class UserManager {
                     record.setBodyLocation(bodyLocation);
                 }
                 /* Add photos */
-                for (Double photoID : (ArrayList<Double>) recordJSON.get("photos")){
-                    Photo photo = photos.get(photoID.intValue());
-                    photo.setPhotoid(photoID.intValue());
+                for (String photoID : (ArrayList<String>) recordJSON.get("photos")){
+                    Photo photo = elasticsearchController.getPhoto(photoID);
+                    photo.setPhotoid(photoID);
                     record.addPhoto(photo);
                 }
 
@@ -320,193 +320,6 @@ public class UserManager {
             }
         } catch (JSONException e){
             throw new RuntimeException("User record data is corrupt.", e);
-        }
-    }
-
-    /**
-     * Assistant method to saveUser method. Saves Problem data, also calls method to save
-     * corresponding record data.
-     *
-     * @param problem The problem object to be uploaded to the database.
-     * @return Returns problemID already owned by problem or generated from the DataManager for new
-     * problems.
-     */
-    private int setProblem(Problem problem){
-        HashMap<Integer, JSONObject> problems = dataManager.getProblems();
-
-        /* Build problem JSON */
-        JSONObject problemJSON = new JSONObject();
-        try {
-            problemJSON.put("title", problem.getTitle());
-            problemJSON.put("description", problem.getDescription());
-            problemJSON.put("comments", problem.getComments());
-            problemJSON.put("records", new ArrayList<Integer>());
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
-
-        /* Generate problemID if needed */
-        if (problem.getProblemID() == -1){
-            problem.setProblemID(dataManager.generateID());
-            /* Problem is new, add empty recordID list */
-        }
-
-        /* Update records */
-        /* Get pre-existing recordID list from problem object */
-        ArrayList<Integer> recordIDList = new ArrayList<>();
-        for (Record record : problem.getRecords()){
-            if (record.getRecordID() != -1) {
-                recordIDList.add(record.getRecordID());
-            }
-        }
-
-        /* Remove records not present in problem (must convert to int) */
-        try {
-            for (Double recordID : (ArrayList<Double>) problemJSON.get("records")){
-                if (!recordIDList.contains(recordID.intValue())){
-                    deleteRecord(recordID.intValue());
-                }
-            }
-        } catch (JSONException e) {
-            throw new RuntimeException("Problem record data is corrupt", e);
-        }
-
-        /* Update new and already existing records */
-        for (Record record : problem.getRecords()){
-            int recordID = setRecord(record);
-
-            /* Add new recordIDs to recordID list */
-            if (!recordIDList.contains(recordID)){
-                recordIDList.add(recordID);
-            }
-        }
-
-        /* Update stored recordID list */
-        try {
-            problemJSON.put("records", recordIDList);
-        } catch (JSONException e) {
-            throw new RuntimeException("Problem recordID list is corrupt", e);
-        }
-
-        /* Save problem and return problemID */
-        problems.put(problem.getProblemID(), problemJSON);
-        return problem.getProblemID();
-    }
-
-    /**
-     * Assistant method to setProblem and saveUser methods. Saves record data.
-     * @param record The record object to be saved. If it doesn't have an ID already (new record),
-     *               one will be generated.
-     * @return The ID of the record, either the one it already has or a new one generated by the
-     * DataManager.
-     */
-    private int setRecord(Record record){
-        HashMap<Integer, JSONObject> records = dataManager.getRecords();
-        HashMap<Integer, Photo> photos = dataManager.getPhotos();
-        /* Build record JSON */
-        JSONObject recordJSON = new JSONObject();
-        try {
-            recordJSON.put("title", record.getTitle());
-            recordJSON.put("date", record.getDate());
-            recordJSON.put("description", record.getDescription());
-            recordJSON.put("geoLocation", record.getLocation());
-            recordJSON.put("bodyLocation", record.getBodyLocation());
-            recordJSON.put("comment", record.getComment());
-            recordJSON.put("photos", new ArrayList<Integer>());
-        } catch (JSONException e){
-            throw new RuntimeException(e);
-        }
-
-        /* Generate recordID if needed */
-        if (record.getRecordID() == -1){
-            record.setRecordID(dataManager.generateID());
-        }
-
-        /* Update photos */
-        /* Generate pre-existing photoID list from record object */
-        ArrayList<Integer> photoIDs = new ArrayList<>();
-        for (Photo photo : record.getPhotos()){
-            if (photo.getPhotoid() != -1) {
-                photoIDs.add(photo.getPhotoid());
-            }
-        }
-        /* Remove photos not present in record object */
-        try {
-            for (Double photoID : (ArrayList<Double>) recordJSON.get("photos")) {
-                if (!photoIDs.contains(photoID.intValue())) {
-                    photos.remove(photoID.intValue());
-                }
-            }
-
-            /* Update new and already existing photos */
-            for (Photo photo : record.getPhotos()) {
-                int photoID = photo.getPhotoid();
-                if (photoID == -1) {
-                    photoID = dataManager.generateID();
-                    photo.setPhotoid(photoID);
-                    photoIDs.add(photoID);
-                }
-                photos.put(photoID, photo);
-            }
-
-            /* Update photoID list in record object */
-            recordJSON.put("photos", photoIDs);
-        } catch (JSONException e) {
-            throw new RuntimeException("Record photoID list is corrupt", e);
-        }
-
-        records.put(record.getRecordID(), recordJSON);
-        return record.getRecordID();
-    }
-
-    /**
-     * Deletes the problem data and associated records and photos from storage.
-     * @param problemID The ID of the problem to delete.
-     */
-    private void deleteProblem(int problemID){
-        HashMap<Integer, JSONObject>  problems = dataManager.getProblems();
-        if (problems.containsKey(problemID)){
-            try {
-                /* remove records */
-                for (Integer recordID : (ArrayList<Integer>) problems.get(problemID).get("records")) {
-                    deleteRecord(recordID);
-                }
-                /* delete problem */
-                problems.remove(problemID);
-                /* make problemID available again */
-                dataManager.addAvailableID(problemID);
-
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
-
-    /**
-     * Deletes the record data and associated photos from storage.
-     * @param recordID The ID of the record to delete.
-     */
-    private void deleteRecord(int recordID){
-        HashMap<Integer, JSONObject> records = dataManager.getRecords();
-        HashMap<Integer, Photo> photos = dataManager.getPhotos();
-        if (records.containsKey(recordID)){
-            try {
-                ArrayList<Integer> photoIDs = (ArrayList<Integer>) records.get(recordID).get("photos");
-                /* Remove photos */
-                for (int photoID : photoIDs){
-                    photos.remove(photoID);
-                    /* make photoID available again */
-                    dataManager.addAvailableID(photoID);
-                }
-
-                /* delete record object */
-                records.remove(recordID);
-                /* make recordID available again */
-                dataManager.addAvailableID(recordID);
-
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
-            }
         }
     }
 

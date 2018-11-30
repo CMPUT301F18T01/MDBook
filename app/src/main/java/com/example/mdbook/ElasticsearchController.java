@@ -592,9 +592,15 @@ class ElasticsearchController {
     //TODO
     public void deleteUser(String userID) {
     }
-
+    //TODO
     public JSONObject getProblem(String problemID) throws InvalidKeyException {
         return null;
+    }
+    // TODO
+    public JSONObject getRecord(String recordID) {
+    }
+    //TODO
+    public Photo getPhoto(String photoID) {
     }
 
     private static class jestIndexTask extends AsyncTask<Index, Void, DocumentResult> {
