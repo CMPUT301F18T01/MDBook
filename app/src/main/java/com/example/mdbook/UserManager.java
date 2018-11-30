@@ -263,7 +263,7 @@ public class UserManager {
      * Does not delete patients of caregiver when caregiver is deleted.
      * @param userID The userID of the user to be cleared out.
      */
-    public void deleteUser(String userID) throws NoSuchUserException {
+    public void deleteUser(String userID) throws NoSuchUserException, NetworkErrorException {
         elasticsearchController.deleteUser(userID);
     }
 

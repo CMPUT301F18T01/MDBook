@@ -432,7 +432,7 @@ class ElasticsearchController {
     /**
      * Pulls a list of IDs from Elastic search server
      */
-    public void pullIDLists() {
+    public void pullIDLists() throws NetworkErrorException {
         JestResult result;
 
         try {
@@ -449,40 +449,21 @@ class ElasticsearchController {
             ArrayList<String> patientidlist = (ArrayList<String>) ((LinkedTreeMap) idlistJSON
                     .get("patientIDs"))
                     .get("values");
-
             ArrayList<String> caregiveridlist = (ArrayList<String>) ((LinkedTreeMap) idlistJSON
                     .get("caregiverIDs"))
                     .get("values");
-
-            ArrayList<Integer> problemidlist = new ArrayList<>();
-            for (Double val : (ArrayList<Double>) ((LinkedTreeMap) idlistJSON
+            ArrayList<String> problemidlist = (ArrayList<String>) ((LinkedTreeMap) idlistJSON
                     .get("problemIDs"))
-                    .get("values")){
-                problemidlist.add(val.intValue());
-            }
-            ArrayList<Integer> recordidlist = new ArrayList<>();
-            for (Double val : (ArrayList<Double>) ((LinkedTreeMap) idlistJSON
+                    .get("values");
+            ArrayList<String> recordidlist = (ArrayList<String>) ((LinkedTreeMap) idlistJSON
                     .get("recordIDs"))
-                    .get("values")){
-                recordidlist.add(val.intValue());
-
-            }
-
-            ArrayList<Integer> photoidlist = new ArrayList<>();
-            for (Double val : (ArrayList<Double>) ((LinkedTreeMap) idlistJSON
+                    .get("values");
+            ArrayList<String> photoidlist = (ArrayList<String>) ((LinkedTreeMap) idlistJSON
                     .get("photoIDs"))
-                    .get("values")){
-                photoidlist.add(val.intValue());
-
-            }
-
-            ArrayList<Integer> availableidlist = new ArrayList<>();
-            for (Double val : (ArrayList<Double>) ((LinkedTreeMap) idlistJSON
+                    .get("values");
+            ArrayList<String> availableidlist = (ArrayList<String>) ((LinkedTreeMap) idlistJSON
                     .get("availableIDs"))
-                    .get("values")){
-                availableidlist.add(val.intValue());
-
-            }
+                    .get("values");
 
             Integer availableID = idlistJSON.getInt("availableID");
 
@@ -493,16 +474,14 @@ class ElasticsearchController {
             idlists.put("photoIDs", photoidlist);
             idlists.put("availableIDs", availableidlist);
             idlists.put("availableID", availableID);
-            dataManager.setAvailableID(availableID);
-            dataManager.setAvailableIDs(availableidlist);
 
 
         }catch (JSONException e) {
-            throw new RuntimeException(e);
+            throw new NetworkErrorException("ID lists are corrupted.", e);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            throw new NetworkErrorException("Interrupted while fetching idlists.", e);
         } catch (ExecutionException e) {
-            e.printStackTrace();
+            throw new NetworkErrorException("Interrupted while fetching idlists.", e);
         }
 
     }
@@ -590,7 +569,9 @@ class ElasticsearchController {
     }
 
     //TODO
-    public void deleteUser(String userID) {
+    public void deleteUser(String userID) throws NetworkErrorException, NoSuchUserException {
+
+
     }
     //TODO
     public JSONObject getProblem(String problemID) throws InvalidKeyException {

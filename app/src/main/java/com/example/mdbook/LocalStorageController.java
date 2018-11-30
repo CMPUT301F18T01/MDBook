@@ -54,7 +54,6 @@ class LocalStorageController {
             localStorageController = new LocalStorageController();
         }
         localStorageController.sharedPreferences = sharedPreferences;
-        localStorageController.dataManager = DataManager.getDataManager();
     }
 
     /**
