@@ -17,16 +17,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
-import org.apache.commons.lang3.ObjectUtils;
-import org.json.JSONObject;
-
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
+
+
 
 /**
  * Creates an activity for the user to add a problem
@@ -35,7 +28,8 @@ import java.util.HashMap;
  * @see com.example.mdbook.Problem
  *
  *
- * @author .....
+ * @author Vanessa Peng
+ * @author Raj
  * @author James Aina
  *
  * @version 0.0.1
@@ -77,8 +71,6 @@ public class AddProblemActivity extends AppCompatActivity {
 
                     Problem problem = new Problem(title.getText().toString(), description.getText().toString());
                     patient.addProblem(problem);
-
-
                 try{
                     userManager.saveUser(patient);
                     Toast.makeText(AddProblemActivity.this, "saved problem: " + title.getText().toString(), Toast.LENGTH_SHORT).show();

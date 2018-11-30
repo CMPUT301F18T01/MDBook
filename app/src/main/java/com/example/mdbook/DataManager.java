@@ -125,18 +125,20 @@ public class DataManager {
         this.availableID = id;
     }
 
-    public int getAvaialbleID(){
+    public int getAvailableID(){
         return this.availableID;
     }
 
     public void push(){
-//        localStorageController.push();
-//        elasticsearchController.push();
-    }
+
+        localStorageController.push();
+        elasticsearchController.push();
+}
+
 
     public void pull(){
-//        elasticsearchController.pull();
-//        localStorageController.loadData();
+        elasticsearchController.pull();
+        localStorageController.loadData();
     }
 
     /**
