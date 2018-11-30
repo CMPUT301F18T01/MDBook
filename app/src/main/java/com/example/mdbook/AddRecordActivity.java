@@ -53,7 +53,6 @@ public class AddRecordActivity extends AppCompatActivity {
 
     private ArrayList<Record> recordList;
     private Integer problemPos;
-    private DateFormat format;
     private Date recordDate;
     private ImageView image;
     private EditText headline;
@@ -61,7 +60,6 @@ public class AddRecordActivity extends AppCompatActivity {
     private EditText Description;
     private Button geo;
     private Button body;
-    private Button reminder;
     private Button save;
     private Button cancel;
 
@@ -71,11 +69,11 @@ public class AddRecordActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_record);
         // set the view and butons appropriately by id's
         headline = findViewById(R.id.headline);
-        date = findViewById(R.id.date);
+
         Description = findViewById(R.id.description);
         geo = findViewById(R.id.geo);
         body = findViewById(R.id.body);
-        reminder = findViewById(R.id.reminder);
+
         save = findViewById(R.id.save);
         cancel = findViewById(R.id.cancel);
 
@@ -85,7 +83,6 @@ public class AddRecordActivity extends AppCompatActivity {
         final Patient patient = (Patient) UserController.getController().getUser();
         problemPos = getIntent().getExtras().getInt("problemPos");
 
-        format = new SimpleDateFormat("dd/MM/yy");
 
         // Switches to addBodyLocationActivity upon the click of the body button
         body.setOnClickListener(new View.OnClickListener() {
@@ -100,7 +97,7 @@ public class AddRecordActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    recordDate = format.parse(date.getText().toString());
+                    recordDate = new Date();
                     Record record = new Record(headline.getText().toString(),recordDate,Description.getText().toString());
                     patient.getProblems().get(problemPos).addRecord(record);
                     userManager.saveUser(patient);
@@ -113,19 +110,10 @@ public class AddRecordActivity extends AppCompatActivity {
                     Toast.makeText(AddRecordActivity.this
                             , "Unable to add record."
                             , Toast.LENGTH_SHORT).show();
-                } catch (ParseException e) {
-                    Toast.makeText(AddRecordActivity.this,"WRONG DATE FORMAT", Toast.LENGTH_SHORT).show();
                 }
-
             }
         });
 
-        reminder.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addReminder();
-            }
-        });
         // Switches to AddProblemsActivity upon the click of the cancel button
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -168,10 +156,7 @@ public class AddRecordActivity extends AppCompatActivity {
         Intent launchmap= new Intent(this, MapActivity.class);
         startActivity(launchmap);
     }
-    public void addReminder(){
-        Intent reminder= new Intent(this, AddReminderActivity.class);
-        startActivity(reminder);
-    }
+
 
     public boolean isServicesOK(){
         Log.d(TAG,"isServicesOK: checking Google Services version");

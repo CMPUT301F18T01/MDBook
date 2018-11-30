@@ -130,7 +130,7 @@ public class DataManager {
     }
 
     public void push(){
-//        elasticsearchController.push();
+        elasticsearchController.push();
         localStorageController.push();
     }
 
