@@ -125,7 +125,7 @@ public class DataManager {
         this.availableID = id;
     }
 
-    public int getAvaialbleID(){
+    public int getAvailableID(){
         return this.availableID;
     }
 
