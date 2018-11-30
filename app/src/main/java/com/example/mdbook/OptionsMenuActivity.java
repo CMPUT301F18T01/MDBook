@@ -10,21 +10,28 @@
 
 package com.example.mdbook;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import java.io.Serializable;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 
 public class OptionsMenuActivity extends AppCompatActivity {
 
-    Button EditProblem;
-    Button EditRecord;
-    Button RecordSlide;
-    Button GeoLocation;
+    private static final String TAG = "OptionsMenuActivity";
+    private static final int ERROR_DIALOG_REQUEST = 9001;
+
+    private Button EditProblem;
+    private Button EditRecord;
+    private Button RecordSlide;
+    private Button GeoLocation;
+    private Button setReminder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,10 +43,7 @@ public class OptionsMenuActivity extends AppCompatActivity {
         EditRecord = findViewById(R.id.EditRecord);
         RecordSlide = findViewById(R.id.RecordSlide);
         GeoLocation = findViewById(R.id.GeoLocation);
-
-//        Intent intent = new Intent();
-//        Problem problem = (Problem) getIntent().getExtras().getSerializable("problem");
-//        Toast.makeText(OptionsMenuActivity.this, problem.getTitle(), Toast.LENGTH_SHORT).show();
+        setReminder = findViewById(R.id.setRemindersBtn);
 
         // Switches to the edit problem activity upon the click of the edit problem button
         EditProblem.setOnClickListener(new View.OnClickListener() {
@@ -70,28 +74,29 @@ public class OptionsMenuActivity extends AppCompatActivity {
             }
         });
 
+        setReminder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setReminder();
+            }
+        });
+
     }
     /**
      * Creates a new intent for switching to the EditProblemDetailsActivity
      */
     public void GoEditProblem(){
         Intent goEditProblem = new Intent(this, EditProblemDetailsActivity.class);
-       // Intent intent = new Intent();
-        Problem problem = (Problem) getIntent().getExtras().getSerializable("problem");
-//        Toast.makeText(OptionsMenuActivity.this, problem.getTitle(), Toast.LENGTH_SHORT).show();
-        goEditProblem.putExtra("problem", problem);
         startActivity(goEditProblem);
     }
     /**
      * Creates a new intent for switching to the ViewRecordActivity
      */
     public void GoEditRecord(){
-        Intent goEditRecord = new Intent(this, ViewRecordActivity.class);
-        Problem problem = (Problem) getIntent().getExtras().getSerializable("problem");
-        int position = getIntent().getExtras().getInt("position");
-        goEditRecord.putExtra("problem", problem);
-        goEditRecord.putExtra("position", position);
-        startActivity(goEditRecord);
+        Intent goEditProblem = new Intent(this, ListRecordActivity.class);
+        goEditProblem.putExtra("problemPos", getIntent().getExtras()
+                .getInt("problemPos"));
+        startActivity(goEditProblem);
     }
     /**
      * Creates a new intent for switching to the PatientSlideActivity
@@ -105,7 +110,43 @@ public class OptionsMenuActivity extends AppCompatActivity {
      * Creates a new intent for switching to the ViewLocationActivity
      */
     public void GeoLocation(){
-        Intent ViewLocationActivity = new Intent(this, ViewLocationActivity.class);
-        startActivity(ViewLocationActivity);
+        if (isServicesOK()) {
+            Intent launchmap = new Intent(this, ViewMapActivity.class);
+            startActivity(launchmap);
+        }
+    }
+
+    public  void setReminder()
+    {
+        Intent intent = new Intent(OptionsMenuActivity.this, AddReminderActivity.class);
+        startActivity(intent);
+        this.finish();
+    }
+
+    public boolean isServicesOK(){
+        Log.d(TAG,"isServicesOK: checking Google Services version");
+        int available = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(OptionsMenuActivity.this);
+        if(available == ConnectionResult.SUCCESS){
+            //Everything is fine and user can make map requests
+            Log.d(TAG, "isServicesOK: Google Play Services is working");
+            return true;
+        }
+        else if (GoogleApiAvailability.getInstance().isUserResolvableError(available)){
+            //Error occured but is fixable
+            Log.d(TAG,"isServicesOK: an error has occured but is fixable");
+            Dialog dialog = GoogleApiAvailability.getInstance().getErrorDialog(OptionsMenuActivity
+                    .this,available , ERROR_DIALOG_REQUEST);
+            dialog.show();
+        }
+        else{
+            Toast.makeText(this, "You cant make map request", Toast.LENGTH_SHORT).show();
+        }
+        return false;
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
     }
 }

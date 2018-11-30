@@ -11,19 +11,25 @@
 
 package com.example.mdbook;
 
+import android.app.Dialog;
 import android.content.Intent;
 //import android.media.Image;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -34,29 +40,30 @@ import java.util.Date;
  *
  *
  * @author Jayanta Chatterjee
- * @author Raj Kapadia
  * @author James Aina
+ * @author Raj Kapadia
  *
  * @version 0.0.1
  */
 
 public class AddRecordActivity extends AppCompatActivity {
+    private static final String TAG = "AddRecordActivity";
+    private static final int ERROR_DIALOG_REQUEST = 9001;
     // Initialize all the required imageViews ans Buttons
-    ImageView image;
-    EditText headline;
-    EditText date;
-    EditText Description;
-    Button geo;
-    Button body;
-    Button reminder;
-    Button save;
-    Button cancel;
-    Record record;
-    Date recordDate;
-    Problem problem;
-    Patient patient;
-    DateFormat formatter;
-    String goBack;
+
+    private ArrayList<Record> recordList;
+    private Integer problemPos;
+    private DateFormat format;
+    private Date recordDate;
+    private ImageView image;
+    private EditText headline;
+    private EditText date;
+    private EditText Description;
+    private Button geo;
+    private Button body;
+    private Button reminder;
+    private Button save;
+    private Button cancel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,8 +78,14 @@ public class AddRecordActivity extends AppCompatActivity {
         reminder = findViewById(R.id.reminder);
         save = findViewById(R.id.save);
         cancel = findViewById(R.id.cancel);
+
         UserManager.initManager();
         final UserManager userManager = UserManager.getManager();
+        recordList = new ArrayList<>();
+        final Patient patient = (Patient) UserController.getController().getUser();
+        problemPos = getIntent().getExtras().getInt("problemPos");
+
+        format = new SimpleDateFormat("dd/MM/yy");
 
         // Switches to addBodyLocationActivity upon the click of the body button
         body.setOnClickListener(new View.OnClickListener() {
@@ -84,55 +97,48 @@ public class AddRecordActivity extends AppCompatActivity {
 
         // Switches to addBodyLocationActivity upon the click of the save button
         save.setOnClickListener(new View.OnClickListener() {
-
-
             @Override
             public void onClick(View v) {
-                problem = (Problem)getIntent().getExtras().getSerializable("problem");
-                patient = (Patient) UserController.getController().getUser();
-                formatter = new SimpleDateFormat("dd/MM/yyyy");
                 try {
-                    recordDate =  formatter.parse(date.getText().toString());
-                    record = new Record(headline.getText().toString(), recordDate,Description.getText().toString());
-                    problem.addRecord(record);
-                } catch (ParseException e) {
-                    Toast.makeText(AddRecordActivity.this, "WRONG DATE FORMAT", Toast.LENGTH_SHORT).show();
-                    e.printStackTrace();
-                }
-
-                try {
+                    recordDate = format.parse(date.getText().toString());
+                    Record record = new Record(headline.getText().toString(),recordDate,Description.getText().toString());
+                    patient.getProblems().get(problemPos).addRecord(record);
                     userManager.saveUser(patient);
-                    Toast.makeText(AddRecordActivity.this, "Save new record: " + record.getTitle(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddRecordActivity.this
+                            ,"Record " + headline.getText().toString() + " Added"
+                            ,Toast.LENGTH_SHORT).show();
+                    endActivity();
+
                 } catch (NoSuchUserException e) {
-                    Toast.makeText(AddRecordActivity.this, "user doesn't exist", Toast.LENGTH_SHORT);
-                    e.printStackTrace();
+                    Toast.makeText(AddRecordActivity.this
+                            , "Unable to add record."
+                            , Toast.LENGTH_SHORT).show();
+                } catch (ParseException e) {
+                    Toast.makeText(AddRecordActivity.this,"WRONG DATE FORMAT", Toast.LENGTH_SHORT).show();
                 }
-                BackToAddProblem();
-                //Go back to patient main page
-                //BackToAddProblem();
-            }
-        });
 
-        // Switches to AddProblemsActivity upon the click of the cancel button
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                BackToAddProblem();
-            }
-        });
-
-        // Switches to AddProblemsActivity upon the click of the geolocstion button
-        geo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openGeoLoc();
             }
         });
 
         reminder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goAddReminder();
+                addReminder();
+            }
+        });
+        // Switches to AddProblemsActivity upon the click of the cancel button
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               endActivity();
+            }
+        });
+
+        // Switches to AddProblemsActivity upon the click of the geolocation button
+        geo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openGeoLoc();
             }
         });
 
@@ -145,43 +151,47 @@ public class AddRecordActivity extends AppCompatActivity {
     public void goAddBodyLoc(){
         Intent addRecordPage = new Intent(this, NewBodyLocationView.class);
         startActivity(addRecordPage);
-        this.finish();
-    }
-
-    /**
-     * Creates a new intent for switch to the AddReminderActivity
-     */
-    public void goAddReminder()
-    {
-        Intent addReminderIntent = new Intent(this, AddReminderActivity.class);
-        startActivity(addReminderIntent);
-        this.finish();
     }
 
     /**
      * Creates a new intent for switch to the ListProblemActivity
      */
-    public void BackToAddProblem(){
-        Intent mainPage = new Intent(this, ViewRecordActivity.class);
-//        Record record = new Record(headline.getText().toString(), date.getText().toString(), Description.getText().toString());
-        mainPage.putExtra("record", record);
-        goBack = "return";
-        mainPage.putExtra("return",goBack);
-        Problem problem = (Problem)getIntent().getExtras().getSerializable("problem");
-        mainPage.putExtra("problem", problem);
-        startActivity(mainPage);
+    public void endActivity(){
+        //Intent mainPage = new Intent(this, ListRecordActivity.class);
+        //startActivity(mainPage);
         this.finish();
     }
     /**
      * Creates a new intent for switch to the ViewLocationActivity
      */
     public void openGeoLoc(){
-        Intent geoLoc = new Intent(this, ViewLocationActivity.class);
-        startActivity(geoLoc);
-        this.finish();
+        Intent launchmap= new Intent(this, MapActivity.class);
+        startActivity(launchmap);
+    }
+    public void addReminder(){
+        Intent reminder= new Intent(this, AddReminderActivity.class);
+        startActivity(reminder);
     }
 
-
-    public void goAddBodyLoc(View view) {
+    public boolean isServicesOK(){
+        Log.d(TAG,"isServicesOK: checking Google Services version");
+        int available = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(AddRecordActivity.this);
+        if(available == ConnectionResult.SUCCESS){
+            //Everything is fine and user can make map requests
+            Log.d(TAG, "isServicesOK: Google Play Services is working");
+            return true;
+        }
+        else if (GoogleApiAvailability.getInstance().isUserResolvableError(available)){
+            //Error occured but is fixable
+            Log.d(TAG,"isServicesOK: an error has occured but is fixable");
+            Dialog dialog = GoogleApiAvailability.getInstance().getErrorDialog(AddRecordActivity
+                    .this,available , ERROR_DIALOG_REQUEST);
+            dialog.show();
+        }
+        else{
+            Toast.makeText(this, "You cant make map request", Toast.LENGTH_SHORT).show();
+        }
+        return false;
     }
+
 }

@@ -10,6 +10,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
+import android.util.Log;
+import android.widget.Toast;
 
 /**
  * Sets notificatoin timer using NotificationActivity
@@ -26,54 +28,33 @@ import android.support.annotation.RequiresApi;
  */
 
 
+import java.text.ParseException;
+
 import static android.app.NotificationManager.IMPORTANCE_DEFAULT;
 
-public class Reminder extends BroadcastReceiver{
-    private static final String CHANNEL_ID = "com.rkkapadi.reminderservice.channelId";
-
-    private Long timeInMilis;
-    private String frequency;
-
-    public Reminder(Long timeInMilis, String frequency)
-    {
-        this.timeInMilis = timeInMilis;
-        this.frequency = frequency;
-    }
+public class AlarmService extends BroadcastReceiver{
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public void onReceive(Context context, Intent intent) {
-        Intent notificationIntent = new Intent(context, NotificationActivity.class);
 
-        TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
-        stackBuilder.addParentStack(NotificationActivity.class);
-        stackBuilder.addNextIntent(notificationIntent);
+        int notificationID = intent.getExtras().getInt("notificationID");
 
-        PendingIntent pendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        Notification.Builder builder = new Notification.Builder(context);
-
-        Notification notification = builder.setContentTitle("Demo App Notification")
-                .setContentText("New Notification From Demo App..")
-                .setTicker("New Message Alert!")
-                .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentIntent(pendingIntent).build();
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            builder.setChannelId(CHANNEL_ID);
-        }
+        Intent mainIntent = new Intent(context, AddReminderActivity.class);
+        PendingIntent contentIntent = PendingIntent.getActivity(context, 0, mainIntent, 0);
 
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel(
-                    CHANNEL_ID,
-                    "NotificationDemo",
-                    IMPORTANCE_DEFAULT
-            );
-            notificationManager.createNotificationChannel(channel);
-        }
+        Notification.Builder builder = new Notification.Builder(context);
+        builder.setSmallIcon(R.drawable.ic_account_box_black_24dp)
+                .setContentTitle("Reminder!")
+                .setContentText("Reminder to take pictures!")
+                .setWhen(System.currentTimeMillis())
+                .setAutoCancel(true)
+                .setContentIntent(contentIntent);
 
-        notificationManager.notify(0, notification);
+        notificationManager.notify(notificationID, builder.build());
+
+
     }
 }
