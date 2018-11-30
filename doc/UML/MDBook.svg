@@ -125,13 +125,13 @@
     <text font-size="16" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="2090.63" y="-1488.65">ListPatientActivity</text>
     <rect style="fill: #ffffff" x="1896.98" y="-1479.65" width="387.3" height="116"/>
     <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1896.98" y="-1479.65" width="387.3" height="116"/>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1899.98" y="-1465.65">+fabAddPatients : FloatingActionButton</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1899.98" y="-1449.65">+fabSearch: FloatingActionButton</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1899.98" y="-1433.65">+viewProfile: Button</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1899.98" y="-1417.65">+patientListConatiner: ListView</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1899.98" y="-1401.65">+patientListConatiner: ArrayAdapter&lt;String&gt; </text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1899.98" y="-1385.65">+nameOfPatient: String</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1899.98" y="-1369.65">+previousIntent: String</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1899.98" y="-1465.65">-fabAddPatients : FloatingActionButton</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1899.98" y="-1449.65">-fabSearch: FloatingActionButton</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1899.98" y="-1433.65">-viewProfile: Button</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1899.98" y="-1417.65">-patientListConatiner: ListView</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1899.98" y="-1401.65">-patientListConatiner: ArrayAdapter&lt;String&gt; </text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1899.98" y="-1385.65">-nameOfPatient: String</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1899.98" y="-1369.65">-previousIntent: String</text>
     <rect style="fill: #ffffff" x="1896.98" y="-1363.65" width="387.3" height="100"/>
     <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1896.98" y="-1363.65" width="387.3" height="100"/>
     <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1899.98" y="-1349.65">+onCreate(Bundle:savedInstanceState)</text>
@@ -161,12 +161,12 @@
     <text font-size="16" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="2519.81" y="-1740.99">ListPatientsProblemsActivity</text>
     <rect style="fill: #ffffff" x="2341.56" y="-1731.99" width="356.5" height="100"/>
     <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="2341.56" y="-1731.99" width="356.5" height="100"/>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2344.56" y="-1717.99">+headerPatientProblem: TextView</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2344.56" y="-1701.99">+patientsProblemContainer: ListView</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2344.56" y="-1685.99">+problemListAdapter: ArrayAdapter&lt;String&gt;</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2344.56" y="-1669.99">+drawerLayout: DrawerLayout</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2344.56" y="-1653.99">+actionBarDrawerToggle: ActionBarDrawerToggle</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2344.56" y="-1637.99">+navigationView: NavigationView</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2344.56" y="-1717.99">-headerPatientProblem: TextView</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2344.56" y="-1701.99">-patientsProblemContainer: ListView</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2344.56" y="-1685.99">-problemListAdapter: ArrayAdapter&lt;String&gt;</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2344.56" y="-1669.99">-drawerLayout: DrawerLayout</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2344.56" y="-1653.99">-actionBarDrawerToggle: ActionBarDrawerToggle</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2344.56" y="-1637.99">-navigationView: NavigationView</text>
     <rect style="fill: #ffffff" x="2341.56" y="-1631.99" width="356.5" height="20"/>
     <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="2341.56" y="-1631.99" width="356.5" height="20"/>
     <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2344.56" y="-1617.99">+onCreate(Bundle:savedInstanceState)</text>
@@ -177,11 +177,11 @@
     <text font-size="16" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="2533.56" y="-1416.87">ViewAccountDetailActivity</text>
     <rect style="fill: #ffffff" x="2366.86" y="-1407.87" width="333.4" height="84"/>
     <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="2366.86" y="-1407.87" width="333.4" height="84"/>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2369.86" y="-1393.87">+name: TextView</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2369.86" y="-1377.87">+phone: TextView</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2369.86" y="-1361.87">+email: TextView</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2369.86" y="-1345.87">+editAccount: Button</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2369.86" y="-1329.87">+logOutButton: Button</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2369.86" y="-1393.87">-name: TextView</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2369.86" y="-1377.87">-phone: TextView</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2369.86" y="-1361.87">-email: TextView</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2369.86" y="-1345.87">-editAccount: Button</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2369.86" y="-1329.87">-logOutButton: Button</text>
     <rect style="fill: #ffffff" x="2366.86" y="-1323.87" width="333.4" height="68"/>
     <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="2366.86" y="-1323.87" width="333.4" height="68"/>
     <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2369.86" y="-1309.87">+onCreate(Bundle:savedInstanceState): void</text>
@@ -195,11 +195,11 @@
     <text font-size="16" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="2604.72" y="-1072.2">EditProblemDetailsActivity</text>
     <rect style="fill: #ffffff" x="2461.12" y="-1063.2" width="287.2" height="84"/>
     <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="2461.12" y="-1063.2" width="287.2" height="84"/>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2464.12" y="-1049.2">+editTitle: EditText</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2464.12" y="-1033.2">+editDate: EditText</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2464.12" y="-1017.2">+editComment: EditText</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2464.12" y="-1001.2">+save: Button</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2464.12" y="-985.202">+cancel: Button</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2464.12" y="-1049.2">-editTitle: EditText</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2464.12" y="-1033.2">-editDate: EditText</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2464.12" y="-1017.2">-editComment: EditText</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2464.12" y="-1001.2">-save: Button</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2464.12" y="-985.202">-cancel: Button</text>
     <rect style="fill: #ffffff" x="2461.12" y="-979.202" width="287.2" height="20"/>
     <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="2461.12" y="-979.202" width="287.2" height="20"/>
     <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2464.12" y="-965.202">+onCreate(Bundle:savedInstanceState)</text>
@@ -210,11 +210,11 @@
     <text font-size="16" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="3212.66" y="-1443.91">ListRecordActivity</text>
     <rect style="fill: #ffffff" x="3042.11" y="-1434.91" width="341.1" height="84"/>
     <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="3042.11" y="-1434.91" width="341.1" height="84"/>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3045.11" y="-1420.91">+mRecyclerView: RecyclerView</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3045.11" y="-1404.91">+mAdapter: RecyclerView.Adapter</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3045.11" y="-1388.91">+mLayoutManager: RecyclerView.LayoutManager</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3045.11" y="-1372.91">+recordList: ArrayList&lt;Record&gt;</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3045.11" y="-1356.91">+problemPos: Integer</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3045.11" y="-1420.91">-mRecyclerView: RecyclerView</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3045.11" y="-1404.91">-mAdapter: RecyclerView.Adapter</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3045.11" y="-1388.91">-mLayoutManager: RecyclerView.LayoutManager</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3045.11" y="-1372.91">-recordList: ArrayList&lt;Record&gt;</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3045.11" y="-1356.91">-problemPos: Integer</text>
     <rect style="fill: #ffffff" x="3042.11" y="-1350.91" width="341.1" height="52"/>
     <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="3042.11" y="-1350.91" width="341.1" height="52"/>
     <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3045.11" y="-1336.91">+onCreate(Bundle:savedInstanceState)</text>
@@ -316,10 +316,10 @@
     <text font-size="16" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="2118.61" y="-931.18">ListProblemActivitiy</text>
     <rect style="fill: #ffffff" x="1847.96" y="-922.18" width="541.3" height="68"/>
     <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1847.96" y="-922.18" width="541.3" height="68"/>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1850.96" y="-908.18">+problems: ArrayList&lt;Problem&gt;</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1850.96" y="-892.18">+recyclerView: RecyclerView</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1850.96" y="-876.18">+mAdapter: ProblemAdapter</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1850.96" y="-860.18">+mLayoutManager: RecyclerView.LayoutManager</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1850.96" y="-908.18">-problems: ArrayList&lt;Problem&gt;</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1850.96" y="-892.18">-recyclerView: RecyclerView</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1850.96" y="-876.18">-mAdapter: ProblemAdapter</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1850.96" y="-860.18">-mLayoutManager: RecyclerView.LayoutManager</text>
     <rect style="fill: #ffffff" x="1847.96" y="-854.18" width="541.3" height="228"/>
     <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1847.96" y="-854.18" width="541.3" height="228"/>
     <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1850.96" y="-840.18">+onCreate(Bundle:savedInstanceState)</text>
@@ -343,18 +343,18 @@
     <text font-size="16" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="3232.91" y="-1194.3">ViewLocationActivity</text>
     <rect style="fill: #ffffff" x="3031.56" y="-1185.3" width="402.7" height="196"/>
     <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="3031.56" y="-1185.3" width="402.7" height="196"/>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3034.56" y="-1171.3">+TAG: String</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3034.56" y="-1155.3">+FINE_LOCATION: String</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3034.56" y="-1139.3">+COARSE_LOCATION: String</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3034.56" y="-1123.3">+LOCATION_PERMISSION_REQUEST_CODE: int</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3034.56" y="-1107.3">+DEFAULT_ZOOM: float</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3034.56" y="-1091.3">+myAddress: List&lt;Address&gt;</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3034.56" y="-1075.3">+mLocationPermissionGranted: Boolean</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3034.56" y="-1059.3">+mMap: GoogleMaps</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3034.56" y="-1043.3">+userManger: UserManager</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3034.56" y="-1027.3">+problems: ArrayList&lt;Problem&gt;</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3034.56" y="-1011.3">+records: ArrayList&lt;Record&gt;</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3034.56" y="-995.296">+GeoList: ArrayList&lt;Geolocation&gt;</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3034.56" y="-1171.3">-TAG: String</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3034.56" y="-1155.3">-FINE_LOCATION: String</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3034.56" y="-1139.3">-COARSE_LOCATION: String</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3034.56" y="-1123.3">-LOCATION_PERMISSION_REQUEST_CODE: int</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3034.56" y="-1107.3">-DEFAULT_ZOOM: float</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3034.56" y="-1091.3">-myAddress: List&lt;Address&gt;</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3034.56" y="-1075.3">-mLocationPermissionGranted: Boolean</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3034.56" y="-1059.3">-mMap: GoogleMaps</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3034.56" y="-1043.3">-userManger: UserManager</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3034.56" y="-1027.3">-problems: ArrayList&lt;Problem&gt;</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3034.56" y="-1011.3">-records: ArrayList&lt;Record&gt;</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3034.56" y="-995.296">-GeoList: ArrayList&lt;Geolocation&gt;</text>
     <rect style="fill: #ffffff" x="3031.56" y="-989.296" width="402.7" height="164"/>
     <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="3031.56" y="-989.296" width="402.7" height="164"/>
     <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3034.56" y="-975.296">+onCreate(Bundle:savedInstanceState)</text>
@@ -384,10 +384,10 @@
     <text font-size="16" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="3249.86" y="-1876.97">ChooseUploadActivity</text>
     <rect style="fill: #ffffff" x="3033.11" y="-1867.97" width="433.5" height="68"/>
     <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="3033.11" y="-1867.97" width="433.5" height="68"/>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3036.11" y="-1853.97">+uploadFromGallery: Button</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3036.11" y="-1837.97">+openCamera: Button</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3036.11" y="-1821.97">+GET_FROM_GALLERY_REQUEST_CODE: int</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3036.11" y="-1805.97">+CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE: int</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3036.11" y="-1853.97">-uploadFromGallery: Button</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3036.11" y="-1837.97">-openCamera: Button</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3036.11" y="-1821.97">-GET_FROM_GALLERY_REQUEST_CODE: int</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3036.11" y="-1805.97">-CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE: int</text>
     <rect style="fill: #ffffff" x="3033.11" y="-1799.97" width="433.5" height="148"/>
     <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="3033.11" y="-1799.97" width="433.5" height="148"/>
     <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3036.11" y="-1785.97">+onCreate(Bundle:savedInstanceState)</text>
@@ -751,14 +751,14 @@
     <text font-size="16" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="2091.96" y="-1166.97">AddPatientActivity</text>
     <rect style="fill: #ffffff" x="1948.36" y="-1157.97" width="287.2" height="132"/>
     <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1948.36" y="-1157.97" width="287.2" height="132"/>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1951.36" y="-1143.97">+addPatientBtn: Button</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1951.36" y="-1127.97">+cancelBtn: Button</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1951.36" y="-1111.97">+enterIDText: EditText</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1951.36" y="-1095.97">+TAG: String = AddPatientActivity</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1951.36" y="-1079.97">+patient: Patient</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1951.36" y="-1063.97">+caregiver: Caregiver</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1951.36" y="-1047.97">+patientID: String</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1951.36" y="-1031.97">+userManager: UserManager</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1951.36" y="-1143.97">-addPatientBtn: Button</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1951.36" y="-1127.97">-cancelBtn: Button</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1951.36" y="-1111.97">-enterIDText: EditText</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1951.36" y="-1095.97">-TAG: String = AddPatientActivity</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1951.36" y="-1079.97">-patient: Patient</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1951.36" y="-1063.97">-caregiver: Caregiver</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1951.36" y="-1047.97">-patientID: String</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1951.36" y="-1031.97">-userManager: UserManager</text>
     <rect style="fill: #ffffff" x="1948.36" y="-1025.97" width="287.2" height="36"/>
     <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1948.36" y="-1025.97" width="287.2" height="36"/>
     <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1951.36" y="-1011.97">+onCreate(Bundle:savedInstanceState)</text>
@@ -778,14 +778,14 @@
     <text font-size="16" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="2518.45" y="-2067.81">ListRecordCGActivity</text>
     <rect style="fill: #ffffff" x="2347.9" y="-2058.81" width="341.1" height="132"/>
     <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="2347.9" y="-2058.81" width="341.1" height="132"/>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2350.9" y="-2044.81">+mRecyclerView: RecyclerView</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2350.9" y="-2028.81">+mAdapter: RecyclerView.Adapter</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2350.9" y="-2012.81">+mLayoutManager: RecyclerView.LayoutManager</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2350.9" y="-1996.81">+recordList: ArrayList&lt;Record&gt;</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2350.9" y="-1980.81">+problemPos: Integer</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2350.9" y="-1964.81">+patientPos: Integer</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2350.9" y="-1948.81">+patientID: String</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2350.9" y="-1932.81">+patient: Patient</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2350.9" y="-2044.81">-mRecyclerView: RecyclerView</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2350.9" y="-2028.81">-mAdapter: RecyclerView.Adapter</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2350.9" y="-2012.81">-mLayoutManager: RecyclerView.LayoutManager</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2350.9" y="-1996.81">-recordList: ArrayList&lt;Record&gt;</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2350.9" y="-1980.81">-problemPos: Integer</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2350.9" y="-1964.81">-patientPos: Integer</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2350.9" y="-1948.81">-patientID: String</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2350.9" y="-1932.81">-patient: Patient</text>
     <rect style="fill: #ffffff" x="2347.9" y="-1926.81" width="341.1" height="84"/>
     <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="2347.9" y="-1926.81" width="341.1" height="84"/>
     <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2350.9" y="-1912.81">+onCreate(Bundle:savedInstanceState)</text>
@@ -804,19 +804,19 @@
     <text font-size="16" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="3729.94" y="-1475.81">AddRecordActivity</text>
     <rect style="fill: #ffffff" x="3586.34" y="-1466.81" width="287.2" height="212"/>
     <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="3586.34" y="-1466.81" width="287.2" height="212"/>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3589.34" y="-1452.81">+recordList: ArrayList&lt;Records&gt;</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3589.34" y="-1436.81">+problemPos: Integer</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3589.34" y="-1420.81">+format: DateFormat</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3589.34" y="-1404.81">+recordDate: Date</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3589.34" y="-1388.81">+image: ImageView</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3589.34" y="-1372.81">+headline: EditText</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3589.34" y="-1356.81">+date: EditText</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3589.34" y="-1340.81">+Description: EditText</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3589.34" y="-1324.81">+geo: Button</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3589.34" y="-1308.81">+body: Button</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3589.34" y="-1292.81">+reminder: Button</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3589.34" y="-1276.81">+save: Button</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3589.34" y="-1260.81">+cancel: Button</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3589.34" y="-1452.81">-recordList: ArrayList&lt;Records&gt;</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3589.34" y="-1436.81">-problemPos: Integer</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3589.34" y="-1420.81">-format: DateFormat</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3589.34" y="-1404.81">-recordDate: Date</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3589.34" y="-1388.81">-image: ImageView</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3589.34" y="-1372.81">-headline: EditText</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3589.34" y="-1356.81">-date: EditText</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3589.34" y="-1340.81">-Description: EditText</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3589.34" y="-1324.81">-geo: Button</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3589.34" y="-1308.81">-body: Button</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3589.34" y="-1292.81">-reminder: Button</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3589.34" y="-1276.81">-save: Button</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3589.34" y="-1260.81">-cancel: Button</text>
     <rect style="fill: #ffffff" x="3586.34" y="-1254.81" width="287.2" height="100"/>
     <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="3586.34" y="-1254.81" width="287.2" height="100"/>
     <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3589.34" y="-1240.81">+onCreate(Bundle:savedInstanceState)</text>
