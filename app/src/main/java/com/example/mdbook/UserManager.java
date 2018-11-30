@@ -252,6 +252,9 @@ public class UserManager {
      * caregiver, e.g. a ContactUser.
      */
     public void saveUser(User user) throws NoSuchUserException, IllegalArgumentException {
+        if (user.getUserID() == userController.getUser().getUserID()){
+            dataManager.saveMe(user);
+        }
         dataManager.addToQueue(user);
     }
 

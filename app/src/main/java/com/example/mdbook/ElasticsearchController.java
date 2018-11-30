@@ -598,9 +598,12 @@ class ElasticsearchController {
     }
     // TODO
     public JSONObject getRecord(String recordID) {
+
     }
+
     //TODO
     public Photo getPhoto(String photoID) {
+
     }
 
     private static class jestIndexTask extends AsyncTask<Index, Void, DocumentResult> {
