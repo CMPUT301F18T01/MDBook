@@ -60,7 +60,6 @@ public class UserManager {
      */
     public static UserManager getManager() {
         if(userManager == null){
-            // throw new IllegalStateException("UserManager has not been initialized!");
             initManager();
         }
         return userManager;
@@ -197,10 +196,10 @@ public class UserManager {
                 String phone = patientJSON.getString("phone");
                 String email = patientJSON.getString("email");
 
-                /* Change JSONObject doubles into ints */
+                /* Change JSONObject stringids into ints */
                 ArrayList<Integer> problemIDs = new ArrayList<>();
-                for (Double d : (ArrayList<Double>) patientJSON.get("problems")){
-                    problemIDs.add(d.intValue());
+                for (String s : (ArrayList<String>) patientJSON.get("problems")){
+                    problemIDs.add(Integer.parseInt(s));
                 }
                 Patient patient = new Patient(userID, phone, email);
 

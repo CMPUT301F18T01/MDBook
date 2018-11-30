@@ -52,7 +52,7 @@ import io.searchbox.core.Index;
  * PatientID:
  *      "phone": String
  *      "email": String
- *      "problems": ArrayList of problemIDs (ints)
+ *      "problems": ArrayList of problemIDs (numeric string)
  * CaregiverID:
  *      "phone": String
  *      "email": String
@@ -61,14 +61,14 @@ import io.searchbox.core.Index;
  *      "title": String
  *      "description": String
  *      "comments": ArrayList of comments (strings)
- *      "records": ArrayList of recordIDs (ints)
+ *      "records": ArrayList of recordIDs (numeric string)
  * RecordID:
  *      "title": String
  *      "date": Date
  *      "description": String
  *      "geoLocation": GeoLocation
  *      "bodyLocation": BodyLocation
- *      "photos": ArrayList of photoIDs (ints)
+ *      "photos": ArrayList of photoIDs (numeric string)
  *      "comment": String
  *
  * PhotoID: Photo
@@ -84,7 +84,7 @@ class ElasticsearchController {
     private ConnectivityManager connectivityManager;
     private DataManager dataManager;
     private static JestClient client;
-    private static String index = "cmput301f18t01test";
+    private static String index = "cmput301f18t01";
     private static HashMap<String, Object> idlists;
     private Context context;
     private int availableID;
@@ -317,14 +317,14 @@ class ElasticsearchController {
      * index/metadata/idlists:
      * patientIDs: list of strings
      * caregiverIDs: list of strings
-     * problemIDs: list of ints
-     * recordIDs: list of ints
-     * photoIDs: list of ints
-     * availableIDs: list of ints
-     * availableID: int
-     * <p>
+     * problemIDs: list of numeric strings
+     * recordIDs: list of numeric strings
+     * photoIDs: list of numeric strings
+     * availableIDs: list of numeric strings
+     * availableID: numeric string
      * Pushes ID lists to es server.
      */
+    //TODO
     private void pushIDLists() {
         JSONObject IDJSON = new JSONObject(this.idlists);
         try {
