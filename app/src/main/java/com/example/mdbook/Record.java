@@ -37,7 +37,7 @@ class Record implements Serializable, Comparable {
     private BodyLocation bodyLocation;
     private ArrayList<Photo> photos;
     private String comment;
-    private int recordID = -1;
+    private String recordID = "-1";
 
 
     /**
@@ -226,14 +226,14 @@ class Record implements Serializable, Comparable {
     /**
      * @return Record ID for this record. Will be null if record hasn't already existed in storage.
      */
-    public int getRecordID() {
+    public String getRecordID() {
         return recordID;
     }
 
     /**
      * @param recordID Set recordID, should be generated from database.
      */
-    public void setRecordID(int recordID) {
+    public void setRecordID(String recordID) {
         this.recordID = recordID;
     }
 
