@@ -53,6 +53,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     /* Widgets */
     private EditText mSearchText;
     private ImageView mGps;
+    private ImageView mAddLocation;
 
 
     /* Vars */
@@ -60,7 +61,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private List<Address> myAddress = new ArrayList<>();
     private Patient patient;
     private Boolean mLocationPermissionGranted = false;
-    private Record record;
+    //private Record record;
     private GoogleMap mMap;
     private FusedLocationProviderClient mFusedLocationProviderClient;
     private UserManager userManager;
@@ -74,9 +75,12 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         mSearchText = (EditText) findViewById(R.id.input_search);
         mGps = (ImageView) findViewById(R.id.gpscenter);
+        mAddLocation = (ImageView) findViewById(R.id.addLocation);
+
+
 
         patient = (Patient) UserController.getController().getUser();
-        record = (Record) getIntent().getParcelableExtra("record");
+
 
         getLocationPermission();
     }
@@ -91,10 +95,16 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                         event.getAction() == KeyEvent.ACTION_DOWN ||
                         event.getAction() == KeyEvent.KEYCODE_ENTER){
                     geoLocate();
-                    showAlertDialog();
 
                 }
                 return false;
+            }
+        });
+
+        mAddLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showAlertDialog();
             }
         });
 
@@ -103,6 +113,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             @Override
             public void onClick(View v) {
                 getDeviceLocation();
+
             }
         });
         hideSoftKeyboard();
@@ -149,7 +160,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                                             ,1);
 
                                     if (myAddress.size() > 0) {
-                                        Address address = myAddress.get(0);
+                                        address = myAddress.get(0);
                                         mSearchText.setText(address.getAddressLine(0));
                                     }
 
@@ -300,13 +311,11 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             @Override
             public void onClick(DialogInterface dialog, int which) {
                if (address != null) {
-                    if (record != null) {
-                        record.getLocation().addAddress(address);
-                        Intent intent = new Intent();
-                        intent.putExtra("newRecord",record);
-                        setResult(RESULT_OK,intent);
-                        finish();
-                    }
+                   Intent intent = new Intent();
+                   intent.putExtra("address", address);
+                   setResult(RESULT_OK,intent);
+                   finish();
+
                }
             }
         });

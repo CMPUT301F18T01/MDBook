@@ -14,6 +14,7 @@ package com.example.mdbook;
 import android.app.Dialog;
 import android.content.Intent;
 //import android.media.Image;
+import android.location.Address;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -53,9 +54,9 @@ public class AddRecordActivity extends AppCompatActivity {
     private static final Integer MAP_ACTIVITY_REQUEST_CODE = 0;
     // Initialize all the required imageViews ans Buttons
 
-    private ArrayList<Record> recordList;
     private Intent launchmap;
     private Record record;
+    private Address address;
     private Integer problemPos;
     private DateFormat format;
     private Date recordDate;
@@ -82,12 +83,10 @@ public class AddRecordActivity extends AppCompatActivity {
         reminder = findViewById(R.id.reminder);
         save = findViewById(R.id.save);
         cancel = findViewById(R.id.cancel);
-
         UserManager.initManager();
         final UserManager userManager = UserManager.getManager();
-        recordList = new ArrayList<>();
-        final Patient patient = (Patient) UserController.getController().getUser();
         problemPos = getIntent().getExtras().getInt("problemPos");
+        final Patient patient = (Patient) UserController.getController().getUser();
 
         format = new SimpleDateFormat("dd/MM/yy");
 
@@ -104,18 +103,25 @@ public class AddRecordActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
+                    //UserManager.initManager();
+                    //UserManager userManager = UserManager.getManager();
+                    //Patient patient = (Patient) UserController.getController().getUser();
+                    recordDate = format.parse(date.getText().toString());
                     if (record == null) {
-                        recordDate = format.parse(date.getText().toString());
+
                         record = new Record(headline.getText().toString(), recordDate, Description.getText().toString());
                     }
-
+                    if (address != null){
+                        record.getLocation().addAddress(address);
+                    }
                     patient.getProblems().get(problemPos).addRecord(record);
-
                     userManager.saveUser(patient);
                     Toast.makeText(AddRecordActivity.this
-                            ,"Record " + headline.getText().toString() + " Added"
-                            ,Toast.LENGTH_SHORT).show();
-                    endActivity();
+                            , "Record " + headline.getText().toString() + " Added"
+                            , Toast.LENGTH_SHORT).show();
+                    setResult(RESULT_OK);
+                    finish();
+
 
                 } catch (NoSuchUserException e) {
                     Toast.makeText(AddRecordActivity.this
@@ -132,7 +138,7 @@ public class AddRecordActivity extends AppCompatActivity {
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               endActivity();
+               finish();
             }
         });
 
@@ -140,6 +146,7 @@ public class AddRecordActivity extends AppCompatActivity {
         geo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                /*
                 if (record == null) {
                     try {
                         recordDate = format.parse(date.getText().toString());
@@ -149,7 +156,7 @@ public class AddRecordActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
 
-                }
+                }*/
                 openGeoLoc();
             }
         });
@@ -161,7 +168,8 @@ public class AddRecordActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == MAP_ACTIVITY_REQUEST_CODE){
             if (resultCode == RESULT_OK){
-                record =(Record) data.getParcelableExtra("newRecord");
+                address = (Address) data.getParcelableExtra("address");
+                address.getAddressLine(0);
             }
         }
     }
@@ -174,22 +182,14 @@ public class AddRecordActivity extends AppCompatActivity {
         startActivity(addRecordPage);
     }
 
-    /**
-     * Creates a new intent for switch to the ListProblemActivity
-     */
-    public void endActivity(){
-        //Intent mainPage = new Intent(this, ListRecordActivity.class);
-        //startActivity(mainPage);
-        this.finish();
-    }
+
     /**
      * Creates a new intent for switch to the ViewLocationActivity
      */
     public void openGeoLoc(){
-        if (record != null) {
+        if (isServicesOK()) {
             launchmap = new Intent(this, MapActivity.class);
-            launchmap.putExtra("record", record);
-            startActivityForResult(launchmap,MAP_ACTIVITY_REQUEST_CODE);
+            startActivityForResult(launchmap, MAP_ACTIVITY_REQUEST_CODE);
         }
     }
 

@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 // class for holding geographic locations
-class GeoLocation implements Parcelable {
+class GeoLocation implements Serializable {
     private ArrayList<Address> addressList;
 
     public GeoLocation(){
@@ -17,21 +17,7 @@ class GeoLocation implements Parcelable {
         }
     }
 
-    protected GeoLocation(Parcel in) {
-        addressList = in.createTypedArrayList(Address.CREATOR);
-    }
 
-    public static final Creator<GeoLocation> CREATOR = new Creator<GeoLocation>() {
-        @Override
-        public GeoLocation createFromParcel(Parcel in) {
-            return new GeoLocation(in);
-        }
-
-        @Override
-        public GeoLocation[] newArray(int size) {
-            return new GeoLocation[size];
-        }
-    };
 
     public ArrayList<Address> getAddressList(){
         return this.addressList;
@@ -41,13 +27,5 @@ class GeoLocation implements Parcelable {
         addressList.add(address);
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeTypedList(addressList);
-    }
 }

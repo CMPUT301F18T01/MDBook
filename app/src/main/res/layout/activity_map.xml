@@ -30,6 +30,7 @@
             android:src="@drawable/ic_magnify"
             />
 
+
         <EditText
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -59,6 +60,21 @@
         android:scaleType="centerCrop"
         android:id="@+id/gpscenter"
         android:src="@drawable/ic_gps"
+        android:background="@drawable/white_border"
+
+        />
+
+
+    <ImageView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_below="@id/relLayout1"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:scaleType="centerCrop"
+        android:id="@+id/addLocation"
+        android:src="@drawable/ic_add_location"
         android:background="@drawable/white_border"
 
         />
