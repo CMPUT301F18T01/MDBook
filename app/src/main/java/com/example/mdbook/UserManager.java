@@ -191,7 +191,12 @@ public class UserManager {
                 JSONObject patientJSON = elasticsearchController.getPatient(userID);
                 String phone = patientJSON.getString("phone");
                 String email = patientJSON.getString("email");
-                ArrayList<Integer> problemIDs = (ArrayList<Integer>) patientJSON.get("problems");
+
+                /* Change JSONObject doubles into ints */
+                ArrayList<Integer> problemIDs = new ArrayList<Integer>();
+                for (Double d : (ArrayList<Double>) patientJSON.get("problems")){
+                    problemIDs.add(d.intValue());
+                }
                 Patient patient = new Patient(userID, phone, email);
 
                 /* Get problem method also loads in records, photos, etc */
@@ -298,11 +303,11 @@ public class UserManager {
                 }
             }
 
-            /* Remove problems not present in user */
+            /* Remove problems not present in user (must convert to int) */
             try {
-                for (int problemID : (ArrayList<Integer>) patientJSON.get("problems")){
-                    if (!problemIDList.contains(problemID)){
-                        deleteProblem(problemID);
+                for (Double problemID : (ArrayList<Double>) patientJSON.get("problems")){
+                    if (!problemIDList.contains(problemID.intValue())){
+                        deleteProblem(problemID.intValue());
                     }
                 }
             } catch (JSONException e) {
@@ -347,6 +352,7 @@ public class UserManager {
             throw new IllegalArgumentException("User is not a patient or a Caregiver!");
         }
 
+        dataManager.push();
     }
 
     /**
@@ -401,9 +407,9 @@ public class UserManager {
                     problem.addComment(comment);
                 }
 
-                /* Add records */
-                for (int recordID : (ArrayList<Integer>) problemJSON.get("records")){
-                    problem.addRecord(this.getRecord(recordID));
+                /* Add records (must convert id to int first) */
+                for (Double recordID : (ArrayList<Double>) problemJSON.get("records")){
+                    problem.addRecord(this.getRecord(recordID.intValue()));
                 }
 
                 return problem;
@@ -446,9 +452,9 @@ public class UserManager {
                     record.setBodyLocation(bodyLocation);
                 }
                 /* Add photos */
-                for (int photoID : (ArrayList<Integer>) recordJSON.get("photos")){
-                    Photo photo = photos.get(photoID);
-                    photo.setPhotoid(photoID);
+                for (Double photoID : (ArrayList<Double>) recordJSON.get("photos")){
+                    Photo photo = photos.get(photoID.intValue());
+                    photo.setPhotoid(photoID.intValue());
                     record.addPhoto(photo);
                 }
 
@@ -499,11 +505,11 @@ public class UserManager {
             }
         }
 
-        /* Remove records not present in problem */
+        /* Remove records not present in problem (must convert to int) */
         try {
-            for (int recordID : (ArrayList<Integer>) problemJSON.get("records")){
-                if (!recordIDList.contains(recordID)){
-                    deleteRecord(recordID);
+            for (Double recordID : (ArrayList<Double>) problemJSON.get("records")){
+                if (!recordIDList.contains(recordID.intValue())){
+                    deleteRecord(recordID.intValue());
                 }
             }
         } catch (JSONException e) {
@@ -571,9 +577,9 @@ public class UserManager {
         }
         /* Remove photos not present in record object */
         try {
-            for (int photoID : (ArrayList<Integer>) recordJSON.get("photos")) {
-                if (!photoIDs.contains(photoID)) {
-                    photos.remove(photoID);
+            for (Double photoID : (ArrayList<Double>) recordJSON.get("photos")) {
+                if (!photoIDs.contains(photoID.intValue())) {
+                    photos.remove(photoID.intValue());
                 }
             }
 
