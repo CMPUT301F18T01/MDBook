@@ -90,20 +90,7 @@ public class UserManager {
             throw new IllegalArgumentException();
         } else {
             Patient patient = new Patient(userID, userPhone, userEmail);
-            UserDecomposer.Decomposition decomposition = new UserDecomposer().decompose(patient);
-            /* Create JSON representation */
-            JSONObject data = new JSONObject();
-            try {
-                data.put("phone", userPhone);
-                data.put("email", userEmail);
-                data.put("problems", new ArrayList<String>());
-
-                /* Push to elastic search */
-                elasticsearchController.addPatient(userID, data);
-
-            } catch (JSONException e) {
-                throw new IllegalArgumentException("Unable to parse data into JSON object", e);
-            }
+            dataManager.
         }
     }
 

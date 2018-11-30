@@ -568,6 +568,24 @@ class ElasticsearchController {
     public String generateID() {
     }
 
+    /**
+     * If there are unused IDs preceding the currently available one, return and remove one of
+     * those. Otherwise return fresh ID and increment counter.
+     * @return
+     */
+    //TODO
+    public String generateID(){
+        if (availableIDs.size() == 0){
+            String oldid = availableID;
+            availableID = Integer.toString(Integer.getInteger(availableID) + 1) ;
+            return oldid;
+        }
+        else {
+            String id = availableIDs.get(0);
+            availableIDs.remove(0);
+            return id;
+        }
+    }
 
     private static class jestIndexTask extends AsyncTask<Index, Void, DocumentResult> {
 
