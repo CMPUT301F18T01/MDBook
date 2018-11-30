@@ -55,7 +55,7 @@
         android:text="Save"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addRecord" />
+        app:layout_constraintTop_toBottomOf="@+id/addDescription" />
 
     <Button
         android:id="@+id/cancelButton"
@@ -72,20 +72,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.886"
         app:layout_constraintStart_toEndOf="@+id/saveButton"
-        app:layout_constraintTop_toBottomOf="@+id/addRecord" />
-
-    <Button
-        android:id="@+id/addRecord"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:text="Add New Record"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/addDescription" />
 
 </android.support.constraint.ConstraintLayout>

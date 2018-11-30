@@ -23,13 +23,13 @@ import android.widget.ImageView;
  * Lets the user have a slideshow
  *
  * @see com.example.mdbook.PatientSlideActivity
- * @see com.example.mdbook.CustomImageAdapter
+ * @see com.example.mdbook.ImageAdapter
  *
  * @author James Aina
  *
  * @version 0.0.1
  */
-public class CustomImageAdapter extends PagerAdapter {
+public class ImageAdapter extends PagerAdapter {
     private Context mContext;
     private int[] mSlideImages = new int[] {R.drawable.donald_trump,
             R.drawable.ears,
@@ -40,7 +40,7 @@ public class CustomImageAdapter extends PagerAdapter {
     };
 
     // Set the context for the custom image adapter
-    CustomImageAdapter(Context context) {
+    ImageAdapter(Context context) {
         mContext = context;
 
     }

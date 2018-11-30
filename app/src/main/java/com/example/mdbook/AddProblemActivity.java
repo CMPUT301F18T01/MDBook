@@ -40,7 +40,7 @@ public class AddProblemActivity extends AppCompatActivity {
     ArrayList<String> problemArray = new ArrayList<String>();
     Button save;
     Button cancel;
-    Button addRecord;
+
     EditText title;
     EditText date;
     EditText description;
@@ -57,7 +57,6 @@ public class AddProblemActivity extends AppCompatActivity {
         cancel = findViewById(R.id.cancelButton);
         title = findViewById(R.id.addTitle);
         description = findViewById(R.id.addDescription);
-        addRecord = findViewById(R.id.addRecord);
         UserManager.initManager();
         final UserManager userManager = UserManager.getManager();
 
@@ -94,13 +93,6 @@ public class AddProblemActivity extends AppCompatActivity {
             }
         });
 
-        // Switches to addRecordActivity upon the click of the save button
-        addRecord.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                goAddRecord();
-            }
-        });
     }
 
 

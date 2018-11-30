@@ -115,7 +115,7 @@ class Problem implements Serializable {
      * @param record Record object to be added.
      */
     public void addRecord(Record record) {
-        this.records.add(record);
+        this.records.add(0,record);
     }
 
     /**

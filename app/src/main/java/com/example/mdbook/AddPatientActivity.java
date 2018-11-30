@@ -34,17 +34,21 @@ import android.widget.Toast;
  * @see
  *
  * @author Raj Kapadia
- * @author James Aina
+ *
  *
  * @version 0.0.1
  */
 
-public class AddPatientActivity extends AppCompatActivity implements View.OnClickListener {
+public class AddPatientActivity extends AppCompatActivity  {
 
     private Button addPatientBtn;
     private Button cancelBtn;
     private EditText enterIDText;
-    private String activity = "AddPatientActivity";
+    private String TAG = "AddPatientActivity";
+    private Patient patient;
+    private Caregiver caregiver;
+    private String patientID;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,41 +59,54 @@ public class AddPatientActivity extends AppCompatActivity implements View.OnClic
 
         // set the view and butons appropriately by id's
         enterIDText = (EditText)findViewById(R.id.enterUserText);
-        enterIDText.setOnClickListener(this);
-
         addPatientBtn = (Button)findViewById(R.id.addPatientBtn);
-        addPatientBtn.setOnClickListener(this);
-
         cancelBtn = (Button)findViewById(R.id.cancelBtn);
-        cancelBtn.setOnClickListener(this);
+
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent back = new Intent(AddPatientActivity.this, ListPatientActivity.class);
+                startActivity(back);
+                AddPatientActivity.this.finish();
+            }
+        });
+
+
+        UserManager.initManager();
+        final UserManager userManager = UserManager.getManager();
+
+        caregiver = (Caregiver) UserController.getController().getUser();
+
+
+
+        addPatientBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                try {
+                    patient = (Patient) userManager.fetchUser(enterIDText.getText().toString());
+                    patientID = patient.getUserID();
+                    caregiver.addPatient(patient);
+
+                } catch (NoSuchUserException e) {
+                    Toast.makeText(AddPatientActivity.this, "No user exists with id: " +enterIDText.getText().toString(), Toast.LENGTH_LONG).show();
+                    e.printStackTrace();
+                }
+                goBackToListPatient();
+
+            }
+        });
     }
 
 
 
-    @Override
-    public void onClick(View v)
+    public void goBackToListPatient()
     {
-        switch (v.getId())
-        {
-            case R.id.addPatientBtn:
-                String userID = enterIDText.getText().toString();
-                Toast.makeText(this, userID + ": added", Toast.LENGTH_SHORT);
-                Intent addToListPatientIntent = new Intent(this, ListPatientActivity.class);
-                addToListPatientIntent.putExtra("userID", userID);
-                addToListPatientIntent.putExtra("activity", activity);
-                startActivity(addToListPatientIntent);
-                break;
-
-            case R.id.cancelBtn:
-                Intent patientListIntent = new Intent(AddPatientActivity.this, ListPatientActivity.class);
-                startActivity(patientListIntent);
-                break;
-
-            case R.id.enterUserText:
-                enterIDText.setText("");
-                break;
-
-        }
+       Intent back = new Intent(AddPatientActivity.this, ListPatientActivity.class);
+       back.putExtra("patientID", patientID);
+       back.putExtra("TAG", TAG);
+       startActivity(back);
+       this.finish();
 
     }
 }
