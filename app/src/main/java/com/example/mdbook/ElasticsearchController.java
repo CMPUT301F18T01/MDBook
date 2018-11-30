@@ -87,7 +87,6 @@ class ElasticsearchController {
     private static JestClient client;
     private static String index = "cmput301f18t01";
     private static HashMap<String, Object> idlists;
-    private Context context;
     private int availableID;
 
 
@@ -131,11 +130,11 @@ class ElasticsearchController {
         return elasticsearchController;
     }
 
-    // TODO
     // Returns true/false if the given userID exists/is taken
-    public boolean existsUser(String userID){
-        return false;
+    public boolean existsUser(String userID) throws NetworkErrorException {
+        return (this.existsPatient(userID) || this.existsCaregiver(userID));
     }
+    
     /**
      * Pushes Patients to Elastic search server
      */

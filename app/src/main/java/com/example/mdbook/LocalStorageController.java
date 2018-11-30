@@ -36,7 +36,6 @@ class LocalStorageController {
 
 
     private static LocalStorageController localStorageController;
-    private DataManager dataManager;
     private Gson patients = new Gson();
     private Gson caregivers = new Gson();
     private Gson problems = new Gson();
