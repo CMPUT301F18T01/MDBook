@@ -4,11 +4,20 @@ import android.graphics.Bitmap;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
+
 // class to hold photo objects
 class Photo implements Parcelable {
 
     private int photoid;
     private String path;
+    ArrayList<Photo> photoList;
+
+    public Photo(){
+        if (photoList == null) {
+            photoList = new ArrayList<>();
+        }
+    }
 
     public Photo(Parcel in){
 
