@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * Provides global access point for data storage.
+ * Acts as an intermediary between the userController and ElasticsearchController
  *
  * @author Noah Burghardt
  * @version 0.0.1

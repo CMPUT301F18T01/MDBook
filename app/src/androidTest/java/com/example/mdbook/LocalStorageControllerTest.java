@@ -2,6 +2,7 @@ package com.example.mdbook;
 
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.test.InstrumentationRegistry;
 
 import junit.framework.TestCase;
@@ -11,11 +12,15 @@ public class LocalStorageControllerTest extends TestCase {
 
     public void testLocalStorage() {
         Context context = InstrumentationRegistry.getContext();
-        LocalStorageController localStorageController = new LocalStorageController();
+        SharedPreferences sharedPreferences = context.getSharedPreferences("shared preferences",
+                context.MODE_PRIVATE);
+        LocalStorageController.init(sharedPreferences);
         UserManager.initManager();
         UserManager userManager = UserManager.getManager();
-        localStorageController.setContext(context);
+        LocalStorageController localStorageController = LocalStorageController.getController();
+
         Patient patient = null;
+
         try {
             patient = userManager.createPatient("patientID", "test-phone", "testemail");
             userManager.saveUser(patient);

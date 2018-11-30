@@ -9,6 +9,8 @@
  */
 package com.example.mdbook;
 
+import android.accounts.NetworkErrorException;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -37,6 +39,7 @@ public class UserManager {
 
     static private UserManager userManager = null;
     private DataManager dataManager;
+    private ElasticsearchController elasticsearchController;
 
     /**
      * Initialize singleton instance.
@@ -45,6 +48,7 @@ public class UserManager {
         if (userManager == null){
             userManager = new UserManager();
             userManager.dataManager = DataManager.getDataManager();
+            userManager.elasticsearchController = ElasticsearchController.getController();
         }
     }
 
@@ -75,40 +79,32 @@ public class UserManager {
      * @returns A new patient object with the given attributes.
      * @throws UserIDNotAvailableException Thrown if the userID is not unique
      * @throws IllegalArgumentException Thrown if the userID is less than 8 characters
+     * @throws NetworkErrorException Thrown if there were any network issues creating the user
+     * (e.g no internet)
      */
     public Patient createPatient(String userID, String userPhone, String userEmail)
-            throws UserIDNotAvailableException, IllegalArgumentException {
+            throws UserIDNotAvailableException, IllegalArgumentException, NetworkErrorException {
         /* Fetch fresh copy of patient list */
-        dataManager.pull();
-        HashMap patients = dataManager.getPatients();
+        //dataManager.pull();
+        //HashMap patients = dataManager.getPatients();
 
         /* Ensure userID is unique */
-        if (patients.containsKey(userID) || dataManager.getCaregivers().containsKey(userID)){
+        if (elasticsearchController.existsUser(userID)){
             throw new UserIDNotAvailableException();
         }
+
         /* Ensure userID is long enough */
         if (userID.length() < 8){
             throw new IllegalArgumentException();
         }
+
         else {
-            /* store data */
-            JSONObject data = new JSONObject();
-            try {
-                data.put("phone", userPhone);
-                data.put("email", userEmail);
-                data.put("problems", new ArrayList<Integer>());
 
-                /* save data in patients table */
-                patients.put(userID, data);
-                dataManager.push();
-
-            } catch (JSONException e){
-                throw new RuntimeException(e);
-            }
+            /* Create patient */
+            Patient patient = new Patient(userID, userPhone, userEmail);
+            elasticsearchController.addPatient(patient);
+            return patient;
         }
-
-        Patient patient = new Patient(userID, userPhone, userEmail);
-        return patient;
     }
 
     /**
@@ -120,39 +116,28 @@ public class UserManager {
      * @throws UserIDNotAvailableException Thrown if the userID is not unique
      * @throws IllegalArgumentException Thrown if the userID is less than 8 characters
      */
-    public Caregiver createCaregiver(String userID, String userPhone, String userEmail)
-            throws UserIDNotAvailableException, IllegalArgumentException {
+    public void createCaregiver(String userID, String userPhone, String userEmail)
+            throws UserIDNotAvailableException, IllegalArgumentException, NetworkErrorException {
         /* Fetch fresh copy of patient list */
-        dataManager.pull();
-        HashMap caregivers = dataManager.getCaregivers();
+        //dataManager.pull();
+        //HashMap patients = dataManager.getPatients();
 
         /* Ensure userID is unique */
-        if (caregivers.containsKey(userID) || dataManager.getPatients().containsKey(userID)){
+        if (elasticsearchController.existsUser(userID)){
             throw new UserIDNotAvailableException();
         }
+
         /* Ensure userID is long enough */
         if (userID.length() < 8){
             throw new IllegalArgumentException();
         }
 
         else {
-            /* store data */
-            JSONObject data = new JSONObject();
-            try {
-                data.put("phone", userPhone);
-                data.put("email", userEmail);
-                data.put("patients", new ArrayList<String>());
 
-                /* save data in patients table */
-                caregivers.put(userID, data);
-                dataManager.push();
-
-            } catch (JSONException e){
-                throw new RuntimeException(e);
-            }
+            /* Create patient */
+            Caregiver caregiver = new Caregiver(userID, userPhone, userEmail);
+            elasticsearchController.addCaregiver(caregiver);
         }
-        Caregiver caregiver = new Caregiver(userID, userPhone, userEmail);
-        return caregiver;
     }
 
     /**
@@ -274,9 +259,8 @@ public class UserManager {
     }
 
     /**
-     * Take the data in the given user object, find the entry in the database with a matching userID
-     * and update the database. Also calls methods to update problem and record data. Anything in
-     * database not in user object is removed.
+     * Take the data in the given user object, convert its components into the corresponding
+     * hashmaps and send them to the esc to be uploaded.
      *
      * @param user The user object to be synced into the database.
      * @throws NoSuchUserException Thrown if there is no user with a matching userID already in the

@@ -10,6 +10,7 @@ package com.example.mdbook;
  */
 
 
+import android.accounts.NetworkErrorException;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -45,6 +46,33 @@ import io.searchbox.core.Index;
 
 /**
  * Keeps DataManager in sync with cloud storage.
+ *
+ * Data model of server:
+ *
+ * PatientID:
+ *      "phone": String
+ *      "email": String
+ *      "problems": ArrayList of problemIDs (ints)
+ * CaregiverID:
+ *      "phone": String
+ *      "email": String
+ *      "patients": ArrayList of patient userIDs (strings)
+ * ProblemID:
+ *      "title": String
+ *      "description": String
+ *      "comments": ArrayList of comments (strings)
+ *      "records": ArrayList of recordIDs (ints)
+ * RecordID:
+ *      "title": String
+ *      "date": Date
+ *      "description": String
+ *      "geoLocation": GeoLocation
+ *      "bodyLocation": BodyLocation
+ *      "photos": ArrayList of photoIDs (ints)
+ *      "comment": String
+ *
+ * PhotoID: Photo
+ *
  *
  * @author Noah Burghardt
  * @author Thomas Chan
@@ -102,6 +130,11 @@ class ElasticsearchController {
         return elasticsearchController;
     }
 
+    // TODO
+    // Returns true/false if the given userID exists/is taken
+    public boolean existsUser(String userID){
+        return false;
+    }
     /**
      * Pushes Patients to Elastic search server
      */
@@ -468,6 +501,16 @@ class ElasticsearchController {
             dataManager.setPhotos(this.pullPhotos());
         }
 
+    }
+
+    // TODO
+    // Add a new patient to elastic search
+    public void addPatient(Patient patient) throws NetworkErrorException {
+    }
+
+    // TODO
+    // Add a new caregiver to elastic search
+    public void addCaregiver(Caregiver caregiver) throws  NetworkErrorException {
     }
 
     private static class jestIndexTask extends AsyncTask<Index, Void, DocumentResult> {
