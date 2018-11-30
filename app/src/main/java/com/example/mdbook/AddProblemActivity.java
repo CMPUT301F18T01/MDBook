@@ -94,7 +94,8 @@ public class AddProblemActivity extends AppCompatActivity implements DatePickerD
 
                 if(date != null)
                 {
-                    Problem problem = new Problem(title.getText().toString(), description.getText().toString(), date);
+                    Problem problem = new Problem(title.getText().toString(), description.getText().toString());
+                    problem.setDate(date);
                     patient.addProblem(problem);
                     BackToListProblem();
                 }
@@ -134,18 +135,7 @@ public class AddProblemActivity extends AppCompatActivity implements DatePickerD
     public void showDatePicker(View v) {
         DialogFragment newFragment = new DatePickerFragment();
         newFragment.show(getSupportFragmentManager(), "date picker");
-//        day = getIntent().getExtras().getString("day");
-//        month = getIntent().getExtras().getString("month");
-//        year = getIntent().getExtras().getString("year");
-//        dateString = day.toString() + "/" + month.toString() + "/" + year.toString();
 
-    }
-
-
-
-    public void goAddRecord(){
-        Intent goAdd = new Intent(this, AddRecordActivity.class);
-        startActivity(goAdd);
     }
 
     private String setDate(Date date) {
@@ -158,6 +148,7 @@ public class AddProblemActivity extends AppCompatActivity implements DatePickerD
     @Override
     public void onDateSet(DatePicker view, int year, int month, int day) {
 
+        view.setMaxDate(Calendar.getInstance().getTimeInMillis());
         date = new Date(view.getYear(), view.getMonth(), view.getDayOfMonth());
         String strDate = setDate(date);
         addDate.setText(strDate);
