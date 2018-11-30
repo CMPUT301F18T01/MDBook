@@ -140,7 +140,7 @@ public class NewBodyLocationView extends AppCompatActivity {
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        if (requestCode == 1) {
+        if (requestCode == 1 & data != null) {
             if (resultCode == RESULT_OK) {
 
                 //receives photo object from ChooseUploadActivity
@@ -163,7 +163,7 @@ public class NewBodyLocationView extends AppCompatActivity {
             }
 
 
-            if (resultCode == RESULT_CANCELED) {
+            if (resultCode == RESULT_CANCELED || data == null) {
                 Toast toast = Toast.makeText(getApplicationContext(), "No image URI found", Toast.LENGTH_SHORT);
                 toast.show();
             }
