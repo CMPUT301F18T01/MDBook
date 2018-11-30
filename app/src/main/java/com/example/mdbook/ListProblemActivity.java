@@ -244,6 +244,7 @@ public class ListProblemActivity extends AppCompatActivity
      * Starts the login activity
      */
     public void signout(){
+
         Intent viewSignout= new Intent(this, LoginActivity.class);
         startActivity(viewSignout);
         this.finish();
