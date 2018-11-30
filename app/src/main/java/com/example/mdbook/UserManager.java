@@ -37,7 +37,7 @@ import java.util.HashMap;
  **/
 public class UserManager {
 
-    static private UserManager userManager = null;
+    static private UserManager userManager;
     private DataManager dataManager;
     private ElasticsearchController elasticsearchController;
     private LocalStorageController localStorageController;

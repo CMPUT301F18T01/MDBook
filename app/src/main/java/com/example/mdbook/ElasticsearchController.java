@@ -81,7 +81,7 @@ import io.searchbox.core.Index;
  **/
 class ElasticsearchController {
 
-    private static ElasticsearchController elasticsearchController = null;
+    private static ElasticsearchController elasticsearchController;
     private ConnectivityManager connectivityManager;
     private DataManager dataManager;
     private static JestClient client;

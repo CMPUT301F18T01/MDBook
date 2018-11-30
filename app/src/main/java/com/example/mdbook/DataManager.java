@@ -43,7 +43,7 @@ public class DataManager {
     private ArrayList<User> pushQueue;
 
 
-    private static DataManager dataManager = null;
+    private static DataManager dataManager;
     private LocalStorageController localStorageController;
 
     /**
