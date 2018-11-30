@@ -78,11 +78,14 @@ public class LoginActivity extends AppCompatActivity {
                 Intent patientIntent = new Intent(this, ListProblemActivity.class);
                 patientIntent.putExtra("activity", activity);
                 startActivity(patientIntent);
+                this.finish();
             } else if (user.getClass() == Caregiver.class) {
                 Intent caregiverIntent = new Intent(this, ListPatientActivity.class);
                 caregiverIntent.putExtra("activity", activity);
                 startActivity(caregiverIntent);
+                this.finish();
             }
+
         }
     }
 

@@ -45,12 +45,19 @@
         <activity android:name=".OptionsMenuActivity" />
         <activity android:name=".EditAccountDetailActivity" />
         <activity android:name=".RegisterActivity" />
-        <activity android:name=".ListPatientActivity" />
+        <activity
+            android:name=".ListPatientActivity"
+            android:label="@string/listPatientsCG"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".AddPatientActivity" />
         <activity android:name=".PatientSearchActivity" />
-        <activity android:name=".ListPatientProblemActivity" />
+        <activity
+            android:name=".ListPatientProblemActivity"
+            android:label="@string/listProblemCG"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".MapActivity" />
         <activity android:name=".ViewMapActivity" />
+        <activity android:name=".AddReminderActivity"/>
         <activity
             android:name=".ListProblemActivity"
             android:label="@string/MDBook"
@@ -63,7 +70,13 @@
         <activity
             android:name=".ListRecordActivity"
             android:label="@string/MDBook"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ListRecordsCGActivity"
+            android:label="@string/listPatientRecordsCG"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".AddCommentActivity"></activity>
+        <receiver android:name=".AlarmService"/>
     </application>
 
 </manifest>

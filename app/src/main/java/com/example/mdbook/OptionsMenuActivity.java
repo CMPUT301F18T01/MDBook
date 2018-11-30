@@ -31,6 +31,7 @@ public class OptionsMenuActivity extends AppCompatActivity {
     private Button EditRecord;
     private Button RecordSlide;
     private Button GeoLocation;
+    private Button setReminder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +43,7 @@ public class OptionsMenuActivity extends AppCompatActivity {
         EditRecord = findViewById(R.id.EditRecord);
         RecordSlide = findViewById(R.id.RecordSlide);
         GeoLocation = findViewById(R.id.GeoLocation);
+        setReminder = findViewById(R.id.setRemindersBtn);
 
         // Switches to the edit problem activity upon the click of the edit problem button
         EditProblem.setOnClickListener(new View.OnClickListener() {
@@ -69,6 +71,13 @@ public class OptionsMenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 GeoLocation();
+            }
+        });
+
+        setReminder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setReminder();
             }
         });
 
@@ -107,6 +116,13 @@ public class OptionsMenuActivity extends AppCompatActivity {
         }
     }
 
+    public  void setReminder()
+    {
+        Intent intent = new Intent(OptionsMenuActivity.this, AddReminderActivity.class);
+        startActivity(intent);
+        this.finish();
+    }
+
     public boolean isServicesOK(){
         Log.d(TAG,"isServicesOK: checking Google Services version");
         int available = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(OptionsMenuActivity.this);
@@ -126,5 +142,11 @@ public class OptionsMenuActivity extends AppCompatActivity {
             Toast.makeText(this, "You cant make map request", Toast.LENGTH_SHORT).show();
         }
         return false;
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
     }
 }

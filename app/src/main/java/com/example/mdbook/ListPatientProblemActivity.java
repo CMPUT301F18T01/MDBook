@@ -11,13 +11,21 @@
 
 package com.example.mdbook;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -42,54 +50,172 @@ import java.util.Arrays;
  *
  * @version 0.0.1
  */
-public class ListPatientProblemActivity extends AppCompatActivity
+public class ListPatientProblemActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener
 {
 
-    private TextView headerPatientProblem;
-    private ListView patientProblemsContainer;
+    private ArrayList<Problem> patientProblems;
+    private RecyclerView recyclerView;
+    private ProblemAdapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutmanager;
+    private int patientPos;
+    private String patientID;
+    private Patient patient;
+    private String problemPos;
 
-    private ArrayAdapter<String> problemListAdapter;
-
-
-    private DrawerLayout drawerLayout;
-    private ActionBarDrawerToggle actionBarDrawerToggle;
-
-    private NavigationView navigationView;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list_patient_problem);
+        setContentView(R.layout.activity_list_patient);
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        UserManager.initManager();
+        UserManager userManager = UserManager.getManager();
+
+        Caregiver caregiver = (Caregiver) UserController.getController().getUser();
+        patientPos = getIntent().getExtras().getInt("patientPos");
+        patientID = caregiver.getPatientList().get(patientPos);
+        try {
+            patient = (Patient) userManager.fetchUser(patientID);
+            patientProblems = patient.getProblems();
+        } catch (NoSuchUserException e) {
+            patientProblems = new ArrayList<>();
+            Toast.makeText(ListPatientProblemActivity.this, "No user found!", Toast.LENGTH_LONG).show();
+            e.printStackTrace();
+        }
 
 
-        headerPatientProblem = (TextView)findViewById(R.id.headerPatientProblems);
+        /* Create recycler view */
+        recyclerView = findViewById(R.id.recylerView);
+        recyclerView.setHasFixedSize(true);
+        mLayoutmanager = new LinearLayoutManager(this);
+        mAdapter = new ProblemAdapter(patientProblems);
+        recyclerView.setLayoutManager(mLayoutmanager);
+        recyclerView.setAdapter(mAdapter);
 
-        patientProblemsContainer = (ListView)findViewById(R.id.listPatientProblems);
-
-        String [] problems = new String[]{"Problem 1", "Problem 2", "Problem 3", "Problem 4"};
-        ArrayList<String> problemList = new ArrayList<String>();
-        problemList.addAll(Arrays.asList(problems));
 
 
-        problemListAdapter = new ArrayAdapter<String>(this, R.layout.simple_list, problemList);
-        patientProblemsContainer.setAdapter(problemListAdapter);
-
-        patientProblemsContainer.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        /* Opens options menu when problem is clicked */
+        mAdapter.setOnItemClickListener(new ProblemAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                //spot is the item clicked
-                //Intent showRecords = new Intent(ListPatientProblemActivity.this, CaretakerViewRecordsActivity.class);
-                //startActivity(showRecords);
+            public void OnItemClick(int Position) {
+                OptionMenu(Position);
             }
         });
 
-        Intent intent = getIntent();
-        String nameOfPatient = intent.getExtras().getString("nameOfPatient");
-        headerPatientProblem.setText("List of problems for: " + nameOfPatient);
+//        /* Delete problem when swipe right is activated */
+//        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.RIGHT) {
+//
+//            @Override
+//            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView
+//                    .ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder viewHolder1) {
+//                return false;
+//            }
+//
+//            @Override
+//            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+//                if (direction == ItemTouchHelper.RIGHT){
+////                    Snackbar.make(recyclerView,  problems.get(viewHolder.getAdapterPosition())
+////                            .getTitle()+" removed", Snackbar.LENGTH_LONG)
+////                            .setAction("Action", null).show();
+//                    showAlertDialog(viewHolder);
+//                }
+//
+//            }
+//        }).attachToRecyclerView(recyclerView);
+
+        /* Initializes the add problem activity */
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addPatient();
+            }
+        });
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string
+                .navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view_patient);
+        navigationView.setNavigationItemSelectedListener(this);
+
+    }
+
+//    public void showAlertDialog(final RecyclerView.ViewHolder position){
+//        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+//        alert.setTitle("MDBook");
+//        alert.setMessage("Are you sure you want to delete this patient?");
+//        alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                patientProblems.remove(position.getAdapterPosition());
+//                mAdapter.notifyDataSetChanged();
+//                Toast.makeText(ListPatientProblemActivity.this, "Patient Removed", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//        alert.setNegativeButton("No", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                mAdapter.notifyDataSetChanged();
+//            }
+//        });
+//        alert.create().show();
+//    }
+
+    /**
+     * @param item item in the menu object
+     * @return a boolean to determine if an item has been selected or not
+     */
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+
+        if (id == R.id.profile) {
+            goViewProfile();
+        } else if (id == R.id.signout) {
+            Toast.makeText(this, "Signing out", Toast.LENGTH_SHORT).show();
+            signout();
+        }
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
+    /**
+     * Starts the view profile activity
+     */
+    public void goViewProfile(){
+        Intent viewProfile = new Intent(this, ViewAccountDetailActivity.class);
+        startActivity(viewProfile);
+    }
+    /**
+     * Starts the login activity
+     */
+    public void signout(){
+        Intent viewSignout= new Intent(this, LoginActivity.class);
+        startActivity(viewSignout);
+        this.finish();
+    }
+
+    public void addPatient(){
+        Intent intent = new Intent(this, AddPatientActivity.class);
+        startActivity(intent);
+    }
 
 
-
+    public void OptionMenu(int position){
+        Intent intent = new Intent(this, ListRecordsCGActivity.class);
+        intent.putExtra("problemPos", position);
+        intent.putExtra("patientPos",patientPos);
+        startActivity(intent);
     }
 
 }

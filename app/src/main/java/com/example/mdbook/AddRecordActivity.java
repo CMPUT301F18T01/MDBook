@@ -44,6 +44,7 @@ import java.util.Date;
  *
  * @author Jayanta Chatterjee
  * @author James Aina
+ * @author Raj Kapadia
  *
  * @version 0.0.1
  */
@@ -134,6 +135,12 @@ public class AddRecordActivity extends AppCompatActivity {
             }
         });
 
+        reminder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addReminder();
+            }
+        });
         // Switches to AddProblemsActivity upon the click of the cancel button
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -142,7 +149,7 @@ public class AddRecordActivity extends AppCompatActivity {
             }
         });
 
-        // Switches to AddProblemsActivity upon the click of the geolocstion button
+        // Switches to AddProblemsActivity upon the click of the geolocation button
         geo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -191,6 +198,10 @@ public class AddRecordActivity extends AppCompatActivity {
             launchmap = new Intent(this, MapActivity.class);
             startActivityForResult(launchmap, MAP_ACTIVITY_REQUEST_CODE);
         }
+    }
+    public void addReminder(){
+        Intent reminder= new Intent(this, AddReminderActivity.class);
+        startActivity(reminder);
     }
 
     public boolean isServicesOK(){

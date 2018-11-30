@@ -118,7 +118,7 @@ public class ListProblemActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view_problem);
         navigationView.setNavigationItemSelectedListener(this);
     }
 
@@ -244,6 +244,7 @@ public class ListProblemActivity extends AppCompatActivity
      * Starts the login activity
      */
     public void signout(){
+
         Intent viewSignout= new Intent(this, LoginActivity.class);
         startActivity(viewSignout);
         this.finish();

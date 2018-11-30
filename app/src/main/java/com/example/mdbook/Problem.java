@@ -11,6 +11,7 @@ package com.example.mdbook;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * The Problem object holds the information about a Problem, including its records.
@@ -26,6 +27,7 @@ class Problem implements Serializable {
     private String description;
     private ArrayList<String> comments;
     private int problemID = -1;
+
 
 
     /**

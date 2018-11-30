@@ -61,10 +61,11 @@
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginBottom="8dp"
-        android:onClick="viewBodyLoc"
+        android:onClick="goAddBodyLoc"
         android:text="Add Body Location"
         app:layout_constraintBottom_toTopOf="@+id/reminder"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="OnClick" />
 
     <Button
         android:id="@+id/save"
