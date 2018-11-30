@@ -474,6 +474,12 @@ class ElasticsearchController {
 
     }
 
+    // inidicates if the esc has internet
+    // TODO
+    public boolean isConnected() {
+        return true;
+    }
+
     private static class jestIndexTask extends AsyncTask<Index, Void, DocumentResult> {
 
         @Override
