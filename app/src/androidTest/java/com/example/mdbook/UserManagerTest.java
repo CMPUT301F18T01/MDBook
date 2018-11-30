@@ -10,6 +10,8 @@
 
 package com.example.mdbook;
 
+import android.accounts.NetworkErrorException;
+
 import junit.framework.TestCase;
 
 
@@ -60,6 +62,8 @@ public class UserManagerTest extends TestCase {
                     "useremail@test.com");
 
         } catch (UserIDNotAvailableException e){
+            fail();
+        } catch (NetworkErrorException e) {
             fail();
         }
 

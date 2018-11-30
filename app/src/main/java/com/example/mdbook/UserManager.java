@@ -153,9 +153,14 @@ public class UserManager {
      * user doesn't exist or there is already someone logged in.
      */
     public boolean login(String userid) throws NetworkErrorException {
+        /* Check for internet connection */
+        if (!elasticsearchController.isConnected()){
+            throw new NetworkErrorException("No internet access!");
+        }
 
         UserController userController = UserController.getController();
 
+        /* Attempt login */
         if (userController.getUser() != null){
             return false;
         }
@@ -193,7 +198,7 @@ public class UserManager {
                 String email = patientJSON.getString("email");
 
                 /* Change JSONObject doubles into ints */
-                ArrayList<Integer> problemIDs = new ArrayList<Integer>();
+                ArrayList<Integer> problemIDs = new ArrayList<>();
                 for (Double d : (ArrayList<Double>) patientJSON.get("problems")){
                     problemIDs.add(d.intValue());
                 }
@@ -231,37 +236,7 @@ public class UserManager {
         }
 
         else {
-            throw new NoSuchUserException();
-        }
-    }
-
-    /**
-     * Builds user object containing only userID, phone and email. Returns said user object.
-     * Does not load into UserController. Good for showing an overview of a User.
-     * @param userID The ID of the user to fetch.
-     * @return A patient or caregiver object with only the contact information stored.
-     * @throws NoSuchUserException Thrown if the userID couldn't be found.
-     */
-    public ContactUser fetchUserContact (String userID) throws NoSuchUserException {
-        HashMap<String, JSONObject> patients = dataManager.getPatients();
-        HashMap<String, JSONObject> caregivers = dataManager.getCaregivers();
-        JSONObject userJSON;
-
-        if (caregivers.containsKey(userID)) {
-            userJSON = caregivers.get(userID);
-        } else if (patients.containsKey(userID)){
-            userJSON = patients.get(userID);
-        }
-        else {
-            throw new NoSuchUserException();
-        }
-
-        try {
-            return new ContactUser(userID,
-                    userJSON.getString("phone"),
-                    userJSON.getString("email"));
-        } catch (JSONException e) {
-            throw new RuntimeException("User attributes are corrupt.", e);
+            throw new NoSuchUserException("User does not exist");
         }
     }
 

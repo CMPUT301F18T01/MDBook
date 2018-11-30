@@ -560,8 +560,7 @@ class ElasticsearchController {
         return null;
     }
 
-    // inidicates if the esc has internet
-    // TODO
+
     
     private static class jestIndexTask extends AsyncTask<Index, Void, DocumentResult> {
 
@@ -608,6 +607,7 @@ class ElasticsearchController {
         }
     }
 
+    // indicates if the esc has internet
     public boolean isConnected() {
         if (connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
                 connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
