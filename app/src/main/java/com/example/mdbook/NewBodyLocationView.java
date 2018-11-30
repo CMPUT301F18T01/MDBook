@@ -30,6 +30,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.Serializable;
 
 /**
  * Creates an activity that add/view a body location
@@ -56,9 +57,7 @@ public class NewBodyLocationView extends AppCompatActivity {
     String location;
     Bitmap myBitmap;
     String uri;
-    String uriFront;
-    String uriBack;
-
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,12 +70,6 @@ public class NewBodyLocationView extends AppCompatActivity {
         uploadBack = findViewById(R.id.uploadBack);
         bodyFront = findViewById(R.id.body_front);
         bodyBack = findViewById(R.id.body_back);
-        if(uriFront != null){
-            loadImage(uriFront, bodyFront);
-        }
-        if(uriFront != null){
-            loadImage(uriFront, bodyFront);
-        }
 
         uploadFront.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,6 +128,9 @@ public class NewBodyLocationView extends AppCompatActivity {
         startActivityForResult(chooseUpload,1);
     }
 
+    /*takes the string path and imageView
+    then set's the imageView image to the image referenced by the FilePath
+     */
     public void loadImage(String path, ImageView img){
 
         myBitmap = BitmapFactory.decodeFile(path);
@@ -146,24 +142,20 @@ public class NewBodyLocationView extends AppCompatActivity {
 
         if (requestCode == 1) {
             if (resultCode == RESULT_OK) {
-                uri = data.getStringExtra("uri");
 
+                //receives photo object from ChooseUploadActivity
+                Photo photo = (Photo) getIntent().getSerializableExtra("serialized_data");
 
-
-
-
+                //assigns string uri to the file path assigned to the photo object
+                uri = photo.getFilepath();
 
                 if (location == "Front") {
-
-                    uriFront = uri;
 
                     loadImage(uri, bodyFront);
 
                 }
 
                 if (location == "Back") {
-
-                    uriBack = uri;
 
                     loadImage(uri, bodyBack);
 
@@ -176,8 +168,9 @@ public class NewBodyLocationView extends AppCompatActivity {
                 toast.show();
             }
         }
+    }
 
     }
 
-}
+
 

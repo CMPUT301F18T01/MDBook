@@ -27,7 +27,6 @@ public class ChooseUploadActivity extends AppCompatActivity {
 
     Button uploadFromGallery;
     Button openCamera;
-    //Photo photo;
 
     public static final int GET_FROM_GALLERY_REQUEST_CODE = 1;
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 2;
@@ -88,10 +87,13 @@ public class ChooseUploadActivity extends AppCompatActivity {
                 toast.show();
                 Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
                 String path = saveImage(thumbnail);
-                //photo = new Photo(thumbnail);
-                //photo.setPath(path);
+
+                //creating new photo object and assigning it it's filepath
+                Photo photo = new Photo(path);
+
+                //creating intent to pass data to previous activity
                 Intent intent = new Intent();
-                intent.putExtra("uri", path);
+                intent.putExtra("serialized_data", photo);
                 setResult(RESULT_OK, intent);
                 finish();
 
@@ -120,10 +122,16 @@ public class ChooseUploadActivity extends AppCompatActivity {
                 try {
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
                     String path = saveImage(bitmap);
+
+                    //Creating new photo object and assigning file path
+                    Photo photo = new Photo(path);
+
+                    //sending data to previous activity
                     Intent intent = new Intent();
-                    intent.putExtra("uri", path);
+                    intent.putExtra("serialized_data", photo);
                     setResult(RESULT_OK, intent);
                     finish();
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -184,6 +192,7 @@ public class ChooseUploadActivity extends AppCompatActivity {
         }
     }
 
+    //Method used for saving a photo as jpg in tmp folder then returning it's file path
     public String saveImage(Bitmap myBitmap) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         myBitmap.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
