@@ -10,6 +10,7 @@
 
 package com.example.mdbook;
 
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.widget.Toast;
 
@@ -27,7 +28,7 @@ import java.util.Date;
  * @see com.example.mdbook.Photo
  * @version 0.0.1
  **/
-class Record implements Serializable {
+class Record implements Serializable, Comparable {
 
     private String title;
     private Date date;
@@ -236,4 +237,8 @@ class Record implements Serializable {
         this.recordID = recordID;
     }
 
+    @Override
+    public int compareTo(@NonNull Object o) {
+        return 0;
+    }
 }

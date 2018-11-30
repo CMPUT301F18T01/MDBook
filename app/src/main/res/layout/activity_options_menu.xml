@@ -8,7 +8,7 @@
 
     <LinearLayout
         android:layout_width="361dp"
-        android:layout_height="204dp"
+        android:layout_height="246dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="192dp"
@@ -30,7 +30,7 @@
             android:id="@+id/EditRecord"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="View/Edit Record" />
+            android:text="Add/View Records" />
 
         <Button
             android:id="@+id/RecordSlide"
@@ -43,6 +43,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Show Geo Location" />
+
+        <Button
+            android:id="@+id/setRemindersBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="SET REMINDER" />
 
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

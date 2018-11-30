@@ -61,6 +61,7 @@ public class AddCommentActivity extends AppCompatActivity {
                     comment = (etComment.getText().toString());
                     commentRecord.setComment(comment);
                     problem.addRecord(commentRecord);
+
                     try {
                         userManager.saveUser(patient);
                         userManager.saveUser(caregiver);

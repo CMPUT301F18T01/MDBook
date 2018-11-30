@@ -15,6 +15,8 @@ import android.view.View;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class ListRecordsCGActivity extends AppCompatActivity {
 
@@ -46,6 +48,20 @@ public class ListRecordsCGActivity extends AppCompatActivity {
         try {
             patient = (Patient) userManager.fetchUser(patientID);
             recordList = patient.getProblems().get(problemPos).getRecords();
+            Collections.sort(recordList, new Comparator<Record>() {
+                @Override
+                public int compare(Record p, Record q) {
+                    {
+                        if (p.getDate().before(q.getDate())) {
+                            return 11;
+                        } else if (p.getDate().after(q.getDate())) {
+                            return -1;
+                        } else {
+                            return 0;
+                        }
+                    }
+                }
+            });
         } catch (NoSuchUserException e) {
             e.printStackTrace();
         }
@@ -59,6 +75,7 @@ public class ListRecordsCGActivity extends AppCompatActivity {
         mAdapter = new RecordCGAdapter(recordList,ListRecordsCGActivity.this);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
+        mAdapter.notifyDataSetChanged();
 
 
 
@@ -88,6 +105,19 @@ public class ListRecordsCGActivity extends AppCompatActivity {
             recordList = patient.getProblems().get(problemPos).getRecords();
         } catch (NoSuchUserException e) {
             e.printStackTrace();
+        }
+        mAdapter.notifyDataSetChanged();
+    }
+
+    public class RecordDateComparator implements Comparator<Record> {
+        public int compare(Record p, Record q) {
+            if (p.getDate().before(q.getDate())) {
+                return 1;
+            } else if (p.getDate().after(q.getDate())) {
+                return -1;
+            } else {
+                return 0;
+            }
         }
     }
 
