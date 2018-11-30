@@ -10,15 +10,20 @@
 
 package com.example.mdbook;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
-import java.util.ArrayList;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 
 
 /**
@@ -40,11 +45,14 @@ public class AddProblemActivity extends AppCompatActivity {
     ArrayList<String> problemArray = new ArrayList<String>();
     Button save;
     Button cancel;
-
+    private Button addDate;
+    private Boolean datePicked;
     EditText title;
-    EditText date;
     EditText description;
     Problem problem;
+    private Date date;
+    private String day, month, year;
+    private String dateString;
 
 
 
@@ -57,8 +65,17 @@ public class AddProblemActivity extends AppCompatActivity {
         cancel = findViewById(R.id.cancelButton);
         title = findViewById(R.id.addTitle);
         description = findViewById(R.id.addDescription);
+        addDate = findViewById(R.id.addDateBtn);
         UserManager.initManager();
         final UserManager userManager = UserManager.getManager();
+
+        addDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDatePicker(v);
+
+            }
+        });
 
         // Switches to addProblemActivty upon the click of the save button
         save.setOnClickListener(new View.OnClickListener() {
@@ -102,6 +119,20 @@ public class AddProblemActivity extends AppCompatActivity {
         startActivity(mainPage);
         this.finish();
     }
+
+
+    public void showDatePicker(View v) {
+        DialogFragment newFragment = new ProblemPickDateFragment();
+        newFragment.show(getSupportFragmentManager(), "date picker");
+//        day = getIntent().getExtras().getString("day");
+//        month = getIntent().getExtras().getString("month");
+//        year = getIntent().getExtras().getString("year");
+        dateString = day.toString() + "/" + month.toString() + "/" + year.toString();
+        Toast.makeText(AddProblemActivity.this, dateString, Toast.LENGTH_LONG).show();
+
+
+    }
+
 
 
     public void goAddRecord(){
