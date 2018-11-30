@@ -40,6 +40,7 @@ public class UserManager {
     static private UserManager userManager = null;
     private DataManager dataManager;
     private ElasticsearchController elasticsearchController;
+    private UserController userController;
 
     /**
      * Initialize singleton instance.
@@ -49,6 +50,7 @@ public class UserManager {
             userManager = new UserManager();
             userManager.dataManager = DataManager.getDataManager();
             userManager.elasticsearchController = ElasticsearchController.getController();
+            userManager.userController = UserController.getController();
         }
     }
 
@@ -65,13 +67,6 @@ public class UserManager {
     }
 
     /**
-     * Constructor, called only by initManager() method.
-     */
-    private UserManager(){
-        this.dataManager = DataManager.getDataManager();
-    }
-
-    /**
      * Create new patient profile and save.
      * @param userID The unique ID of the new patient. Must be unique.
      * @param userPhone The phone number of the new patient.
@@ -84,9 +79,6 @@ public class UserManager {
      */
     public Patient createPatient(String userID, String userPhone, String userEmail)
             throws UserIDNotAvailableException, IllegalArgumentException, NetworkErrorException {
-        /* Fetch fresh copy of patient list */
-        //dataManager.pull();
-        //HashMap patients = dataManager.getPatients();
 
         /* Ensure userID is unique */
         if (elasticsearchController.existsUser(userID)){
@@ -115,12 +107,10 @@ public class UserManager {
      * @returns A new caregiver object with the given attributes.
      * @throws UserIDNotAvailableException Thrown if the userID is not unique
      * @throws IllegalArgumentException Thrown if the userID is less than 8 characters
+     * @throws NetworkErrorException Thrown if there were any network issues creating the user
      */
     public void createCaregiver(String userID, String userPhone, String userEmail)
             throws UserIDNotAvailableException, IllegalArgumentException, NetworkErrorException {
-        /* Fetch fresh copy of patient list */
-        //dataManager.pull();
-        //HashMap patients = dataManager.getPatients();
 
         /* Ensure userID is unique */
         if (elasticsearchController.existsUser(userID)){
@@ -147,10 +137,10 @@ public class UserManager {
      * @return Returns true on successful login, false if credentials are invalid,
      * user doesn't exist or there is already someone logged in.
      */
-    public boolean login(String userid) {
-        /* Get the latest data */
-        dataManager.pull();
+    public boolean login(String userid) throws NetworkErrorException {
+
         UserController userController = UserController.getController();
+
         if (userController.getUser() != null){
             return false;
         }
