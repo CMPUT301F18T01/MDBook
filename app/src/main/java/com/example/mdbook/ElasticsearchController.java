@@ -505,12 +505,14 @@ class ElasticsearchController {
 
     // TODO
     // Add a new patient to elastic search
-    public void addPatient(Patient patient) throws NetworkErrorException {
+    // Assumes the given user id is free (and will overwrite stuff)
+    public void addPatient(String userID, JSONObject data) throws NetworkErrorException {
     }
 
     // TODO
     // Add a new caregiver to elastic search
-    public void addCaregiver(Caregiver caregiver) throws  NetworkErrorException {
+    // Assumes the given user id is free (and will overwrite stuff)
+    public void addCaregiver(String userID, JSONObject data) throws  NetworkErrorException {
     }
 
     private static class jestIndexTask extends AsyncTask<Index, Void, DocumentResult> {

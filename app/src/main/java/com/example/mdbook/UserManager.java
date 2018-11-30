@@ -77,25 +77,34 @@ public class UserManager {
      * @throws NetworkErrorException Thrown if there were any network issues creating the user
      * (e.g no internet)
      */
-    public Patient createPatient(String userID, String userPhone, String userEmail)
+    public void createPatient(String userID, String userPhone, String userEmail)
             throws UserIDNotAvailableException, IllegalArgumentException, NetworkErrorException {
 
         /* Ensure userID is unique */
-        if (elasticsearchController.existsUser(userID)){
+        if (elasticsearchController.existsUser(userID)) {
             throw new UserIDNotAvailableException();
         }
 
         /* Ensure userID is long enough */
-        if (userID.length() < 8){
+        if (userID.length() < 8) {
             throw new IllegalArgumentException();
-        }
-
-        else {
+        } else {
 
             /* Create patient */
             Patient patient = new Patient(userID, userPhone, userEmail);
-            elasticsearchController.addPatient(patient);
-            return patient;
+
+            /* Create JSON representation */
+            JSONObject data = new JSONObject();
+            try {
+                data.put("phone", userPhone);
+                data.put("email", userEmail);
+                data.put("problems", new ArrayList<Integer>());
+
+                elasticsearchController.addPatient(userID, data);
+
+            } catch (JSONException e) {
+                throw new IllegalArgumentException("Unable to parse data into JSON object", e);
+            }
         }
     }
 
@@ -124,9 +133,20 @@ public class UserManager {
 
         else {
 
-            /* Create patient */
+            /* Create caregiver */
             Caregiver caregiver = new Caregiver(userID, userPhone, userEmail);
-            elasticsearchController.addCaregiver(caregiver);
+
+            /* Create JSON representation */
+            JSONObject data = new JSONObject();
+            try {
+                data.put("phone", userPhone);
+                data.put("email", userEmail);
+                data.put("problems", new ArrayList<Integer>());
+
+                elasticsearchController.addCaregiver(userID, data);
+
+            } catch (JSONException e) {
+                throw new IllegalArgumentException("Unable to parse data into JSON object", e);
         }
     }
 
@@ -168,8 +188,8 @@ public class UserManager {
      * @throws NoSuchUserException Thrown if there is no user with the given userID in the database.
      */
     public User fetchUser (String userID) throws NoSuchUserException {
-        HashMap<String, JSONObject> patients = dataManager.getPatients();
-        HashMap<String, JSONObject> caregivers = dataManager.getCaregivers();
+        //HashMap<String, JSONObject> patients = dataManager.getPatients();
+        //HashMap<String, JSONObject> caregivers = dataManager.getCaregivers();
 
         /* Check if userID corresponds with a patient */
         if (patients.containsKey(userID)){
