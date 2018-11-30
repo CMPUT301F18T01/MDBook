@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * Acts as an intermediary between the userController and ElasticsearchController
+ * Holds data for currently logged in user
  *
  * @author Noah Burghardt
  * @version 0.0.1
@@ -45,6 +45,7 @@ public class DataManager {
     private HashMap<String, Photo> photos;
     private ArrayList<String> availableIDs;
     private String availableID = "0"; // An unused id number
+    private boolean needsPush = false;
 
 
     private static DataManager dataManager = null;
@@ -87,15 +88,15 @@ public class DataManager {
         this.user = user;
     }
 
-    public void setPhotos(HashMap<Integer, Photo> photos) {
+    public void setPhotos(HashMap<String, Photo> photos) {
         this.photos = photos;
     }
 
-    public void setProblems(HashMap<Integer, JSONObject> problems) {
+    public void setProblems(HashMap<String, JSONObject> problems) {
         this.problems = problems;
     }
 
-    public void setRecords(HashMap<Integer, JSONObject> records) {
+    public void setRecords(HashMap<String, JSONObject> records) {
         this.records = records;
     }
 
@@ -160,4 +161,11 @@ public class DataManager {
         this.availableIDs.add(availableID);
     }
 
+    public void setNeedsPush(boolean needsPush) {
+        this.needsPush = needsPush;
+    }
+
+    public boolean needsPush() {
+        return needsPush;
+    }
 }

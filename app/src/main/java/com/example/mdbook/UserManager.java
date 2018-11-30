@@ -40,6 +40,7 @@ public class UserManager {
     static private UserManager userManager = null;
     private DataManager dataManager;
     private ElasticsearchController elasticsearchController;
+    private LocalStorageController localStorageController;
     private UserController userController;
 
     /**
@@ -51,6 +52,7 @@ public class UserManager {
             userManager.dataManager = DataManager.getDataManager();
             userManager.elasticsearchController = ElasticsearchController.getController();
             userManager.userController = UserController.getController();
+            userManager.localStorageController = LocalStorageController.getController();
         }
     }
 
