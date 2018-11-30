@@ -90,7 +90,8 @@ public class UserManager {
             throw new IllegalArgumentException();
         } else {
             Patient patient = new Patient(userID, userPhone, userEmail);
-            dataManager.
+            dataManager.saveMe(patient);
+            dataManager.addToQueue(patient);
         }
     }
 
@@ -117,20 +118,9 @@ public class UserManager {
         }
 
         else {
-
-            /* Create JSON representation */
-            JSONObject data = new JSONObject();
-            try {
-                data.put("phone", userPhone);
-                data.put("email", userEmail);
-                data.put("patients", new ArrayList<String>());
-
-                /* Push to elastic search */
-                elasticsearchController.addCaregiver(userID, data);
-
-            } catch (JSONException e) {
-                throw new IllegalArgumentException("Unable to parse data into JSON object", e);
-            }
+            Caregiver caregiver = new Caregiver(userID, userPhone, userEmail);
+            dataManager.saveMe(caregiver);
+            dataManager.addToQueue(caregiver);
         }
     }
 
@@ -156,7 +146,7 @@ public class UserManager {
         try {
             User user = this.fetchUser(userid);
             userController.loadUser(user);
-            dataManager.loadUser(user);
+            dataManager.saveMe(user);
             return true;
 
         } catch (NoSuchUserException e){
@@ -169,6 +159,7 @@ public class UserManager {
      */
     public void logout() {
         UserController.getController().clearUser();
+        dataManager.removeMe();
     }
 
     /**
@@ -178,7 +169,7 @@ public class UserManager {
      * @return A patient or caregiver object built from the userID.
      * @throws NoSuchUserException Thrown if there is no user with the given userID in the database.
      */
-    public User fetchUser (String userID) throws NoSuchUserException {
+    public User fetchUser (String userID) throws NoSuchUserException, NetworkErrorException {
 
         /* Check if userID corresponds with a patient */
         if (elasticsearchController.existsPatient(userID)){
@@ -187,8 +178,6 @@ public class UserManager {
                 JSONObject patientJSON = elasticsearchController.getPatient(userID);
                 String phone = patientJSON.getString("phone");
                 String email = patientJSON.getString("email");
-
-                /* Change JSONObject stringids into ints */
                 ArrayList<String> problemIDs = (ArrayList<String>) patientJSON.get("problems");
                 Patient patient = new Patient(userID, phone, email);
 
@@ -240,79 +229,7 @@ public class UserManager {
      * caregiver, e.g. a ContactUser.
      */
     public void saveUser(User user) throws NoSuchUserException, IllegalArgumentException {
-
-        if (user.getClass() == Patient.class) {
-            /* Update contact info */
-            JSONObject patientJSON = elasticsearchController.getPatient(user.getUserID());
-
-            try {
-                patientJSON.put("phone", user.getPhoneNumber());
-                patientJSON.put("email", user.getEmail());
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
-            }
-
-            /* Update problems, update/add/remove records transitively */
-
-            /* Get pre-existing problemID list from user object */
-            ArrayList<String> problemIDList = new ArrayList<>();
-            for (Problem problem : ((Patient) user).getProblems()){
-                if (problem.getProblemID() != "-1") {
-                    problemIDList.add(problem.getProblemID());
-                }
-            }
-
-            /* Remove problems not present in user from elastic search */
-            try {
-                for (String problemID : (ArrayList<String>) patientJSON.get("problems")){
-                    if (!problemIDList.contains(problemID)){
-                        deleteProblem(problemID);
-                    }
-                }
-            } catch (JSONException e) {
-                throw new RuntimeException("Patient problem data is corrupt", e);
-            }
-
-            /* Add new and already existing problems to elasticsearch */
-            for (Problem problem : ((Patient) user).getProblems()){
-                String problemID = setProblem(problem);
-
-                /* Add new problemIDs to problemID list */
-                if (!problemIDList.contains(problemID)) {
-                    problemIDList.add(problemID);
-                }
-            }
-
-            /* Update local problemID list */
-            try {
-                patientJSON.put("problems", problemIDList);
-            } catch (JSONException e) {
-                throw new RuntimeException("User problem ID list is corrupt", e);
-            }
-
-            /* update patient object in elastic search */
-            elasticsearchController.setPatient(user.getUserID(), patientJSON);
-        }
-
-        else if (user.getClass() == Caregiver.class){
-            /* Update contact info */
-            JSONObject caregiverJSON = caregivers.get(user.getUserID());
-            try {
-                caregiverJSON.put("phone", user.getPhoneNumber());
-                caregiverJSON.put("email", user.getEmail());
-
-                /* Update patientID list */
-                caregiverJSON.put("patients", ((Caregiver) user).getPatientList());
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
-            }
-        }
-
-        else{
-            throw new IllegalArgumentException("User is not a patient or a Caregiver!");
-        }
-
-        dataManager.push();
+        dataManager.addToQueue(user);
     }
 
     /**
@@ -321,30 +238,7 @@ public class UserManager {
      * @param userID The userID of the user to be cleared out.
      */
     public void deleteUser(String userID) throws NoSuchUserException {
-        HashMap<String, JSONObject> patients = dataManager.getPatients();
-        HashMap<String, JSONObject> caregivers = dataManager.getCaregivers();
-
-        /* Check to make sure user exists */
-        if (patients.containsKey(userID)){
-            /* grab problemIDs */
-            ArrayList<Integer> problemIDs = null;
-            try {
-                problemIDs = (ArrayList<Integer>) patients.get(userID).get("problems");
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
-            }
-            /* delete problems */
-            for (int problemID : problemIDs){
-                deleteProblem(problemID);
-            }
-            /* delete patient */
-            patients.remove(userID);
-
-        } else if (caregivers.containsKey(userID)){
-            caregivers.remove(userID);
-        } else {
-            throw new NoSuchUserException();
-        }
+        elasticsearchController.deleteUser(userID);
     }
 
     /**
@@ -352,11 +246,12 @@ public class UserManager {
      * @param problemID The problem ID number
      * @return A fully filled out problem object
      */
-    private Problem getProblem(int problemID) throws InvalidKeyException {
-        HashMap<Integer, JSONObject> problems = dataManager.getProblems();
+    private Problem getProblem(String problemID) throws InvalidKeyException {
+
         try {
-            if (problems.containsKey(problemID)) {
-                JSONObject problemJSON = problems.get(problemID);
+            JSONObject problemJSON = elasticsearchController.getProblem(problemID);
+            if (problemJSON != null) {
+
                 String title = problemJSON.getString("title");
                 String description = problemJSON.getString("description");
                 Problem problem = new Problem(title, description);
@@ -368,8 +263,8 @@ public class UserManager {
                 }
 
                 /* Add records (must convert id to int first) */
-                for (Double recordID : (ArrayList<Double>) problemJSON.get("records")){
-                    problem.addRecord(this.getRecord(recordID.intValue()));
+                for (String recordID : (ArrayList<String>) problemJSON.get("records")){
+                    problem.addRecord(getRecord(recordID));
                 }
 
                 return problem;

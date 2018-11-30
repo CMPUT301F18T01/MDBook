@@ -25,6 +25,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.security.InvalidKeyException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.ExecutionException;
@@ -538,13 +539,13 @@ class ElasticsearchController {
 
     //TODO
     // indicates if given userID is an existing patient
-    public boolean existsPatient(String userID) {
+    public boolean existsPatient(String userID) throws NetworkErrorException {
         return false;
     }
 
     //TODO
     // indicates if given userID is an existing caregiver
-    public boolean existsCaregiver(String userID) {
+    public boolean existsCaregiver(String userID) throws NetworkErrorException {
         return false;
     }
 
@@ -566,6 +567,7 @@ class ElasticsearchController {
 
     //TODO
     public String generateID() {
+
     }
 
     /**
@@ -585,6 +587,14 @@ class ElasticsearchController {
             availableIDs.remove(0);
             return id;
         }
+    }
+
+    //TODO
+    public void deleteUser(String userID) {
+    }
+
+    public JSONObject getProblem(String problemID) throws InvalidKeyException {
+        return null;
     }
 
     private static class jestIndexTask extends AsyncTask<Index, Void, DocumentResult> {
