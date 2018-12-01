@@ -547,4 +547,25 @@ class ElasticsearchController {
             return false;
     }
 
+
+    public void addPatient(UserDecomposer.Decomposition decomposition) throws NetworkErrorException {
+        this.idlists.get("patientIDs").add(decomposition.getUserid());
+        Index jestIndex = new Index.Builder(decomposition.getUser()).index(index)
+                .type("patient")
+                .id(decomposition.getUserid())
+                .build();
+        new jestIndexTask().execute(jestIndex);
+        this.pushIDLists();
+    }
+
+    public void addCaregiver(UserDecomposer.Decomposition decomposition) throws NetworkErrorException {
+        this.idlists.get("caregiverIDS").add(decomposition.getUserid());
+        Index jestIndex = new Index.Builder(decomposition.getUser()).index(index)
+                .type("patient")
+                .id(decomposition.getUserid())
+                .build();
+        new jestIndexTask().execute(jestIndex);
+        this.pushIDLists();
+    }
+
 }

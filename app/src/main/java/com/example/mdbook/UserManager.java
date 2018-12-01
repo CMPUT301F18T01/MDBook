@@ -92,7 +92,7 @@ public class UserManager {
             throw new IllegalArgumentException();
         } else {
             Patient patient = new Patient(userID, userPhone, userEmail);
-            saveUser(patient);
+            elasticsearchController.addPatient(decomposer.decompose(patient));
         }
     }
 
@@ -120,7 +120,7 @@ public class UserManager {
 
         else {
             Caregiver caregiver = new Caregiver(userID, userPhone, userEmail);
-            saveUser(caregiver);
+            elasticsearchController.addCaregiver(decomposer.decompose(caregiver));
         }
     }
 
