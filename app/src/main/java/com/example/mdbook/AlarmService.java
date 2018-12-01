@@ -9,8 +9,13 @@ import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 
-
-
+/**
+ * Required for proper reminder functionality. It builds a notification.
+ * 
+ * @author Raj Kapadia
+ * @author Vanessa Peng
+ * @see AddReminderActivity
+ */
 public class AlarmService extends BroadcastReceiver {
 
         @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
@@ -25,7 +30,7 @@ public class AlarmService extends BroadcastReceiver {
             NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
             Notification.Builder builder = new Notification.Builder(context);
-            builder.setSmallIcon(R.drawable.ic_account_box_black_24dp)
+            builder.setSmallIcon(R.drawable.iconlogo)
                     .setContentTitle("Reminder!")
                     .setContentText("Reminder to take pictures!")
                     .setWhen(System.currentTimeMillis())
@@ -33,7 +38,6 @@ public class AlarmService extends BroadcastReceiver {
                     .setContentIntent(contentIntent);
 
             notificationManager.notify(notificationID, builder.build());
-
 
         }
     }
