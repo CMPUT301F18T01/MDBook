@@ -1,5 +1,6 @@
 package com.example.mdbook;
 
+import android.accounts.NetworkErrorException;
 import android.content.Intent;
 import android.nfc.Tag;
 import android.support.annotation.NonNull;
@@ -64,9 +65,9 @@ public class ListRecordsCGActivity extends AppCompatActivity {
             });
         } catch (NoSuchUserException e) {
             e.printStackTrace();
+        } catch (NetworkErrorException e) {
+            e.printStackTrace();
         }
-
-
 
 
         mRecyclerView = findViewById(R.id.recordRecyclerViewCG);
@@ -104,6 +105,8 @@ public class ListRecordsCGActivity extends AppCompatActivity {
             patient = (Patient) userManager.fetchUser(patientID);
             recordList = patient.getProblems().get(problemPos).getRecords();
         } catch (NoSuchUserException e) {
+            e.printStackTrace();
+        } catch (NetworkErrorException e) {
             e.printStackTrace();
         }
         mAdapter.notifyDataSetChanged();

@@ -37,7 +37,7 @@ import java.util.HashMap;
  **/
 public class UserManager {
 
-    static private UserManager userManager;
+    private static UserManager userManager;
     private DataManager dataManager;
     private ElasticsearchController elasticsearchController;
     private LocalStorageController localStorageController;
@@ -232,7 +232,7 @@ public class UserManager {
            ArrayList<User> toupload = dataManager.getPushQueue();
            for (User user1 : toupload){
 
-               UserDecomposer.Decomposition userDecomp = null;
+               UserDecomposer.Decomposition userDecomp;
                try {
                    userDecomp = decomposer.decompose(user1);
                    if (user1.getClass() == Patient.class) {

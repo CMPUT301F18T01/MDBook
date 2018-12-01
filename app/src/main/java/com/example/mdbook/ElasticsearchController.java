@@ -85,7 +85,7 @@ class ElasticsearchController {
     private ConnectivityManager connectivityManager;
     private DataManager dataManager;
     private static JestClient client;
-    private static String index = "cmput301f18t01";
+    private static String index = "cmput301f18t01test";
     private HashMap<String, ArrayList<String>> idlists;
     private String availableID;
 
@@ -246,16 +246,21 @@ class ElasticsearchController {
 
         if (idlists.get("availableIDs").size() == 0){
             String oldid = availableID;
-            availableID = Integer.toString(Integer.valueOf(availableID) + 1);
-            this.pushIDLists();
+            String availableIDList[] = availableID.split("\\.");
+            //
+            availableID = Integer.toString(Integer.parseInt(availableIDList[0]) + 1);
 
+            this.pushIDLists();
             return oldid;
         }
         else {
             String id = idlists.get("availableIDs").get(0);
             idlists.get("availableIDs").remove(0);
+
+            this.pushIDLists();
             return id;
         }
+
     }
 
     public UserDecomposer.Decomposition getPatientDecomposition(String userID) throws NetworkErrorException {

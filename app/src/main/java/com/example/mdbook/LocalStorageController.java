@@ -74,7 +74,58 @@ class LocalStorageController {
 
     }
 
+    public User loadMe(){
+        String userTypeString = sharedPreferences.getString("usertype", null);
+        Type userTypeStringType = new TypeToken<String>(){}.getType();
+        String userTypeStringString = gson.fromJson(userTypeString, userTypeStringType);
+
+        if (userTypeStringString == null){
+            return null;
+        }
+
+        switch (userTypeStringString) {
+            case "patient": {
+                String User = sharedPreferences.getString("user", null);
+                Type userType = new TypeToken<Patient>() {
+                }.getType();
+                return gson.fromJson(User, userType);
+            }
+            case "caregiver": {
+                String User = sharedPreferences.getString("user", null);
+                Type userType = new TypeToken<Caregiver>() {
+                }.getType();
+                return gson.fromJson(User, userType);
+            }
+            default:
+                return null;
+        }
+    }
+
+    public void saveMe(User me) {
+        String user = gson.toJson(me);
+        editor.putString("user",user);
+        if (me.getClass() == Patient.class){
+            editor.putString("usertype", "patient");
+        } else {
+            editor.putString("usertype", "caregiver");
+        }
+        editor.apply();
+    }
+
+    // TODO: split saveQueue into two arraylists of each type of user
+    public void saveQueue(ArrayList<User> pushQueue) {
+        /*
+        String queueString = gson.toJson(pushQueue);
+        editor.putString("pushQueue", queueString);
+        editor.apply();
+        */
+
+    }
+
+
+    // TODO: split saveQueue into two arraylists of each type of user
     public ArrayList<User> loadQueue() {
+        /*
         String queueString = sharedPreferences.getString("pushQueue", null);
         Type queueType = new TypeToken<ArrayList<User>>(){}.getType();
         ArrayList<User> pushQueue = gson.fromJson(queueString, queueType);
@@ -82,28 +133,12 @@ class LocalStorageController {
             return new ArrayList<>();
         }
         return pushQueue;
-    }
-
-    public User loadMe(){
-        String User = sharedPreferences.getString("user",null);
-        Type userType = new TypeToken<User>(){}.getType();
-        User returnUser = gson.fromJson(User,userType);
-        return returnUser;
-    }
-
-    public void saveQueue(ArrayList<User> pushQueue) {
-        String queueString = gson.toJson(pushQueue);
-        editor.putString("pushQueue", queueString);
-        editor.apply();
-    }
-
-    public void saveMe(User me) {
-        String user = gson.toJson(me);
-        editor.putString("user",user);
-        editor.apply();
+        */
+        return new ArrayList<>();
     }
 
     public void clearMe() {
         editor.remove("user").commit();
+        editor.remove("usertype").commit();
     }
 }

@@ -118,7 +118,6 @@ public class LoginActivity extends AppCompatActivity {
 
     public void onResume(){
         super.onResume();
-        UserManager.getManager().logout();
     }
 
     private void hideSoftKeyboard(){

@@ -143,6 +143,7 @@ public class UserDecomposer {
 
                 /* set userJSON problemID list */
                 userJSON.put("problems", problemIDs);
+
             } else {
                 userJSON.put("patients", ((Caregiver) user).getPatientList());
                 /* make otherhashmaps null */
