@@ -639,7 +639,7 @@ class ElasticsearchController {
     }
 
 
-    public boolean setPatient(UserDecomposer.Decomposition userDecomp) {
+    public boolean pushPatient(UserDecomposer.Decomposition userDecomp) {
         try {
             this.pullIDLists();
 
@@ -694,6 +694,32 @@ class ElasticsearchController {
 
             /* Update ID lists */
             this.pushIDLists();
+
+            return true;
+
+        } catch (NetworkErrorException e) {
+            return false;
+        }
+    }
+
+    public boolean pushCaregiver(UserDecomposer.Decomposition userDecomp) {
+        try {
+            this.pullIDLists();
+
+            /* Patient JSON */
+            if (!this.idlists.get("caregiverIDs").contains(userDecomp.getUserid())){
+                this.idlists.get("caregiverIDs").add(userDecomp.getUserid());
+            }
+            Index jestIndex = new Index.Builder(userDecomp.getUser()).index(index)
+                    .type("caregiver")
+                    .id(userDecomp.getUserid())
+                    .build();
+            new jestIndexTask().execute(jestIndex);
+
+            /* Update ID lists */
+            this.pushIDLists();
+
+            return true;
 
         } catch (NetworkErrorException e) {
             return false;

@@ -236,12 +236,12 @@ public class UserManager {
                try {
                    userDecomp = decomposer.decompose(user1);
                    if (user1.getClass() == Patient.class) {
-                       if (elasticsearchController.setPatient(userDecomp)) {
+                       if (elasticsearchController.pushPatient(userDecomp)) {
                            dataManager.removeFromQueue(user1);
                        }
                    }
                    else {
-                       if (elasticsearchController.setCaregiver(userDecomp)) {
+                       if (elasticsearchController.pushCaregiver(userDecomp)) {
                            dataManager.removeFromQueue(user1);
                        }
                    }
