@@ -525,7 +525,6 @@ class ElasticsearchController {
      * those. Otherwise return fresh ID and increment counter.
      * @return
      */
-
     public String generateID() throws NetworkErrorException {
         this.pullIDLists();
 
@@ -641,9 +640,10 @@ class ElasticsearchController {
 
     public boolean pushPatient(UserDecomposer.Decomposition userDecomp) {
         try {
+            /* Get fresh id lists */
             this.pullIDLists();
 
-            /* Patient JSON */
+            /* Update user JSON */
             if (!this.idlists.get("patientIDs").contains(userDecomp.getUserid())){
                 this.idlists.get("patientIDs").add(userDecomp.getUserid());
             }
@@ -653,7 +653,7 @@ class ElasticsearchController {
                     .build();
             new jestIndexTask().execute(jestIndex);
 
-            /* Problem JSON */
+            /* Add/update new/existing problems */
             for (String problemID : userDecomp.getProblems().keySet()){
                 JSONObject problemJSON = userDecomp.getProblems().get(problemID);
                 if (!this.idlists.get("problemIDs").contains(problemID)){
@@ -666,12 +666,25 @@ class ElasticsearchController {
                 new jestIndexTask().execute(problemIndex);
             }
 
-            /* Record JSON */
-            for (String recordID : userDecomp.getRecords().keySet()){
+            /* Remove deleted problems */
+            for (String problemID :  idlists.get("problemIDs")) {
+                if (!userDecomp.getProblems().containsKey(problemID)) {
+                    Delete delete = new Delete.Builder(problemID)
+                            .index(index)
+                            .type("problem")
+                            .build();
+                    new jestDeleteTask().execute(delete);
+                }
+            }
+
+            /* Add new records */
+            for (String recordID : userDecomp.getRecords().keySet()) {
                 JSONObject recordJSON = userDecomp.getProblems().get(recordID);
-                if (!this.idlists.get("recordIDs").contains(recordID)){
+                if (!this.idlists.get("recordIDs").contains(recordID)) {
                     this.idlists.get("recordIDs").add(recordID);
                 }
+
+
                 Index recordIndex = new Index.Builder(recordJSON).index(index)
                         .type("record")
                         .id(recordID)
@@ -679,7 +692,19 @@ class ElasticsearchController {
                 new jestIndexTask().execute(recordIndex);
             }
 
-            /* Photo Objects */
+
+            /* Delete removed records */
+            for (String recordID : idlists.get("recordIDs")) {
+                if (!userDecomp.getRecords().containsKey(recordID)) {
+                    Delete delete = new Delete.Builder(recordID.toString())
+                            .index(index)
+                            .type("record")
+                            .build();
+                    new jestDeleteTask().execute(delete);
+                }
+            }
+
+            /* Add/Update new/existing photos */
             for (String photoID : userDecomp.getPhotos().keySet()){
                 Photo photo = userDecomp.getPhotos().get(photoID);
                 if (!this.idlists.get("photoIDs").contains(photoID)){
@@ -692,12 +717,25 @@ class ElasticsearchController {
                 new jestIndexTask().execute(photoIndex);
             }
 
+            /* Delete removed photos */
+            for (String photoID : idlists.get("photoIDs")) {
+                if (!userDecomp.getPhotos().containsKey(photoID)) {
+                    Delete delete = new Delete.Builder(photoID.toString())
+                            .index(index)
+                            .type("photo")
+                            .build();
+                    new jestDeleteTask().execute(delete);
+                }
+            }
+
             /* Update ID lists */
             this.pushIDLists();
 
             return true;
 
         } catch (NetworkErrorException e) {
+            return false;
+        } catch (NullPointerException e) {
             return false;
         }
     }
@@ -722,6 +760,8 @@ class ElasticsearchController {
             return true;
 
         } catch (NetworkErrorException e) {
+            return false;
+        } catch (NullPointerException e) {
             return false;
         }
     }
