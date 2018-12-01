@@ -56,7 +56,7 @@ public class ClearESMetadata extends TestCase {
         idlists.put("problemIDs", new ArrayList<Integer>());
         idlists.put("recordIDs", new ArrayList<Integer>());
         idlists.put("photoIDs", new ArrayList<Integer>());
-        idlists.put("availableIDs", new ArrayList<Integer>();
+        idlists.put("availableIDs", new ArrayList<Integer>());
 
 
 
