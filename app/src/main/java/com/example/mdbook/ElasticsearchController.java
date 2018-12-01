@@ -133,7 +133,7 @@ class ElasticsearchController {
     public boolean existsUser(String userID) throws NetworkErrorException {
         return (this.existsPatient(userID) || this.existsCaregiver(userID));
     }
-    
+
 
 
     /**

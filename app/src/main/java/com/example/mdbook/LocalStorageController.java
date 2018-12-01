@@ -43,6 +43,8 @@ class LocalStorageController {
     private Gson photos = new Gson();
     private Gson availableIDs = new Gson();
     private SharedPreferences sharedPreferences;
+    private Gson gson;
+    private SharedPreferences.Editor editor;
 
 
     /**
@@ -53,6 +55,8 @@ class LocalStorageController {
             localStorageController = new LocalStorageController();
         }
         localStorageController.sharedPreferences = sharedPreferences;
+        localStorageController.gson = new Gson();
+        localStorageController.editor = sharedPreferences.edit();
     }
 
     /**
@@ -140,23 +144,37 @@ class LocalStorageController {
 
     }
 
-    // TODO
+    
     public ArrayList<User> loadQueue() {
-        return new ArrayList<>();
+        String queueString = sharedPreferences.getString("pushQueue", null);
+        Type queueType = new TypeToken<ArrayList<User>>(){}.getType();
+        ArrayList<User> pushQueue = gson.fromJson(queueString, queueType);
+        if (pushQueue == null){
+            return new ArrayList<>();
+        }
+        return pushQueue;
     }
-    //TODO
+
     public User loadMe(){
-        return null;
+        String User = sharedPreferences.getString("user",null);
+        Type userType = new TypeToken<User>(){}.getType();
+        User returnUser = gson.fromJson(User,userType);
+        return returnUser;
     }
-    // TODO
+
     public void saveQueue(ArrayList<User> pushQueue) {
+        String queueString = gson.toJson(pushQueue);
+        editor.putString("pushQueue", queueString);
+        editor.apply();
     }
 
-    // TODO
     public void saveMe(User me) {
+        String user = gson.toJson(me);
+        editor.putString("user",user);
+        editor.apply();
     }
 
-    // TODO
     public void clearMe() {
+        editor.remove("user").commit();
     }
 }
