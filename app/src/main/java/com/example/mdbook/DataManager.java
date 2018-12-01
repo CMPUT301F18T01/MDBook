@@ -74,6 +74,10 @@ public class DataManager {
         localStorageController.saveQueue(pushQueue);
     }
 
+    public ArrayList<User> getPushQueue() {
+        return pushQueue;
+    }
+
     public void saveMe(User user){
         me = user;
         localStorageController.saveMe(me);

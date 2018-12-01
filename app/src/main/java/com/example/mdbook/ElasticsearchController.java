@@ -134,7 +134,7 @@ class ElasticsearchController {
     public boolean existsUser(String userID) throws NetworkErrorException {
         return (this.existsPatient(userID) || this.existsCaregiver(userID));
     }
-    
+
     /**
      * Pushes Patients to Elastic search server
      */
@@ -503,27 +503,18 @@ class ElasticsearchController {
 
     }
 
-    // TODO
-    // Add a new patient to elastic search
-    // Assumes the given user id is free (and will overwrite stuff)
-    public void addPatient(String userID, JSONObject data) throws NetworkErrorException {
-    }
-
-    // TODO
-    // Add a new caregiver to elastic search
-    // Assumes the given user id is free (and will overwrite stuff)
-    public void addCaregiver(String userID, JSONObject data) throws  NetworkErrorException {
-    }
 
     //TODO
     // indicates if given userID is an existing patient
     public boolean existsPatient(String userID) throws NetworkErrorException {
+        this.pullIDLists();
         return false;
     }
 
     //TODO
     // indicates if given userID is an existing caregiver
     public boolean existsCaregiver(String userID) throws NetworkErrorException {
+        this.pullIDLists();
         return false;
     }
 
@@ -541,10 +532,31 @@ class ElasticsearchController {
 
     // TODO
     public void setPatient(String userID, JSONObject patientJSON) {
+
     }
 
     //TODO
-    public String generateID() {
+    public void setCaregiver(String userID, JSONObject caregiverJSON){
+
+    }
+
+    //TODO
+    public void deleteUser(String userID) throws NetworkErrorException, NoSuchUserException {
+        this.pullIDLists();
+
+
+    }
+    //TODO
+    public JSONObject getProblem(String problemID) throws InvalidKeyException {
+        return null;
+    }
+    // TODO
+    public JSONObject getRecord(String recordID) {
+
+    }
+
+    //TODO
+    public Photo getPhoto(String photoID) {
 
     }
 
@@ -567,23 +579,22 @@ class ElasticsearchController {
         }
     }
 
-    //TODO
-    public void deleteUser(String userID) throws NetworkErrorException, NoSuchUserException {
 
 
-    }
     //TODO
-    public JSONObject getProblem(String problemID) throws InvalidKeyException {
-        return null;
+    public void upload() {
+        if (isConnected()){
+            ArrayList<User> toupload = dataManager.getPushQueue();
+            for (User user : )
+        }
     }
+
     // TODO
-    public JSONObject getRecord(String recordID) {
-
+    public UserDecomposer.Decomposition getPatientDecomposition(String userID) {
     }
 
-    //TODO
-    public Photo getPhoto(String photoID) {
-
+    // TODO
+    public UserDecomposer.Decomposition getCaregiverDecomposition(String userID) {
     }
 
     private static class jestIndexTask extends AsyncTask<Index, Void, DocumentResult> {

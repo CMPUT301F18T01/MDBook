@@ -42,6 +42,7 @@ public class UserManager {
     private ElasticsearchController elasticsearchController;
     private LocalStorageController localStorageController;
     private UserController userController;
+    private UserDecomposer decomposer;
 
     /**
      * Initialize singleton instance.
@@ -53,6 +54,7 @@ public class UserManager {
             userManager.elasticsearchController = ElasticsearchController.getController();
             userManager.userController = UserController.getController();
             userManager.localStorageController = LocalStorageController.getController();
+            userManager.decomposer = new UserDecomposer();
         }
     }
 
@@ -196,44 +198,12 @@ public class UserManager {
 
         /* Check if userID corresponds with a patient */
         if (elasticsearchController.existsPatient(userID)){
-            try {
-                /* load basic data into patient */
-                JSONObject patientJSON = elasticsearchController.getPatient(userID);
-                String phone = patientJSON.getString("phone");
-                String email = patientJSON.getString("email");
-                ArrayList<String> problemIDs = (ArrayList<String>) patientJSON.get("problems");
-                Patient patient = new Patient(userID, phone, email);
-
-                /* Get problem method also loads in records, photos, etc */
-                for (String problemID : problemIDs){
-                    patient.addProblem(getProblem(problemID));
-                }
-
-                return patient;
-
-            } catch (JSONException e){
-                throw new NoSuchUserException("User data is corrupt, unable to load user", e);
-            } catch (InvalidKeyException e) {
-                throw new NoSuchUserException("User data is corrupt, unable to load user", e);
-            }
+                return decomposer.compose(elasticsearchController.getPatientDecomposition(userID))
         }
 
         /* Check if userID corresponds with a caregiver */
         else if (elasticsearchController.existsCaregiver(userID)){
-            try {
-                /* load basic data into caregiver */
-                JSONObject caregiverJSON = elasticsearchController.getCaregiver(userID);
-
-                String phone = caregiverJSON.getString("phone");
-                String email = caregiverJSON.getString("email");
-                ArrayList<String> patientIDs = (ArrayList<String>) caregiverJSON.get("patients");
-                Caregiver caregiver = new Caregiver(userID, phone, email);
-                caregiver.setPatientList(patientIDs);
-                return caregiver;
-
-            } catch (JSONException e){
-                throw new NoSuchUserException("User data is corrupt, unable to load user", e);
-            }
+                return decomposer.compose(elasticsearchController.getCaregiverDecomposition(userID));
         }
 
         else {
@@ -256,6 +226,18 @@ public class UserManager {
             dataManager.saveMe(user);
         }
         dataManager.addToQueue(user);
+
+        // TODO: this should also be triggered whenever there is an internet connection
+       if (elasticsearchController.isConnected()){
+           ArrayList<User> toupload = dataManager.getPushQueue();
+           UserDecomposer decomposer = new UserDecomposer();
+           for (User user1 : toupload){
+               UserDecomposer.Decomposition userDecomp = decomposer.decompose(user1);
+
+
+
+           }
+       }
     }
 
     /**

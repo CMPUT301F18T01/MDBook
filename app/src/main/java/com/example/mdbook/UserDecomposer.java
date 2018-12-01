@@ -4,6 +4,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 /**
@@ -40,7 +41,7 @@ public class UserDecomposer {
 
 
     public Decomposition decompose(User user){
-        Decomposition decomposition = new Decomposition();
+        Decomposition decomposition = new Decomposition(user.getUserID());
         ElasticsearchController elasticsearchController = ElasticsearchController.getController();
         try {
             /* Build user json */
@@ -149,14 +150,97 @@ public class UserDecomposer {
         }
     }
 
+    public User compose(Decomposition decomposition){
+        try {
+            if (decomposition.getProblems() != null) {
+
+                /* User is a patient */
+                JSONObject patientJSON = decomposition.getUser();
+                String phone = patientJSON.getString("phone");
+                String email = patientJSON.getString("email");
+                Patient patient = new Patient(decomposition.getUserid(), phone, email);
+
+                /* Get problem method also loads in records, photos, etc */
+                for (String problemID : decomposition.getProblems().keySet()) {
+                    JSONObject problemJSON = decomposition.getProblems().get(problemID);
+
+                    String title = problemJSON.getString("title");
+                    String description = problemJSON.getString("description");
+
+                    Problem problem = new Problem(title, description);
+                    problem.setProblemID(problemID);
+
+                    /* Add comments */
+                    for (String comment : (ArrayList<String>) problemJSON.get("comments")) {
+                        problem.addComment(comment);
+                    }
+
+                    /* Add records */
+                    for (String recordID : (ArrayList<String>) problemJSON.get("records")) {
+
+                        JSONObject recordJSON = decomposition.getRecords().get(recordID);
+
+                        /* Fetch data */
+                        String recordTitle = recordJSON.getString("title");
+                        Date recordDate = (Date) recordJSON.get("date");
+                        String recordDescription = recordJSON.getString("description");
+                        String comment = recordJSON.getString("comment");
+
+                        Record record = new Record(recordTitle, recordDate, recordDescription);
+
+                        record.setComment(comment);
+                        record.setRecordID(recordID);
+
+                        if (recordJSON.has("geoLocation")) {
+                            GeoLocation geoLocation = (GeoLocation) recordJSON.get("geoLocation");
+                            record.setGeoLocation(geoLocation);
+                        }
+                        if (recordJSON.has("bodyLocation")) {
+                            BodyLocation bodyLocation = (BodyLocation) recordJSON.get("bodyLocation");
+                            record.setBodyLocation(bodyLocation);
+                        }
+                        /* Add photos */
+                        for (String photoID : (ArrayList<String>) recordJSON.get("photos")) {
+                            Photo photo = decomposition.getPhotos().get(photoID);
+                            photo.setPhotoid(photoID);
+                            record.addPhoto(photo);
+                        }
+
+                        problem.addRecord(record);
+                    }
+
+                    patient.addProblem(problem);
+                }
+
+                return patient;
+            } else {
+                /* User is a caregiver */
+                JSONObject caregiverJSON = decomposition.getUser();
+
+                String phone = caregiverJSON.getString("phone");
+                String email = caregiverJSON.getString("email");
+                ArrayList<String> patientIDs = (ArrayList<String>) caregiverJSON.get("patients");
+                Caregiver caregiver = new Caregiver(decomposition.getUserid(), phone, email);
+                caregiver.setPatientList(patientIDs);
+
+                return caregiver;
+            }
+        } catch (JSONException e) {
+            return null;
+        }
+    }
+
+
     public class Decomposition {
 
+        private String userid;
         private JSONObject user;
         private HashMap<String, JSONObject> problems;
         private HashMap<String, JSONObject> records;
         private HashMap<String, Photo> photos;
 
-        private Decomposition(){
+        private Decomposition(String userid){
+            this.userid = userid;
             user = new JSONObject();
             problems = new HashMap<>();
             records = new HashMap<>();
@@ -193,6 +277,10 @@ public class UserDecomposer {
 
         public void setPhotos(HashMap<String, Photo> photos) {
             this.photos = photos;
+        }
+
+        public String getUserid() {
+            return userid;
         }
     }
 
