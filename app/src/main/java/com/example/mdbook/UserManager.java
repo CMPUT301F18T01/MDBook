@@ -235,8 +235,15 @@ public class UserManager {
                UserDecomposer.Decomposition userDecomp = null;
                try {
                    userDecomp = decomposer.decompose(user1);
-                   if(elasticsearchController.setUser(userDecomp)){
-                       dataManager.removeFromQueue(user1);
+                   if (user1.getClass() == Patient.class) {
+                       if (elasticsearchController.setPatient(userDecomp)) {
+                           dataManager.removeFromQueue(user1);
+                       }
+                   }
+                   else {
+                       if (elasticsearchController.setCaregiver(userDecomp)) {
+                           dataManager.removeFromQueue(user1);
+                       }
                    }
 
                } catch (NetworkErrorException e) {

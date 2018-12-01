@@ -72,7 +72,7 @@ public class UserDecomposer {
                 for (Problem problem : ((Patient) user).getProblems()) {
 
                     /* Assign an ID to new problems */
-                    if (problem.getProblemID() == "-1") {
+                    if (problem.getProblemID().equals("-1")) {
                         problem.setProblemID(elasticsearchController.generateID());
                     }
 
@@ -90,7 +90,7 @@ public class UserDecomposer {
 
                     for (Record record : problem.getRecords()) {
                         /* Assign an ID to new records */
-                        if (record.getRecordID() == "-1") {
+                        if (record.getRecordID().equals("-1")) {
                             record.setRecordID(elasticsearchController.generateID());
                         }
 

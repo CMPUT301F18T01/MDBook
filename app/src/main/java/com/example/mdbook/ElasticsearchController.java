@@ -638,9 +638,66 @@ class ElasticsearchController {
         }
     }
 
-    // TODO
-    public boolean setUser(UserDecomposer.Decomposition userDecomp) {
 
+    public boolean setPatient(UserDecomposer.Decomposition userDecomp) {
+        try {
+            this.pullIDLists();
+
+            /* Patient JSON */
+            if (!this.idlists.get("patientIDs").contains(userDecomp.getUserid())){
+                this.idlists.get("patientIDs").add(userDecomp.getUserid());
+            }
+            Index jestIndex = new Index.Builder(userDecomp.getUser()).index(index)
+                    .type("patient")
+                    .id(userDecomp.getUserid())
+                    .build();
+            new jestIndexTask().execute(jestIndex);
+
+            /* Problem JSON */
+            for (String problemID : userDecomp.getProblems().keySet()){
+                JSONObject problemJSON = userDecomp.getProblems().get(problemID);
+                if (!this.idlists.get("problemIDs").contains(problemID)){
+                    this.idlists.get("problemIDs").add(problemID);
+                }
+                Index problemIndex = new Index.Builder(problemJSON).index(index)
+                        .type("problem")
+                        .id(problemID)
+                        .build();
+                new jestIndexTask().execute(problemIndex);
+            }
+
+            /* Record JSON */
+            for (String recordID : userDecomp.getRecords().keySet()){
+                JSONObject recordJSON = userDecomp.getProblems().get(recordID);
+                if (!this.idlists.get("recordIDs").contains(recordID)){
+                    this.idlists.get("recordIDs").add(recordID);
+                }
+                Index recordIndex = new Index.Builder(recordJSON).index(index)
+                        .type("record")
+                        .id(recordID)
+                        .build();
+                new jestIndexTask().execute(recordIndex);
+            }
+
+            /* Photo Objects */
+            for (String photoID : userDecomp.getPhotos().keySet()){
+                Photo photo = userDecomp.getPhotos().get(photoID);
+                if (!this.idlists.get("photoIDs").contains(photoID)){
+                    this.idlists.get("photoIDs").add(photoID);
+                }
+                Index photoIndex = new Index.Builder(photo).index(index)
+                        .type("photo")
+                        .id(photoID)
+                        .build();
+                new jestIndexTask().execute(photoIndex);
+            }
+
+            /* Update ID lists */
+            this.pushIDLists();
+
+        } catch (NetworkErrorException e) {
+            return false;
+        }
     }
 
     private static class jestIndexTask extends AsyncTask<Index, Void, DocumentResult> {
