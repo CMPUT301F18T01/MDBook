@@ -125,6 +125,12 @@ public class AddProblemActivity extends AppCompatActivity implements DatePickerD
     }
 
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+    }
+
 
     public void BackToListProblem() {
         Intent mainPage = new Intent(AddProblemActivity.this, ListProblemActivity.class);
