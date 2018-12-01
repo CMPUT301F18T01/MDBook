@@ -10,15 +10,26 @@
 
 package com.example.mdbook;
 
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Intent;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
-import java.util.ArrayList;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 
 /**
@@ -35,16 +46,19 @@ import java.util.ArrayList;
  * @version 0.0.1
  */
 
-public class AddProblemActivity extends AppCompatActivity {
+public class AddProblemActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
     ArrayList<String> problemArray = new ArrayList<String>();
     Button save;
     Button cancel;
-
+    private Button addDate;
+    private Boolean datePicked;
     EditText title;
-    EditText date;
     EditText description;
     Problem problem;
+    private Date date;
+    private String day, month, year;
+    private String dateString;
 
 
 
@@ -57,8 +71,17 @@ public class AddProblemActivity extends AppCompatActivity {
         cancel = findViewById(R.id.cancelButton);
         title = findViewById(R.id.addTitle);
         description = findViewById(R.id.addDescription);
+        addDate = findViewById(R.id.addDateBtn);
         UserManager.initManager();
         final UserManager userManager = UserManager.getManager();
+
+        addDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDatePicker(v);
+
+            }
+        });
 
         // Switches to addProblemActivty upon the click of the save button
         save.setOnClickListener(new View.OnClickListener() {
@@ -69,18 +92,24 @@ public class AddProblemActivity extends AppCompatActivity {
 
                 //Patient patient = new Patient(user, null, null);
 
-                    Problem problem = new Problem(title.getText().toString(), description.getText().toString());
-                    patient.addProblem(problem);
-                try{
-                    userManager.saveUser(patient);
-                    Toast.makeText(AddProblemActivity.this, "saved problem: " + title.getText().toString(), Toast.LENGTH_SHORT).show();
-                }catch ( NoSuchUserException id)
+                if(date != null)
                 {
-                    Toast.makeText(AddProblemActivity.this, "No user", Toast.LENGTH_SHORT).show();
+                    Problem problem = new Problem(title.getText().toString(), description.getText().toString());
+                    problem.setDate(date);
+                    patient.addProblem(problem);
+                    try{
+                        userManager.saveUser(patient);
+                        Toast.makeText(AddProblemActivity.this, "saved problem: " + title.getText().toString(), Toast.LENGTH_SHORT).show();
+                    }catch ( NoSuchUserException id)
+                    {
+                        Toast.makeText(AddProblemActivity.this, "No user", Toast.LENGTH_SHORT).show();
+                    }
+                    BackToListProblem();
                 }
+                else{
+                    Toast.makeText(AddProblemActivity.this, "Please pick date", Toast.LENGTH_LONG).show();
 
-                BackToListProblem();
-
+                }
 
             }
         });
@@ -110,9 +139,44 @@ public class AddProblemActivity extends AppCompatActivity {
     }
 
 
-    public void goAddRecord(){
-        Intent goAdd = new Intent(this, AddRecordActivity.class);
-        startActivity(goAdd);
+    public void showDatePicker(View v) {
+        DialogFragment newFragment = new DatePickerFragment();
+        newFragment.show(getSupportFragmentManager(), "date picker");
+
     }
 
+    private String setDate(Date date) {
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yy");
+        return  dateFormat.format(date);
+
+    }
+
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int day) {
+
+        view.setMaxDate(Calendar.getInstance().getTimeInMillis());
+        date = new Date(view.getYear(), view.getMonth(), view.getDayOfMonth());
+        String strDate = setDate(date);
+        addDate.setText(strDate);
+        Toast.makeText(AddProblemActivity.this, strDate, Toast.LENGTH_LONG).show();
+
+    }
+
+    public static class DatePickerFragment extends DialogFragment {
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            final Calendar c = Calendar.getInstance();
+            int year = c.get(Calendar.YEAR);
+            int month = c.get(Calendar.MONTH);
+            int day = c.get(Calendar.DAY_OF_MONTH);
+
+
+            return new DatePickerDialog(getActivity(),
+                    (DatePickerDialog.OnDateSetListener)
+                            getActivity(), year, month, day);
+        }
+
+    }
 }

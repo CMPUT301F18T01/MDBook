@@ -40,9 +40,8 @@
     <string name="apikey">AIzaSyC87hg2QtwH0d4NAmWTyytBC8ZH9hSj71I</string>
     <string name="title_activity_view_record2">ViewRecordActivity2</string>
     <string name="MDBook">MDBook</string>
-    <string name="unable_save_address">Unable to save address</string>
-    <string name="listProblemCG">Listing problems</string>
-    <string name="listPatientsCG">Listing problems</string>
+    <string name="listProblemCG">Listing patient\'s problems</string>
+    <string name="listPatientsCG">Your Patients</string>
     <string name="listPatientRecordsCG">Listing patient\'s records</string>
 
 </resources>

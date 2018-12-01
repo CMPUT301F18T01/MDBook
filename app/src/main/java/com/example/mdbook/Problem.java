@@ -27,6 +27,7 @@ class Problem implements Serializable {
     private String description;
     private ArrayList<String> comments;
     private int problemID = -1;
+    private Date date;
 
 
 
@@ -167,5 +168,11 @@ class Problem implements Serializable {
      */
     public void setProblemID(int problemID) {
         this.problemID = problemID;
+    }
+
+    public Date getDate(){return this.date;}
+
+    public void setDate(Date date){
+        this.date = date;
     }
 }
