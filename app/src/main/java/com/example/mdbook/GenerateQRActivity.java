@@ -23,7 +23,7 @@ import androidmads.library.qrgenearator.QRGEncoder;
 import androidmads.library.qrgenearator.QRGSaver;
 
 public class GenerateQRActivity extends AppCompatActivity {
-    
+
     ImageView qrImage;
     Button generate;
     String inputValue;

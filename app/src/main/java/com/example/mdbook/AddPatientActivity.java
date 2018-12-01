@@ -45,6 +45,7 @@ public class AddPatientActivity extends AppCompatActivity  {
 
     private Button addPatientBtn;
     private Button cancelBtn;
+    private Button readQRBtn;
     private EditText enterIDText;
     private String TAG = "AddPatientActivity";
     private Patient patient;
@@ -65,6 +66,7 @@ public class AddPatientActivity extends AppCompatActivity  {
         enterIDText = findViewById(R.id.enterUserText);
         addPatientBtn = findViewById(R.id.addPatientBtn);
         cancelBtn = findViewById(R.id.cancelBtn);
+        readQRBtn = findViewById(R.id.readQR);
 
         cancelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,6 +95,13 @@ public class AddPatientActivity extends AppCompatActivity  {
 
             }
         });
+
+        readQRBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goReadQR();
+            }
+        });
     }
 
 
@@ -110,6 +119,11 @@ public class AddPatientActivity extends AppCompatActivity  {
        back.putExtra("TAG", TAG);
        startActivity(back);
        this.finish();
+    }
+
+    public void goReadQR()
+    {
+        Toast.makeText(AddPatientActivity.this, "Go scan QR code", Toast.LENGTH_LONG).show();
 
     }
 }
