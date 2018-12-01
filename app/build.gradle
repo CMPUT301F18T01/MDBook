@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
 def apikey = new Properties()
-rootProject.file('api.keys').withInputStream {apikey.load(it)}
+rootProject.file('api.keys').withInputStream { apikey.load(it) }
 
 android {
     compileSdkVersion 28
@@ -40,4 +40,5 @@ dependencies {
     implementation 'com.android.support:cardview-v7:28.0.0'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     implementation 'com.google.android.gms:play-services-location:16.0.0'
+    implementation 'androidmads.library.qrgenearator:QRGenearator:1.0.3'
 }

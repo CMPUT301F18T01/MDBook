@@ -13,6 +13,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
         android:allowBackup="true"
@@ -57,7 +58,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".MapActivity" />
         <activity android:name=".ViewMapActivity" />
-        <activity android:name=".AddReminderActivity"/>
+        <activity android:name=".AddReminderActivity" />
         <activity
             android:name=".ListProblemActivity"
             android:label="@string/MDBook"
@@ -74,9 +75,12 @@
         <activity
             android:name=".ListRecordsCGActivity"
             android:label="@string/listPatientRecordsCG"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".AddCommentActivity"></activity>
-        <receiver android:name=".AlarmService"/>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".AddCommentActivity" />
+
+        <receiver android:name=".AlarmService" />
+
+        <activity android:name=".GenerateQRActivity"></activity>
     </application>
 
 </manifest>
