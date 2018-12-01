@@ -393,6 +393,7 @@ class ElasticsearchController {
             for (String problemID : cloudPatient.getProblems().keySet()) {
                 if (!userDecomp.getProblems().containsKey(problemID)) {
                     this.idlists.get("problemIDs").remove(problemID);
+                    this.idlists.get("availableIDs").add(problemID);
                     Delete delete = new Delete.Builder(problemID)
                             .index(index)
                             .type("problem")
@@ -403,7 +404,7 @@ class ElasticsearchController {
 
             /* Add new records */
             for (String recordID : userDecomp.getRecords().keySet()) {
-                JSONObject recordJSON = userDecomp.getProblems().get(recordID);
+                JSONObject recordJSON = userDecomp.getRecords().get(recordID);
                 if (!this.idlists.get("recordIDs").contains(recordID)) {
                     this.idlists.get("recordIDs").add(recordID);
                 }
@@ -421,6 +422,7 @@ class ElasticsearchController {
             for (String recordID : cloudPatient.getRecords().keySet()) {
                 if (!userDecomp.getRecords().containsKey(recordID)) {
                     this.idlists.get("recordIDs").remove(recordID);
+                    this.idlists.get("availableIDs").add(recordID);
                     Delete delete = new Delete.Builder(recordID)
                             .index(index)
                             .type("record")
@@ -446,6 +448,7 @@ class ElasticsearchController {
             for (String photoID : cloudPatient.getPhotos().keySet()) {
                 if (!userDecomp.getPhotos().containsKey(photoID)) {
                     this.idlists.get("photoIDs").remove(photoID);
+                    this.idlists.get("availableIDs").add(photoID);
                     Delete delete = new Delete.Builder(photoID.toString())
                             .index(index)
                             .type("photo")
