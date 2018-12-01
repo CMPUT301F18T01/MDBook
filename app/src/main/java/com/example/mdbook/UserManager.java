@@ -159,9 +159,13 @@ public class UserManager {
     public boolean localLogin() {
         User localUser = localStorageController.loadMe();
         if (localUser != null){
+
+            // TODO: solve this race condition
+            // As is, cloud based changes will not overwrite the local copy, at all (no additions)
             if(elasticsearchController.isConnected()){
                 try {
-                    localUser = this.fetchUser(localUser.getUserID());
+                    User cloudUser = this.fetchUser(localUser.getUserID());
+
                 } catch (NoSuchUserException e) {
                     this.logout();
                     return false;
@@ -227,7 +231,7 @@ public class UserManager {
 
         // TODO: this should also be triggered whenever there is an internet connection
        if (elasticsearchController.isConnected()){
-           ArrayList<User> toupload = dataManager.getPushQueue();
+           ArrayList<User> toupload = (ArrayList<User>) dataManager.getPushQueue().clone();
            for (User user1 : toupload){
 
                UserDecomposer.Decomposition userDecomp;

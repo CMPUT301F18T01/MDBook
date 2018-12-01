@@ -114,27 +114,42 @@ class LocalStorageController {
 
     // TODO: split saveQueue into two arraylists of each type of user
     public void saveQueue(ArrayList<User> pushQueue) {
-        /*
-        String queueString = gson.toJson(pushQueue);
-        editor.putString("pushQueue", queueString);
-        editor.apply();
-        */
+
+        ArrayList<Patient> patientQueue = new ArrayList<>();
+        ArrayList<Caregiver> caregiverQueue = new ArrayList<>();
+        for (User user : pushQueue){
+            if (user.getClass() == Patient.class){
+                patientQueue.add((Patient) user);
+            }
+            else {
+                caregiverQueue.add((Caregiver) user);
+            }
+        }
+        String patientQueueString = gson.toJson(patientQueue);
+        String caregiverQueueString = gson.toJson(caregiverQueue);
+        editor.putString("patientPushQueue", patientQueueString);
+        editor.putString("caregiverPushQueue", caregiverQueueString);
 
     }
 
 
     // TODO: split saveQueue into two arraylists of each type of user
     public ArrayList<User> loadQueue() {
-        /*
-        String queueString = sharedPreferences.getString("pushQueue", null);
-        Type queueType = new TypeToken<ArrayList<User>>(){}.getType();
-        ArrayList<User> pushQueue = gson.fromJson(queueString, queueType);
-        if (pushQueue == null){
-            return new ArrayList<>();
+
+        String patientQueueString = sharedPreferences.getString("patientPushQueue", null);
+        String caregiverQueueString = sharedPreferences.getString("caregiverPushQueue", null);
+        Type patientQueueType = new TypeToken<ArrayList<Patient>>(){}.getType();
+        Type caregiverQueueType = new TypeToken<ArrayList<Caregiver>>(){}.getType();
+        ArrayList<Patient> patientPushQueue = gson.fromJson(patientQueueString, patientQueueType);
+        ArrayList<Caregiver> caregiverPushQueue = gson.fromJson(caregiverQueueString, caregiverQueueType);
+        ArrayList<User> pushQueue = new ArrayList<>();
+        if (patientPushQueue != null){
+            pushQueue.addAll(patientPushQueue);
+        }
+        if (caregiverPushQueue != null) {
+            pushQueue.addAll(caregiverPushQueue);
         }
         return pushQueue;
-        */
-        return new ArrayList<>();
     }
 
     public void clearMe() {

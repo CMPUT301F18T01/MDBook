@@ -54,7 +54,6 @@ public class DataManager {
             dataManager = new DataManager();
             dataManager.localStorageController = LocalStorageController.getController();
             dataManager.setPushQueue(LocalStorageController.getController().loadQueue());
-            //dataManager.setMe(LocalStorageController.loadMe());
         }
         return dataManager;
     }
