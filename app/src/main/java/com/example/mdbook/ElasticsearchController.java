@@ -152,7 +152,7 @@ class ElasticsearchController {
     private void pushIDLists() {
         JSONObject IDJSON = new JSONObject(this.idlists);
         try {
-            IDJSON.put("availableID", dataManager.getAvailableID());
+            IDJSON.put("availableID", availableID);
         } catch (JSONException e) {
             throw new RuntimeException();
         }
@@ -160,7 +160,6 @@ class ElasticsearchController {
                 .id("idlists")
                 .build();
         new jestIndexTask().execute(JestID);
-
     }
 
 
