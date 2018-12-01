@@ -231,9 +231,16 @@ public class UserManager {
        if (elasticsearchController.isConnected()){
            ArrayList<User> toupload = dataManager.getPushQueue();
            for (User user1 : toupload){
-               UserDecomposer.Decomposition userDecomp = decomposer.decompose(user1);
-               if(elasticsearchController.setUser(userDecomp)){
-                   dataManager.removeFromQueue(user1);
+
+               UserDecomposer.Decomposition userDecomp = null;
+               try {
+                   userDecomp = decomposer.decompose(user1);
+                   if(elasticsearchController.setUser(userDecomp)){
+                       dataManager.removeFromQueue(user1);
+                   }
+
+               } catch (NetworkErrorException e) {
+                   break;
                }
            }
        }

@@ -1,5 +1,7 @@
 package com.example.mdbook;
 
+import android.accounts.NetworkErrorException;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -40,9 +42,17 @@ public class UserDecomposer {
      */
 
 
-    public Decomposition decompose(User user){
+    public Decomposition decompose(User user) throws NetworkErrorException {
         Decomposition decomposition = new Decomposition(user.getUserID());
         ElasticsearchController elasticsearchController = ElasticsearchController.getController();
+
+        /* Ensure internet connection is available before decomposing users, in order to generate
+         * ID values.
+         */
+        if (!elasticsearchController.isConnected()){
+            throw new NetworkErrorException();
+        }
+
         try {
             /* Build user json */
             JSONObject userJSON = new JSONObject();

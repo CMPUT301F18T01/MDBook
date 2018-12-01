@@ -86,7 +86,7 @@ class ElasticsearchController {
     private DataManager dataManager;
     private static JestClient client;
     private static String index = "cmput301f18t01";
-    private static HashMap<String, Object> idlists;
+    private HashMap<String, ArrayList<String>> idlists;
     private int availableID;
 
 
@@ -95,15 +95,6 @@ class ElasticsearchController {
      */
 
     public static void init(ConnectivityManager connectivityManager){
-        if (elasticsearchController == null) {
-            ElasticsearchController.getController();
-        }
-        elasticsearchController.connectivityManager = connectivityManager;
-        elasticsearchController.dataManager = DataManager.getDataManager();
-    }
-
-
-    public static ElasticsearchController getController() {
         if (elasticsearchController == null) {
             elasticsearchController = new ElasticsearchController();
             elasticsearchController.dataManager = DataManager.getDataManager();
@@ -115,17 +106,25 @@ class ElasticsearchController {
                     .maxTotalConnection(20)
                     .build());
             client = factory.getObject();
+            elasticsearchController.connectivityManager = connectivityManager;
+            elasticsearchController.dataManager = DataManager.getDataManager();
+            HashMap<String, ArrayList<String>> idl = new HashMap<>();
+            idl.put("patientIDs", new ArrayList<String>());
+            idl.put("caregiverIDs", new ArrayList<String>());
+            idl.put("problemIDs", new ArrayList<String>());
+            idl.put("recordIDs", new ArrayList<String>());
+            idl.put("photoIDs", new ArrayList<String>());
+            idl.put("availableIDs", new ArrayList<String>());
+            elasticsearchController.idlists = idl;
+            elasticsearchController.availableID = 0;
         }
 
-        if (idlists == null) {
-            idlists = new HashMap<>();
-            idlists.put("patientIDs", new ArrayList<String>());
-            idlists.put("caregiverIDs", new ArrayList<String>());
-            idlists.put("problemIDs", new ArrayList<Integer>());
-            idlists.put("recordIDs", new ArrayList<Integer>());
-            idlists.put("photoIDs", new ArrayList<Integer>());
-            idlists.put("availableIDs", new ArrayList<Integer>());
+    }
 
+
+    public static ElasticsearchController getController() {
+        if (elasticsearchController == null) {
+            throw new RuntimeException("ElasticsearchController has not been initialized!");
         }
         return elasticsearchController;
     }
@@ -464,15 +463,13 @@ class ElasticsearchController {
                     .get("availableIDs"))
                     .get("values");
 
-            Integer availableID = idlistJSON.getInt("availableID");
-
+            availableID = idlistJSON.getInt("availableID");
             idlists.put("patientIDs", patientidlist);
             idlists.put("caregiverIDs", caregiveridlist);
             idlists.put("problemIDs", problemidlist);
             idlists.put("recordIDs", recordidlist);
             idlists.put("photoIDs", photoidlist);
             idlists.put("availableIDs", availableidlist);
-            idlists.put("availableID", availableID);
 
 
         }catch (JSONException e) {
@@ -488,7 +485,7 @@ class ElasticsearchController {
     /**
      * Method that calls all other pull methods and sets data back in the dataManager
      */
-    public void pull() {
+    public void pull() throws  NetworkErrorException {
         if (isConnected()) {
             /*Execute this first to get ID list */
             this.pullIDLists();
@@ -504,18 +501,17 @@ class ElasticsearchController {
     }
 
 
-    //TODO
     // indicates if given userID is an existing patient
     public boolean existsPatient(String userID) throws NetworkErrorException {
         this.pullIDLists();
-        return false;
+        return this.idlists.get("patientIDs").contains(userID);
     }
 
-    //TODO
+
     // indicates if given userID is an existing caregiver
     public boolean existsCaregiver(String userID) throws NetworkErrorException {
         this.pullIDLists();
-        return false;
+        return this.idlists.get("caregiverIDs").contains(userID);
     }
 
 
@@ -530,8 +526,10 @@ class ElasticsearchController {
      * @return
      */
     //TODO
-    public String generateID(){
-        if (availableIDs.size() == 0){
+    public String generateID() throws NetworkErrorException {
+        this.pullIDLists();
+
+        if (idlists.get("availableIDs").size() == 0){
             String oldid = availableID;
             availableID = Integer.toString(Integer.getInteger(availableID) + 1) ;
             return oldid;
@@ -540,16 +538,6 @@ class ElasticsearchController {
             String id = availableIDs.get(0);
             availableIDs.remove(0);
             return id;
-        }
-    }
-
-
-
-    //TODO
-    public void upload() {
-        if (isConnected()){
-            ArrayList<User> toupload = dataManager.getPushQueue();
-            for (User user : )
         }
     }
 
@@ -563,6 +551,7 @@ class ElasticsearchController {
 
     // TODO
     public boolean setUser(UserDecomposer.Decomposition userDecomp) {
+
     }
 
     private static class jestIndexTask extends AsyncTask<Index, Void, DocumentResult> {
