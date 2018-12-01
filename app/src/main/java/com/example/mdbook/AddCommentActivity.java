@@ -10,6 +10,23 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+/**
+ * Creates an activity where the caregiver and patient are able to add comment record
+ * to problems.
+ *
+ *
+ * @see com.example.mdbook.Patient
+ * @see com.example.mdbook.Caregiver
+ * @see com.example.mdbook.Problem
+ * @see com.example.mdbook.Record
+ * @see UserManager
+ *
+ * @author Raj Kapadia
+ *
+ *
+ * @version 0.0.1
+ */
+
 public class AddCommentActivity extends AppCompatActivity {
 
     private Button addComment;
@@ -17,15 +34,15 @@ public class AddCommentActivity extends AppCompatActivity {
     private String comment;
     private Integer problemPos;
     private String patientID;
-    private ArrayList<Record> recordList;
     private Record commentRecord;
     private Problem problem;
     private Patient patient;
-    private Integer patientPos;
-    private String TAG;
     Caregiver caregiver;
 
-
+    /**
+     * @throws NoSuchUserException
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,10 +52,8 @@ public class AddCommentActivity extends AppCompatActivity {
         final UserManager userManager = UserManager.getManager();
 
         caregiver = (Caregiver)UserController.getController().getUser();
-//        caregiver.getPatientList().get(patientPos);
 
         commentRecord = new Record("Caregiver says: ");
-
 
         addComment = findViewById(R.id.addCommentBtn);
         etComment = findViewById(R.id.etAddComment);
@@ -46,15 +61,9 @@ public class AddCommentActivity extends AppCompatActivity {
         problemPos = getIntent().getExtras().getInt("problemPos");
         patientID = getIntent().getExtras().getString("patientID");
 
-
-
-
-
-
         try {
             patient = (Patient) userManager.fetchUser(patientID);
             problem = patient.getProblems().get(problemPos);
-            recordList = problem.getRecords();
             addComment.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -76,20 +85,21 @@ public class AddCommentActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-
-
-
     }
 
+    /**
+     * Takes user back to list of records the caregiver can see. Passes neccessary Extras to
+     * ListRecordsCGActivity
+     *
+     * @see ListRecordsCGActivity
+     * @result The caregiver can see the added comment in the recyclerview.
+     */
     public void backToRecord()
     {
-        TAG = "coming back";
         Intent backIntent = new Intent(AddCommentActivity.this, ListRecordsCGActivity.class);
         backIntent.putExtra("problemPos", problemPos);
-        backIntent.putExtra("patientPos", patientPos);
         backIntent.putExtra("patientID", patientID);
         backIntent.putExtra("record", commentRecord);
-        backIntent.putExtra("TAG", TAG);
         startActivity(backIntent);
         this.finish();
     }
