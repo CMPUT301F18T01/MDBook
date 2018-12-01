@@ -24,7 +24,7 @@
         tools:ignore="GoogleAppIndexingWarning">
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyC87hg2QtwH0d4NAmWTyytBC8ZH9hSj71I" />
+            android:value="MAPS_KEY" />
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />

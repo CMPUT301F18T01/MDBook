@@ -96,6 +96,12 @@ public class AddProblemActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+    }
+
 
     public void BackToListProblem() {
         Intent mainPage = new Intent(AddProblemActivity.this, ListProblemActivity.class);

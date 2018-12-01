@@ -66,3 +66,8 @@ fastlane/readme.md
 
 # DS store (OSX files)
 .DS_Store
+
+# Api.keys
+api.keys
+*.keys
+*.keys~
