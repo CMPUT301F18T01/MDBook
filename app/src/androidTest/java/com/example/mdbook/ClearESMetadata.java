@@ -21,7 +21,7 @@ import io.searchbox.core.DocumentResult;
 import io.searchbox.core.Index;
 
 public class ClearESMetadata extends TestCase {
-    public void testResetIDLists() {
+    public void testResetStringIDs() {
 
         HashMap<String, ArrayList<String>> idlists = new HashMap<>();
         String availableID = "0";
@@ -31,6 +31,32 @@ public class ClearESMetadata extends TestCase {
         idlists.put("recordIDs", new ArrayList<String>());
         idlists.put("photoIDs", new ArrayList<String>());
         idlists.put("availableIDs", new ArrayList<String>());
+
+
+
+        JSONObject IDJSON = new JSONObject(idlists);
+        try {
+            IDJSON.put("availableID", availableID);
+        } catch (JSONException e) {
+            fail();
+        }
+        Index JestID = new Index.Builder(IDJSON).index("cmput301f18t01test").type("metadata")
+                .id("idlists")
+                .build();
+        new jestIndexTask().execute(JestID);
+    }
+
+    public void testResetIntIDs(){
+
+
+        HashMap<String, Object> idlists = new HashMap<>();
+        int availableID = 0;
+        idlists.put("patientIDs", new ArrayList<String>());
+        idlists.put("caregiverIDs", new ArrayList<String>());
+        idlists.put("problemIDs", new ArrayList<Integer>());
+        idlists.put("recordIDs", new ArrayList<Integer>());
+        idlists.put("photoIDs", new ArrayList<Integer>());
+        idlists.put("availableIDs", new ArrayList<Integer>();
 
 
 
