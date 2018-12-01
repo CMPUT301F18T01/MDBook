@@ -7,9 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 
 /**
@@ -49,9 +47,8 @@ public class ProblemAdapter extends RecyclerView.Adapter<ProblemAdapter.ProblemA
      */
     public static class ProblemAdapterHolder extends RecyclerView.ViewHolder{
 
-        public TextView title;
-        public TextView description;
-        public TextView date;
+        public TextView text;
+        public TextView text2;
 
 
         /**
@@ -61,9 +58,8 @@ public class ProblemAdapter extends RecyclerView.Adapter<ProblemAdapter.ProblemA
          */
         public ProblemAdapterHolder(@NonNull View itemView, final OnItemClickListener listener) {
             super(itemView);
-            this.title = itemView.findViewById(R.id.problemTitle);
-            this.description =itemView.findViewById(R.id.problemDesc);
-            this.date = itemView.findViewById(R.id.problemDate);
+            this.text = itemView.findViewById(R.id.mtext);
+            this.text2 =itemView.findViewById(R.id.mtext2);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -109,11 +105,8 @@ public class ProblemAdapter extends RecyclerView.Adapter<ProblemAdapter.ProblemA
     @Override
     public void onBindViewHolder(@NonNull ProblemAdapterHolder problemAdapterHolder, int i) {
         Problem currentitem = problems.get(i);
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yy");
-        String strDate = dateFormat.format(currentitem.getDate());
-        problemAdapterHolder.title.setText(currentitem.getTitle());
-        problemAdapterHolder.description.setText(currentitem.getDescription());
-        problemAdapterHolder.date.setText(strDate);
+        problemAdapterHolder.text.setText(currentitem.getTitle());
+        problemAdapterHolder.text2.setText(currentitem.getDescription());
     }
 
     /**
