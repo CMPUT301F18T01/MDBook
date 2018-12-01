@@ -413,7 +413,6 @@ public class UserManager {
                 JSONObject problemJSON = problems.get(problemID);
                 String title = problemJSON.getString("title");
                 String description = problemJSON.getString("description");
-//                Date date = (Date) problemJSON.get("date");
                 Problem problem = new Problem(title, description);
                 problem.setProblemID(problemID);
 
@@ -500,7 +499,6 @@ public class UserManager {
             problemJSON.put("title", problem.getTitle());
             problemJSON.put("description", problem.getDescription());
             problemJSON.put("comments", problem.getComments());
-//            problemJSON.put("date", problem.getDate());
             problemJSON.put("records", new ArrayList<Integer>());
         } catch (JSONException e) {
             throw new RuntimeException(e);

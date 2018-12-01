@@ -67,7 +67,7 @@ public class ListPatientProblemActivity extends AppCompatActivity implements Nav
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list_patient_problem);
+        setContentView(R.layout.activity_list_patient);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -105,7 +105,35 @@ public class ListPatientProblemActivity extends AppCompatActivity implements Nav
             }
         });
 
+//        /* Delete problem when swipe right is activated */
+//        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.RIGHT) {
+//
+//            @Override
+//            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView
+//                    .ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder viewHolder1) {
+//                return false;
+//            }
+//
+//            @Override
+//            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+//                if (direction == ItemTouchHelper.RIGHT){
+////                    Snackbar.make(recyclerView,  problems.get(viewHolder.getAdapterPosition())
+////                            .getTitle()+" removed", Snackbar.LENGTH_LONG)
+////                            .setAction("Action", null).show();
+//                    showAlertDialog(viewHolder);
+//                }
+//
+//            }
+//        }).attachToRecyclerView(recyclerView);
 
+        /* Initializes the add problem activity */
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addPatient();
+            }
+        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -114,10 +142,31 @@ public class ListPatientProblemActivity extends AppCompatActivity implements Nav
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view_problem_cg);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view_patient);
         navigationView.setNavigationItemSelectedListener(this);
 
     }
+
+//    public void showAlertDialog(final RecyclerView.ViewHolder position){
+//        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+//        alert.setTitle("MDBook");
+//        alert.setMessage("Are you sure you want to delete this patient?");
+//        alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                patientProblems.remove(position.getAdapterPosition());
+//                mAdapter.notifyDataSetChanged();
+//                Toast.makeText(ListPatientProblemActivity.this, "Patient Removed", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//        alert.setNegativeButton("No", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                mAdapter.notifyDataSetChanged();
+//            }
+//        });
+//        alert.create().show();
+//    }
 
     /**
      * @param item item in the menu object
@@ -154,6 +203,11 @@ public class ListPatientProblemActivity extends AppCompatActivity implements Nav
         Intent viewSignout= new Intent(this, LoginActivity.class);
         startActivity(viewSignout);
         this.finish();
+    }
+
+    public void addPatient(){
+        Intent intent = new Intent(this, AddPatientActivity.class);
+        startActivity(intent);
     }
 
 
