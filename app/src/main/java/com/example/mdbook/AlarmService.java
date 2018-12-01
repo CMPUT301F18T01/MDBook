@@ -11,7 +11,7 @@ import android.support.annotation.RequiresApi;
 
 /**
  * Required for proper reminder functionality. It builds a notification.
- * 
+ *
  * @author Raj Kapadia
  * @author Vanessa Peng
  * @see AddReminderActivity

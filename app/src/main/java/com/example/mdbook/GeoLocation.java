@@ -7,10 +7,15 @@ import android.os.Parcelable;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-// class for holding geographic locations
+/**
+ * Class for implementing Geolocation
+ */
 class GeoLocation implements Serializable {
     private ArrayList<Address> addressList;
 
+    /**
+     * creates a Geolocation object
+     */
     public GeoLocation(){
         if (addressList == null) {
             addressList = new ArrayList<>();
@@ -18,11 +23,18 @@ class GeoLocation implements Serializable {
     }
 
 
-
+    /**
+     * Returns current address list
+     * @return ArrayList<Address> addressList
+     */
     public ArrayList<Address> getAddressList(){
         return this.addressList;
     }
 
+    /**
+     * adds 'address' ArrayList of addresses 
+     * @param address: address
+     */
     public void addAddress(Address address){
         addressList.add(address);
     }
