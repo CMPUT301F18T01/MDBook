@@ -63,12 +63,10 @@ public class AddCommentActivity extends AppCompatActivity {
                     commentRecord.setComment(comment);
                     problem.addRecord(commentRecord);
 
-                    try {
-                        userManager.saveUser(patient);
-                        userManager.saveUser(caregiver);
-                    } catch (NoSuchUserException e) {
-                        e.printStackTrace();
-                    }
+
+                    userManager.saveUser(patient);
+                    userManager.saveUser(caregiver);
+
                     backToRecord();
                 }
             });

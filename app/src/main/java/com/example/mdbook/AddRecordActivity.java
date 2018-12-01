@@ -109,10 +109,6 @@ public class AddRecordActivity extends AppCompatActivity {
                             ,Toast.LENGTH_SHORT).show();
                     endActivity();
 
-                } catch (NoSuchUserException e) {
-                    Toast.makeText(AddRecordActivity.this
-                            , "Unable to add record."
-                            , Toast.LENGTH_SHORT).show();
                 } catch (ParseException e) {
                     Toast.makeText(AddRecordActivity.this,"WRONG DATE FORMAT", Toast.LENGTH_SHORT).show();
                 }

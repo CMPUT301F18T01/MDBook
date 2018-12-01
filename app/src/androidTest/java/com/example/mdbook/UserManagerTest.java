@@ -29,6 +29,6 @@ import junit.framework.TestCase;
  * @version 1.1.0
  */
 public class UserManagerTest extends TestCase {
-    
+
 
 }

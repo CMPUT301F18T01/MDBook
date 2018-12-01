@@ -127,11 +127,7 @@ public class ListProblemActivity extends AppCompatActivity
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     problems.remove(position.getAdapterPosition());
-                    try {
-                        UserManager.getManager().saveUser(UserController.getController().getUser());
-                    } catch (NoSuchUserException e) {
-                        e.printStackTrace();
-                    }
+                    UserManager.getManager().saveUser(UserController.getController().getUser());
                     mAdapter.notifyDataSetChanged();
                     Toast.makeText(ListProblemActivity.this, "Problem Removed", Toast.LENGTH_SHORT).show();
                 }

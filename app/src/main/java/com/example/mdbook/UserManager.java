@@ -92,8 +92,7 @@ public class UserManager {
             throw new IllegalArgumentException();
         } else {
             Patient patient = new Patient(userID, userPhone, userEmail);
-            dataManager.saveMe(patient);
-            dataManager.addToQueue(patient);
+            saveUser(patient);
         }
     }
 
@@ -121,8 +120,7 @@ public class UserManager {
 
         else {
             Caregiver caregiver = new Caregiver(userID, userPhone, userEmail);
-            dataManager.saveMe(caregiver);
-            dataManager.addToQueue(caregiver);
+            saveUser(caregiver);
         }
     }
 
@@ -221,7 +219,7 @@ public class UserManager {
      * @throws IllegalArgumentException Thrown if the inputted user is not a (full) patient or
      * caregiver, e.g. a ContactUser.
      */
-    public void saveUser(User user) throws NoSuchUserException, IllegalArgumentException {
+    public void saveUser(User user) throws IllegalArgumentException {
         if (user.getUserID().equals(userController.getUser().getUserID())){
             dataManager.saveMe(user);
         }
