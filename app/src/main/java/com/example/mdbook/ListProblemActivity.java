@@ -93,9 +93,6 @@ public class ListProblemActivity extends AppCompatActivity
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 if (direction == ItemTouchHelper.RIGHT){
-//                    Snackbar.make(recyclerView,  problems.get(viewHolder.getAdapterPosition())
-//                            .getTitle()+" removed", Snackbar.LENGTH_LONG)
-//                            .setAction("Action", null).show();
                     showAlertDialog(viewHolder);
                 }
 
@@ -164,21 +161,6 @@ public class ListProblemActivity extends AppCompatActivity
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.search_menu, menu);
         MenuItem item = menu.findItem(R.id.recylerView);
-
-        //SearchView searchView = (SearchView)item.getActionView();
-
-        /*searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
-            }
-        });
-        */
         return super.onCreateOptionsMenu(menu);
 
     }

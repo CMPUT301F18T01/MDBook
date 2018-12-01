@@ -24,7 +24,6 @@ import android.view.MenuItem;
 import android.widget.Toast;
 import java.util.ArrayList;
 
-
 /**
  * Creates an activity that lists the Patients Problems for the care giver.
  *
@@ -47,8 +46,6 @@ public class ListPatientProblemActivity extends AppCompatActivity implements Nav
     private int patientPos;
     private String patientID;
     private Patient patient;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

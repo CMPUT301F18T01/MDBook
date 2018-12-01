@@ -19,6 +19,14 @@ import com.google.android.gms.common.GoogleApiAvailability;
 
 import java.util.ArrayList;
 
+/**
+ * Activity which lists the records for a certain problem, viewed by the Patient
+ *
+ * @see Patient
+ *
+ * @author Thomas Chan
+ * 
+ */
 public class ListRecordActivity extends AppCompatActivity {
 
     private static final String TAG = "ListRecordActivity";
@@ -77,7 +85,6 @@ public class ListRecordActivity extends AppCompatActivity {
         });
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -86,6 +93,12 @@ public class ListRecordActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     *
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -100,14 +113,20 @@ public class ListRecordActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Changes to AddRecordActivity, when user clicks add
+     */
     public void AddRecord(){
         Intent addRecord = new Intent(this, AddRecordActivity.class);
         addRecord.putExtra("problemPos", problemPos);
         startActivityForResult(addRecord, ADD_RECORD_REQUEST_CODE);
-
         //this.finish();
     }
 
+    /**
+     * Checks the google services for proper map functionality
+     * @return bool
+     */
     public boolean isServicesOK(){
         Log.d(TAG,"isServicesOK: checking Google Services version");
         int available = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(this);
