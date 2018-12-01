@@ -1,5 +1,8 @@
 apply plugin: 'com.android.application'
 
+def apikey = new Properties()
+rootProject.file('api.keys').withInputStream {apikey.load(it)}
+
 android {
     compileSdkVersion 28
     defaultConfig {
@@ -14,6 +17,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            resValue "string", "MAPS_KEY", apikey['releaseMapsApiKey']
         }
     }
 

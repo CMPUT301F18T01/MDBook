@@ -1,6 +1,8 @@
 package com.example.mdbook;
 
 import android.Manifest;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -10,7 +12,9 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -33,6 +37,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,12 +53,15 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     /* Widgets */
     private EditText mSearchText;
     private ImageView mGps;
+    private ImageView mAddLocation;
 
 
     /* Vars */
     private Address address;
     private List<Address> myAddress = new ArrayList<>();
+    private Patient patient;
     private Boolean mLocationPermissionGranted = false;
+    //private Record record;
     private GoogleMap mMap;
     private FusedLocationProviderClient mFusedLocationProviderClient;
     private UserManager userManager;
@@ -67,6 +75,11 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         mSearchText = (EditText) findViewById(R.id.input_search);
         mGps = (ImageView) findViewById(R.id.gpscenter);
+        mAddLocation = (ImageView) findViewById(R.id.addLocation);
+
+
+
+        patient = (Patient) UserController.getController().getUser();
 
 
         getLocationPermission();
@@ -82,8 +95,16 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                         event.getAction() == KeyEvent.ACTION_DOWN ||
                         event.getAction() == KeyEvent.KEYCODE_ENTER){
                     geoLocate();
+
                 }
                 return false;
+            }
+        });
+
+        mAddLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showAlertDialog();
             }
         });
 
@@ -92,6 +113,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             @Override
             public void onClick(View v) {
                 getDeviceLocation();
+
             }
         });
         hideSoftKeyboard();
@@ -110,7 +132,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         if (list.size() > 0){
             address = list.get(0);
-            Toast.makeText(this, address.toString(), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, address.toString(), Toast.LENGTH_SHORT).show();
             moveCamera(new LatLng(address.getLatitude(), address.getLongitude()),DEFAULT_ZOOM, address.getAddressLine(0));
         }
     }
@@ -138,7 +160,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                                             ,1);
 
                                     if (myAddress.size() > 0) {
-                                        Address address = myAddress.get(0);
+                                        address = myAddress.get(0);
                                         mSearchText.setText(address.getAddressLine(0));
                                     }
 
@@ -279,5 +301,30 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         }
         this.finish();
 
+    }
+
+    public void showAlertDialog(){
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setTitle("MDBook");
+        alert.setMessage("Are you sure you want to use this location?");
+        alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+               if (address != null) {
+                   Intent intent = new Intent();
+                   intent.putExtra("address", address);
+                   setResult(RESULT_OK,intent);
+                   finish();
+
+               }
+            }
+        });
+        alert.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        alert.create().show();
     }
 }

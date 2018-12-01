@@ -10,9 +10,7 @@
 
 package com.example.mdbook;
 
-import android.os.Parcelable;
 import android.support.annotation.NonNull;
-import android.widget.Toast;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -28,6 +26,7 @@ import java.util.Date;
  * @see com.example.mdbook.Photo
  * @version 0.0.1
  **/
+
 class Record implements Serializable, Comparable {
 
     private String title;
@@ -57,7 +56,7 @@ class Record implements Serializable, Comparable {
             this.title = title;
             this.date = new Date();
             this.description = "";
-            this.geoLocation = null;
+            this.geoLocation = new GeoLocation();
             this.bodyLocation = null;
             this.photos = new ArrayList<>();
             this.comment = "";
@@ -81,12 +80,15 @@ class Record implements Serializable, Comparable {
             this.title = title;
             this.date = date;
             this.description = description;
-            this.geoLocation = null;
+            this.geoLocation = new GeoLocation();
             this.bodyLocation = null;
             this.photos = new ArrayList<>();
             this.comment = "";
         }
     }
+
+
+
 
     /**
      * Add a geographic location to a record
