@@ -10,33 +10,20 @@
 
 
 package com.example.mdbook;
-
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.Switch;
-import android.widget.TextView;
 import android.widget.Toast;
-
 import java.util.ArrayList;
-import java.util.Arrays;
+
 
 /**
  * Creates an activity that lists the Patients Problems for the care giver.
@@ -46,7 +33,7 @@ import java.util.Arrays;
  * @see com.example.mdbook.Problem
  *
  * @author Raj Kapadia
- * @author James Aina
+ *
  *
  * @version 0.0.1
  */
@@ -60,7 +47,6 @@ public class ListPatientProblemActivity extends AppCompatActivity implements Nav
     private int patientPos;
     private String patientID;
     private Patient patient;
-    private String problemPos;
 
 
 
@@ -86,7 +72,6 @@ public class ListPatientProblemActivity extends AppCompatActivity implements Nav
             e.printStackTrace();
         }
 
-
         /* Create recycler view */
         recyclerView = findViewById(R.id.recylerView);
         recyclerView.setHasFixedSize(true);
@@ -95,8 +80,6 @@ public class ListPatientProblemActivity extends AppCompatActivity implements Nav
         recyclerView.setLayoutManager(mLayoutmanager);
         recyclerView.setAdapter(mAdapter);
 
-
-
         /* Opens options menu when problem is clicked */
         mAdapter.setOnItemClickListener(new ProblemAdapter.OnItemClickListener() {
             @Override
@@ -104,8 +87,6 @@ public class ListPatientProblemActivity extends AppCompatActivity implements Nav
                 OptionMenu(Position);
             }
         });
-
-
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -157,6 +138,10 @@ public class ListPatientProblemActivity extends AppCompatActivity implements Nav
     }
 
 
+    /**
+     * Changes to ListRecordsCGActivity, passes the necessary Extras
+     * @param position:position of problem in list
+     */
     public void OptionMenu(int position){
         Intent intent = new Intent(this, ListRecordsCGActivity.class);
         intent.putExtra("problemPos", position);
