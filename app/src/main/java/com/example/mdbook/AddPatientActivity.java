@@ -31,9 +31,10 @@ import android.widget.Toast;
  * Displays a list of all the patients already added
  *
  * @see com.example.mdbook.Patient
- * @see
+ *
  *
  * @author Raj Kapadia
+ * @throws NoSuchUserException
  *
  *
  * @version 0.0.1
@@ -54,13 +55,15 @@ public class AddPatientActivity extends AppCompatActivity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_patient);
-
+        UserManager.initManager();
+        final UserManager userManager = UserManager.getManager();
+        caregiver = (Caregiver) UserController.getController().getUser();
 
 
         // set the view and butons appropriately by id's
-        enterIDText = (EditText)findViewById(R.id.enterUserText);
-        addPatientBtn = (Button)findViewById(R.id.addPatientBtn);
-        cancelBtn = (Button)findViewById(R.id.cancelBtn);
+        enterIDText = findViewById(R.id.enterUserText);
+        addPatientBtn = findViewById(R.id.addPatientBtn);
+        cancelBtn = findViewById(R.id.cancelBtn);
 
         cancelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,13 +73,6 @@ public class AddPatientActivity extends AppCompatActivity  {
                 AddPatientActivity.this.finish();
             }
         });
-
-
-        UserManager.initManager();
-        final UserManager userManager = UserManager.getManager();
-
-        caregiver = (Caregiver) UserController.getController().getUser();
-
 
 
         addPatientBtn.setOnClickListener(new View.OnClickListener() {
@@ -99,7 +95,13 @@ public class AddPatientActivity extends AppCompatActivity  {
     }
 
 
-
+    /**
+     * Takes user back to list of patients the caregiver can see. Passes neccessary Extras to
+     * ListPatientActivity
+     *
+     * @see ListPatientActivity
+     * @result The caregiver can see the added comment in the recyclerview.
+     */
     public void goBackToListPatient()
     {
        Intent back = new Intent(AddPatientActivity.this, ListPatientActivity.class);
