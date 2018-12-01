@@ -95,7 +95,7 @@ public class UserDecomposer {
                         }
 
                         /* Add record ID to problemJSON */
-                        problemIDs.add(problem.getProblemID());
+                        recordIDs.add(record.getRecordID());
 
                         /* Add record data to recordJSON */
                         JSONObject recordJSON = new JSONObject();
@@ -146,7 +146,7 @@ public class UserDecomposer {
 
             } else {
                 userJSON.put("patients", ((Caregiver) user).getPatientList());
-                /* make otherhashmaps null */
+                /* make other hashmaps null */
                 decomposition.setProblems(null);
                 decomposition.setPhotos(null);
                 decomposition.setRecords(null);

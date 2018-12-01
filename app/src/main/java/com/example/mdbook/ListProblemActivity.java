@@ -93,9 +93,6 @@ public class ListProblemActivity extends AppCompatActivity
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 if (direction == ItemTouchHelper.RIGHT){
-//                    Snackbar.make(recyclerView,  problems.get(viewHolder.getAdapterPosition())
-//                            .getTitle()+" removed", Snackbar.LENGTH_LONG)
-//                            .setAction("Action", null).show();
                     showAlertDialog(viewHolder);
                 }
 
@@ -130,6 +127,11 @@ public class ListProblemActivity extends AppCompatActivity
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     problems.remove(position.getAdapterPosition());
+                    try {
+                        UserManager.getManager().saveUser(UserController.getController().getUser());
+                    } catch (NoSuchUserException e) {
+                        e.printStackTrace();
+                    }
                     mAdapter.notifyDataSetChanged();
                     Toast.makeText(ListProblemActivity.this, "Problem Removed", Toast.LENGTH_SHORT).show();
                 }

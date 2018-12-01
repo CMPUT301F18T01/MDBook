@@ -318,6 +318,7 @@ class ElasticsearchController {
                         decomposition.getPhotos().put(photoID, photo);
                     }
                 }
+
             }
 
             return decomposition;
@@ -363,6 +364,8 @@ class ElasticsearchController {
         try {
             /* Get fresh id lists */
             this.pullIDLists();
+            /* Get cloud version of user */
+            UserDecomposer.Decomposition cloudPatient = getPatientDecomposition(userDecomp.getUserid());
 
             /* Update user JSON */
             if (!this.idlists.get("patientIDs").contains(userDecomp.getUserid())){
@@ -388,8 +391,9 @@ class ElasticsearchController {
             }
 
             /* Remove deleted problems */
-            for (String problemID :  idlists.get("problemIDs")) {
+            for (String problemID : cloudPatient.getProblems().keySet()) {
                 if (!userDecomp.getProblems().containsKey(problemID)) {
+                    this.idlists.get("problemIDs").remove(problemID);
                     Delete delete = new Delete.Builder(problemID)
                             .index(index)
                             .type("problem")
@@ -415,9 +419,10 @@ class ElasticsearchController {
 
 
             /* Delete removed records */
-            for (String recordID : idlists.get("recordIDs")) {
+            for (String recordID : cloudPatient.getRecords().keySet()) {
                 if (!userDecomp.getRecords().containsKey(recordID)) {
-                    Delete delete = new Delete.Builder(recordID.toString())
+                    this.idlists.get("recordIDs").remove(recordID);
+                    Delete delete = new Delete.Builder(recordID)
                             .index(index)
                             .type("record")
                             .build();
@@ -439,8 +444,9 @@ class ElasticsearchController {
             }
 
             /* Delete removed photos */
-            for (String photoID : idlists.get("photoIDs")) {
+            for (String photoID : cloudPatient.getPhotos().keySet()) {
                 if (!userDecomp.getPhotos().containsKey(photoID)) {
+                    this.idlists.get("photoIDs").remove(photoID);
                     Delete delete = new Delete.Builder(photoID.toString())
                             .index(index)
                             .type("photo")
