@@ -518,46 +518,10 @@ class ElasticsearchController {
         return false;
     }
 
-    //TODO
-    // Returns corresponding json of patient from patients table
-    public JSONObject getPatient(String userID) {
-        return null;
-    }
-
-    //TODO
-    // Returns corresponding json of patient from caregivers table
-    public JSONObject getCaregiver(String userID) {
-        return null;
-    }
-
-    // TODO
-    public void setPatient(String userID, JSONObject patientJSON) {
-
-    }
-
-    //TODO
-    public void setCaregiver(String userID, JSONObject caregiverJSON){
-
-    }
 
     //TODO
     public void deleteUser(String userID) throws NetworkErrorException, NoSuchUserException {
         this.pullIDLists();
-
-
-    }
-    //TODO
-    public JSONObject getProblem(String problemID) throws InvalidKeyException {
-        return null;
-    }
-    // TODO
-    public JSONObject getRecord(String recordID) {
-
-    }
-
-    //TODO
-    public Photo getPhoto(String photoID) {
-
     }
 
     /**
@@ -595,6 +559,10 @@ class ElasticsearchController {
 
     // TODO
     public UserDecomposer.Decomposition getCaregiverDecomposition(String userID) {
+    }
+
+    // TODO
+    public boolean setUser(UserDecomposer.Decomposition userDecomp) {
     }
 
     private static class jestIndexTask extends AsyncTask<Index, Void, DocumentResult> {

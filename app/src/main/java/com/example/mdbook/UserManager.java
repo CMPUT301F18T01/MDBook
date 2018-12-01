@@ -198,7 +198,7 @@ public class UserManager {
 
         /* Check if userID corresponds with a patient */
         if (elasticsearchController.existsPatient(userID)){
-                return decomposer.compose(elasticsearchController.getPatientDecomposition(userID))
+                return decomposer.compose(elasticsearchController.getPatientDecomposition(userID));
         }
 
         /* Check if userID corresponds with a caregiver */
@@ -222,7 +222,7 @@ public class UserManager {
      * caregiver, e.g. a ContactUser.
      */
     public void saveUser(User user) throws NoSuchUserException, IllegalArgumentException {
-        if (user.getUserID() == userController.getUser().getUserID()){
+        if (user.getUserID().equals(userController.getUser().getUserID())){
             dataManager.saveMe(user);
         }
         dataManager.addToQueue(user);
@@ -230,12 +230,11 @@ public class UserManager {
         // TODO: this should also be triggered whenever there is an internet connection
        if (elasticsearchController.isConnected()){
            ArrayList<User> toupload = dataManager.getPushQueue();
-           UserDecomposer decomposer = new UserDecomposer();
            for (User user1 : toupload){
                UserDecomposer.Decomposition userDecomp = decomposer.decompose(user1);
-
-
-
+               if(elasticsearchController.setUser(userDecomp)){
+                   dataManager.removeFromQueue(user1);
+               }
            }
        }
     }
@@ -249,86 +248,8 @@ public class UserManager {
         elasticsearchController.deleteUser(userID);
     }
 
-    /**
-     * Assistant method for retrieving full problem objects
-     * @param problemID The problem ID number
-     * @return A fully filled out problem object
-     */
-    private Problem getProblem(String problemID) throws InvalidKeyException {
 
-        try {
-            JSONObject problemJSON = elasticsearchController.getProblem(problemID);
-            if (problemJSON != null) {
 
-                String title = problemJSON.getString("title");
-                String description = problemJSON.getString("description");
-                Problem problem = new Problem(title, description);
-                problem.setProblemID(problemID);
 
-                /* Add comments */
-                for (String comment : (ArrayList<String>) problemJSON.get("comments")){
-                    problem.addComment(comment);
-                }
-
-                /* Add records (must convert id to int first) */
-                for (String recordID : (ArrayList<String>) problemJSON.get("records")){
-                    problem.addRecord(getRecord(recordID));
-                }
-
-                return problem;
-            } else {
-                throw new InvalidKeyException("Problem does not exist!");
-            }
-        } catch (JSONException e){
-            throw new RuntimeException("User data is corrupt.", e);
-        }
-
-    }
-
-    /**
-     * Assistant method for retrieving full record objects
-     * @param recordID The record ID number
-     * @return A fully filled out problem object
-     */
-    private Record getRecord(String recordID) throws InvalidKeyException{
-        try {
-            JSONObject recordJSON = elasticsearchController.getRecord(recordID);
-            if (recordJSON != null){
-
-                /* Fetch data */
-                String title = recordJSON.getString("title");
-                Date date = (Date) recordJSON.get("date");
-                String description = recordJSON.getString("description");
-                String comment = recordJSON.getString("comment");
-
-                Record record = new Record(title, date, description);
-
-                record.setComment(comment);
-                record.setRecordID(recordID);
-
-                if (recordJSON.has("geoLocation")){
-                    GeoLocation geoLocation = (GeoLocation) recordJSON.get("geoLocation");
-                    record.setGeoLocation(geoLocation);
-                }
-                if (recordJSON.has("bodyLocation")) {
-                    BodyLocation bodyLocation = (BodyLocation) recordJSON.get("bodyLocation");
-                    record.setBodyLocation(bodyLocation);
-                }
-                /* Add photos */
-                for (String photoID : (ArrayList<String>) recordJSON.get("photos")){
-                    Photo photo = elasticsearchController.getPhoto(photoID);
-                    photo.setPhotoid(photoID);
-                    record.addPhoto(photo);
-                }
-
-                return record;
-            }
-            else{
-                throw new InvalidKeyException("Record does not exist!");
-            }
-        } catch (JSONException e){
-            throw new RuntimeException("User record data is corrupt.", e);
-        }
-    }
 
 }
