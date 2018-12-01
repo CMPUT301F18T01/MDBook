@@ -562,15 +562,51 @@ class ElasticsearchController {
             decomposition.setUser(userJSON);
 
             /* Get problem JSON */
-            
+            for (String problemID : (ArrayList<String>) userJSON.get("problems")) {
+                Get problemGet = new Get.Builder(index, problemID)
+                        .type("problem")
+                        .build();
 
+                jestGetTask problemJgt = new jestGetTask();
+                problemJgt.execute(problemGet);
+                JestResult problemResult = problemJgt.get();
 
+                JSONObject problemJSON = problemResult.getSourceAsObject(JSONObject.class);
+                decomposition.getProblems().put(problemID, problemJSON);
 
+                for (String recordID : (ArrayList<String>) problemJSON.get("records")){
+                    Get recordGet = new Get.Builder(index, recordID)
+                            .type("record")
+                            .build();
+                    jestGetTask recordJgt = new jestGetTask();
+                    recordJgt.execute(recordGet);
+                    JestResult recordResult = recordJgt.get();
+
+                    JSONObject recordJSON = recordResult.getSourceAsObject(JSONObject.class);
+                    decomposition.getRecords().put(recordID, recordJSON);
+
+                    for(String photoID : (ArrayList<String>) recordJSON.get("photos")){
+                        Get photoGet = new Get.Builder(index, photoID)
+                                .type("photo")
+                                .build();
+                        jestGetTask photoJgt = new jestGetTask();
+                        photoJgt.execute(photoGet);
+                        JestResult photoResult = photoJgt.get();
+
+                        Photo photo = photoResult.getSourceAsObject(Photo.class);
+                        decomposition.getPhotos().put(photoID, photo);
+                    }
+                }
+            }
+
+            return decomposition;
 
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            throw new NetworkErrorException("Interrupted during user retrieval.", e);
         } catch (ExecutionException e) {
-            e.printStackTrace();
+            throw new NetworkErrorException("Interrupted during jest task execution.", e);
+        } catch (JSONException e) {
+            throw new NetworkErrorException("Unable to parse JSON object", e);
         }
 
     }
