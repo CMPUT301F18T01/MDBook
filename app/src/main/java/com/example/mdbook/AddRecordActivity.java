@@ -151,8 +151,6 @@ public class AddRecordActivity extends AppCompatActivity {
      * Creates a new intent for switch to the ListProblemActivity
      */
     public void endActivity(){
-        //Intent mainPage = new Intent(this, ListRecordActivity.class);
-        //startActivity(mainPage);
         this.finish();
     }
     /**
@@ -164,6 +162,10 @@ public class AddRecordActivity extends AppCompatActivity {
     }
 
 
+    /**
+     * Checks to see if Google Services are working fine for proper map functionality
+     * @return boolean value
+     */
     public boolean isServicesOK(){
         Log.d(TAG,"isServicesOK: checking Google Services version");
         int available = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(AddRecordActivity.this);
