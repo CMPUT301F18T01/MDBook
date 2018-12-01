@@ -41,8 +41,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private Button registerButton;
     private CheckBox CGCheckbox;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
