@@ -60,6 +60,7 @@ public class ListPatientActivity extends AppCompatActivity implements Navigation
     private RecyclerView recyclerView;
     private PatientAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutmanager;
+    private Caregiver caregiver;
 
 
 
@@ -73,7 +74,7 @@ public class ListPatientActivity extends AppCompatActivity implements Navigation
         UserManager.initManager();
         UserManager userManager = UserManager.getManager();
 
-        Caregiver caregiver = (Caregiver) UserController.getController().getUser();
+        caregiver = (Caregiver) UserController.getController().getUser();
         patientIDs = caregiver.getPatientList();
 
 
@@ -107,9 +108,6 @@ public class ListPatientActivity extends AppCompatActivity implements Navigation
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 if (direction == ItemTouchHelper.RIGHT){
-//                    Snackbar.make(recyclerView,  problems.get(viewHolder.getAdapterPosition())
-//                            .getTitle()+" removed", Snackbar.LENGTH_LONG)
-//                            .setAction("Action", null).show();
                     showAlertDialog(viewHolder);
                 }
 
@@ -137,6 +135,10 @@ public class ListPatientActivity extends AppCompatActivity implements Navigation
 
     }
 
+    /**
+     *
+     * @param position:position of item in recyclerview
+     */
     public void showAlertDialog(final RecyclerView.ViewHolder position){
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setTitle("MDBook");
@@ -195,12 +197,19 @@ public class ListPatientActivity extends AppCompatActivity implements Navigation
         this.finish();
     }
 
+    /**
+     * Lets the user change to AddPatientActivity
+     */
     public void addPatient(){
         Intent intent = new Intent(this, AddPatientActivity.class);
         startActivity(intent);
     }
 
 
+    /**
+     * Lets the user change to ListPatientProblemActivity.class, passes necessary Extras
+     * @param position
+     */
     public void OptionMenu(int position){
         Intent intent = new Intent(this, ListPatientProblemActivity.class);
         intent.putExtra("patientPos",position);

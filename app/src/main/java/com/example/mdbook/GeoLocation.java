@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 /**
  * Class for implementing Geolocation
+ * @author Thomas Chan
  */
 class GeoLocation implements Serializable {
     private ArrayList<Address> addressList;
@@ -32,7 +33,7 @@ class GeoLocation implements Serializable {
     }
 
     /**
-     * adds 'address' ArrayList of addresses 
+     * adds 'address' ArrayList of addresses
      * @param address: address
      */
     public void addAddress(Address address){
