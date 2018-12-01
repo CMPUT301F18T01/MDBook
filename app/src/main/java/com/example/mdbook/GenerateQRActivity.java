@@ -23,8 +23,7 @@ import androidmads.library.qrgenearator.QRGEncoder;
 import androidmads.library.qrgenearator.QRGSaver;
 
 public class GenerateQRActivity extends AppCompatActivity {
-
-    String TAG = "GenerateQRCode";
+    
     ImageView qrImage;
     Button generate;
     String inputValue;
@@ -61,14 +60,20 @@ public class GenerateQRActivity extends AppCompatActivity {
                     try {
                         bitmap = qrgEncoder.encodeAsBitmap();
                         qrImage.setImageBitmap(bitmap);
+                        Toast.makeText(GenerateQRActivity.this, "Generating...", Toast.LENGTH_LONG).show();
                     } catch (WriterException e) {
-                        Toast.makeText(GenerateQRActivity.this, "invalid QR code", Toast.LENGTH_LONG).show();
-                        Log.v(TAG, e.toString());
+                        Toast.makeText(GenerateQRActivity.this, "Cannot generate", Toast.LENGTH_LONG).show();
                     }
                 } else {
                 }
             }
         });
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        this.finish();
     }
 }

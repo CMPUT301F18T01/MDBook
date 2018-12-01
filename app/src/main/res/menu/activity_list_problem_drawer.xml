@@ -8,6 +8,10 @@
             android:id="@+id/profile"
             android:icon="@drawable/ic_menu_person"
             android:title="@string/Profile" />
+        <item
+            android:id="@+id/shareQR"
+            android:icon="@drawable/ic_code_24dp"
+            android:title="@string/shareQR" />
 
     </group>
 

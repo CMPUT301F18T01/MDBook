@@ -195,6 +195,11 @@ public class ListProblemActivity extends AppCompatActivity
             Toast.makeText(this, "Signing out", Toast.LENGTH_SHORT).show();
             signout();
         }
+        else if(id == R.id.shareQR)
+        {
+            Toast.makeText(this, "Share QR-Code with Caregiver so they can add you", Toast.LENGTH_LONG).show();
+            goGenerate();
+        }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
@@ -230,6 +235,12 @@ public class ListProblemActivity extends AppCompatActivity
         Intent viewSignout= new Intent(this, LoginActivity.class);
         startActivity(viewSignout);
         this.finish();
+    }
+
+    public void goGenerate()
+    {
+        Intent generateIntent = new Intent(this, GenerateQRActivity.class);
+        startActivity(generateIntent);
     }
 
     /**
