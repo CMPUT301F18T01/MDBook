@@ -18,8 +18,17 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+/**
+ * Activity which shows the caregiver the number of records a patient has for a particular patient
+ * uses RecordCGAdapter.
+ *
+ * @author Raj Kapadia
+ * @author Vanessa Peng
+ *
+ * @see Record
+ * @see RecordCGAdapter
+ */
 public class ListRecordsCGActivity extends AppCompatActivity {
-
 
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
@@ -29,6 +38,7 @@ public class ListRecordsCGActivity extends AppCompatActivity {
     private Integer problemPos;
     private String patientID;
     private  Patient patient;
+    private  Caregiver caregiver;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,8 +49,7 @@ public class ListRecordsCGActivity extends AppCompatActivity {
         UserManager userManager = UserManager.getManager();
         recordList = new ArrayList<>();
 
-        Caregiver caregiver = (Caregiver) UserController.getController().getUser();
-
+        caregiver = (Caregiver) UserController.getController().getUser();
 
         problemPos = getIntent().getExtras().getInt("problemPos");
         patientPos = getIntent().getExtras().getInt("patientPos");
@@ -66,9 +75,6 @@ public class ListRecordsCGActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-
-
-
         mRecyclerView = findViewById(R.id.recordRecyclerViewCG);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
@@ -77,10 +83,7 @@ public class ListRecordsCGActivity extends AppCompatActivity {
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
 
-
-
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -89,13 +92,15 @@ public class ListRecordsCGActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * when the activity resumes
+     */
     @Override
     protected void onResume() {
       super.onResume();
         Caregiver caregiver = (Caregiver) UserController.getController().getUser();
         UserManager.initManager();
         UserManager userManager = UserManager.getManager();
-
 
         problemPos = getIntent().getExtras().getInt("problemPos");
         patientPos = getIntent().getExtras().getInt("patientPos");
@@ -109,24 +114,18 @@ public class ListRecordsCGActivity extends AppCompatActivity {
         mAdapter.notifyDataSetChanged();
     }
 
-    public class RecordDateComparator implements Comparator<Record> {
-        public int compare(Record p, Record q) {
-            if (p.getDate().before(q.getDate())) {
-                return 1;
-            } else if (p.getDate().after(q.getDate())) {
-                return -1;
-            } else {
-                return 0;
-            }
-        }
-    }
-
+    /**
+     * When the back button is pressed by the user, finish the current actvity
+     */
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         this.finish();
     }
 
+    /**
+     * When user clicks on Add button to add a comment, changes to AddCommentActivity, finished current Activity
+     */
     public void AddComment() {
         Intent addRecord = new Intent(this, AddCommentActivity.class);
         addRecord.putExtra("problemPos", problemPos);

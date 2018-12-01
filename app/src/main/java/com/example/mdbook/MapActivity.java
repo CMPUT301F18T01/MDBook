@@ -41,6 +41,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * MapActivity for users for geolocation implementation
+ *
+ * @author Thomas Chan
+ */
 public class MapActivity extends AppCompatActivity implements OnMapReadyCallback {
 
 
@@ -61,7 +66,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private List<Address> myAddress = new ArrayList<>();
     private Patient patient;
     private Boolean mLocationPermissionGranted = false;
-    //private Record record;
     private GoogleMap mMap;
     private FusedLocationProviderClient mFusedLocationProviderClient;
     private UserManager userManager;
@@ -119,6 +123,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         hideSoftKeyboard();
     }
 
+    /**
+     *
+     */
     private void geoLocate(){
         Log.d(TAG,"geoLocate: geoLocating");
         String searchstring = mSearchText.getText().toString();
@@ -132,12 +139,14 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         if (list.size() > 0){
             address = list.get(0);
-            //Toast.makeText(this, address.toString(), Toast.LENGTH_SHORT).show();
             moveCamera(new LatLng(address.getLatitude(), address.getLongitude()),DEFAULT_ZOOM, address.getAddressLine(0));
         }
     }
 
 
+    /**
+     * Gets the user's device's current geoLocation
+     */
     private void getDeviceLocation(){
         Log.d(TAG,"getDevicesLocation: getting devices current location");
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
@@ -189,6 +198,13 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     }
 
 
+    /**
+     * Moves around the map
+     *
+     * @param latLng
+     * @param zoom
+     * @param title
+     */
     private void moveCamera(LatLng latLng, float zoom, String title){
         Log.d(TAG,"moveCamera: moving the camera to: lat:" +latLng.latitude +", lng: " +latLng.longitude);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,zoom));
@@ -198,10 +214,12 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             mMap.addMarker(options);
         }
         hideSoftKeyboard();
-
     }
 
 
+    /**
+     * Initializes the map
+     */
     private void initMap(){
         Log.d(TAG, "initMap: initializing map");
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -209,7 +227,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(MapActivity.this);
     }
 
-
+    /**
+     * Prompts user if app is allowed to get Location info
+     */
     private void getLocationPermission(){
         Log.d(TAG, "getLocationPermission: getting location permissions");
         String[] permission = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission
@@ -229,9 +249,14 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             ActivityCompat.requestPermissions(this,permission,
                     LOCATION_PERMISSION_REQUEST_CODE);
         }
-
     }
 
+    /**
+     * checks if user allowed app to use location or not
+     * @param requestCode
+     * @param permissions
+     * @param grantResults
+     */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         Log.d(TAG, "onRequestPermissionResult: called");
@@ -255,6 +280,10 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         }
     }
 
+    /**
+     * What to do when user opens Map
+     * @param googleMap
+     */
     @Override
     public void onMapReady(GoogleMap googleMap) {
         Toast.makeText(this, "Map is Ready", Toast.LENGTH_SHORT).show();
@@ -288,6 +317,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
 
+    /**
+     * On back pressed, checks type of user and goes to appropriate screen.
+     */
     @Override
     public void onBackPressed() {
         User user = UserController.getController().getUser();
@@ -303,6 +335,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     }
 
+    /**
+     * Displays user prompts
+     */
     public void showAlertDialog(){
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setTitle("MDBook");

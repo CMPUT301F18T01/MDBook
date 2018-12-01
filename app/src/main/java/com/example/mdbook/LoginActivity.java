@@ -44,7 +44,6 @@ public class LoginActivity extends AppCompatActivity {
         UserManager.initManager();
 
         setContentView(R.layout.activity_login);
-
         etUserID = findViewById(R.id.etUserID);
 
         etUserID.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -63,10 +62,6 @@ public class LoginActivity extends AppCompatActivity {
         });
 
     }
-
-
-
-
 
     public void onLoginClick(View v) {
         UserManager userManager = UserManager.getManager();
@@ -89,20 +84,26 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-
-
-
-
+    /**
+     * changes to register activity
+     * @param v
+     */
     public void onRegisterClick(View v) {
         Intent registerIntent = new Intent(this, RegisterActivity.class);
         startActivity(registerIntent);
     }
 
+    /**
+     * When user resumes this activity, perform log out functionality
+     */
     public void onResume(){
         super.onResume();
         UserManager.getManager().logout();
     }
 
+    /**
+     *
+     */
     private void hideSoftKeyboard(){
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
