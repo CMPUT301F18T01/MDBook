@@ -5,6 +5,8 @@ import android.accounts.NetworkErrorException;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -101,6 +103,7 @@ public class UserDecomposer {
                         JSONObject recordJSON = new JSONObject();
 
                         recordJSON.put("date", record.getDate());
+                        recordJSON.put("title", record.getTitle());
                         recordJSON.put("description", record.getDescription());
                         recordJSON.put("geoLocation", record.getLocation());
                         recordJSON.put("bodyLocation", record.getBodyLocation());
@@ -193,7 +196,8 @@ public class UserDecomposer {
 
                         /* Fetch data */
                         String recordTitle = recordJSON.getString("title");
-                        Date recordDate = (Date) recordJSON.get("date");
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+                        Date recordDate = sdf.parse(recordJSON.getString("date"));
                         String recordDescription = recordJSON.getString("description");
                         String comment = recordJSON.getString("comment");
 
@@ -202,12 +206,17 @@ public class UserDecomposer {
                         record.setComment(comment);
                         record.setRecordID(recordID);
 
+                        // TODO
                         if (recordJSON.has("geoLocation")) {
-                            GeoLocation geoLocation = (GeoLocation) recordJSON.get("geoLocation");
+                            //GeoLocation geoLocation = (GeoLocation) recordJSON.get("geoLocation");
+                            GeoLocation geoLocation = new GeoLocation();
                             record.setGeoLocation(geoLocation);
                         }
+
+                        // TODO
                         if (recordJSON.has("bodyLocation")) {
-                            BodyLocation bodyLocation = (BodyLocation) recordJSON.get("bodyLocation");
+                            //BodyLocation bodyLocation = (BodyLocation) recordJSON.get("bodyLocation");
+                            BodyLocation bodyLocation = new BodyLocation("");
                             record.setBodyLocation(bodyLocation);
                         }
                         /* Add photos */
@@ -237,6 +246,8 @@ public class UserDecomposer {
                 return caregiver;
             }
         } catch (JSONException e) {
+            return null;
+        } catch (ParseException e) {
             return null;
         }
     }
