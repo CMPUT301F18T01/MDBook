@@ -463,7 +463,7 @@ class ElasticsearchController {
                     .get("availableIDs"))
                     .get("values");
 
-            availableID = idlistJSON.getInt("availableID");
+            availableID = idlistJSON.getString("availableID");
             idlists.put("patientIDs", patientidlist);
             idlists.put("caregiverIDs", caregiveridlist);
             idlists.put("problemIDs", problemidlist);
@@ -478,6 +478,8 @@ class ElasticsearchController {
             throw new NetworkErrorException("Interrupted while fetching idlists.", e);
         } catch (ExecutionException e) {
             throw new NetworkErrorException("Interrupted while fetching idlists.", e);
+        } catch (NullPointerException e) {
+            throw new NetworkErrorException("Unable to fetch idlists.", e);
         }
 
     }
@@ -523,7 +525,7 @@ class ElasticsearchController {
      * those. Otherwise return fresh ID and increment counter.
      * @return
      */
-    
+
     public String generateID() throws NetworkErrorException {
         this.pullIDLists();
 
@@ -543,10 +545,12 @@ class ElasticsearchController {
 
     // TODO
     public UserDecomposer.Decomposition getPatientDecomposition(String userID) {
+
     }
 
     // TODO
     public UserDecomposer.Decomposition getCaregiverDecomposition(String userID) {
+
     }
 
     // TODO
