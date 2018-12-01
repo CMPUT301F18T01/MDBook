@@ -241,7 +241,7 @@ public class UserDecomposer {
     }
 
 
-    public class Decomposition {
+    public static class Decomposition {
 
         private String userid;
         private JSONObject user;
@@ -249,7 +249,7 @@ public class UserDecomposer {
         private HashMap<String, JSONObject> records;
         private HashMap<String, Photo> photos;
 
-        private Decomposition(String userid){
+        public Decomposition(String userid){
             this.userid = userid;
             user = new JSONObject();
             problems = new HashMap<>();

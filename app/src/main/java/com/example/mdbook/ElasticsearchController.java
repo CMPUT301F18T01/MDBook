@@ -544,7 +544,34 @@ class ElasticsearchController {
     }
 
     // TODO
-    public UserDecomposer.Decomposition getPatientDecomposition(String userID) {
+    public UserDecomposer.Decomposition getPatientDecomposition(String userID) throws NetworkErrorException {
+        try {
+
+            UserDecomposer.Decomposition decomposition = new UserDecomposer.Decomposition(userID);
+            this.pullIDLists();
+
+            /* Get user JSON */
+            Get get = new Get.Builder(index, userID)
+                    .type("patient")
+                    .build();
+
+            jestGetTask jgt = new jestGetTask();
+            jgt.execute(get);
+            JestResult result = jgt.get();
+            JSONObject userJSON = result.getSourceAsObject(JSONObject.class);
+            decomposition.setUser(userJSON);
+
+            /* Get problem JSON */
+            
+
+
+
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
 
     }
 
