@@ -87,7 +87,7 @@ class ElasticsearchController {
     private static JestClient client;
     private static String index = "cmput301f18t01";
     private HashMap<String, ArrayList<String>> idlists;
-    private int availableID;
+    private String availableID;
 
 
     /**
@@ -116,7 +116,7 @@ class ElasticsearchController {
             idl.put("photoIDs", new ArrayList<String>());
             idl.put("availableIDs", new ArrayList<String>());
             elasticsearchController.idlists = idl;
-            elasticsearchController.availableID = 0;
+            elasticsearchController.availableID = "0";
         }
 
     }
@@ -507,13 +507,11 @@ class ElasticsearchController {
         return this.idlists.get("patientIDs").contains(userID);
     }
 
-
     // indicates if given userID is an existing caregiver
     public boolean existsCaregiver(String userID) throws NetworkErrorException {
         this.pullIDLists();
         return this.idlists.get("caregiverIDs").contains(userID);
     }
-
 
     //TODO
     public void deleteUser(String userID) throws NetworkErrorException, NoSuchUserException {
@@ -525,18 +523,20 @@ class ElasticsearchController {
      * those. Otherwise return fresh ID and increment counter.
      * @return
      */
-    //TODO
+    
     public String generateID() throws NetworkErrorException {
         this.pullIDLists();
 
         if (idlists.get("availableIDs").size() == 0){
             String oldid = availableID;
-            availableID = Integer.toString(Integer.getInteger(availableID) + 1) ;
+            availableID = Integer.toString(Integer.valueOf(availableID) + 1);
+            this.pushIDLists();
+
             return oldid;
         }
         else {
-            String id = availableIDs.get(0);
-            availableIDs.remove(0);
+            String id = idlists.get("availableIDs").get(0);
+            idlists.get("availableIDs").remove(0);
             return id;
         }
     }
