@@ -148,7 +148,6 @@ class ElasticsearchController {
      * availableID: numeric string
      * Pushes ID lists to es server.
      */
-    //TODO
     private void pushIDLists() {
         JSONObject IDJSON = new JSONObject(this.idlists);
         try {
