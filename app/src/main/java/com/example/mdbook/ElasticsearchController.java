@@ -543,7 +543,6 @@ class ElasticsearchController {
         }
     }
 
-    // TODO
     public UserDecomposer.Decomposition getPatientDecomposition(String userID) throws NetworkErrorException {
         try {
 
@@ -574,6 +573,7 @@ class ElasticsearchController {
                 JSONObject problemJSON = problemResult.getSourceAsObject(JSONObject.class);
                 decomposition.getProblems().put(problemID, problemJSON);
 
+                /* Get record JSON */
                 for (String recordID : (ArrayList<String>) problemJSON.get("records")){
                     Get recordGet = new Get.Builder(index, recordID)
                             .type("record")
@@ -585,6 +585,7 @@ class ElasticsearchController {
                     JSONObject recordJSON = recordResult.getSourceAsObject(JSONObject.class);
                     decomposition.getRecords().put(recordID, recordJSON);
 
+                    /* Get photos */
                     for(String photoID : (ArrayList<String>) recordJSON.get("photos")){
                         Get photoGet = new Get.Builder(index, photoID)
                                 .type("photo")
@@ -611,9 +612,30 @@ class ElasticsearchController {
 
     }
 
-    // TODO
-    public UserDecomposer.Decomposition getCaregiverDecomposition(String userID) {
+    public UserDecomposer.Decomposition getCaregiverDecomposition(String userID) throws NetworkErrorException {
+        try {
 
+            UserDecomposer.Decomposition decomposition = new UserDecomposer.Decomposition(userID);
+            this.pullIDLists();
+
+            /* Get user JSON */
+            Get get = new Get.Builder(index, userID)
+                    .type("caregiver")
+                    .build();
+
+            jestGetTask jgt = new jestGetTask();
+            jgt.execute(get);
+            JestResult result = jgt.get();
+            JSONObject userJSON = result.getSourceAsObject(JSONObject.class);
+            decomposition.setUser(userJSON);
+
+            return decomposition;
+
+        } catch (InterruptedException e) {
+            throw new NetworkErrorException("Interrupted during user retrieval.", e);
+        } catch (ExecutionException e) {
+            throw new NetworkErrorException("Interrupted during jest task execution.", e);
+        }
     }
 
     // TODO
