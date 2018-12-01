@@ -1,5 +1,6 @@
 package com.example.mdbook;
 
+import android.accounts.NetworkErrorException;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -62,21 +63,19 @@ public class AddCommentActivity extends AppCompatActivity {
                     commentRecord.setComment(comment);
                     problem.addRecord(commentRecord);
 
-                    try {
-                        userManager.saveUser(patient);
-                        userManager.saveUser(caregiver);
-                    } catch (NoSuchUserException e) {
-                        e.printStackTrace();
-                    }
+
+                    userManager.saveUser(patient);
+                    userManager.saveUser(caregiver);
+
                     backToRecord();
                 }
             });
         } catch (NoSuchUserException e) {
             Toast.makeText(AddCommentActivity.this, "No such user exists", Toast.LENGTH_LONG).show();
             e.printStackTrace();
+        } catch (NetworkErrorException e) {
+            Toast.makeText(this, "Internet connection is required to fetch patient", Toast.LENGTH_SHORT).show();
         }
-
-
 
 
     }

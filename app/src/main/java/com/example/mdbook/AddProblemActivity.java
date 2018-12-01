@@ -69,15 +69,10 @@ public class AddProblemActivity extends AppCompatActivity {
 
                 //Patient patient = new Patient(user, null, null);
 
-                    Problem problem = new Problem(title.getText().toString(), description.getText().toString());
-                    patient.addProblem(problem);
-                try{
-                    userManager.saveUser(patient);
-                    Toast.makeText(AddProblemActivity.this, "saved problem: " + title.getText().toString(), Toast.LENGTH_SHORT).show();
-                }catch ( NoSuchUserException id)
-                {
-                    Toast.makeText(AddProblemActivity.this, "No user", Toast.LENGTH_SHORT).show();
-                }
+                Problem problem = new Problem(title.getText().toString(), description.getText().toString());
+                patient.addProblem(problem);
+                userManager.saveUser(patient);
+                Toast.makeText(AddProblemActivity.this, "saved problem: " + title.getText().toString(), Toast.LENGTH_SHORT).show();
 
                 BackToListProblem();
 

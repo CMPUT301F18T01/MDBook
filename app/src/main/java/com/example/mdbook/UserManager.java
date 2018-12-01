@@ -9,6 +9,8 @@
  */
 package com.example.mdbook;
 
+import android.accounts.NetworkErrorException;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -35,8 +37,12 @@ import java.util.HashMap;
  **/
 public class UserManager {
 
-    static private UserManager userManager = null;
+    private static UserManager userManager;
     private DataManager dataManager;
+    private ElasticsearchController elasticsearchController;
+    private LocalStorageController localStorageController;
+    private UserController userController;
+    private UserDecomposer decomposer;
 
     /**
      * Initialize singleton instance.
@@ -45,6 +51,10 @@ public class UserManager {
         if (userManager == null){
             userManager = new UserManager();
             userManager.dataManager = DataManager.getDataManager();
+            userManager.elasticsearchController = ElasticsearchController.getController();
+            userManager.userController = UserController.getController();
+            userManager.localStorageController = LocalStorageController.getController();
+            userManager.decomposer = new UserDecomposer();
         }
     }
 
@@ -54,17 +64,9 @@ public class UserManager {
      */
     public static UserManager getManager() {
         if(userManager == null){
-            // throw new IllegalStateException("UserManager has not been initialized!");
             initManager();
         }
         return userManager;
-    }
-
-    /**
-     * Constructor, called only by initManager() method.
-     */
-    private UserManager(){
-        this.dataManager = DataManager.getDataManager();
     }
 
     /**
@@ -72,43 +74,26 @@ public class UserManager {
      * @param userID The unique ID of the new patient. Must be unique.
      * @param userPhone The phone number of the new patient.
      * @param userEmail The email of the new patient.
-     * @returns A new patient object with the given attributes.
      * @throws UserIDNotAvailableException Thrown if the userID is not unique
      * @throws IllegalArgumentException Thrown if the userID is less than 8 characters
+     * @throws NetworkErrorException Thrown if there were any network issues creating the user
+     * (e.g no internet)
      */
-    public Patient createPatient(String userID, String userPhone, String userEmail)
-            throws UserIDNotAvailableException, IllegalArgumentException {
-        /* Fetch fresh copy of patient list */
-        dataManager.pull();
-        HashMap patients = dataManager.getPatients();
+    public void createPatient(String userID, String userPhone, String userEmail)
+            throws UserIDNotAvailableException, IllegalArgumentException, NetworkErrorException {
 
         /* Ensure userID is unique */
-        if (patients.containsKey(userID) || dataManager.getCaregivers().containsKey(userID)){
+        if (elasticsearchController.existsUser(userID)) {
             throw new UserIDNotAvailableException();
         }
+
         /* Ensure userID is long enough */
-        if (userID.length() < 8){
+        if (userID.length() < 8) {
             throw new IllegalArgumentException();
+        } else {
+            Patient patient = new Patient(userID, userPhone, userEmail);
+            elasticsearchController.addPatient(decomposer.decompose(patient));
         }
-        else {
-            /* store data */
-            JSONObject data = new JSONObject();
-            try {
-                data.put("phone", userPhone);
-                data.put("email", userEmail);
-                data.put("problems", new ArrayList<Integer>());
-
-                /* save data in patients table */
-                patients.put(userID, data);
-                dataManager.push();
-
-            } catch (JSONException e){
-                throw new RuntimeException(e);
-            }
-        }
-
-        Patient patient = new Patient(userID, userPhone, userEmail);
-        return patient;
     }
 
     /**
@@ -116,43 +101,27 @@ public class UserManager {
      * @param userID The unique ID of the new caregiver. Must be unique.
      * @param userPhone The phone number of the new caregiver.
      * @param userEmail The email of the new caregiver.
-     * @returns A new caregiver object with the given attributes.
      * @throws UserIDNotAvailableException Thrown if the userID is not unique
      * @throws IllegalArgumentException Thrown if the userID is less than 8 characters
+     * @throws NetworkErrorException Thrown if there were any network issues creating the user
      */
-    public Caregiver createCaregiver(String userID, String userPhone, String userEmail)
-            throws UserIDNotAvailableException, IllegalArgumentException {
-        /* Fetch fresh copy of patient list */
-        dataManager.pull();
-        HashMap caregivers = dataManager.getCaregivers();
+    public void createCaregiver(String userID, String userPhone, String userEmail)
+            throws UserIDNotAvailableException, IllegalArgumentException, NetworkErrorException {
 
         /* Ensure userID is unique */
-        if (caregivers.containsKey(userID) || dataManager.getPatients().containsKey(userID)){
+        if (elasticsearchController.existsUser(userID)){
             throw new UserIDNotAvailableException();
         }
+
         /* Ensure userID is long enough */
         if (userID.length() < 8){
             throw new IllegalArgumentException();
         }
 
         else {
-            /* store data */
-            JSONObject data = new JSONObject();
-            try {
-                data.put("phone", userPhone);
-                data.put("email", userEmail);
-                data.put("patients", new ArrayList<String>());
-
-                /* save data in patients table */
-                caregivers.put(userID, data);
-                dataManager.push();
-
-            } catch (JSONException e){
-                throw new RuntimeException(e);
-            }
+            Caregiver caregiver = new Caregiver(userID, userPhone, userEmail);
+            elasticsearchController.addCaregiver(decomposer.decompose(caregiver));
         }
-        Caregiver caregiver = new Caregiver(userID, userPhone, userEmail);
-        return caregiver;
     }
 
     /**
@@ -162,20 +131,54 @@ public class UserManager {
      * @return Returns true on successful login, false if credentials are invalid,
      * user doesn't exist or there is already someone logged in.
      */
-    public boolean login(String userid) {
-        /* Get the latest data */
-        dataManager.pull();
-        UserController userController = UserController.getController();
+    public boolean login(String userid) throws NetworkErrorException {
+        /* Check for internet connection */
+        if (!elasticsearchController.isConnected()){
+            throw new NetworkErrorException("No internet access!");
+        }
+
+        /* Attempt login */
         if (userController.getUser() != null){
             return false;
         }
         try {
             User user = this.fetchUser(userid);
             userController.loadUser(user);
+            dataManager.saveMe(user);
             return true;
+
         } catch (NoSuchUserException e){
             return false;
         }
+    }
+
+    /**
+     * Attempt to login based on local data
+     * @return
+     */
+    public boolean localLogin() {
+        User localUser = localStorageController.loadMe();
+        if (localUser != null){
+
+            // TODO: solve this race condition
+            // As is, cloud based changes will not overwrite the local copy, at all (no additions)
+            if(elasticsearchController.isConnected()){
+                try {
+                    User cloudUser = this.fetchUser(localUser.getUserID());
+
+                } catch (NoSuchUserException e) {
+                    this.logout();
+                    return false;
+                } catch (NetworkErrorException e) {
+                    this.logout();
+                    return false;
+                }
+            }
+            dataManager.saveMe(localUser);
+            userController.loadUser(localUser);
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -183,6 +186,7 @@ public class UserManager {
      */
     public void logout() {
         UserController.getController().clearUser();
+        dataManager.removeMe();
     }
 
     /**
@@ -192,96 +196,26 @@ public class UserManager {
      * @return A patient or caregiver object built from the userID.
      * @throws NoSuchUserException Thrown if there is no user with the given userID in the database.
      */
-    public User fetchUser (String userID) throws NoSuchUserException {
-        HashMap<String, JSONObject> patients = dataManager.getPatients();
-        HashMap<String, JSONObject> caregivers = dataManager.getCaregivers();
+    public User fetchUser (String userID) throws NoSuchUserException, NetworkErrorException {
 
         /* Check if userID corresponds with a patient */
-        if (patients.containsKey(userID)){
-            try {
-                /* load basic data into patient */
-                JSONObject patientJSON = patients.get(userID);
-                String phone = patientJSON.getString("phone");
-                String email = patientJSON.getString("email");
-
-                /* Change JSONObject doubles into ints */
-                ArrayList<Integer> problemIDs = new ArrayList<Integer>();
-                for (Double d : (ArrayList<Double>) patientJSON.get("problems")){
-                    problemIDs.add(d.intValue());
-                }
-                Patient patient = new Patient(userID, phone, email);
-
-                /* Get problem method also loads in records, photos, etc */
-                for (int problemID : problemIDs){
-                    patient.addProblem(getProblem(problemID));
-                }
-
-                return patient;
-
-            } catch (JSONException e){
-                throw new RuntimeException(e);
-            } catch (InvalidKeyException e) {
-                throw new RuntimeException("The user data is corrupt", e);
-            }
+        if (elasticsearchController.existsPatient(userID)){
+                return decomposer.compose(elasticsearchController.getPatientDecomposition(userID));
         }
 
         /* Check if userID corresponds with a caregiver */
-        else if (caregivers.containsKey(userID)){
-            try {
-                /* load basic data into caregiver */
-                JSONObject caregiverJSON = caregivers.get(userID);
-                String phone = caregiverJSON.getString("phone");
-                String email = caregiverJSON.getString("email");
-                ArrayList<String> patientIDs = (ArrayList<String>) caregiverJSON.get("patients");
-                Caregiver caregiver = new Caregiver(userID, phone, email);
-                caregiver.setPatientList(patientIDs);
-                return caregiver;
-
-            } catch (JSONException e){
-                e.printStackTrace();
-                throw new RuntimeException("User attributes are corrupt.", e);
-            }
+        else if (elasticsearchController.existsCaregiver(userID)){
+                return decomposer.compose(elasticsearchController.getCaregiverDecomposition(userID));
         }
 
         else {
-            throw new NoSuchUserException();
+            throw new NoSuchUserException("User does not exist");
         }
     }
 
     /**
-     * Builds user object containing only userID, phone and email. Returns said user object.
-     * Does not load into UserController. Good for showing an overview of a User.
-     * @param userID The ID of the user to fetch.
-     * @return A patient or caregiver object with only the contact information stored.
-     * @throws NoSuchUserException Thrown if the userID couldn't be found.
-     */
-    public ContactUser fetchUserContact (String userID) throws NoSuchUserException {
-        HashMap<String, JSONObject> patients = dataManager.getPatients();
-        HashMap<String, JSONObject> caregivers = dataManager.getCaregivers();
-        JSONObject userJSON;
-
-        if (caregivers.containsKey(userID)) {
-            userJSON = caregivers.get(userID);
-        } else if (patients.containsKey(userID)){
-            userJSON = patients.get(userID);
-        }
-        else {
-            throw new NoSuchUserException();
-        }
-
-        try {
-            return new ContactUser(userID,
-                    userJSON.getString("phone"),
-                    userJSON.getString("email"));
-        } catch (JSONException e) {
-            throw new RuntimeException("User attributes are corrupt.", e);
-        }
-    }
-
-    /**
-     * Take the data in the given user object, find the entry in the database with a matching userID
-     * and update the database. Also calls methods to update problem and record data. Anything in
-     * database not in user object is removed.
+     * Take the data in the given user object, convert its components into the corresponding
+     * hashmaps and send them to the esc to be uploaded.
      *
      * @param user The user object to be synced into the database.
      * @throws NoSuchUserException Thrown if there is no user with a matching userID already in the
@@ -289,84 +223,36 @@ public class UserManager {
      * @throws IllegalArgumentException Thrown if the inputted user is not a (full) patient or
      * caregiver, e.g. a ContactUser.
      */
-    public void saveUser(User user) throws NoSuchUserException, IllegalArgumentException {
-        HashMap<String, JSONObject> patients = dataManager.getPatients();
-        HashMap<String, JSONObject> caregivers = dataManager.getCaregivers();
-
-        /* Check to make sure user exists */
-        if (!patients.containsKey(user.getUserID()) && !caregivers.containsKey(user.getUserID())){
-            throw new NoSuchUserException();
+    public void saveUser(User user) throws IllegalArgumentException {
+        if (user.getUserID().equals(userController.getUser().getUserID())){
+            dataManager.saveMe(user);
         }
+        dataManager.addToQueue(user);
 
-        if (user.getClass() == Patient.class) {
-            /* Update contact info */
-            JSONObject patientJSON = patients.get(user.getUserID());
-            try {
-                patientJSON.put("phone", user.getPhoneNumber());
-                patientJSON.put("email", user.getEmail());
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
-            }
+        // TODO: this should also be triggered whenever there is an internet connection
+       if (elasticsearchController.isConnected()){
+           ArrayList<User> toupload = (ArrayList<User>) dataManager.getPushQueue().clone();
+           for (User user1 : toupload){
 
-            /* Update problems, update/add/remove records transitively */
-            /* Get pre-existing problemID list from user object */
-            ArrayList<Integer> problemIDList = new ArrayList<>();
-            for (Problem problem : ((Patient) user).getProblems()){
-                if (problem.getProblemID() != -1) {
-                    problemIDList.add(problem.getProblemID());
-                }
-            }
+               UserDecomposer.Decomposition userDecomp;
+               try {
+                   userDecomp = decomposer.decompose(user1);
+                   if (user1.getClass() == Patient.class) {
+                       if (elasticsearchController.pushPatient(userDecomp)) {
+                           dataManager.removeFromQueue(user1);
+                       }
+                   }
+                   else {
+                       if (elasticsearchController.pushCaregiver(userDecomp)) {
+                           dataManager.removeFromQueue(user1);
+                       }
+                   }
 
-            /* Remove problems not present in user (must convert to int) */
-            try {
-                for (Double problemID : (ArrayList<Double>) patientJSON.get("problems")){
-                    if (!problemIDList.contains(problemID.intValue())){
-                        deleteProblem(problemID.intValue());
-                    }
-                }
-            } catch (JSONException e) {
-                throw new RuntimeException("Patient problem data is corrupt", e);
-            }
-
-            /* Update new and already existing problems */
-            for (Problem problem : ((Patient) user).getProblems()){
-                int problemID = setProblem(problem);
-
-                /* Add new problemIDs to problemID list */
-                if (!problemIDList.contains(problemID)) {
-                    problemIDList.add(problemID);
-                }
-            }
-
-            /* Update stored problemID list */
-            try {
-                patientJSON.put("problems", problemIDList);
-            } catch (JSONException e) {
-                throw new RuntimeException("User problem ID list is corrupt", e);
-            }
-
-            patients.put(user.getUserID(), patientJSON);
-        }
-
-        else if (user.getClass() == Caregiver.class){
-            /* Update contact info */
-            JSONObject caregiverJSON = caregivers.get(user.getUserID());
-            try {
-                caregiverJSON.put("phone", user.getPhoneNumber());
-                caregiverJSON.put("email", user.getEmail());
-
-                /* Update patientID list */
-                caregiverJSON.put("patients", ((Caregiver) user).getPatientList());
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
-            }
-        }
-
-        else{
-            throw new IllegalArgumentException("User is not a patient or a Caregiver!");
-        }
-
-        dataManager.push();
+               } catch (NetworkErrorException e) {
+                   break;
+               }
+           }
+       }
     }
 
     /**
@@ -374,299 +260,12 @@ public class UserManager {
      * Does not delete patients of caregiver when caregiver is deleted.
      * @param userID The userID of the user to be cleared out.
      */
-    public void deleteUser(String userID) throws NoSuchUserException {
-        HashMap<String, JSONObject> patients = dataManager.getPatients();
-        HashMap<String, JSONObject> caregivers = dataManager.getCaregivers();
-
-        /* Check to make sure user exists */
-        if (patients.containsKey(userID)){
-            /* grab problemIDs */
-            ArrayList<Integer> problemIDs = null;
-            try {
-                problemIDs = (ArrayList<Integer>) patients.get(userID).get("problems");
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
-            }
-            /* delete problems */
-            for (int problemID : problemIDs){
-                deleteProblem(problemID);
-            }
-            /* delete patient */
-            patients.remove(userID);
-
-        } else if (caregivers.containsKey(userID)){
-            caregivers.remove(userID);
-        } else {
-            throw new NoSuchUserException();
-        }
+    public void deleteUser(String userID) throws NoSuchUserException, NetworkErrorException {
+        elasticsearchController.deleteUser(userID);
     }
 
-    /**
-     * Assistant method for retrieving full problem objects
-     * @param problemID The problem ID number
-     * @return A fully filled out problem object
-     */
-    private Problem getProblem(int problemID) throws InvalidKeyException {
-        HashMap<Integer, JSONObject> problems = dataManager.getProblems();
-        try {
-            if (problems.containsKey(problemID)) {
-                JSONObject problemJSON = problems.get(problemID);
-                String title = problemJSON.getString("title");
-                String description = problemJSON.getString("description");
-                Problem problem = new Problem(title, description);
-                problem.setProblemID(problemID);
 
-                /* Add comments */
-                for (String comment : (ArrayList<String>) problemJSON.get("comments")){
-                    problem.addComment(comment);
-                }
 
-                /* Add records (must convert id to int first) */
-                for (Double recordID : (ArrayList<Double>) problemJSON.get("records")){
-                    problem.addRecord(this.getRecord(recordID.intValue()));
-                }
 
-                return problem;
-            } else {
-                throw new InvalidKeyException("Problem does not exist!");
-            }
-        } catch (JSONException e){
-            throw new RuntimeException("User data is corrupt.", e);
-        }
-
-    }
-
-    /**
-     * Assistant method for retrieving full record objects
-     * @param recordID The record ID number
-     * @return A fully filled out problem object
-     */
-    private Record getRecord(int recordID) throws InvalidKeyException{
-        HashMap<Integer, JSONObject> records = dataManager.getRecords();
-        HashMap<Integer, Photo> photos = dataManager.getPhotos();
-        try {
-            if (records.containsKey(recordID)){
-                JSONObject recordJSON = records.get(recordID);
-                /* Fetch data */
-                String title = recordJSON.getString("title");
-                Date date = (Date) recordJSON.get("date");
-                String description = recordJSON.getString("description");
-                String comment = recordJSON.getString("comment");
-
-                Record record = new Record(title, date, description);
-
-                record.setComment(comment);
-                record.setRecordID(recordID);
-                if (recordJSON.has("geoLocation")){
-                    GeoLocation geoLocation = (GeoLocation) recordJSON.get("geoLocation");
-                    record.setGeoLocation(geoLocation);
-                }
-                if (recordJSON.has("bodyLocation")) {
-                    BodyLocation bodyLocation = (BodyLocation) recordJSON.get("bodyLocation");
-                    record.setBodyLocation(bodyLocation);
-                }
-                /* Add photos */
-                for (Double photoID : (ArrayList<Double>) recordJSON.get("photos")){
-                    Photo photo = photos.get(photoID.intValue());
-                    photo.setPhotoid(photoID.intValue());
-                    record.addPhoto(photo);
-                }
-
-                return record;
-            }
-            else{
-                throw new InvalidKeyException("Record does not exist!");
-            }
-        } catch (JSONException e){
-            throw new RuntimeException("User record data is corrupt.", e);
-        }
-    }
-
-    /**
-     * Assistant method to saveUser method. Saves Problem data, also calls method to save
-     * corresponding record data.
-     *
-     * @param problem The problem object to be uploaded to the database.
-     * @return Returns problemID already owned by problem or generated from the DataManager for new
-     * problems.
-     */
-    private int setProblem(Problem problem){
-        HashMap<Integer, JSONObject> problems = dataManager.getProblems();
-
-        /* Build problem JSON */
-        JSONObject problemJSON = new JSONObject();
-        try {
-            problemJSON.put("title", problem.getTitle());
-            problemJSON.put("description", problem.getDescription());
-            problemJSON.put("comments", problem.getComments());
-            problemJSON.put("records", new ArrayList<Integer>());
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
-
-        /* Generate problemID if needed */
-        if (problem.getProblemID() == -1){
-            problem.setProblemID(dataManager.generateID());
-            /* Problem is new, add empty recordID list */
-        }
-
-        /* Update records */
-        /* Get pre-existing recordID list from problem object */
-        ArrayList<Integer> recordIDList = new ArrayList<>();
-        for (Record record : problem.getRecords()){
-            if (record.getRecordID() != -1) {
-                recordIDList.add(record.getRecordID());
-            }
-        }
-
-        /* Remove records not present in problem (must convert to int) */
-        try {
-            for (Double recordID : (ArrayList<Double>) problemJSON.get("records")){
-                if (!recordIDList.contains(recordID.intValue())){
-                    deleteRecord(recordID.intValue());
-                }
-            }
-        } catch (JSONException e) {
-            throw new RuntimeException("Problem record data is corrupt", e);
-        }
-
-        /* Update new and already existing records */
-        for (Record record : problem.getRecords()){
-            int recordID = setRecord(record);
-
-            /* Add new recordIDs to recordID list */
-            if (!recordIDList.contains(recordID)){
-                recordIDList.add(recordID);
-            }
-        }
-
-        /* Update stored recordID list */
-        try {
-            problemJSON.put("records", recordIDList);
-        } catch (JSONException e) {
-            throw new RuntimeException("Problem recordID list is corrupt", e);
-        }
-
-        /* Save problem and return problemID */
-        problems.put(problem.getProblemID(), problemJSON);
-        return problem.getProblemID();
-    }
-
-    /**
-     * Assistant method to setProblem and saveUser methods. Saves record data.
-     * @param record The record object to be saved. If it doesn't have an ID already (new record),
-     *               one will be generated.
-     * @return The ID of the record, either the one it already has or a new one generated by the
-     * DataManager.
-     */
-    private int setRecord(Record record){
-        HashMap<Integer, JSONObject> records = dataManager.getRecords();
-        HashMap<Integer, Photo> photos = dataManager.getPhotos();
-        /* Build record JSON */
-        JSONObject recordJSON = new JSONObject();
-        try {
-            recordJSON.put("title", record.getTitle());
-            recordJSON.put("date", record.getDate());
-            recordJSON.put("description", record.getDescription());
-            recordJSON.put("geoLocation", record.getLocation());
-            recordJSON.put("bodyLocation", record.getBodyLocation());
-            recordJSON.put("comment", record.getComment());
-            recordJSON.put("photos", new ArrayList<Integer>());
-        } catch (JSONException e){
-            throw new RuntimeException(e);
-        }
-
-        /* Generate recordID if needed */
-        if (record.getRecordID() == -1){
-            record.setRecordID(dataManager.generateID());
-        }
-
-        /* Update photos */
-        /* Generate pre-existing photoID list from record object */
-        ArrayList<Integer> photoIDs = new ArrayList<>();
-        for (Photo photo : record.getPhotos()){
-            if (photo.getPhotoid() != -1) {
-                photoIDs.add(photo.getPhotoid());
-            }
-        }
-        /* Remove photos not present in record object */
-        try {
-            for (Double photoID : (ArrayList<Double>) recordJSON.get("photos")) {
-                if (!photoIDs.contains(photoID.intValue())) {
-                    photos.remove(photoID.intValue());
-                }
-            }
-
-            /* Update new and already existing photos */
-            for (Photo photo : record.getPhotos()) {
-                int photoID = photo.getPhotoid();
-                if (photoID == -1) {
-                    photoID = dataManager.generateID();
-                    photo.setPhotoid(photoID);
-                    photoIDs.add(photoID);
-                }
-                photos.put(photoID, photo);
-            }
-
-            /* Update photoID list in record object */
-            recordJSON.put("photos", photoIDs);
-        } catch (JSONException e) {
-            throw new RuntimeException("Record photoID list is corrupt", e);
-        }
-
-        records.put(record.getRecordID(), recordJSON);
-        return record.getRecordID();
-    }
-
-    /**
-     * Deletes the problem data and associated records and photos from storage.
-     * @param problemID The ID of the problem to delete.
-     */
-    private void deleteProblem(int problemID){
-        HashMap<Integer, JSONObject>  problems = dataManager.getProblems();
-        if (problems.containsKey(problemID)){
-            try {
-                /* remove records */
-                for (Integer recordID : (ArrayList<Integer>) problems.get(problemID).get("records")) {
-                    deleteRecord(recordID);
-                }
-                /* delete problem */
-                problems.remove(problemID);
-                /* make problemID available again */
-                dataManager.addAvailableID(problemID);
-
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
-
-    /**
-     * Deletes the record data and associated photos from storage.
-     * @param recordID The ID of the record to delete.
-     */
-    private void deleteRecord(int recordID){
-        HashMap<Integer, JSONObject> records = dataManager.getRecords();
-        HashMap<Integer, Photo> photos = dataManager.getPhotos();
-        if (records.containsKey(recordID)){
-            try {
-                ArrayList<Integer> photoIDs = (ArrayList<Integer>) records.get(recordID).get("photos");
-                /* Remove photos */
-                for (int photoID : photoIDs){
-                    photos.remove(photoID);
-                    /* make photoID available again */
-                    dataManager.addAvailableID(photoID);
-                }
-
-                /* delete record object */
-                records.remove(recordID);
-                /* make recordID available again */
-                dataManager.addAvailableID(recordID);
-
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
 
 }

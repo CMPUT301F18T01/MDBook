@@ -11,7 +11,6 @@ package com.example.mdbook;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * The Problem object holds the information about a Problem, including its records.
@@ -26,7 +25,7 @@ class Problem implements Serializable {
     private String title;
     private String description;
     private ArrayList<String> comments;
-    private int problemID = -1;
+    private String problemID = "-1";
 
 
 
@@ -91,7 +90,6 @@ class Problem implements Serializable {
      * @param comment a string matching the comment to be deleted
      * @return true if comment was found and deleted, false otherwise
      */
-    //TODO: add to test cases
     public Boolean deleteComment(String comment) {
         if (this.comments.contains(comment)){
             this.comments.remove(comment);
@@ -158,14 +156,14 @@ class Problem implements Serializable {
     /**
      * @return Problem ID, can be null.
      */
-    public int getProblemID(){
+    public String getProblemID(){
         return this.problemID;
     }
 
     /**
      * @param problemID Problem ID
      */
-    public void setProblemID(int problemID) {
+    public void setProblemID(String problemID) {
         this.problemID = problemID;
     }
 }

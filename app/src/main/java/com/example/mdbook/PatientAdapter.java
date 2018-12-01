@@ -1,11 +1,13 @@
 package com.example.mdbook;
 
+import android.accounts.NetworkErrorException;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 /**
@@ -118,6 +120,8 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.PatientA
             Patient patient = (Patient) userManager.fetchUser(currentitem);
             patientAdapterHolder.patientProblems.setText("# of problems: " + patient.getProblems().size());
         } catch (NoSuchUserException e) {
+            e.printStackTrace();
+        } catch (NetworkErrorException e) {
             e.printStackTrace();
         }
 
