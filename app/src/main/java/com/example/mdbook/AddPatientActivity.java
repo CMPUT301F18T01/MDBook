@@ -124,6 +124,5 @@ public class AddPatientActivity extends AppCompatActivity  {
     public void goReadQR()
     {
         Toast.makeText(AddPatientActivity.this, "Go scan QR code", Toast.LENGTH_LONG).show();
-
     }
 }
