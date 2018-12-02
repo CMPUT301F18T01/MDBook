@@ -157,6 +157,7 @@ public class AddPatientActivity extends AppCompatActivity  {
     public void goReadQR()
     {
         Intent scanQRIntent = new Intent(AddPatientActivity.this, ScanQRActivity.class);
+        scanQRIntent.putExtra("TAG", 1);
         startActivity(scanQRIntent);
         Toast.makeText(AddPatientActivity.this, "Go scan QR code", Toast.LENGTH_LONG).show();
     }
