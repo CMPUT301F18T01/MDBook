@@ -36,6 +36,8 @@ import android.widget.Toast;
 public class LoginActivity extends AppCompatActivity {
 
     private EditText etUserID;
+    private String TAG;
+    private Button scanQR;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +49,6 @@ public class LoginActivity extends AppCompatActivity {
         LocalStorageController.init(sharedPreferences);
         ElasticsearchController.init(connectivityManager);
         UserManager.initManager();
-
 
 
         setContentView(R.layout.activity_login);
@@ -117,6 +118,13 @@ public class LoginActivity extends AppCompatActivity {
      * When user resumes this activity, perform log out functionality
      */
     public void onResume(){
+        try{
+            TAG = getIntent().getExtras().getString("userID");
+            etUserID.setText(TAG);
+        }catch (NullPointerException id)
+        {
+            id.getStackTrace();
+        }
         super.onResume();
     }
 
@@ -125,5 +133,12 @@ public class LoginActivity extends AppCompatActivity {
      */
     private void hideSoftKeyboard(){
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+    }
+
+    public void goScanQR(View v)
+    {
+        Intent scanQR = new Intent(LoginActivity.this, ScanQRActivity.class);
+        scanQR.putExtra("login", 0);
+        startActivity(scanQR);
     }
 }

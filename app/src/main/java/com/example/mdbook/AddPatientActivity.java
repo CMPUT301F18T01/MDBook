@@ -149,7 +149,7 @@ public class AddPatientActivity extends AppCompatActivity  {
     {
        Intent back = new Intent(AddPatientActivity.this, ListPatientActivity.class);
        back.putExtra("patientID", patientID);
-       back.putExtra("TAG", TAG);
+       back.putExtra("TAG", 1);
        startActivity(back);
        this.finish();
     }
