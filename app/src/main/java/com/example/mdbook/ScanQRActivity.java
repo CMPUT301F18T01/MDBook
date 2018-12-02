@@ -103,16 +103,12 @@ public class ScanQRActivity extends AppCompatActivity {
                 final SparseArray<Barcode> qrCode = detections.getDetectedItems();
                 if(qrCode.size() != 0)
                 {
-                    userIDText.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            Vibrator vibrator = (Vibrator)getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
-                            vibrator.vibrate(1000);
-                            userID = qrCode.valueAt(0).displayValue;
-                            goBackToAddPatient();
 
-                        }
-                    });
+                    Vibrator vibrator = (Vibrator)getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
+                    vibrator.vibrate(1000);
+                    userID = qrCode.valueAt(0).displayValue;
+                    goBackToAddPatient();
+
                 }
             }
         });

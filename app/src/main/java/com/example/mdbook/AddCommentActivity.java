@@ -39,6 +39,7 @@ public class AddCommentActivity extends AppCompatActivity {
     private Problem problem;
     private Patient patient;
     Caregiver caregiver;
+    private ArrayList<Record> recordList;
 
     /**
      * @throws NoSuchUserException
@@ -71,7 +72,7 @@ public class AddCommentActivity extends AppCompatActivity {
                     comment = (etComment.getText().toString());
                     commentRecord.setComment(comment);
                     problem.addRecord(commentRecord);
-
+                    recordList = patient.getProblems().get(problemPos).getRecords();
                     userManager.saveUser(patient);
                     userManager.saveUser(caregiver);
                     backToRecord();

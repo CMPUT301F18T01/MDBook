@@ -103,7 +103,10 @@ public class AddPatientActivity extends AppCompatActivity  {
                     {
                         Toast.makeText(AddPatientActivity.this, "No patient exists with id: " + patientID, Toast.LENGTH_LONG).show();
                     }
-                    caregiver.addPatient((Patient) user);
+                    else{
+                        caregiver.addPatient((Patient) user);
+                        userManager.saveUser(caregiver);
+                    }
 
                 } catch (NoSuchUserException e) {
                     Toast.makeText(AddPatientActivity.this, "No user exists with id: " +enterIDText.getText().toString(), Toast.LENGTH_LONG).show();
@@ -112,7 +115,6 @@ public class AddPatientActivity extends AppCompatActivity  {
                     Toast.makeText(AddPatientActivity.this, "Internet connection is required to add patient", Toast.LENGTH_SHORT).show();
                 }
                 goBackToListPatient();
-
             }
         });
 

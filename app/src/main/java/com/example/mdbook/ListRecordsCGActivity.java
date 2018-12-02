@@ -48,7 +48,6 @@ public class ListRecordsCGActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         UserManager.initManager();
         UserManager userManager = UserManager.getManager();
-        recordList = new ArrayList<>();
 
         caregiver = (Caregiver) UserController.getController().getUser();
 
@@ -116,7 +115,6 @@ public class ListRecordsCGActivity extends AppCompatActivity {
         } catch (NetworkErrorException e) {
             e.printStackTrace();
         }
-        mAdapter.notifyDataSetChanged();
     }
 
     /**

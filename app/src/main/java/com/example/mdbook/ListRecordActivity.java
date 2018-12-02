@@ -46,7 +46,6 @@ public class ListRecordActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         UserManager.initManager();
         UserManager userManager = UserManager.getManager();
-        recordList = new ArrayList<>();
 
         Patient patient = (Patient) UserController.getController().getUser();
         if (problemPos == null) {

@@ -71,9 +71,6 @@ public class ListPatientProblemActivity extends AppCompatActivity implements Nav
         }
         patientProblems = patient.getProblems();
 
-            patientProblems = new ArrayList<>();
-            Toast.makeText(ListPatientProblemActivity.this, "No user found!", Toast.LENGTH_LONG).show();
-
         /* Create recycler view */
         recyclerView = findViewById(R.id.recylerView);
         recyclerView.setHasFixedSize(true);
@@ -97,7 +94,7 @@ public class ListPatientProblemActivity extends AppCompatActivity implements Nav
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view_patient);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view_problem);
         navigationView.setNavigationItemSelectedListener(this);
 
     }
