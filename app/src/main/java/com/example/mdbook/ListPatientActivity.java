@@ -38,6 +38,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -79,6 +80,7 @@ public class ListPatientActivity extends AppCompatActivity implements Navigation
         patientIDs = caregiver.getPatientList();
 
 
+
         /* Create recycler view */
         recyclerView = findViewById(R.id.recylerView);
         recyclerView.setHasFixedSize(true);
@@ -111,7 +113,6 @@ public class ListPatientActivity extends AppCompatActivity implements Navigation
                 if (direction == ItemTouchHelper.RIGHT){
                     showAlertDialog(viewHolder);
                 }
-
             }
         }).attachToRecyclerView(recyclerView);
 
@@ -217,6 +218,7 @@ public class ListPatientActivity extends AppCompatActivity implements Navigation
         intent.putExtra("patientPos",position);
         startActivity(intent);
     }
+
 
 
 }

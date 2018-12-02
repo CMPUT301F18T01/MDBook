@@ -107,7 +107,6 @@ public class ListRecordActivity extends AppCompatActivity {
                 UserManager userManager = UserManager.getManager();
                 Patient patient = (Patient) UserController.getController().getUser();
                 recordList = patient.getProblems().get(problemPos).getRecords();
-                mAdapter.notifyDataSetChanged();
             }
         }
     }
