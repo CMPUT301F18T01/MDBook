@@ -17,7 +17,7 @@
         >
 
         <TextView
-            android:id="@+id/problemTitle"
+            android:id="@+id/mtext"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
@@ -31,7 +31,7 @@
             android:id="@+id/mtext2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/problemTitle"
+            android:layout_below="@id/mtext"
             android:text="description"
             android:textSize="15dp" />
 

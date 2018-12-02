@@ -127,6 +127,7 @@ public class ListProblemActivity extends AppCompatActivity
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     problems.remove(position.getAdapterPosition());
+                    UserManager.getManager().saveUser(UserController.getController().getUser());
                     mAdapter.notifyDataSetChanged();
                     Toast.makeText(ListProblemActivity.this, "Problem Removed", Toast.LENGTH_SHORT).show();
                 }
@@ -231,7 +232,7 @@ public class ListProblemActivity extends AppCompatActivity
      * Starts the login activity
      */
     public void signout(){
-
+        UserManager.getManager().logout();
         Intent viewSignout= new Intent(this, LoginActivity.class);
         startActivity(viewSignout);
         this.finish();

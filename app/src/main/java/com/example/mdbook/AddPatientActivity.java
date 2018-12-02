@@ -12,6 +12,7 @@
 
 package com.example.mdbook;
 
+import android.accounts.NetworkErrorException;
 import android.content.Intent;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -90,6 +91,8 @@ public class AddPatientActivity extends AppCompatActivity  {
                 } catch (NoSuchUserException e) {
                     Toast.makeText(AddPatientActivity.this, "No user exists with id: " +enterIDText.getText().toString(), Toast.LENGTH_LONG).show();
                     e.printStackTrace();
+                } catch (NetworkErrorException e) {
+                    Toast.makeText(AddPatientActivity.this, "Internet connection is required to add patient", Toast.LENGTH_SHORT).show();
                 }
                 goBackToListPatient();
 

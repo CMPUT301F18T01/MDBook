@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * Provides global access point for data storage.
+ * Holds data for currently logged in user
  *
  * @author Noah Burghardt
  * @version 0.0.1
@@ -39,18 +39,12 @@ public class DataManager {
      *
      *
      */
-    private HashMap<String, JSONObject> patients;
-    private HashMap<String, JSONObject> caregivers;
-    private HashMap<Integer, JSONObject> problems;
-    private HashMap<Integer, JSONObject> records;
-    private HashMap<Integer, Photo> photos;
-    private ArrayList<Integer> availableIDs;
-    private int availableID = 0; // An unused id number
-    private ElasticsearchController elasticsearchController;
+    private User me;
+    private ArrayList<User> pushQueue;
+
+
+    private static DataManager dataManager;
     private LocalStorageController localStorageController;
-
-
-    private static DataManager dataManager = null;
 
     /**
      * @return Singleton instance of DataManager
@@ -58,119 +52,38 @@ public class DataManager {
     public static DataManager getDataManager() {
         if (dataManager == null){
             dataManager = new DataManager();
-            dataManager.elasticsearchController = ElasticsearchController.getController();
             dataManager.localStorageController = LocalStorageController.getController();
+            dataManager.setPushQueue(LocalStorageController.getController().loadQueue());
         }
         return dataManager;
     }
 
-    private DataManager(){
-        this.patients = new HashMap<>();
-        this.caregivers = new HashMap<>();
-        this.problems = new HashMap<>();
-        this.records = new HashMap<>();
-        this.photos = new HashMap<>();
-        this.availableIDs = new ArrayList<>();
+    // Queues user up for upload
+    public void addToQueue(User user){
+        pushQueue.add(user);
+        localStorageController.saveQueue(pushQueue);
     }
 
-    public HashMap<String, JSONObject> getCaregivers() {
-        return caregivers;
+    public void setPushQueue(ArrayList<User> pushQueue) {
+        this.pushQueue = pushQueue;
     }
 
-    public HashMap<String, JSONObject> getPatients() {
-        return patients;
+    public void removeFromQueue(User user){
+        pushQueue.remove(user);
+        localStorageController.saveQueue(pushQueue);
     }
 
-    public HashMap<Integer, JSONObject> getProblems() {
-        return problems;
+    public ArrayList<User> getPushQueue() {
+        return pushQueue;
     }
 
-    public HashMap<Integer, JSONObject> getRecords() {
-        return records;
+    public void saveMe(User user){
+        me = user;
+        localStorageController.saveMe(me);
     }
 
-    public HashMap<Integer, Photo> getPhotos() {
-        return photos;
+    public void removeMe(){
+        me = null;
+        localStorageController.clearMe();
     }
-
-    public void setCaregivers(HashMap<String, JSONObject> caregivers) {
-        this.caregivers = caregivers;
-    }
-
-    public void setPatients(HashMap<String, JSONObject> patients) {
-        this.patients = patients;
-    }
-
-    public void setPhotos(HashMap<Integer, Photo> photos) {
-        this.photos = photos;
-    }
-
-    public void setProblems(HashMap<Integer, JSONObject> problems) {
-        this.problems = problems;
-    }
-
-    public void setRecords(HashMap<Integer, JSONObject> records) {
-        this.records = records;
-    }
-
-    public void setAvailableIDs(ArrayList<Integer> availableIDs){
-        this.availableIDs = availableIDs;
-    }
-
-    public ArrayList<Integer> getAvailableIDs(){
-        return availableIDs;
-    }
-
-    public void setAvailableID(int id){
-        this.availableID = id;
-    }
-
-    public int getAvailableID(){
-        return this.availableID;
-    }
-
-    public void push(){
-        elasticsearchController.push();
-        localStorageController.push();
-    }
-
-
-    public void pull(){
-        if (elasticsearchController.isConnected()) {
-            elasticsearchController.pull();
-            localStorageController.push();
-        }
-        else{
-            localStorageController.loadData();
-        }
-    }
-
-    /**
-     * If there are unused IDs preceding the currently available one, return and remove one of
-     * those. Otherwise return fresh ID and increment counter.
-     * @return
-     */
-    public int generateID(){
-        if (availableIDs.size() == 0){
-            availableID += 1;
-            return availableID-1;
-        }
-        else {
-            int id = availableIDs.get(0);
-            availableIDs.remove(0);
-            return id;
-        }
-    }
-
-    /**
-     * Adds id number to list of available IDs. This indicates that the corresponding item has
-     * been deleted.
-     * @param availableID ID number to be added to queue of available IDs. Any information here can
-     *                    be eventually overwritten but is not guaranteed to happen immediately or
-     *                    at all.
-     */
-    public void addAvailableID(int availableID){
-        this.availableIDs.add(availableID);
-    }
-
 }

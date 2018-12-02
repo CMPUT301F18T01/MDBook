@@ -64,12 +64,7 @@ public class EditProblemDetailsActivity extends AppCompatActivity {
                 Patient patient = (Patient) UserController.getController().getUser();
                 Problem problem = (Problem) getIntent().getExtras().getSerializable("problem");
                 problem.setDescription(editDescription.getText().toString());
-                try {
-                     userManager.saveUser(patient);
-                } catch (NoSuchUserException e) {
-                    Toast.makeText(EditProblemDetailsActivity.this, "No user exist", Toast.LENGTH_SHORT).show();
-                    e.printStackTrace();
-                }
+                 userManager.saveUser(patient);
 
 
                 backToMainPage();

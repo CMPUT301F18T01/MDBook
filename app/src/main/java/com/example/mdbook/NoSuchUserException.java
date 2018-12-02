@@ -31,4 +31,6 @@ public class NoSuchUserException extends Exception {
     public NoSuchUserException(String errorMessage){
         super(errorMessage);
     }
+
+    public NoSuchUserException(String errorMessage, Throwable cause){ super(errorMessage, cause);}
 }

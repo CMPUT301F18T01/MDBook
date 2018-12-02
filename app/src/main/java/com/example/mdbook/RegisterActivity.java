@@ -11,6 +11,7 @@
 
 package com.example.mdbook;
 
+import android.accounts.NetworkErrorException;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -93,6 +94,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     } catch (UserIDNotAvailableException e) {
                         Toast.makeText(this, "UserID is taken", Toast.LENGTH_SHORT).show();
                         e.printStackTrace();
+                    } catch (NetworkErrorException e) {
+                        Toast.makeText(this, "Internet connection is required to register", Toast.LENGTH_SHORT).show();
                     }
                 }
                 else
@@ -107,6 +110,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         Toast.makeText(this, "UserID is taken", Toast.LENGTH_SHORT).show();
                     } catch (IllegalArgumentException e){
                         Toast.makeText(this, "UserID must be at least 8 characters", Toast.LENGTH_SHORT).show();
+                    } catch (NetworkErrorException e) {
+                        Toast.makeText(this, "Internet connection is required to register", Toast.LENGTH_SHORT).show();
                     }
         }
 

@@ -1,8 +1,11 @@
 package com.example.mdbook;
 
+import android.accounts.NetworkErrorException;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -40,12 +43,15 @@ public class LoginActivity extends AppCompatActivity {
         /* Initialize controllers */
         SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("shared preferences",
                 getApplicationContext().MODE_PRIVATE);
+        ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
         LocalStorageController.init(sharedPreferences);
+        ElasticsearchController.init(connectivityManager);
         UserManager.initManager();
+
+
 
         setContentView(R.layout.activity_login);
         etUserID = findViewById(R.id.etUserID);
-
         etUserID.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -61,26 +67,38 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        /* Check if user is already logged in */
+        if (UserManager.getManager().localLogin()){
+            loggedIn();
+        }
+
     }
 
     public void onLoginClick(View v) {
         UserManager userManager = UserManager.getManager();
-        if (userManager.login(etUserID.getText().toString())) {
-            Toast.makeText(this, "Login successful", Toast.LENGTH_SHORT).show();
-            User user = UserController.getController().getUser();
-            String activity = "LoginActivity";
-            if (user.getClass() == Patient.class) {
-                Intent patientIntent = new Intent(this, ListProblemActivity.class);
-                patientIntent.putExtra("activity", activity);
-                startActivity(patientIntent);
-                this.finish();
-            } else if (user.getClass() == Caregiver.class) {
-                Intent caregiverIntent = new Intent(this, ListPatientActivity.class);
-                caregiverIntent.putExtra("activity", activity);
-                startActivity(caregiverIntent);
-                this.finish();
+        try {
+            if (userManager.login(etUserID.getText().toString())) {
+                Toast.makeText(this, "Login successful", Toast.LENGTH_SHORT).show();
+                loggedIn();
             }
+        } catch (NetworkErrorException e) {
+            Toast.makeText(this, "No internet connection", Toast.LENGTH_SHORT).show();
+        }
+    }
 
+    private void loggedIn(){
+        User user = UserController.getController().getUser();
+        String activity = "LoginActivity";
+        if (user.getClass() == Patient.class) {
+            Intent patientIntent = new Intent(this, ListProblemActivity.class);
+            patientIntent.putExtra("activity", activity);
+            startActivity(patientIntent);
+            this.finish();
+        } else if (user.getClass() == Caregiver.class) {
+            Intent caregiverIntent = new Intent(this, ListPatientActivity.class);
+            caregiverIntent.putExtra("activity", activity);
+            startActivity(caregiverIntent);
+            this.finish();
         }
     }
 
@@ -98,7 +116,6 @@ public class LoginActivity extends AppCompatActivity {
      */
     public void onResume(){
         super.onResume();
-        UserManager.getManager().logout();
     }
 
     /**
