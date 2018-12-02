@@ -35,38 +35,41 @@ import org.w3c.dom.Text;
  **/
 public class EditProblemDetailsActivity extends AppCompatActivity {
 
-    TextView showTitle;
+    EditText editTitle;
     TextView showDate;
     EditText editDescription;
-    EditText editLocation;
     Button save;
     Button cancel;
+    Problem problem;
+    int problemPos;
+    Patient patient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_problem_details);
         // set the views and buttons appropriately by id's
-        showTitle = findViewById(R.id.showTitle);
-        showDate = findViewById(R.id.showDate);
+        editTitle = findViewById(R.id.showTitle);
+        //showDate = findViewById(R.id.showDate);
         editDescription = findViewById(R.id.editDescription);
         save = findViewById(R.id.save);
         cancel = findViewById(R.id.cancel);
         UserManager.initManager();
         final UserManager userManager = UserManager.getManager();
-
+        patient = (Patient) UserController.getController().getUser();
+        problemPos = getIntent().getExtras().getInt("problemPos");
+        problem = patient.getProblems().get(problemPos);
+        editTitle.setText(problem.getTitle());
+        editDescription.setText(problem.getDescription());
+        //showDate.setText(problem.getDate().toString());
 
         // Switches to the main activity upon the click of the save button
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO: Save the data
-                Patient patient = (Patient) UserController.getController().getUser();
-                Problem problem = (Problem) getIntent().getExtras().getSerializable("problem");
+                problem.setTitle(editTitle.getText().toString());
                 problem.setDescription(editDescription.getText().toString());
-                 userManager.saveUser(patient);
-
-
+                userManager.saveUser(patient);
                 backToMainPage();
             }
         });

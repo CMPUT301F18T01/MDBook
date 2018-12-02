@@ -93,6 +93,7 @@ public class OptionsMenuActivity extends AppCompatActivity {
      */
     public void GoEditProblem(){
         Intent goEditProblem = new Intent(this, EditProblemDetailsActivity.class);
+        goEditProblem.putExtra("problemPos", getIntent().getExtras().getInt("problemPos"));
         startActivity(goEditProblem);
     }
     /**

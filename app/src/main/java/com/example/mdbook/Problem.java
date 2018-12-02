@@ -155,12 +155,18 @@ class Problem implements Serializable {
         return this.title;
     }
 
+    public void setTitle(String title) {this.title = title;}
+
     /**
      * @return Problem ID, can be null.
      */
     public String getProblemID(){
         return this.problemID;
     }
+
+    public Date getDate(){return this.date;}
+
+    public void setDate(Date date){this.date = date;}
 
     /**
      * @param problemID Problem ID
@@ -169,9 +175,4 @@ class Problem implements Serializable {
         this.problemID = problemID;
     }
 
-    public Date getDate(){return this.date;}
-
-    public void setDate(Date date){
-        this.date = date;
-    }
 }
