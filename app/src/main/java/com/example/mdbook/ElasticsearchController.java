@@ -501,7 +501,8 @@ class ElasticsearchController {
         protected DocumentResult doInBackground(Index... indices) {
             for (Index index : indices) {
                 try {
-                    return client.execute(index);
+                    DocumentResult documentResult = client.execute(index);
+                    return documentResult;
                 } catch (IOException e) {
                     return null;
                 }
@@ -562,9 +563,9 @@ class ElasticsearchController {
     }
 
     public void addCaregiver(UserDecomposer.Decomposition decomposition) throws NetworkErrorException {
-        this.idlists.get("caregiverIDS").add(decomposition.getUserid());
+        this.idlists.get("caregiverIDs").add(decomposition.getUserid());
         Index jestIndex = new Index.Builder(decomposition.getUser()).index(index)
-                .type("patient")
+                .type("caregiver")
                 .id(decomposition.getUserid())
                 .build();
         new jestIndexTask().execute(jestIndex);

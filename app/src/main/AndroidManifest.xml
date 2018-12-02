@@ -13,10 +13,6 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:allowBackup="true"
@@ -32,8 +28,6 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-        <meta-data android:name="com.google.android.gms.vision"
-            android:value="barcode"/>
 
         <activity android:name=".LoginActivity">
             <intent-filter>
@@ -63,7 +57,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".MapActivity" />
         <activity android:name=".ViewMapActivity" />
-        <activity android:name=".AddReminderActivity" />
+        <activity android:name=".AddReminderActivity"/>
         <activity
             android:name=".ListProblemActivity"
             android:label="@string/MDBook"
@@ -80,13 +74,9 @@
         <activity
             android:name=".ListRecordsCGActivity"
             android:label="@string/listPatientRecordsCG"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".AddCommentActivity" />
-
-        <receiver android:name=".AlarmService" />
-
-        <activity android:name=".GenerateQRActivity" />
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".AddCommentActivity"></activity>
+        <receiver android:name=".AlarmService"/>
     </application>
-
 
 </manifest>
