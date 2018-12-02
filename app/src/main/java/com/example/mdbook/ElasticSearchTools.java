@@ -1,13 +1,9 @@
 package com.example.mdbook;
 
-import android.accounts.NetworkErrorException;
 import android.os.AsyncTask;
 
-import com.google.gson.internal.LinkedTreeMap;
 import com.searchly.jestdroid.DroidClientConfig;
 import com.searchly.jestdroid.JestClientFactory;
-
-import junit.framework.TestCase;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -20,8 +16,21 @@ import io.searchbox.client.JestClient;
 import io.searchbox.core.DocumentResult;
 import io.searchbox.core.Index;
 
-public class ClearESMetadata extends TestCase {
-    public void testResetStringIDs() {
+/**
+ * Provides a suite of tools to Manage Elasticsearch cloud data.
+ * Elasticsearch Servers
+ *  * http://cmput301.softwareprocess.es:8080/cmput301f18t01test
+ *  * http://cmput301.softwareprocess.es:8080/cmput301f18t01
+ *  * http://es2.softwareprocess.ca:8080/cmput301f18t01test
+ *  * http://es2.softwareprocess.ca:8080/cmput301f18t01
+ *
+ * @author Noah Burghardt
+ * @see ElasticsearchController
+ * @version 1.0.0
+ */
+public class ElasticSearchTools {
+
+    public void ResetStringIDs() {
 
         HashMap<String, ArrayList<String>> idlists = new HashMap<>();
         String availableID = "0";
@@ -38,7 +47,7 @@ public class ClearESMetadata extends TestCase {
         try {
             IDJSON.put("availableID", availableID);
         } catch (JSONException e) {
-            fail();
+            e.printStackTrace();
         }
         Index JestID = new Index.Builder(IDJSON).index("cmput301f18t01test").type("metadata")
                 .id("idlists")
@@ -46,7 +55,7 @@ public class ClearESMetadata extends TestCase {
         new jestIndexTask().execute(JestID);
     }
 
-    public void testResetIntIDs(){
+    public void ResetIntIDs(){
 
 
         HashMap<String, Object> idlists = new HashMap<>();
@@ -64,7 +73,7 @@ public class ClearESMetadata extends TestCase {
         try {
             IDJSON.put("availableID", availableID);
         } catch (JSONException e) {
-            fail();
+            e.printStackTrace();
         }
         Index JestID = new Index.Builder(IDJSON).index("cmput301f18t01test").type("metadata")
                 .id("idlists")
