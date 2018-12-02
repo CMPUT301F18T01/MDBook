@@ -20,6 +20,16 @@ import com.google.android.gms.common.GoogleApiAvailability;
 
 import java.util.ArrayList;
 
+/**
+ * Record Adapter for viewing records in ListRecordActivity for the patient
+ *
+ * @author Thomas Chan
+ *
+ * @see ListRecordActivity
+ * @see Record
+ *
+ *
+ */
 public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordViewholder> {
 
 
@@ -35,9 +45,11 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
 
     public void setOnItemClickListener(onItemClickListener listener){
         mListener = listener;
-
     }
 
+    /**
+     * A static class which is for a particular view, which contains the contents of record.
+     */
     public static class RecordViewholder extends RecyclerView.ViewHolder{
 
         public ImageView mImageView;
@@ -48,6 +60,11 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
         public ImageButton mLocation;
 
 
+        /**
+         * creates a RecordViewHolder object
+         * @param itemView
+         * @param listener
+         */
         public RecordViewholder(@NonNull View itemView, final onItemClickListener listener) {
             super(itemView);
 
@@ -85,12 +102,23 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
         }
     }
 
+    /**
+     * creates a RecordAdapter object
+     * @param recordList: needs list of all records by the user currently signed
+     * @param activity: needs the current activity to implement RecordAdapter
+     */
     public RecordAdapter(ArrayList<Record> recordList, Activity activity){
         mrecordList = recordList;
         mActivity = activity;
     }
 
 
+    /**
+     * when a RecordViewHolder is created, it adds to a layout
+     * @param viewGroup
+     * @param i
+     * @return RecordViewHolder
+     */
     @NonNull
     @Override
     public RecordViewholder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -101,6 +129,11 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
         return rvh;
     }
 
+    /**
+     * Sets the content of a record to objects on the RecordViewHolder
+     * @param recordViewholder
+     * @param position
+     */
     @Override
     public void onBindViewHolder(@NonNull RecordViewholder recordViewholder, int position) {
         currentRecord = mrecordList.get(position);
@@ -108,12 +141,12 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
         recordViewholder.mTitle.setText(currentRecord.getTitle());
         recordViewholder.mDate.setText(currentRecord.getDate().toString());
         recordViewholder.mComment.setText(currentRecord.getComment());
-
-
-
     }
 
 
+    /**
+     * @return size of list
+     */
     @Override
     public int getItemCount() {
         return mrecordList.size();

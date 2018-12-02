@@ -22,6 +22,12 @@ import android.widget.Toast;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 
+/**
+ * Creates activity that shows user things they can do when clicked on a particular proble,
+ * @see Problem
+ *
+ * @author ...
+ */
 public class OptionsMenuActivity extends AppCompatActivity {
 
     private static final String TAG = "OptionsMenuActivity";
@@ -87,6 +93,7 @@ public class OptionsMenuActivity extends AppCompatActivity {
      */
     public void GoEditProblem(){
         Intent goEditProblem = new Intent(this, EditProblemDetailsActivity.class);
+        goEditProblem.putExtra("problemPos", getIntent().getExtras().getInt("problemPos"));
         startActivity(goEditProblem);
     }
     /**
@@ -116,6 +123,9 @@ public class OptionsMenuActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Changes to AddReminderActivity when set reminder buttons is pressed.
+     */
     public  void setReminder()
     {
         Intent intent = new Intent(OptionsMenuActivity.this, AddReminderActivity.class);
@@ -123,6 +133,10 @@ public class OptionsMenuActivity extends AppCompatActivity {
         this.finish();
     }
 
+    /**
+     * Checks google services for proper map functionalities
+     * @return
+     */
     public boolean isServicesOK(){
         Log.d(TAG,"isServicesOK: checking Google Services version");
         int available = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(OptionsMenuActivity.this);
