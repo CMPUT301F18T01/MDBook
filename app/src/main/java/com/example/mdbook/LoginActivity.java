@@ -91,10 +91,12 @@ public class LoginActivity extends AppCompatActivity {
         String activity = "LoginActivity";
         if (user.getClass() == Patient.class) {
             Intent patientIntent = new Intent(this, ListProblemActivity.class);
+            Toast.makeText(this, "User is a patient", Toast.LENGTH_SHORT).show();
             patientIntent.putExtra("activity", activity);
             startActivity(patientIntent);
             this.finish();
         } else if (user.getClass() == Caregiver.class) {
+            Toast.makeText(this, "User is a caregiver", Toast.LENGTH_SHORT).show();
             Intent caregiverIntent = new Intent(this, ListPatientActivity.class);
             caregiverIntent.putExtra("activity", activity);
             startActivity(caregiverIntent);
