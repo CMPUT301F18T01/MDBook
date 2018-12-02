@@ -29,6 +29,8 @@ import android.widget.Toast;
 
 import com.google.android.gms.vision.L;
 
+import java.util.ArrayList;
+
 /**
  * Creates an activity for the user to add patients
  * Displays a list of all the patients already added
@@ -51,6 +53,7 @@ public class AddPatientActivity extends AppCompatActivity  {
     private Button readQRBtn;
     private EditText enterIDText;
     private User user;
+    private ArrayList<String> patientList;
     private Caregiver caregiver;
     private String patientID;
     private String TAG;
@@ -63,7 +66,7 @@ public class AddPatientActivity extends AppCompatActivity  {
         UserManager.initManager();
         final UserManager userManager = UserManager.getManager();
         caregiver = (Caregiver) UserController.getController().getUser();
-
+        patientList = caregiver.getPatientList();
 
         // set the view and butons appropriately by id's
         enterIDText = findViewById(R.id.enterUserText);
@@ -104,8 +107,16 @@ public class AddPatientActivity extends AppCompatActivity  {
                         Toast.makeText(AddPatientActivity.this, "No patient exists with id: " + patientID, Toast.LENGTH_LONG).show();
                     }
                     else{
-                        caregiver.addPatient((Patient) user);
-                        userManager.saveUser(caregiver);
+
+                        if(patientList.contains(patientID))
+                        {
+                            Toast.makeText(AddPatientActivity.this, "Patient already exists", Toast.LENGTH_LONG).show();
+                        }
+                        else{
+                            caregiver.addPatient((Patient) user);
+                            userManager.saveUser(caregiver);
+                        }
+
                     }
 
                 } catch (NoSuchUserException e) {

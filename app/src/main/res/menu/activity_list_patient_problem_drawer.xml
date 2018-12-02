@@ -2,11 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
-
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/profile"
-            android:icon="@drawable/ic_menu_person"></item>
+            android:icon="@drawable/ic_menu_person"
+            android:title="@string/Profile" />
     </group>
 
     <item android:title="Communicate">
