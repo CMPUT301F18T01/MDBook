@@ -93,11 +93,16 @@ public class UserManagerTest extends TestCase {
             //check to make sure patient doesn't exist
             assertFalse(um.login("patientid"));
             assertNull(UserController.getController().getUser());
+
+            /* Clean up test data */
+            um.deleteUser("patientid");
         } catch (NoSuchUserException e){
             fail();
         } catch (NetworkErrorException e) {
             fail();
         }
+
+
     }
     /**
      * test for expected output when failing to login.
@@ -128,11 +133,15 @@ public class UserManagerTest extends TestCase {
             UserController userController = UserController.getController();
             User u = userController.getUser();
             assertNull(u);
+
+            /* Clean up test data */
+            um.deleteUser("patientid");
+            um.deleteUser("caregiverid");
         } catch (UserIDNotAvailableException e){
             fail();
         } catch (NetworkErrorException e) {
             fail();
-        }
+        } catch (NoSuchUserException e) {;}
     }
     /**
      * test to make sure user data is loaded into user object upon login and removed upon logout.
@@ -168,11 +177,15 @@ public class UserManagerTest extends TestCase {
             assertEquals(userController.getUser().getUserID(), "patientid2");
             um.logout();
             assertNull(userController.getUser());
+
+            /* Clean up test data */
+            um.deleteUser("patientid");
+            um.deleteUser("patientid2");
         } catch (UserIDNotAvailableException e){
             fail();
         } catch (NetworkErrorException e) {
             fail();
-        }
+        } catch (NoSuchUserException e) {;}
     }
     /**
      * Test to make sure login cannot be completed without logging out first.
@@ -207,11 +220,15 @@ public class UserManagerTest extends TestCase {
             // ensure first user is still the one logged in
             assertEquals("patientid", UserController.getController().getUser()
                     .getUserID());
+
+            /* Clean up test data */
+            um.deleteUser("patientid");
+            um.deleteUser("patientid1");
         } catch (UserIDNotAvailableException e) {
             fail();
         } catch (NetworkErrorException e) {
             fail();
-        }
+        } catch (NoSuchUserException e) {;}
     }
 
     /**
@@ -347,6 +364,16 @@ public class UserManagerTest extends TestCase {
         assertEquals("problemtitle", problem.getTitle());
         assertEquals("recordtitle", record.getTitle());
         assertEquals(1, record.getPhotos().size());
+
+        /* Clean up test data */
+        try {
+            userManager.deleteUser(patientID);
+            userManager.deleteUser(caregiverID);
+        } catch (NoSuchUserException e) {
+            e.printStackTrace();
+        } catch (NetworkErrorException e) {
+            e.printStackTrace();
+        }
     }
     /**
      * Test deleting user with data. No test implemented to search corners of database to see if
@@ -416,6 +443,15 @@ public class UserManagerTest extends TestCase {
             assertTrue(true);
         } catch (NetworkErrorException e) {
             fail();
+        }
+
+        /* Clean up test data */
+        try {
+            userManager.deleteUser(patientID);
+        } catch (NoSuchUserException e) {
+            e.printStackTrace();
+        } catch (NetworkErrorException e) {
+            e.printStackTrace();
         }
     }
 
