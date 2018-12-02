@@ -81,7 +81,7 @@ class Problem implements Serializable {
 
     /**
      * Returns list of comments (strings). If there are no comments, returns an empty list.
-     * @return Comment list
+     * @return ArrayList<String> comments
      */
     public ArrayList<String> getComments() {
         return this.comments;
@@ -174,4 +174,5 @@ class Problem implements Serializable {
     public void setProblemID(String problemID) {
         this.problemID = problemID;
     }
+
 }

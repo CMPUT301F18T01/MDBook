@@ -82,8 +82,9 @@ public class EditAccountDetailActivity extends AppCompatActivity {
      */
     public void backToMain(){
 
-        Intent backToMain = new Intent(this, ListProblemActivity.class);
+        Intent backToMain = new Intent(this, ViewAccountDetailActivity.class);
         startActivity(backToMain);
+        this.finish();
 
     }
 }

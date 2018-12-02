@@ -34,6 +34,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Allows user to see the map
+ *
+ * @author Thomas Chan
+ */
+
 public class ViewMapActivity extends AppCompatActivity implements OnMapReadyCallback {
 
 

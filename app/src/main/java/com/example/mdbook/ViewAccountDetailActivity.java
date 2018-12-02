@@ -25,8 +25,8 @@ import android.widget.TextView;
  * @see com.example.mdbook.LoginActivity
  *
  *
- * @author Vanessa Peng
  * @author Raj Kapadia
+ * @author Vanessa Peng
  * @author James Aina
  *
  * @version 0.0.1
@@ -38,6 +38,7 @@ public class ViewAccountDetailActivity extends AppCompatActivity {
     TextView email;
     Button editAccount;
     Button logOutButton;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +58,7 @@ public class ViewAccountDetailActivity extends AppCompatActivity {
         phone.setText(user.getPhoneNumber());
         email.setText(user.getEmail());
 
+
         // Switches to the edit account details upon the click of the editbutton
         editAccount.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,16 +74,18 @@ public class ViewAccountDetailActivity extends AppCompatActivity {
         });
     }
 
-
     /**
      * Creates a new intent for switching to the EditAccountDetailActivity
      */
     public void goEditAccount(){
         Intent editAccount = new Intent(this, EditAccountDetailActivity.class);
         startActivity(editAccount);
+        this.finish();
     }
 
-
+    /**
+     * Logout functionality
+     */
     public void goToLogin()
     {
         UserManager.initManager();

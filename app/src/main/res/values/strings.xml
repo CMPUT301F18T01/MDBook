@@ -44,6 +44,7 @@
     <string name="listProblemCG">Listing problems</string>
     <string name="listPatientsCG">Listing problems</string>
     <string name="listPatientRecordsCG">Listing patient\'s records</string>
+    <string name="shareQR">Share QR code</string>
 
 </resources>
 
