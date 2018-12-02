@@ -36,12 +36,7 @@ public class ViewAccountDetailActivity extends AppCompatActivity {
     TextView phone;
     TextView email;
     Button editAccount;
-
-
     Button logOutButton;
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,11 +48,7 @@ public class ViewAccountDetailActivity extends AppCompatActivity {
         phone = findViewById(R.id.viewPhone);
         email = findViewById(R.id.viewEmail);
         editAccount = findViewById(R.id.EditAccount);
-
         logOutButton = findViewById(R.id.LogOutBtn);
-
-
-
 
         // Switches to the edit account details upon the click of the editbutton
         editAccount.setOnClickListener(new View.OnClickListener() {
