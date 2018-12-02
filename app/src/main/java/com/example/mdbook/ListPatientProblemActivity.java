@@ -10,6 +10,7 @@
 
 
 package com.example.mdbook;
+import android.accounts.NetworkErrorException;
 import android.content.Intent;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -60,14 +61,18 @@ public class ListPatientProblemActivity extends AppCompatActivity implements Nav
         Caregiver caregiver = (Caregiver) UserController.getController().getUser();
         patientPos = getIntent().getExtras().getInt("patientPos");
         patientID = caregiver.getPatientList().get(patientPos);
+
         try {
             patient = (Patient) userManager.fetchUser(patientID);
-            patientProblems = patient.getProblems();
         } catch (NoSuchUserException e) {
-            patientProblems = new ArrayList<>();
-            Toast.makeText(ListPatientProblemActivity.this, "No user found!", Toast.LENGTH_LONG).show();
+            e.printStackTrace();
+        } catch (NetworkErrorException e) {
             e.printStackTrace();
         }
+        patientProblems = patient.getProblems();
+
+            patientProblems = new ArrayList<>();
+            Toast.makeText(ListPatientProblemActivity.this, "No user found!", Toast.LENGTH_LONG).show();
 
         /* Create recycler view */
         recyclerView = findViewById(R.id.recylerView);
@@ -92,7 +97,7 @@ public class ListPatientProblemActivity extends AppCompatActivity implements Nav
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view_problem_cg);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view_patient);
         navigationView.setNavigationItemSelectedListener(this);
 
     }

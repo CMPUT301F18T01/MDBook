@@ -102,21 +102,15 @@ public class AddRecordActivity extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-                    recordDate = new Date();
-                    Record record = new Record(headline.getText().toString(),recordDate,Description.getText().toString());
-                    patient.getProblems().get(problemPos).addRecord(record);
-                    userManager.saveUser(patient);
-                    Toast.makeText(AddRecordActivity.this
-                            ,"Record " + headline.getText().toString() + " Added"
-                            ,Toast.LENGTH_SHORT).show();
-                    endActivity();
+                recordDate = new Date();
+                Record record = new Record(headline.getText().toString(),recordDate,Description.getText().toString());
+                patient.getProblems().get(problemPos).addRecord(record);
+                userManager.saveUser(patient);
+                Toast.makeText(AddRecordActivity.this
+                        ,"Record " + headline.getText().toString() + " Added"
+                        ,Toast.LENGTH_SHORT).show();
+                endActivity();
 
-                } catch (NoSuchUserException e) {
-                    Toast.makeText(AddRecordActivity.this
-                            , "Unable to add record."
-                            , Toast.LENGTH_SHORT).show();
-                }
             }
         });
 

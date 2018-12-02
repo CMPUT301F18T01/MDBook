@@ -80,13 +80,8 @@ public class AddProblemActivity extends AppCompatActivity implements DatePickerD
                     Problem problem = new Problem(title.getText().toString(), description.getText().toString());
                     problem.setDate(date);
                     patient.addProblem(problem);
-                    try{
-                        userManager.saveUser(patient);
-                        Toast.makeText(AddProblemActivity.this, "saved problem: " + title.getText().toString(), Toast.LENGTH_SHORT).show();
-                    }catch ( NoSuchUserException id)
-                    {
-                        Toast.makeText(AddProblemActivity.this, "No user", Toast.LENGTH_SHORT).show();
-                    }
+                    userManager.saveUser(patient);
+                    Toast.makeText(AddProblemActivity.this, "saved problem: " + title.getText().toString(), Toast.LENGTH_SHORT).show();
                     BackToListProblem();
                 }
                 else{
