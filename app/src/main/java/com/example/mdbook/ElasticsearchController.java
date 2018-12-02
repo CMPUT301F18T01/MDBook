@@ -348,6 +348,9 @@ class ElasticsearchController {
             JestResult result = jgt.get();
             JSONObject userJSON = result.getSourceAsObject(JSONObject.class);
             decomposition.setUser(userJSON);
+            decomposition.setPhotos(null);
+            decomposition.setRecords(null);
+            decomposition.setProblems(null);
 
             return decomposition;
 
