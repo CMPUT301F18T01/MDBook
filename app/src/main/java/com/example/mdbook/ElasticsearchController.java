@@ -256,16 +256,37 @@ class ElasticsearchController {
 
 
     /**
-     * TODO: Removes user and all corresponding data (Problems, records, photos etc) from
-     * Elasticsearch.
+     * Removes the userobject and its id from the id list. Called by UserManager.deleteUser, assumes
+     * that if the user is a patient, they have no problems/records/photos.
+     * @see UserManager
      * @param userID The userID of the user to delete.
      * @throws NetworkErrorException Thrown if the app is unable to reach Elasticsearch.
      * @throws NoSuchUserException Thrown if the userID is not connected to a user.
      */
     public void deleteUser(String userID) throws NetworkErrorException, NoSuchUserException {
         this.pullIDLists();
-        this.idlists.get("caregiverIDs").remove(userID);
-        this.idlists.get("patientIDs").remove(userID);
+        if (existsPatient(userID)){
+            /* remove from idlist */
+            this.idlists.get("patientIDs").remove(userID);
+            /* delete patient */
+            Delete delete = new Delete.Builder(userID)
+                    .index(index)
+                    .type("patient")
+                    .build();
+            new jestDeleteTask().execute(delete);
+
+        } else if (existsCaregiver(userID)){
+            /* remove from idlist */
+            this.idlists.get("caregiverIDs").remove(userID);
+            /* delete caregiver */
+            Delete delete = new Delete.Builder(userID)
+                    .index(index)
+                    .type("caregiver")
+                    .build();
+            new jestDeleteTask().execute(delete);
+        } else {
+            throw new NoSuchUserException();
+        }
         this.pushIDLists();
     }
 

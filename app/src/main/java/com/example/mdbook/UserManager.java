@@ -259,6 +259,17 @@ public class UserManager {
      * @param userID The userID of the user to be cleared out.
      */
     public void deleteUser(String userID) throws NoSuchUserException, NetworkErrorException {
+        if (elasticsearchController.existsPatient(userID)) {
+            /* Replace patient with empty patient
+             * Effectively deletes all problems, records and photos
+             */
+            Patient patient = new Patient(userID, "", "");
+            userManager.saveUser(patient);
+        } else if (!elasticsearchController.existsCaregiver(userID)) {
+            throw new NoSuchUserException();
+        }
+
+        /* Delete what remains of the user */
         elasticsearchController.deleteUser(userID);
     }
 

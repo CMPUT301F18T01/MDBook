@@ -95,7 +95,10 @@ public class UserManagerTest extends TestCase {
             assertNull(UserController.getController().getUser());
 
             /* Clean up test data */
-            um.deleteUser("patientid");
+            try {
+                um.deleteUser("patientid");
+            } catch (NoSuchUserException e) {;}
+            catch (NetworkErrorException e){;}
         } catch (NoSuchUserException e){
             fail();
         } catch (NetworkErrorException e) {
@@ -260,9 +263,18 @@ public class UserManagerTest extends TestCase {
             userManager.createPatient("takenuserid","phone", "email");
             fail();
         } catch (UserIDNotAvailableException e) {
-            assert true;
+            assertTrue(true);
         } catch (NetworkErrorException e) {
             fail();
+        }
+
+        /* Clean up test data */
+        try {
+            userManager.deleteUser("takenuserid");
+        } catch (NoSuchUserException e) {
+            e.printStackTrace();
+        } catch (NetworkErrorException e) {
+            e.printStackTrace();
         }
     }
     /**
