@@ -264,6 +264,9 @@ class ElasticsearchController {
      */
     public void deleteUser(String userID) throws NetworkErrorException, NoSuchUserException {
         this.pullIDLists();
+        this.idlists.get("caregiverIDs").remove(userID);
+        this.idlists.get("patientIDs").remove(userID);
+        this.pushIDLists();
     }
 
     /**

@@ -220,8 +220,10 @@ public class UserManager {
      * @param user The user object to be synced into the database.
      */
     public void saveUser(User user) {
-        if (user.getUserID().equals(userController.getUser().getUserID())){
-            dataManager.saveMe(user);
+        if (userController.getUser() != null) {
+            if (user.getUserID().equals(userController.getUser().getUserID())) {
+                dataManager.saveMe(user);
+            }
         }
         dataManager.addToQueue(user);
 
