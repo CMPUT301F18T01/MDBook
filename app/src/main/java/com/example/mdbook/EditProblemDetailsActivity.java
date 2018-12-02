@@ -17,9 +17,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import org.w3c.dom.Text;
 
 /**
  * Creates a view for editing the problems details
@@ -48,7 +45,7 @@ public class EditProblemDetailsActivity extends AppCompatActivity {
         showTitle = findViewById(R.id.showTitle);
         showDate = findViewById(R.id.showDate);
         editDescription = findViewById(R.id.editDescription);
-        save = findViewById(R.id.save);
+        save = findViewById(R.id.done);
         cancel = findViewById(R.id.cancel);
         UserManager.initManager();
         final UserManager userManager = UserManager.getManager();

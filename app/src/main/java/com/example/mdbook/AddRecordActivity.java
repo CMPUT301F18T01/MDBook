@@ -28,11 +28,9 @@ import android.widget.Toast;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 
-import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -82,7 +80,7 @@ public class AddRecordActivity extends AppCompatActivity {
         geo = findViewById(R.id.geo);
         body = findViewById(R.id.body);
         reminder = findViewById(R.id.reminder);
-        save = findViewById(R.id.save);
+        save = findViewById(R.id.done);
         cancel = findViewById(R.id.cancel);
         UserManager.initManager();
         final UserManager userManager = UserManager.getManager();

@@ -10,17 +10,22 @@
 
 package com.example.mdbook;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.ExtractedTextRequest;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * Creates an activity that add/view a body location
@@ -40,50 +45,68 @@ public class NewBodyLocationView extends AppCompatActivity {
 
     ImageView bodyFront;
     ImageView bodyBack;
-    Button uploadFront;
-    Button uploadBack;
-    Button save;
+    Button Front;
+    Button Back;
+    Button done;
     Button cancel;
+    TextView bodypart;
+    TextView label1;
     String location;
     Bitmap myBitmap;
+    private int xF, yF, xB, yB;
+    private ArrayList<String> bodypartlist;
+    private ArrayList<String> labellist;
+
+    private BodyLocation bodylocation;
     private UserManager userManager;
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_body_location_view);
 
+
+        bodylocation = new BodyLocation("Ear");
+
         // set the views and buttons appropriately by id's
-        save = findViewById(R.id.save);
+        done = findViewById(R.id.done);
         cancel = findViewById(R.id.cancel);
-        uploadFront = findViewById(R.id.uploadFront);
-        uploadBack = findViewById(R.id.uploadBack);
+        label1 = findViewById(R.id.label);
+        bodypart = findViewById(R.id.bodypart);
+        //Front = findViewById(R.id.uploadFront);
+        //Back = findViewById(R.id.uploadBack);
         bodyFront = findViewById(R.id.body_front);
         bodyBack = findViewById(R.id.body_back);
 
-        uploadFront.setOnClickListener(new View.OnClickListener() {
+        bodyFront.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onClick(View v) {
-                //upload activity handled here
-                location = "Front";
-                ChooseUploadMethod();
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                xF = (int) motionEvent.getX();
+                yF = (int) motionEvent.getY();
+                bodylocation.setFrontLoc(xF,yF);
+                return false;
 
             }
         });
 
-        uploadBack.setOnClickListener(new View.OnClickListener() {
+        bodyBack.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onClick(View v) {
-                //upload activity handled here
-                location = "Back";
-                ChooseUploadMethod();
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                xF = (int) motionEvent.getX();
+                yF = (int) motionEvent.getY();
+                bodylocation.setBackLoc(xF,yF);
+                return false;
 
             }
         });
+
+
+
 
         //Intent intent = getIntent();
 
-        save.setOnClickListener(new View.OnClickListener() {
+        done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Todo: Save data into the user manager
