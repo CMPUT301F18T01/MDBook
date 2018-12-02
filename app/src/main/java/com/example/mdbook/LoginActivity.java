@@ -36,6 +36,8 @@ import android.widget.Toast;
 public class LoginActivity extends AppCompatActivity {
 
     private EditText etUserID;
+    private String TAG;
+    private Button scanQR;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,9 +51,7 @@ public class LoginActivity extends AppCompatActivity {
         UserManager.initManager();
 
 
-
         setContentView(R.layout.activity_login);
-
         etUserID = findViewById(R.id.etUserID);
         etUserID.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -75,10 +75,6 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-
-
-
-
     public void onLoginClick(View v) {
         UserManager userManager = UserManager.getManager();
         try {
@@ -96,10 +92,12 @@ public class LoginActivity extends AppCompatActivity {
         String activity = "LoginActivity";
         if (user.getClass() == Patient.class) {
             Intent patientIntent = new Intent(this, ListProblemActivity.class);
+            Toast.makeText(this, "User is a patient", Toast.LENGTH_SHORT).show();
             patientIntent.putExtra("activity", activity);
             startActivity(patientIntent);
             this.finish();
         } else if (user.getClass() == Caregiver.class) {
+            Toast.makeText(this, "User is a caregiver", Toast.LENGTH_SHORT).show();
             Intent caregiverIntent = new Intent(this, ListPatientActivity.class);
             caregiverIntent.putExtra("activity", activity);
             startActivity(caregiverIntent);
@@ -107,20 +105,40 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-
-
-
-
+    /**
+     * changes to register activity
+     * @param v
+     */
     public void onRegisterClick(View v) {
         Intent registerIntent = new Intent(this, RegisterActivity.class);
         startActivity(registerIntent);
     }
 
+    /**
+     * When user resumes this activity, perform log out functionality
+     */
     public void onResume(){
+        try{
+            TAG = getIntent().getExtras().getString("userID");
+            etUserID.setText(TAG);
+        }catch (NullPointerException id)
+        {
+            id.getStackTrace();
+        }
         super.onResume();
     }
 
+    /**
+     *
+     */
     private void hideSoftKeyboard(){
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+    }
+
+    public void goScanQR(View v)
+    {
+        Intent scanQR = new Intent(LoginActivity.this, ScanQRActivity.class);
+        scanQR.putExtra("login", 0);
+        startActivity(scanQR);
     }
 }

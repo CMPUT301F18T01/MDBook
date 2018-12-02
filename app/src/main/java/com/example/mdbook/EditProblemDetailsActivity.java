@@ -27,6 +27,8 @@ import org.w3c.dom.Text;
  * @see com.example.mdbook.Record
  *
  * @author Noah Burghardt
+ * @author Raj Kapadia
+ * @author Vanessa Peng
  * @author James Aina
  *
  * @version 0.0.1
