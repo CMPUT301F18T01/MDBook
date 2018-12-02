@@ -2,9 +2,9 @@ package com.example.mdbook;
 /*
  * ElasticSearchController
  *
- * Version 1.0.2
+ * Version 2.0.0
  *
- * 2018-11-20
+ * 2018-12-02
  *
  * Copyright (c) 2018. All rights reserved.
  */
@@ -40,13 +40,15 @@ import io.searchbox.core.Index;
 
 /**
  * Elastic search Servers
- * http://cmput301.softwareprocess.es:8080/cmput301f18t01test
- * http://cmput301.softwareprocess.es:8080/cmput301f18t01
+ *  * http://cmput301.softwareprocess.es:8080/cmput301f18t01test
+ *  * http://cmput301.softwareprocess.es:8080/cmput301f18t01
+ *  * http://es2.softwareprocess.ca:8080/cmput301f18t01test
+ *  * http://es2.softwareprocess.ca:8080/cmput301f18t01
  */
 
 
 /**
- * Keeps DataManager in sync with cloud storage.
+ * Provides a suite of tools for interfacing with Elasticsearch.
  *
  * Data model of server:
  *
@@ -65,7 +67,7 @@ import io.searchbox.core.Index;
  *      "records": ArrayList of recordIDs (numeric string)
  * RecordID:
  *      "title": String
- *      "date": Date
+ *      "date": DateString
  *      "description": String
  *      "geoLocation": GeoLocation
  *      "bodyLocation": BodyLocation
@@ -77,7 +79,7 @@ import io.searchbox.core.Index;
  *
  * @author Noah Burghardt
  * @author Thomas Chan
- * @version 1.0.2
+ * @version 2.0.0
  **/
 class ElasticsearchController {
 
@@ -91,9 +93,11 @@ class ElasticsearchController {
 
 
     /**
-     * @return Singleton instance of ElasticSearchController
+     * Initializes the controller. Fills all id lists with empty array lists and starts availableID
+     * at "0".
+     * @param connectivityManager Connectivity manager generated from application context to check
+     *                            internet connection.
      */
-
     public static void init(ConnectivityManager connectivityManager){
         if (elasticsearchController == null) {
             elasticsearchController = new ElasticsearchController();
@@ -122,6 +126,9 @@ class ElasticsearchController {
     }
 
 
+    /**
+     * @return Singleton instance of ElasticSearchController
+     */
     public static ElasticsearchController getController() {
         if (elasticsearchController == null) {
             throw new RuntimeException("ElasticsearchController has not been initialized!");
@@ -129,7 +136,12 @@ class ElasticsearchController {
         return elasticsearchController;
     }
 
-    // Returns true/false if the given userID exists/is taken
+    /**
+     * Checks if the given userID is available.
+     * @param userID The userID to check.
+     * @return True or False depending on if the userID is free.
+     * @throws NetworkErrorException Thrown if it is unable to reach the elasticsearch server.
+     */
     public boolean existsUser(String userID) throws NetworkErrorException {
         return (this.existsPatient(userID) || this.existsCaregiver(userID));
     }
@@ -147,6 +159,8 @@ class ElasticsearchController {
      * availableIDs: list of numeric strings
      * availableID: numeric string
      * Pushes ID lists to es server.
+     *
+     * Pushes cached copy of idlists to server.
      */
     private void pushIDLists() {
         JSONObject IDJSON = new JSONObject(this.idlists);
@@ -218,19 +232,36 @@ class ElasticsearchController {
     }
 
 
-    // indicates if given userID is an existing patient
+    /**
+     * Indicates if given userID belongs to a patient.
+     * @param userID The userID to check.
+     * @return True or False depending on if the userID belongs to a patient.
+     * @throws NetworkErrorException Thrown if it is unable to reach the Elasticsearch server.
+     */
     public boolean existsPatient(String userID) throws NetworkErrorException {
         this.pullIDLists();
         return this.idlists.get("patientIDs").contains(userID);
     }
 
-    // indicates if given userID is an existing caregiver
+    /**
+     * Indicates if given userID belongs to a caregiver.
+     * @param userID The userID to check.
+     * @return True or False depending on if the userID belongs to a caregiver.
+     * @throws NetworkErrorException Thrown if it is unable to reach the Elasticsearch server.
+     */
     public boolean existsCaregiver(String userID) throws NetworkErrorException {
         this.pullIDLists();
         return this.idlists.get("caregiverIDs").contains(userID);
     }
 
-    //TODO
+
+    /**
+     * TODO: Removes user and all corresponding data (Problems, records, photos etc) from
+     * Elasticsearch.
+     * @param userID The userID of the user to delete.
+     * @throws NetworkErrorException Thrown if the app is unable to reach Elasticsearch.
+     * @throws NoSuchUserException Thrown if the userID is not connected to a user.
+     */
     public void deleteUser(String userID) throws NetworkErrorException, NoSuchUserException {
         this.pullIDLists();
     }
@@ -238,7 +269,7 @@ class ElasticsearchController {
     /**
      * If there are unused IDs preceding the currently available one, return and remove one of
      * those. Otherwise return fresh ID and increment counter.
-     * @return
+     * @return An ID number that is not as of yet connected to any objects.
      */
     public String generateID() throws NetworkErrorException {
         this.pullIDLists();
@@ -262,6 +293,13 @@ class ElasticsearchController {
 
     }
 
+    /**
+     * Returns a decomposition of the given patientID, taken from the server.
+     * @see UserDecomposer
+     * @param userID The userID of the patient to fetch.
+     * @return A decomposition of the fetched patient.
+     * @throws NetworkErrorException Thrown if the app is unable to reach the Elasticsearch server.
+     */
     public UserDecomposer.Decomposition getPatientDecomposition(String userID) throws NetworkErrorException {
         try {
 
@@ -332,6 +370,13 @@ class ElasticsearchController {
 
     }
 
+    /**
+     * Returns a decomposition of the given caregiverID, taken from the server.
+     * @see UserDecomposer
+     * @param userID The userID of the caregiver to fetch.
+     * @return A decomposition of the fetched caregiver.
+     * @throws NetworkErrorException Thrown if the app is unable to reach the Elasticsearch server.
+     */
     public UserDecomposer.Decomposition getCaregiverDecomposition(String userID) throws NetworkErrorException {
         try {
 
@@ -362,6 +407,13 @@ class ElasticsearchController {
     }
 
 
+    /**
+     * Attempts to push the deconstructed patient to Elasticsearch.
+     * @see UserDecomposer
+     * @param userDecomp The decomposition of the user to push.
+     * @return False if for any reason the user couldn't be pushed, including a missing internet
+     * connection or an incorrectly deconstructed user.
+     */
     public boolean pushPatient(UserDecomposer.Decomposition userDecomp) {
         try {
             /* Get fresh id lists */
@@ -472,6 +524,13 @@ class ElasticsearchController {
         }
     }
 
+    /**
+     * Attempts to push the deconstructed caregiver to Elasticsearch.
+     * @see UserDecomposer
+     * @param userDecomp The decomposition of the user to push.
+     * @return False if for any reason the user couldn't be pushed, including a missing internet
+     * connection or an incorrectly deconstructed user.
+     */
     public boolean pushCaregiver(UserDecomposer.Decomposition userDecomp) {
         try {
             this.pullIDLists();
@@ -498,6 +557,9 @@ class ElasticsearchController {
         }
     }
 
+    /**
+     * Performs a Jest Indexing task in a seperate thread. Returns the result as a DocumentResult.
+     */
     private static class jestIndexTask extends AsyncTask<Index, Void, DocumentResult> {
 
         @Override
@@ -514,6 +576,9 @@ class ElasticsearchController {
         }
     }
 
+    /**
+     * Performs a Jest Deleting task in a seperate thread. Returns the result as a DocumentResult.
+     */
     private static class jestDeleteTask extends AsyncTask<Delete, Void, DocumentResult> {
 
         @Override
@@ -529,6 +594,9 @@ class ElasticsearchController {
         }
     }
 
+    /**
+     * Performs a Jest Getting task in a seperate thread. Returns the result as a DocumentResult.
+     */
     private static class jestGetTask extends AsyncTask<Get, Void, DocumentResult> {
 
         @Override
@@ -544,7 +612,9 @@ class ElasticsearchController {
         }
     }
 
-    // indicates if the esc has internet
+    /**
+     * @return True or False depending on whether the phone has an internet connection.
+     */
     public boolean isConnected() {
         if (connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
                 connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
@@ -554,7 +624,12 @@ class ElasticsearchController {
             return false;
     }
 
-
+    /**
+     * Adds a new Patient (no problems/records/photos) to the server.
+     * @see UserDecomposer
+     * @param decomposition A decomposition of the new user.
+     * @throws NetworkErrorException Thrown if the app is unable to reach the Elasticsearch server.
+     */
     public void addPatient(UserDecomposer.Decomposition decomposition) throws NetworkErrorException {
         this.idlists.get("patientIDs").add(decomposition.getUserid());
         Index jestIndex = new Index.Builder(decomposition.getUser()).index(index)
@@ -565,6 +640,12 @@ class ElasticsearchController {
         this.pushIDLists();
     }
 
+    /**
+     * Adds a new Caregiver (empty patient list) to the server.
+     * @see UserDecomposer
+     * @param decomposition A decomposition of the new user.
+     * @throws NetworkErrorException Thrown if the app is unable to reach the Elasticsearch server.
+     */
     public void addCaregiver(UserDecomposer.Decomposition decomposition) throws NetworkErrorException {
         this.idlists.get("caregiverIDs").add(decomposition.getUserid());
         Index jestIndex = new Index.Builder(decomposition.getUser()).index(index)
