@@ -36,7 +36,6 @@ public class LoginActivityTest{
             }
         } catch (NetworkErrorException e) {
             e.printStackTrace();
-            assertNull(etUserID);
         }
 
     }
