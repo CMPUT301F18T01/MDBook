@@ -153,6 +153,8 @@ class Problem implements Serializable {
         return this.title;
     }
 
+    public void setTitle(String title) {this.title = title;}
+
     /**
      * @return Problem ID, can be null.
      */

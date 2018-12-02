@@ -61,7 +61,6 @@ public class ListProblemActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
         UserManager.initManager();
         UserManager userManager = UserManager.getManager();
-
         Patient patient = (Patient) UserController.getController().getUser();
         problems = patient.getProblems();
 
