@@ -30,7 +30,7 @@ public class GenerateQRActivity extends AppCompatActivity {
     private String inputValue;
     private Bitmap bitmap;
     private QRGEncoder qrgEncoder;
-    private TextView tag;
+
 
 
     @Override
@@ -42,7 +42,6 @@ public class GenerateQRActivity extends AppCompatActivity {
 
         qrImage =  findViewById(R.id.qrImageView);
         generate = findViewById(R.id.generateButton);
-        tag = findViewById(R.id.tag);
 
         generate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,7 +64,6 @@ public class GenerateQRActivity extends AppCompatActivity {
                         bitmap = qrgEncoder.encodeAsBitmap();
                         qrImage.setImageBitmap(bitmap);
                         Toast.makeText(GenerateQRActivity.this, "Generating...", Toast.LENGTH_LONG).show();
-                        tag.setText("QR code for user: rajkapadia" + inputValue);
                     } catch (WriterException e) {
                         Toast.makeText(GenerateQRActivity.this, "Cannot generate", Toast.LENGTH_LONG).show();
                     }
