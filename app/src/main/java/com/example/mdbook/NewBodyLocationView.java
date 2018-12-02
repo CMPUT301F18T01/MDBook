@@ -122,10 +122,10 @@ public class NewBodyLocationView extends AppCompatActivity {
 
         if (requestCode == 1) {
             if (resultCode == RESULT_OK) {
-                //String uri = data.getStringExtra("uri");
-                Photo photo = (Photo) getIntent().getSerializableExtra("uri");
+                String uri = data.getStringExtra("uri");
+                //Photo photo = (Photo) getIntent().getExtras().getSerializable("uri");
 
-                String uri = photo.getFilepath();
+                //String uri = photo.getFilepath();
 
                 myBitmap = BitmapFactory.decodeFile(uri);
 

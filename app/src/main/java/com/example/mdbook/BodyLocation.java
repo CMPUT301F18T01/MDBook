@@ -6,32 +6,50 @@ import java.io.Serializable;
 // might be better off leaving body location as just a name for a string, we'll see
 class BodyLocation implements Serializable {
 
+    private  int Frontx;
+    private int Fronty;
+    private  int Backx;
+    private int Backy;
+    String location;
 
     public BodyLocation(String location) {
+        Frontx = 0;
+        Fronty = 0;
+        Backx = 0;
+        Backy = 0;
+        this.location = location;
     }
 
     //public void uploadPhoto(){}
 
-    public void availableBodyLocations(){
-
+    public void setFrontLoc(int x, int y){
+        this.Frontx = x;
+        this.Fronty = y;
     }
 
-    public void chooseBodyLocation(){
-
+    public void setBackLoc(int x, int y){
+        this.Backx = x;
+        this.Backy = y;
     }
 
-    public void addBodyLocationPhoto(){
-
+    public int getFrontx(){
+        return this.Frontx;
+    }
+    public int getFronty(){
+        return this.Fronty;
+    }
+    public int getBackx(){
+        return this.Backx;
+    }
+    public int getBacky(){
+        return this.Backy;
     }
 
-    public void removeBodyLocationPhoto(){
-
+    public void setLocation(String location){
+        this.location = location;
     }
-    //public void addLabel(String label, BodyLocation bodyLocation){}
+    public String getLocation(){
+        return this.location;
+    }
 
-
-    /*TO BE IMPLEMENTED:
-    public void indicateBodyLocation(){}
-
-    */
 }

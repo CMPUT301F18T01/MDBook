@@ -88,10 +88,10 @@ public class ChooseUploadActivity extends AppCompatActivity {
                 toast.show();
                 Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
                 String path = saveImage(thumbnail);
-                Photo photo = new Photo(path);
+                //Photo photo = new Photo(path);
 
                 Intent intent = new Intent();
-                intent.putExtra("uri", photo);
+                intent.putExtra("uri", path);
                 setResult(RESULT_OK, intent);
                 finish();
 
@@ -120,9 +120,9 @@ public class ChooseUploadActivity extends AppCompatActivity {
                 try {
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
                     String path = saveImage(bitmap);
-                    Photo photo = new Photo(path);
+                    //Photo photo = new Photo(path);
                     Intent intent = new Intent();
-                    intent.putExtra("uri", photo);
+                    intent.putExtra("uri", path);
                     setResult(RESULT_OK, intent);
                     finish();
                 } catch (IOException e) {
