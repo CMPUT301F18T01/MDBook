@@ -25,7 +25,8 @@ import android.widget.TextView;
  * @see com.example.mdbook.LoginActivity
  *
  *
- * @author .....
+ * @author Vanessa Peng
+ * @author Raj Kapadia
  * @author James Aina
  *
  * @version 0.0.1
@@ -42,6 +43,9 @@ public class ViewAccountDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_account_detail);
+        UserManager.initManager();
+        UserManager userManager = UserManager.getManager();
+        User user = UserController.getController().getUser();
 
         // set the view and buttons appropriately by id's
         name = findViewById(R.id.viewName);
@@ -49,6 +53,9 @@ public class ViewAccountDetailActivity extends AppCompatActivity {
         email = findViewById(R.id.viewEmail);
         editAccount = findViewById(R.id.EditAccount);
         logOutButton = findViewById(R.id.LogOutBtn);
+        name.setText(user.getUserID());
+        phone.setText(user.getPhoneNumber());
+        email.setText(user.getEmail());
 
         // Switches to the edit account details upon the click of the editbutton
         editAccount.setOnClickListener(new View.OnClickListener() {

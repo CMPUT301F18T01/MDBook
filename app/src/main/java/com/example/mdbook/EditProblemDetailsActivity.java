@@ -63,8 +63,6 @@ public class EditProblemDetailsActivity extends AppCompatActivity {
                 Problem problem = (Problem) getIntent().getExtras().getSerializable("problem");
                 problem.setDescription(editDescription.getText().toString());
                  userManager.saveUser(patient);
-
-
                 backToMainPage();
             }
         });
