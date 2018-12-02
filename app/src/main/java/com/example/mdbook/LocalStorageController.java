@@ -36,12 +36,6 @@ class LocalStorageController {
 
 
     private static LocalStorageController localStorageController;
-    private Gson patients = new Gson();
-    private Gson caregivers = new Gson();
-    private Gson problems = new Gson();
-    private Gson records = new Gson();
-    private Gson photos = new Gson();
-    private Gson availableIDs = new Gson();
     private SharedPreferences sharedPreferences;
     private Gson gson;
     private SharedPreferences.Editor editor;
