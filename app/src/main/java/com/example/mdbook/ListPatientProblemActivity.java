@@ -11,6 +11,7 @@
 
 package com.example.mdbook;
 
+import android.accounts.NetworkErrorException;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -84,6 +85,8 @@ public class ListPatientProblemActivity extends AppCompatActivity implements Nav
             patientProblems = new ArrayList<>();
             Toast.makeText(ListPatientProblemActivity.this, "No user found!", Toast.LENGTH_LONG).show();
             e.printStackTrace();
+        } catch (NetworkErrorException e) {
+            Toast.makeText(this, "Internet connection is required to view patient problems", Toast.LENGTH_SHORT).show();
         }
 
 

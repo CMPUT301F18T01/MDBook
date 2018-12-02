@@ -1,11 +1,14 @@
 package com.example.mdbook;
 
 import android.location.Address;
+import android.os.Parcel;
+import android.os.Parcelable;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 // class for holding geographic locations
-class GeoLocation {
+class GeoLocation implements Serializable {
     private ArrayList<Address> addressList;
 
     public GeoLocation(){
@@ -14,6 +17,8 @@ class GeoLocation {
         }
     }
 
+
+
     public ArrayList<Address> getAddressList(){
         return this.addressList;
     }
@@ -21,4 +26,6 @@ class GeoLocation {
     public void addAddress(Address address){
         addressList.add(address);
     }
+
+
 }

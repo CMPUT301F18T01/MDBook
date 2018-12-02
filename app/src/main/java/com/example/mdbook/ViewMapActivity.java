@@ -21,8 +21,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -50,6 +48,8 @@ public class ViewMapActivity extends AppCompatActivity implements OnMapReadyCall
     private List<Address> myAddress;
     private Boolean mLocationPermissionGranted = false;
     private GoogleMap mMap;
+    private Address address;
+    private Record record;
     private UserManager userManager;
     private ArrayList<Problem> problems;
     private ArrayList<Record> records;
@@ -61,30 +61,27 @@ public class ViewMapActivity extends AppCompatActivity implements OnMapReadyCall
         setContentView(R.layout.activity_view_map);
         UserManager.initManager();
         userManager = UserManager.getManager();
-        getProblemLocation();
+        address = getIntent().getParcelableExtra("recieveAddress");
+
+
+        //getProblemLocation();
         getLocationPermission();
+        //viewRecordLocation();
+        //initMap();
     }
 
     private void init(){
         Log.d(TAG,"init: initializing");
-        for (int i =0; i < myAddress.size(); i++){
-            Address address =myAddress.get(i);
+        if (address != null){
+            //address =myAddress.get(i);
             moveCamera(new LatLng(address.getLatitude(), address.getLongitude()),DEFAULT_ZOOM, address.getAddressLine(0));
         }
-
-
     }
 
 
     private void moveCamera(LatLng latLng, float zoom, String title){
         Log.d(TAG,"moveCamera: moving the camera to: lat:" +latLng.latitude +", lng: " +latLng.longitude);
-
-        if (myAddress.size() > 0) {
-            if (title.equals(myAddress.get(0).getAddressLine(0))) {
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom));
-            }
-        }
-
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom));
         MarkerOptions options = new MarkerOptions().position(latLng).title(title);
         mMap.addMarker(options);
 
@@ -168,7 +165,12 @@ public class ViewMapActivity extends AppCompatActivity implements OnMapReadyCall
             init();
         }
     }
+    /*
+    public void viewRecordLocation(){
+        myAddress = record.getLocation().getAddressList();
+    }*/
 
+    /*
     public void getProblemLocation(){
         Patient patient = (Patient) UserController.getController().getUser();
         problems = patient.getProblems();
@@ -192,7 +194,7 @@ public class ViewMapActivity extends AppCompatActivity implements OnMapReadyCall
             }
         }
 
-    }
+    }*/
 
 
     @Override

@@ -35,8 +35,7 @@ import static android.content.Context.MODE_PRIVATE;
 class LocalStorageController {
 
 
-    private static LocalStorageController localStorageController = null;
-    private DataManager dataManager;
+    private static LocalStorageController localStorageController;
     private Gson patients = new Gson();
     private Gson caregivers = new Gson();
     private Gson problems = new Gson();
@@ -44,6 +43,8 @@ class LocalStorageController {
     private Gson photos = new Gson();
     private Gson availableIDs = new Gson();
     private SharedPreferences sharedPreferences;
+    private Gson gson;
+    private SharedPreferences.Editor editor;
 
 
     /**
@@ -54,7 +55,8 @@ class LocalStorageController {
             localStorageController = new LocalStorageController();
         }
         localStorageController.sharedPreferences = sharedPreferences;
-        localStorageController.dataManager = DataManager.getDataManager();
+        localStorageController.gson = new Gson();
+        localStorageController.editor = sharedPreferences.edit();
     }
 
     /**
@@ -72,75 +74,86 @@ class LocalStorageController {
 
     }
 
+    public User loadMe(){
+        String userTypeString = sharedPreferences.getString("usertype", null);
+        Type userTypeStringType = new TypeToken<String>(){}.getType();
+        String userTypeStringString = gson.fromJson(userTypeString, userTypeStringType);
 
-    /**
-     * Saves all objects to Gson including:
-     * Patients, Caregivers, Problems, Records ,Photos and Available
-     */
-    public void push() {
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        String stringPatients = patients.toJson(dataManager.getPatients());
-        String stringCaregivers = caregivers.toJson(dataManager.getCaregivers());
-        String stringProblems = problems.toJson(dataManager.getProblems());
-        String stringRecords = records.toJson(dataManager.getRecords());
-        String stringPhotos = photos.toJson(dataManager.getPhotos());
-        String stringAvailableIDs = availableIDs.toJson(dataManager.getAvailableIDs());
-        editor.putString("patients", stringPatients);
-        editor.putString("caregivers", stringCaregivers);
-        editor.putString("problems", stringProblems);
-        editor.putString("records", stringRecords);
-        editor.putString("photos", stringPhotos);
-        editor.putString("availableIDs", stringAvailableIDs);
-        editor.apply();
-
-
-    }
-
-    /**
-     *  Loads back data when the application starts, it does this by finding the String objects
-     *  and converts the string objects back to its regular type and then it will load the data
-     *  back to its containers.
-     */
-    public void loadData(){
-        Gson gson = new Gson();
-        String stringPatients = sharedPreferences.getString("patients", null);
-        String stringCaregivers = sharedPreferences.getString("caregivers", null);
-        String stringProblems = sharedPreferences.getString("problems", null);
-        String stringRecords = sharedPreferences.getString("records", null);
-        String stringPhotos = sharedPreferences.getString("photos", null);
-        String stringAvailableIDs = sharedPreferences.getString("availableIDs", null);
-
-
-        Type typeString = new TypeToken<HashMap<String, JSONObject>>(){}.getType();
-        Type typeInt = new TypeToken<HashMap<Integer, JSONObject>>(){}.getType();
-        Type typePhoto = new TypeToken<HashMap<Integer, Photo>>(){}.getType();
-        Type typeArray = new TypeToken<ArrayList<Integer>>(){}.getType();
-
-
-
-        HashMap<String, JSONObject> Patients = gson.fromJson(stringPatients,typeString);
-        HashMap<String, JSONObject> Caregivers = gson.fromJson(stringCaregivers ,typeString);
-        HashMap<Integer, JSONObject> Problems = gson.fromJson(stringProblems,typeInt);
-        HashMap<Integer, JSONObject> Records = gson.fromJson(stringRecords,typeInt);
-        HashMap<Integer, Photo> Photos = gson.fromJson(stringPhotos,typePhoto);
-        ArrayList<Integer> AvailableIDs = gson.fromJson(stringAvailableIDs,typeArray);
-
-        if (Patients != null) {
-            dataManager.setPatients(Patients);
-        } if (Caregivers != null) {
-            dataManager.setCaregivers(Caregivers);
-        } if (Problems != null) {
-            dataManager.setProblems(Problems);
-        } if (Records != null) {
-            dataManager.setRecords(Records);
-        } if (Photos != null) {
-            dataManager.setPhotos(Photos);
-        } if (AvailableIDs != null) {
-            dataManager.setAvailableIDs(AvailableIDs);
+        if (userTypeStringString == null){
+            return null;
         }
 
+        switch (userTypeStringString) {
+            case "patient": {
+                String User = sharedPreferences.getString("user", null);
+                Type userType = new TypeToken<Patient>() {
+                }.getType();
+                return gson.fromJson(User, userType);
+            }
+            case "caregiver": {
+                String User = sharedPreferences.getString("user", null);
+                Type userType = new TypeToken<Caregiver>() {
+                }.getType();
+                return gson.fromJson(User, userType);
+            }
+            default:
+                return null;
+        }
+    }
+
+    public void saveMe(User me) {
+        String user = gson.toJson(me);
+        editor.putString("user",user);
+        if (me.getClass() == Patient.class){
+            editor.putString("usertype", "patient");
+        } else {
+            editor.putString("usertype", "caregiver");
+        }
+        editor.apply();
+    }
+
+    // TODO: split saveQueue into two arraylists of each type of user
+    public void saveQueue(ArrayList<User> pushQueue) {
+
+        ArrayList<Patient> patientQueue = new ArrayList<>();
+        ArrayList<Caregiver> caregiverQueue = new ArrayList<>();
+        for (User user : pushQueue){
+            if (user.getClass() == Patient.class){
+                patientQueue.add((Patient) user);
+            }
+            else {
+                caregiverQueue.add((Caregiver) user);
+            }
+        }
+        String patientQueueString = gson.toJson(patientQueue);
+        String caregiverQueueString = gson.toJson(caregiverQueue);
+        editor.putString("patientPushQueue", patientQueueString);
+        editor.putString("caregiverPushQueue", caregiverQueueString);
 
     }
 
 
+    // TODO: split saveQueue into two arraylists of each type of user
+    public ArrayList<User> loadQueue() {
+
+        String patientQueueString = sharedPreferences.getString("patientPushQueue", null);
+        String caregiverQueueString = sharedPreferences.getString("caregiverPushQueue", null);
+        Type patientQueueType = new TypeToken<ArrayList<Patient>>(){}.getType();
+        Type caregiverQueueType = new TypeToken<ArrayList<Caregiver>>(){}.getType();
+        ArrayList<Patient> patientPushQueue = gson.fromJson(patientQueueString, patientQueueType);
+        ArrayList<Caregiver> caregiverPushQueue = gson.fromJson(caregiverQueueString, caregiverQueueType);
+        ArrayList<User> pushQueue = new ArrayList<>();
+        if (patientPushQueue != null){
+            pushQueue.addAll(patientPushQueue);
+        }
+        if (caregiverPushQueue != null) {
+            pushQueue.addAll(caregiverPushQueue);
+        }
+        return pushQueue;
+    }
+
+    public void clearMe() {
+        editor.remove("user").commit();
+        editor.remove("usertype").commit();
+    }
 }

@@ -22,7 +22,7 @@ package com.example.mdbook;
 class UserController {
 
     private User user;
-    private static UserController userController = null;
+    private static UserController userController;
 
 
     /**
