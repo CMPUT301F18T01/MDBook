@@ -16,31 +16,30 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class ViewMapActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class ViewAllMapActivity extends AppCompatActivity implements OnMapReadyCallback {
 
 
     private static final String TAG = "ViewMapActivity";
     private static final String FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
     private static final String COARSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1234;
-    private static final float DEFAULT_ZOOM = 15;
 
 
     /* Vars */
     private List<Address> myAddress;
     private Boolean mLocationPermissionGranted = false;
+    private Integer problemPos;
     private GoogleMap mMap;
-    private Address address;
-    private Record record;
     private UserManager userManager;
-    private ArrayList<Problem> problems;
-    private ArrayList<Record> records;
-    private ArrayList<GeoLocation> GeoList;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -49,30 +48,31 @@ public class ViewMapActivity extends AppCompatActivity implements OnMapReadyCall
         UserManager.initManager();
         userManager = UserManager.getManager();
 
-        address = getIntent().getParcelableExtra("recieveAddress");
-        mMap = getIntent().getParcelableExtra("recieveAllAddress");
+        problemPos = getIntent().getExtras().getInt("problemPos");
 
 
-        //getProblemLocation();
+        getProblemLocation();
         getLocationPermission();
-        //viewRecordLocation();
-        //initMap();
+
+
+
+
+
     }
 
     private void init(){
         Log.d(TAG,"init: initializing");
-        if (address != null){
-            //address =myAddress.get(i);
-            moveCamera(new LatLng(address.getLatitude(), address.getLongitude()),DEFAULT_ZOOM, address.getAddressLine(0));
+        if (myAddress != null){
+            moveCamera(new LatLng(myAddress.get(0).getLatitude(), myAddress.get(0)
+                    .getLongitude()), 11);
         }
     }
 
 
-    private void moveCamera(LatLng latLng, float zoom, String title){
+    private void moveCamera(LatLng latLng, float zoom){
         Log.d(TAG,"moveCamera: moving the camera to: lat:" +latLng.latitude +", lng: " +latLng.longitude);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom));
-        MarkerOptions options = new MarkerOptions().position(latLng).title(title);
-        mMap.addMarker(options);
+
 
     }
 
@@ -81,7 +81,7 @@ public class ViewMapActivity extends AppCompatActivity implements OnMapReadyCall
         Log.d(TAG, "initMap: initializing map");
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(ViewMapActivity.this);
+        mapFragment.getMapAsync(ViewAllMapActivity.this);
     }
 
 
@@ -136,6 +136,14 @@ public class ViewMapActivity extends AppCompatActivity implements OnMapReadyCall
         Log.d(TAG, "onMapReady: map is ready");
         mMap = googleMap;
 
+        for (int i = 0; i < myAddress.size();i++){
+            LatLng LLPos = new LatLng(myAddress.get(i).getLatitude(),myAddress.get(i)
+                    .getLongitude());
+            String title = myAddress.get(i).getAddressLine(0);
+            mMap.addMarker(new MarkerOptions().position(LLPos).title(title)
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
+        }
+
         if (mLocationPermissionGranted) {
 
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission
@@ -154,41 +162,26 @@ public class ViewMapActivity extends AppCompatActivity implements OnMapReadyCall
             init();
         }
     }
-    /*
-    public void viewRecordLocation(){
-        myAddress = record.getLocation().getAddressList();
-    }*/
 
-    /*
-    public void getProblemLocation(){
-        Patient patient = (Patient) UserController.getController().getUser();
-        problems = patient.getProblems();
-        GeoList = new ArrayList<>();
-        myAddress = new ArrayList<>();
-        for (int i = 0; i < problems.size();i++)
-        {
-            Problem problem = problems.get(i);
-            records = problem.getRecords();
-            for(int j = 0 ; j < records.size(); j++){
-                Record record = records.get(j);
-                GeoList.add(record.getLocation());
-            }
-        }
-        for (int i = 0; i < GeoList.size(); i++) {
-            if (GeoList.get(i) != null) {
-                ArrayList<Address> addressList = GeoList.get(i).getAddressList();
-                for (int j = 0; j < addressList.size(); j++) {
-                    myAddress.add(addressList.get(i));
-                }
-            }
-        }
-
-    }*/
 
 
     @Override
     public void onBackPressed() {
         this.finish();
+
+    }
+
+    public void getProblemLocation(){
+        if (problemPos !=null){
+            UserManager.initManager();
+            UserManager userManager = UserManager.getManager();
+            Patient patient = (Patient) UserController.getController().getUser();
+            myAddress = new ArrayList<>();
+            ArrayList<Record> allRecords = patient.getProblems().get(problemPos).getRecords();
+            for (int i = 0; i < allRecords.size(); i++){
+                myAddress.add(allRecords.get(i).getLocation().getAddressList().get(0));
+            }
+        }
 
     }
 }
