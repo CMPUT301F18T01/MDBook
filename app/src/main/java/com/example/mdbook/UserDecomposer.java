@@ -33,12 +33,13 @@ import java.util.HashMap;
  *      "patients": ArrayList of patient userIDs (strings)
  * ProblemID:
  *      "title": String
+ *      "date": DateString
  *      "description": String
  *      "comments": ArrayList of comments (strings)
  *      "records": ArrayList of recordIDs (ints)
  * RecordID:
  *      "title": String
- *      "date": Date
+ *      "date": DateString
  *      "description": String
  *      "geoLocation": GeoLocation
  *      "bodyLocation": BodyLocation
@@ -103,6 +104,7 @@ public class UserDecomposer {
                     /* Add problem data to problemJSON */
                     JSONObject problemJSON = new JSONObject();
                     problemJSON.put("title", problem.getTitle());
+                    problemJSON.put("date", problem.getDate());
                     problemJSON.put("description", problem.getDescription());
                     problemJSON.put("comments", problem.getComments());
 
@@ -205,10 +207,13 @@ public class UserDecomposer {
                     JSONObject problemJSON = decomposition.getProblems().get(problemID);
 
                     String title = problemJSON.getString("title");
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+                    Date problemDate = sdf.parse(problemJSON.getString("date"));
                     String description = problemJSON.getString("description");
 
                     Problem problem = new Problem(title, description);
                     problem.setProblemID(problemID);
+                    problem.setDate(problemDate);
 
                     /* Add comments */
                     for (String comment : (ArrayList<String>) problemJSON.get("comments")) {
@@ -222,7 +227,6 @@ public class UserDecomposer {
 
                         /* Fetch data */
                         String recordTitle = recordJSON.getString("title");
-                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
                         Date recordDate = sdf.parse(recordJSON.getString("date"));
                         String recordDescription = recordJSON.getString("description");
                         String comment = recordJSON.getString("comment");

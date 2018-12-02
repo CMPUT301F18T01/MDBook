@@ -62,6 +62,7 @@ import io.searchbox.core.Index;
  *      "patients": ArrayList of patient userIDs (strings)
  * ProblemID:
  *      "title": String
+ *      "date": DateString
  *      "description": String
  *      "comments": ArrayList of comments (strings)
  *      "records": ArrayList of recordIDs (numeric string)
