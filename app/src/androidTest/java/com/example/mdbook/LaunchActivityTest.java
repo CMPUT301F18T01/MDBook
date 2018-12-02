@@ -20,9 +20,6 @@ public class LaunchActivityTest {
     public ActivityTestRule<RegisterActivity> registerActivityActivityTestRule = new ActivityTestRule<>(RegisterActivity.class);
     private RegisterActivity RegisterActivity = null;
     @Rule
-    public ActivityTestRule<ListProblemActivity> listProblemActivityTestRule = new ActivityTestRule<>(ListProblemActivity.class);
-    private ListProblemActivity ListProblemActivity = null;
-    @Rule
     public ActivityTestRule<AddProblemActivity> addProblemActivityActivityTestRule = new ActivityTestRule<>(AddProblemActivity.class);
     private AddProblemActivity AddProblemActivity = null;
     @Rule
@@ -39,12 +36,9 @@ public class LaunchActivityTest {
     public void setUp() throws Exception {
         LoginActivity = loginActivityActivityTestRule.getActivity();
         RegisterActivity = registerActivityActivityTestRule.getActivity();
-        ListProblemActivity = listProblemActivityTestRule.getActivity();
         AddProblemActivity = addProblemActivityActivityTestRule.getActivity();
         ViewAccountDetailActivity = viewAccountDetailActivityActivityTestRule.getActivity();
         EditAccountDetailsActivity = editAccountDetailsActivityActivityTestRule.getActivity();
-
-
     }
 
     /*
@@ -57,8 +51,6 @@ that means the activity was launched successfully
         assertNotNull(userID);
         EditText etPhone = RegisterActivity.findViewById(R.id.etPhoneNumber);
         assertNotNull(etPhone);
-        RecyclerView view = ListProblemActivity.findViewById(R.id.recylerView);
-        assertNotNull(view);
         EditText edit = AddProblemActivity.findViewById(R.id.addTitle);
         assertNotNull(edit);
         TextView viewName = ViewAccountDetailActivity.findViewById(R.id.viewName);
@@ -66,18 +58,14 @@ that means the activity was launched successfully
         EditText editName = EditAccountDetailsActivity.findViewById(R.id.editName);
         assertNotNull(editName);
 
-
     }
 
     @After
     public void tearDown() throws Exception {
         LoginActivity = null;
         RegisterActivity = null;
-        ListProblemActivity = null;
         AddProblemActivity = null;
         ViewAccountDetailActivity = null;
         EditAccountDetailsActivity = null;
-
-
     }
 }

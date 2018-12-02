@@ -64,7 +64,6 @@ public class ListProblemActivity extends AppCompatActivity
 
         Patient patient = (Patient) UserController.getController().getUser();
         problems = patient.getProblems();
-
         /* Create recycler view */
         recyclerView = findViewById(R.id.recylerView);
         recyclerView.setHasFixedSize(true);
