@@ -20,7 +20,7 @@ import junit.framework.TestCase;
 
 
 /**
- * test functionalities of usermanager and elastisearch controller
+ * test functionalities of usermanager and elastisearch controller. Requires internet.
  *
  * @author Noah Burghardt
  * @author Jayanta Chattergee
