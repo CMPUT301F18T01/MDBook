@@ -36,7 +36,6 @@ public class EditProblemDetailsActivity extends AppCompatActivity {
     EditText editTitle;
     TextView showDate;
     EditText editDescription;
-    EditText editLocation;
     Button save;
     Button cancel;
     Problem problem;
@@ -49,7 +48,7 @@ public class EditProblemDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_problem_details);
         // set the views and buttons appropriately by id's
         editTitle = findViewById(R.id.showTitle);
-        showDate = findViewById(R.id.showDate);
+        //showDate = findViewById(R.id.showDate);
         editDescription = findViewById(R.id.editDescription);
         save = findViewById(R.id.save);
         cancel = findViewById(R.id.cancel);
@@ -59,9 +58,8 @@ public class EditProblemDetailsActivity extends AppCompatActivity {
         problemPos = getIntent().getExtras().getInt("problemPos");
         problem = patient.getProblems().get(problemPos);
         editTitle.setText(problem.getTitle());
-        //TODO edit location and date
         editDescription.setText(problem.getDescription());
-
+        //showDate.setText(problem.getDate().toString());
 
         // Switches to the main activity upon the click of the save button
         save.setOnClickListener(new View.OnClickListener() {
