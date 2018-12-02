@@ -64,6 +64,7 @@ public class ListPatientActivity extends AppCompatActivity implements Navigation
 
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -202,6 +203,7 @@ public class ListPatientActivity extends AppCompatActivity implements Navigation
      */
     public void addPatient(){
         Intent intent = new Intent(this, AddPatientActivity.class);
+        intent.putExtra("TAG", "first");
         startActivity(intent);
     }
 

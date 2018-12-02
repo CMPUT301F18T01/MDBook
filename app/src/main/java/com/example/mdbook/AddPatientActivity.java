@@ -27,6 +27,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.vision.L;
+
 /**
  * Creates an activity for the user to add patients
  * Displays a list of all the patients already added
@@ -48,10 +50,10 @@ public class AddPatientActivity extends AppCompatActivity  {
     private Button cancelBtn;
     private Button readQRBtn;
     private EditText enterIDText;
-    private String TAG = "AddPatientActivity";
-    private Patient patient;
+    private User user;
     private Caregiver caregiver;
     private String patientID;
+    private String TAG;
 
 
     @Override
@@ -69,6 +71,17 @@ public class AddPatientActivity extends AppCompatActivity  {
         cancelBtn = findViewById(R.id.cancelBtn);
         readQRBtn = findViewById(R.id.readQR);
 
+        TAG = getIntent().getExtras().getString("TAG");
+        if(TAG.equals("getQR"))
+        {
+            patientID = getIntent().getExtras().getString("userID");
+            enterIDText.setText(patientID);
+        }
+        else
+        {
+            patientID = "";
+        }
+
         cancelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -84,9 +97,13 @@ public class AddPatientActivity extends AppCompatActivity  {
             public void onClick(View v) {
 
                 try {
-                    patient = (Patient) userManager.fetchUser(enterIDText.getText().toString());
-                    patientID = patient.getUserID();
-                    caregiver.addPatient(patient);
+                    patientID = enterIDText.getText().toString();
+                    user =  userManager.fetchUser(patientID);
+                    if(user.getClass() == Caregiver.class)
+                    {
+                        Toast.makeText(AddPatientActivity.this, "No patient exists with id: " + patientID, Toast.LENGTH_LONG).show();
+                    }
+                    caregiver.addPatient((Patient) user);
 
                 } catch (NoSuchUserException e) {
                     Toast.makeText(AddPatientActivity.this, "No user exists with id: " +enterIDText.getText().toString(), Toast.LENGTH_LONG).show();
@@ -126,6 +143,8 @@ public class AddPatientActivity extends AppCompatActivity  {
 
     public void goReadQR()
     {
+        Intent scanQRIntent = new Intent(AddPatientActivity.this, ScanQRActivity.class);
+        startActivity(scanQRIntent);
         Toast.makeText(AddPatientActivity.this, "Go scan QR code", Toast.LENGTH_LONG).show();
     }
 }

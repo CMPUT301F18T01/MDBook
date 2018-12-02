@@ -1,6 +1,7 @@
 package com.example.mdbook;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Vibrator;
 import android.support.annotation.NonNull;
@@ -27,6 +28,7 @@ public class ScanQRActivity extends AppCompatActivity {
     private BarcodeDetector barcodeDetector;
     private CameraSource cameraSource;
     private final int RequestCameraPermissionID = 1001;
+    private String userID;
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -106,12 +108,21 @@ public class ScanQRActivity extends AppCompatActivity {
                         public void run() {
                             Vibrator vibrator = (Vibrator)getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
                             vibrator.vibrate(1000);
-                            userIDText.setText(qrCode.valueAt(0).displayValue);
+                            userID = qrCode.valueAt(0).displayValue;
+                            goBackToAddPatient();
 
                         }
                     });
                 }
             }
         });
+    }
+
+    public void goBackToAddPatient()
+    {
+        Intent goBack = new Intent(ScanQRActivity.this, AddPatientActivity.class);
+        goBack.putExtra("TAG", "getQR");
+        goBack.putExtra("userID", userID);
+        startActivity(goBack);
     }
 }
