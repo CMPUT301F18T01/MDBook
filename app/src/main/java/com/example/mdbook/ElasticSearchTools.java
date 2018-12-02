@@ -1,3 +1,12 @@
+/*
+ * ElasticsearchTools
+ *
+ * Version 1.0.0
+ *
+ * 2018-12-02
+ *
+ * Copyright (c) 2018. All rights reserved.
+ */
 package com.example.mdbook;
 
 import android.os.AsyncTask;
@@ -30,7 +39,10 @@ import io.searchbox.core.Index;
  */
 public class ElasticSearchTools {
 
-    public void ResetStringIDs() {
+    /**
+     * Sets all metadata at index/metadata/idlists to empty lists and makes availableID = "0".
+     */
+    public static void ResetStringIDs() {
 
         HashMap<String, ArrayList<String>> idlists = new HashMap<>();
         String availableID = "0";
@@ -55,7 +67,10 @@ public class ElasticSearchTools {
         new jestIndexTask().execute(JestID);
     }
 
-    public void ResetIntIDs(){
+    /**
+     * Sets all metadata at index/metadata/idlists to empty lists and makes availableID = 0.
+     */
+    public static void ResetIntIDs(){
 
 
         HashMap<String, Object> idlists = new HashMap<>();
@@ -81,8 +96,16 @@ public class ElasticSearchTools {
         new jestIndexTask().execute(JestID);
     }
 
+    /**
+     * Provides async interface for running jest index tasks.
+     */
     private static class jestIndexTask extends AsyncTask<Index, Void, DocumentResult> {
 
+        /**
+         * Executes the given index.
+         * @param indices Indexes to be executed.
+         * @return Return value of Index (null if failed for any reason)
+         */
         @Override
         protected DocumentResult doInBackground(Index... indices) {
             for (Index index : indices) {
