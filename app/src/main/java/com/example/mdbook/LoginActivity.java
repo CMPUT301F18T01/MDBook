@@ -20,6 +20,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.File;
+
 /**
  * Logs in user, if user exists.
  *
@@ -46,7 +48,8 @@ public class LoginActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("shared preferences",
                 getApplicationContext().MODE_PRIVATE);
         ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
-        LocalStorageController.init(sharedPreferences);
+        File fileDir = getFilesDir();
+        LocalStorageController.init(sharedPreferences, fileDir);
         ElasticsearchController.init(connectivityManager);
         UserManager.initManager();
 

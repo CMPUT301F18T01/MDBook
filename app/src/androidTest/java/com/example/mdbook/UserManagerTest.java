@@ -38,7 +38,7 @@ public class UserManagerTest extends TestCase {
         SharedPreferences sharedPreferences = InstrumentationRegistry.getContext().getSharedPreferences("shared preferences",
                 InstrumentationRegistry.getContext().MODE_PRIVATE);
         ConnectivityManager connectivityManager = (ConnectivityManager) InstrumentationRegistry.getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-        LocalStorageController.init(sharedPreferences);
+        LocalStorageController.init(sharedPreferences, InstrumentationRegistry.getContext().getFilesDir());
         ElasticsearchController.init(connectivityManager);
         UserManager.initManager();
     }

@@ -14,6 +14,8 @@ import android.accounts.NetworkErrorException;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.nio.file.FileSystemException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -72,6 +74,7 @@ public class UserDecomposer {
     public Decomposition decompose(User user) throws NetworkErrorException {
         Decomposition decomposition = new Decomposition(user.getUserID());
         ElasticsearchController elasticsearchController = ElasticsearchController.getController();
+        LocalStorageController localStorageController = LocalStorageController.getController();
 
         /* Ensure internet connection is available before decomposing users, in order to generate
          * ID values.
@@ -156,13 +159,16 @@ public class UserDecomposer {
 
                             Photo photo = bodyLocation.getPhoto();
                             /* Assign an ID to new photos */
-                            if (photo.getPhotoid() == "-1") {
+                            if (photo.getPhotoid().equals("-1")) {
+
                                 photo.setPhotoid(elasticsearchController.generateID());
+                                /* update photo filename */
+                                if(!localStorageController.savePhoto(photo)){
+                                    return null;
+                                }
                             }
 
-                            // TODO: actually move the photo
-                            /* update photo filename */
-                            photo.setFilepath(photo.getPhotoid());
+
 
                             /* Add photo to bodylocation */
                             bodyJSON.put("photo", photo.getPhotoid());

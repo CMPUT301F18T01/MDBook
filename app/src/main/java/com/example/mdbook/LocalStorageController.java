@@ -14,7 +14,13 @@ import android.content.SharedPreferences;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import org.json.JSONException;
+
+import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Type;
+import java.nio.file.FileAlreadyExistsException;
+import java.nio.file.FileSystemException;
 import java.util.ArrayList;
 
 
@@ -34,20 +40,20 @@ class LocalStorageController {
 
     private static LocalStorageController localStorageController;
     private SharedPreferences sharedPreferences;
+    private File filesDir;
     private Gson gson;
-    private SharedPreferences.Editor editor;
 
 
     /**
      * @param sharedPreferences Sets the context in the local storage controller
      */
-    public static void init(SharedPreferences sharedPreferences){
+    public static void init(SharedPreferences sharedPreferences, File filesDir){
         if (localStorageController == null) {
             localStorageController = new LocalStorageController();
+            localStorageController.sharedPreferences = sharedPreferences;
+            localStorageController.gson = new Gson();
+            localStorageController.filesDir = filesDir;
         }
-        localStorageController.sharedPreferences = sharedPreferences;
-        localStorageController.gson = new Gson();
-        localStorageController.editor = sharedPreferences.edit();
     }
 
     /**
@@ -102,6 +108,7 @@ class LocalStorageController {
      */
     public void saveMe(User me) {
         String user = gson.toJson(me);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("user",user);
         if (me.getClass() == Patient.class){
             editor.putString("usertype", "patient");
@@ -129,6 +136,7 @@ class LocalStorageController {
         }
         String patientQueueString = gson.toJson(patientQueue);
         String caregiverQueueString = gson.toJson(caregiverQueue);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("patientPushQueue", patientQueueString);
         editor.putString("caregiverPushQueue", caregiverQueueString);
 
@@ -161,7 +169,43 @@ class LocalStorageController {
      * Clears logged in user data out from saved storage. Should be called on logout.
      */
     public void clearMe() {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.remove("user").commit();
         editor.remove("usertype").commit();
+    }
+
+    /**
+     * Renames the file.
+     * @param olddir
+     * @param newdir
+     */
+    public boolean savePhoto(Photo photo) {
+        String olddir = photo.getFilepath();
+        Boolean x = olddir.isEmpty();
+
+        File newdir = new File(filesDir, "MDBOOK_" + photo.getPhotoid() + ".jpg");
+        String s = newdir.getAbsolutePath();
+
+        File sourceLocation = new File(olddir);
+        //File targetLocation = new File(filesDir.toString() + "/" + "MDBOOK_" + photo.getPhotoid() + ".jpg");
+
+        File targetLocation = new File(olddir + ".png");
+
+        if(sourceLocation.renameTo(targetLocation)){
+            photo.setFilepath(targetLocation.getAbsolutePath());
+            return true;
+        }
+        else {
+            return false;
+        }
+
+    }
+
+    /**
+     * Deletes the file.
+     * @param fileDir
+     */
+    public void deleteFile(String fileDir){
+
     }
 }
