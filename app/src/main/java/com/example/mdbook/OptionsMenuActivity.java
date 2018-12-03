@@ -22,6 +22,8 @@ import android.widget.Toast;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 
+import java.util.ArrayList;
+
 public class OptionsMenuActivity extends AppCompatActivity {
 
     private static final String TAG = "OptionsMenuActivity";
@@ -112,9 +114,31 @@ public class OptionsMenuActivity extends AppCompatActivity {
     public void GeoLocation(){
         if (isServicesOK()) {
             Intent launchmap = new Intent(this, ViewAllMapActivity.class);
-            launchmap.putExtra("problemPos", getIntent().getExtras()
-                    .getInt("problemPos"));
-            startActivity(launchmap);
+            boolean toggle = false;
+
+            UserManager.initManager();
+            UserManager userManager = UserManager.getManager();
+            Patient patient = (Patient) UserController.getController().getUser();
+            ArrayList<Record> allRecords = patient.getProblems().get( getIntent().getExtras()
+                    .getInt("problemPos")).getRecords();
+            if (allRecords.size() >0) {
+                for (int i =0; i < allRecords.size();i++) {
+                    if (allRecords.get(i).getLocation().getAddressList().size() > 0) {
+                        toggle =true;
+                    }
+                }
+                if (toggle) {
+                    launchmap.putExtra("problemPos", getIntent().getExtras()
+                            .getInt("problemPos"));
+                    startActivity(launchmap);
+                }
+                else{
+                    Toast.makeText(this, "No locations for any record", Toast.LENGTH_SHORT).show();
+                }
+            }
+            else{
+                Toast.makeText(this, "No records", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
