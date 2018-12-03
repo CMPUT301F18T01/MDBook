@@ -179,7 +179,9 @@ public class ViewAllMapActivity extends AppCompatActivity implements OnMapReadyC
             myAddress = new ArrayList<>();
             ArrayList<Record> allRecords = patient.getProblems().get(problemPos).getRecords();
             for (int i = 0; i < allRecords.size(); i++){
-                myAddress.add(allRecords.get(i).getLocation().getAddressList().get(0));
+                if (allRecords.get(i).getLocation().getAddressList().size() >0) {
+                    myAddress.add(allRecords.get(i).getLocation().getAddressList().get(0));
+                }
             }
         }
 
