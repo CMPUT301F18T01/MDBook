@@ -13,6 +13,9 @@ package com.example.mdbook;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import java.util.ArrayList;
+
 /**
  * Lets the user have a slideshow
  *
@@ -24,6 +27,10 @@ import android.os.Bundle;
  * @version 0.0.1
  */
 public class PatientSlideActivity extends AppCompatActivity {
+
+    private ArrayList<Record> recordList;
+    private Integer problemPos;
+
     /**
      * Creates a viewpager to allow slideshow
      */
@@ -32,8 +39,17 @@ public class PatientSlideActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patient_slide);
 
+        UserManager.initManager();
+        UserManager userManager = UserManager.getManager();
+
+        Patient patient = (Patient) UserController.getController().getUser();
+        if (problemPos == null) {
+            problemPos = getIntent().getExtras().getInt("problemPos");
+        }
+        recordList = patient.getProblems().get(problemPos).getRecords();
+
         ViewPager viewPager = findViewById(R.id.viewPager);
-        ImageAdapter adapter = new ImageAdapter(this);
+        ImageAdapter adapter = new ImageAdapter(this, recordList, problemPos);
         viewPager.setAdapter(adapter);
     }
 }

@@ -54,7 +54,9 @@ public class ListRecordActivity extends AppCompatActivity {
             problemPos = getIntent().getExtras().getInt("problemPos");
         }
         recordList = patient.getProblems().get(problemPos).getRecords();
+
         Collections.sort(recordList, new Comparator<Record>() {
+
             @Override
             public int compare(Record p, Record q) {
                 {

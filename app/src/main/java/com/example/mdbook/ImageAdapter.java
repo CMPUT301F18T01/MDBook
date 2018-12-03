@@ -12,11 +12,15 @@
 package com.example.mdbook;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+
+import java.util.ArrayList;
 
 
 /**
@@ -31,17 +35,22 @@ import android.widget.ImageView;
  */
 public class ImageAdapter extends PagerAdapter {
     private Context mContext;
-    private int[] mSlideImages = new int[] {R.drawable.donald_trump,
-            R.drawable.ears,
-            R.drawable.hand,
-            R.drawable.nose,
-            R.drawable.finger,
-            R.drawable.eye,
-    };
+    private ArrayList<Record> record1;
+    private Integer problemPos1;
+    private String uri;
+//    private int[] mSlideImages = new int[] {R.drawable.donald_trump,
+//            R.drawable.ears,
+//            R.drawable.hand,
+//            R.drawable.nose,
+//            R.drawable.finger,
+//            R.drawable.eye,
+//    };
 
     // Set the context for the custom image adapter
-    ImageAdapter(Context context) {
+    ImageAdapter(Context context, ArrayList<Record> recordList, Integer problemPos) {
         mContext = context;
+        this.record1 = recordList;
+        this.problemPos1 =  problemPos;
 
     }
     /**
@@ -51,7 +60,7 @@ public class ImageAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
-        return mSlideImages.length;
+        return record1.size();
     }
 
     /**
@@ -77,7 +86,13 @@ public class ImageAdapter extends PagerAdapter {
         // set the view and butons appropriately by id's
         ImageView imageView = new ImageView(mContext);
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        imageView.setImageResource(mSlideImages[position]);
+
+//        uri = record1.get(problemPos1).getPhotos().getPath();
+//        Bitmap myBitmap = BitmapFactory.decodeFile(uri);
+//
+//        imageView.setImageResource(myBitmap);
+
+
         container.addView(imageView, 0);
         return imageView;
 

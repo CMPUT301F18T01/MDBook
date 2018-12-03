@@ -114,6 +114,8 @@ public class OptionsMenuActivity extends AppCompatActivity {
      */
     public void RecordSlide(){
         Intent ViewRecordSlide = new Intent(this, PatientSlideActivity.class);
+        ViewRecordSlide.putExtra("problemPos", getIntent().getExtras()
+                .getInt("problemPos"));
         startActivity(ViewRecordSlide);
     }
 
