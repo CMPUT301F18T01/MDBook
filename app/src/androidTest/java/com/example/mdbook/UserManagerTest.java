@@ -326,9 +326,9 @@ public class UserManagerTest extends TestCase {
         }
         assertNull(UserController.getController().getUser());
         /* Create a new caregiver, patient, problem, record and photo and connect them */
-        Photo photo = new Photo();
+//        Photo photo = new Photo();
         Record record = new Record("recordtitle");
-        record.addPhoto(photo);
+//        record.addPhoto(photo);
         Problem problem = new Problem("problemtitle", "description");
         problem.addRecord(record);
         /* Create patient and caregiver */
@@ -404,9 +404,9 @@ public class UserManagerTest extends TestCase {
         }
         assertNull(UserController.getController().getUser());
         /* Create a new patient, problem, record and photo and connect them */
-        Photo photo = new Photo();
+//        Photo photo = new Photo();
         Record record = new Record("recordtitle");
-        record.addPhoto(photo);
+//        record.addPhoto(photo);
         Problem problem = new Problem("problemtitle", "description");
         problem.addRecord(record);
 
