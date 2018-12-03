@@ -3,15 +3,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.mdbook">
 
+    <uses-feature
+        android:name="android.hardware.camera2"
+        android:required="false" />
     <!-- To auto-complete the email text field in the login form with the user's emails -->
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.VIBRATE" />
+
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -62,6 +68,7 @@
         <activity android:name=".ViewMapActivity" />
         <activity android:name=".ViewAllMapActivity" />
         <activity android:name=".AddReminderActivity"/>
+
         <activity
             android:name=".ListProblemActivity"
             android:label="@string/MDBook"
@@ -71,6 +78,7 @@
             android:name="org.apache.http.legacy"
             android:required="false" />
 
+        <activity android:name=".ChooseUploadActivity" />
         <activity
             android:name=".ListRecordActivity"
             android:label="@string/MDBook"
@@ -78,11 +86,13 @@
         <activity
             android:name=".ListRecordsCGActivity"
             android:label="@string/listPatientRecordsCG"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".AddCommentActivity" />
+        <receiver android:name=".AlarmService" />
         <activity android:name=".GenerateQRActivity"></activity>
         <activity android:name=".ScanQRActivity"></activity>
-        <activity android:name=".AddCommentActivity"></activity>
         <receiver android:name=".AlarmService"/>
+>>>>>>> 0898ff1041f8994f9ddd08296706b63cb22d3a9a
     </application>
 
 </manifest>

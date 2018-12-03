@@ -27,7 +27,7 @@ import java.util.Comparator;
  * @see Patient
  *
  * @author Thomas Chan
- * 
+ *
  */
 public class ListRecordActivity extends AppCompatActivity {
 
