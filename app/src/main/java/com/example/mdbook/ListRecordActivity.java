@@ -104,7 +104,7 @@ public class ListRecordActivity extends AppCompatActivity {
 
         });
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fabAddRecord);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
