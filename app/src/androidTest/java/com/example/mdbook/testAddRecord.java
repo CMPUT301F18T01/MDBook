@@ -86,4 +86,10 @@ public class testAddRecord {
 
         solo.assertCurrentActivity("Wrong Activity", ListRecordActivity.class);
     }
+
+    @Test
+    public void testEnd() throws Exception{
+        UserController.getController().clearUser();
+    }
+
 }
