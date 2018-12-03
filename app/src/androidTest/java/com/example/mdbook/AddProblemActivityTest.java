@@ -28,6 +28,8 @@ public class AddProblemActivityTest {
 
     @Test
     public void testAddRecord() throws Exception{
+        EditText addTitle = AddProblemActivity.findViewById(R.id.etUserID);
+        assertNotNull(addTitle);
         String UserID;
         UserID = "Testpatient";
         Espresso.onView(withId(R.id.headline)).perform(typeText("Headline"));
