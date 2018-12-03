@@ -1,9 +1,6 @@
 package com.example.mdbook;
 import android.support.test.rule.ActivityTestRule;
-import android.support.v4.view.ViewPager;
-import android.support.v7.widget.RecyclerView;
 import android.widget.EditText;
-import android.widget.TextView;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -22,14 +19,6 @@ public class LaunchActivityTest {
     @Rule
     public ActivityTestRule<AddProblemActivity> addProblemActivityActivityTestRule = new ActivityTestRule<>(AddProblemActivity.class);
     private AddProblemActivity AddProblemActivity = null;
-//    @Rule
-//    public ActivityTestRule<ViewAccountDetailActivity> viewAccountDetailActivityActivityTestRule = new ActivityTestRule<>(ViewAccountDetailActivity.class);
-//    private ViewAccountDetailActivity ViewAccountDetailActivity = null;
-//    @Rule
-//    public ActivityTestRule<EditAccountDetailActivity> editAccountDetailsActivityActivityTestRule = new ActivityTestRule<>(EditAccountDetailActivity.class);
-//    private EditAccountDetailActivity EditAccountDetailsActivity = null;
-
-
 
 
     @Before
@@ -37,8 +26,7 @@ public class LaunchActivityTest {
         LoginActivity = loginActivityActivityTestRule.getActivity();
         RegisterActivity = registerActivityActivityTestRule.getActivity();
         AddProblemActivity = addProblemActivityActivityTestRule.getActivity();
-        //ViewAccountDetailActivity = viewAccountDetailActivityActivityTestRule.getActivity();
-        //EditAccountDetailsActivity = editAccountDetailsActivityActivityTestRule.getActivity();
+
     }
 
     /*
@@ -53,10 +41,6 @@ that means the activity was launched successfully
         assertNotNull(etPhone);
         EditText edit = AddProblemActivity.findViewById(R.id.addTitle);
         assertNotNull(edit);
-//        TextView viewName = ViewAccountDetailActivity.findViewById(R.id.viewName);
-////        assertNotNull(viewName);
-//        EditText editName = EditAccountDetailsActivity.findViewById(R.id.editName);
-//        assertNotNull(editName);
 
     }
 
@@ -65,7 +49,6 @@ that means the activity was launched successfully
         LoginActivity = null;
         RegisterActivity = null;
         AddProblemActivity = null;
-        //ViewAccountDetailActivity = null;
-        //EditAccountDetailsActivity = null;
+
     }
 }
