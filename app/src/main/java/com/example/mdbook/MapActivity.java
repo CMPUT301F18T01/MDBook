@@ -347,7 +347,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             public void onClick(DialogInterface dialog, int which) {
                if (address != null) {
                    Intent intent = new Intent();
-                   intent.putExtra("address", address);
+                   intent.putExtra("Lat", address.getLatitude());
+                   intent.putExtra("Long", address.getLongitude());
+                   intent.putExtra("Title", address.getAddressLine(0));
                    setResult(RESULT_OK,intent);
                    finish();
 

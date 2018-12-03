@@ -34,7 +34,7 @@ public class ViewAllMapActivity extends AppCompatActivity implements OnMapReadyC
 
 
     /* Vars */
-    private List<Address> myAddress;
+    private ArrayList<MarkerOptions> markers;
     private Boolean mLocationPermissionGranted = false;
     private Integer problemPos;
     private GoogleMap mMap;
@@ -62,9 +62,18 @@ public class ViewAllMapActivity extends AppCompatActivity implements OnMapReadyC
 
     private void init(){
         Log.d(TAG,"init: initializing");
-        if (myAddress != null){
-            moveCamera(new LatLng(myAddress.get(0).getLatitude(), myAddress.get(0)
-                    .getLongitude()), 11);
+        UserManager.initManager();
+        UserManager userManager = UserManager.getManager();
+        Patient patient = (Patient) UserController.getController().getUser();
+        ArrayList<Record> allRecords = patient.getProblems().get(problemPos).getRecords();
+        if (problemPos != null){
+            if (allRecords.size() >0) {
+                Double Latitude = allRecords.get(0).getLocation().getLat();
+                Double Longitude = allRecords.get(0).getLocation().getLong();
+                String Title = allRecords.get(0).getLocation().getTitle();
+
+                moveCamera(new LatLng(Latitude, Longitude), 11);
+            }
         }
     }
 
@@ -136,12 +145,8 @@ public class ViewAllMapActivity extends AppCompatActivity implements OnMapReadyC
         Log.d(TAG, "onMapReady: map is ready");
         mMap = googleMap;
 
-        for (int i = 0; i < myAddress.size();i++){
-            LatLng LLPos = new LatLng(myAddress.get(i).getLatitude(),myAddress.get(i)
-                    .getLongitude());
-            String title = myAddress.get(i).getAddressLine(0);
-            mMap.addMarker(new MarkerOptions().position(LLPos).title(title)
-                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
+        for (int i = 0; i < markers.size();i++){
+            mMap.addMarker(markers.get(i));
         }
 
         if (mLocationPermissionGranted) {
@@ -176,11 +181,15 @@ public class ViewAllMapActivity extends AppCompatActivity implements OnMapReadyC
             UserManager.initManager();
             UserManager userManager = UserManager.getManager();
             Patient patient = (Patient) UserController.getController().getUser();
-            myAddress = new ArrayList<>();
+            markers = new ArrayList<>();
             ArrayList<Record> allRecords = patient.getProblems().get(problemPos).getRecords();
             for (int i = 0; i < allRecords.size(); i++){
-                if (allRecords.get(i).getLocation().getAddressList().size() >0) {
-                    myAddress.add(allRecords.get(i).getLocation().getAddressList().get(0));
+                if (allRecords.get(i).getLocation().getLat() != null) {
+                    LatLng LLPos = new LatLng(allRecords.get(i).getLocation().getLat(),
+                            allRecords.get(i).getLocation().getLong());
+                    String title = allRecords.get(i).getLocation().getTitle();
+                    markers.add(new MarkerOptions().position(LLPos).title(title));
+
                 }
             }
         }

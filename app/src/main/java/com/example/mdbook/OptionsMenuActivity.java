@@ -132,7 +132,7 @@ public class OptionsMenuActivity extends AppCompatActivity {
                     .getInt("problemPos")).getRecords();
             if (allRecords.size() >0) {
                 for (int i =0; i < allRecords.size();i++) {
-                    if (allRecords.get(i).getLocation().getAddressList().size() > 0) {
+                    if (allRecords.get(i).getLocation().getLat() != null) {
                         toggle =true;
                     }
                 }
