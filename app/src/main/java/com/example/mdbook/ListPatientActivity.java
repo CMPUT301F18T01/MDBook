@@ -108,7 +108,7 @@ public class ListPatientActivity extends AppCompatActivity implements Navigation
         }).attachToRecyclerView(recyclerView);
 
         /* Initializes the add record activity */
-        FloatingActionButton fab = findViewById(R.id.gotoAddPatient);
+        FloatingActionButton fab = findViewById(R.id.fabAddProblem);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
