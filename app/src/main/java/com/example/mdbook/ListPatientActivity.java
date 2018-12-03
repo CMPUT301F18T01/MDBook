@@ -12,6 +12,8 @@ package com.example.mdbook;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -219,6 +221,11 @@ public class ListPatientActivity extends AppCompatActivity implements Navigation
         startActivity(intent);
     }
 
-
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        SyncController syncController = new SyncController();
+        registerReceiver(syncController,filter);
+    }
 }

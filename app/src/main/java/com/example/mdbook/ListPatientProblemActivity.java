@@ -59,6 +59,9 @@ public class ListPatientProblemActivity extends AppCompatActivity implements Nav
         setSupportActionBar(toolbar);
         UserManager.initManager();
         UserManager userManager = UserManager.getManager();
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        SyncController syncController = new SyncController();
+        registerReceiver(syncController,filter);
 
         Caregiver caregiver = (Caregiver) UserController.getController().getUser();
         patientPos = getIntent().getExtras().getInt("patientPos");
@@ -151,4 +154,11 @@ public class ListPatientProblemActivity extends AppCompatActivity implements Nav
         startActivity(intent);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        SyncController syncController = new SyncController();
+        registerReceiver(syncController,filter);
+    }
 }

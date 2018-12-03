@@ -68,6 +68,7 @@ public class ListProblemActivity extends AppCompatActivity
         UserManager userManager = UserManager.getManager();
         Patient patient = (Patient) UserController.getController().getUser();
 
+
         problems = patient.getProblems();
         /* Create recycler view */
         recyclerView = findViewById(R.id.recylerView);
@@ -154,6 +155,10 @@ public class ListProblemActivity extends AppCompatActivity
         Patient patient = (Patient) UserController.getController().getUser();
         problems = patient.getProblems();
         mAdapter.notifyDataSetChanged();
+
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        SyncController syncController = new SyncController();
+        registerReceiver(syncController,filter);
     }
 
     /**

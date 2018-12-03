@@ -13,21 +13,31 @@ import java.util.ArrayList;
 
 public class SyncController extends BroadcastReceiver {
 
+    private static SyncController syncController;
     private ElasticsearchController elasticsearchController;
     private DataManager dataManager;
     private UserDecomposer decomposer;
     private boolean isConnected = false;
 
+
     public void SyncController(){
         if (elasticsearchController == null){
-            if ( dataManager == null) {
-                if (decomposer == null) {
-                    elasticsearchController = ElasticsearchController.getController();
-                    dataManager = DataManager.getDataManager();
-                    decomposer = new UserDecomposer();
-                }
-            }
+            elasticsearchController = ElasticsearchController.getController();
         }
+        if(dataManager == null){
+            dataManager = DataManager.getDataManager();
+        }
+        if (decomposer == null){
+            decomposer = new UserDecomposer();
+        }
+
+    }
+
+    public static SyncController getController() {
+        if (syncController == null) {
+            throw new RuntimeException("SyncController has not been initialized!");
+        }
+        return syncController;
     }
 
     @Override
@@ -38,11 +48,10 @@ public class SyncController extends BroadcastReceiver {
 
         boolean isConnected = intent.getBooleanExtra(ConnectivityManager.EXTRA_NO_CONNECTIVITY, false);
         if(isConnected){
-            Toast.makeText(context,"Internet connection lost",Toast.LENGTH_SHORT).show();
+            Toast.makeText(context,"Internet Connection Lost \n Profile Not Synced",Toast.LENGTH_SHORT).show();
 
         }
         else{
-            Toast.makeText(context,"Internet Available",Toast.LENGTH_SHORT).show();
             if (elasticsearchController.isConnected()){
                 ArrayList<User> toupload = (ArrayList<User>) dataManager.getPushQueue().clone();
                 for (User user1 : toupload){
@@ -60,6 +69,7 @@ public class SyncController extends BroadcastReceiver {
                                 dataManager.removeFromQueue(user1);
                             }
                         }
+                        Toast.makeText(context,"Profile Synced Up",Toast.LENGTH_SHORT).show();
 
                     } catch (NetworkErrorException e) {
                         break;
