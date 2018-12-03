@@ -67,7 +67,7 @@ public class NewBodyLocationView extends AppCompatActivity {
         setContentView(R.layout.activity_new_body_location_view);
 
 
-        bodylocation = new BodyLocation("Ear");
+        bodylocation = new BodyLocation();
 
         // set the views and buttons appropriately by id's
         done = findViewById(R.id.done);
@@ -79,12 +79,15 @@ public class NewBodyLocationView extends AppCompatActivity {
         bodyFront = findViewById(R.id.body_front);
         bodyBack = findViewById(R.id.body_back);
 
+
+
         bodyFront.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 xF = (int) motionEvent.getX();
                 yF = (int) motionEvent.getY();
                 bodylocation.setFrontLoc(xF,yF);
+                ChooseUploadMethod();
                 return false;
 
             }
@@ -93,9 +96,10 @@ public class NewBodyLocationView extends AppCompatActivity {
         bodyBack.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-                xF = (int) motionEvent.getX();
-                yF = (int) motionEvent.getY();
-                bodylocation.setBackLoc(xF,yF);
+                xB = (int) motionEvent.getX();
+                yB = (int) motionEvent.getY();
+                bodylocation.setBackLoc(xB,yB);
+                ChooseUploadMethod();
                 return false;
 
             }
@@ -110,8 +114,11 @@ public class NewBodyLocationView extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //Todo: Save data into the user manager
-                Toast toast = Toast.makeText(getApplicationContext(), "Body Location successfully added!", Toast.LENGTH_SHORT);
-                toast.show();
+                Intent intent = new Intent(NewBodyLocationView.this, AddRecordActivity.class);
+                intent.putExtra("bodylocation", bodylocation);
+                startActivity(intent);
+                //Toast toast = Toast.makeText(getApplicationContext(), "Body Location successfully added!", Toast.LENGTH_SHORT);
+                //toast.show();
                 BackToAddProblem();
 
             }
@@ -150,20 +157,14 @@ public class NewBodyLocationView extends AppCompatActivity {
 
                 //String uri = photo.getFilepath();
 
-                myBitmap = BitmapFactory.decodeFile(uri);
+                //myBitmap = BitmapFactory.decodeFile(uri);
+
+                Photo photo = new Photo(uri);
+                bodylocation.setPhoto(photo);
 
 
 
-                if (location == "Front") {
 
-
-                    bodyFront.setImageBitmap(myBitmap);
-                }
-
-                if (location == "Back") {
-
-                    bodyBack.setImageBitmap(myBitmap);
-                }
             }
 
 

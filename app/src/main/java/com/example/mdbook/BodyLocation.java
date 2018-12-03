@@ -1,6 +1,7 @@
 package com.example.mdbook;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 // class for body locations
 // might be better off leaving body location as just a name for a string, we'll see
@@ -10,14 +11,15 @@ class BodyLocation implements Serializable {
     private int Fronty;
     private  int Backx;
     private int Backy;
-    String location;
 
-    public BodyLocation(String location) {
+    private Photo photo;
+
+    public BodyLocation() {
         Frontx = 0;
         Fronty = 0;
         Backx = 0;
         Backy = 0;
-        this.location = location;
+
     }
 
     //public void uploadPhoto(){}
@@ -45,11 +47,18 @@ class BodyLocation implements Serializable {
         return this.Backy;
     }
 
-    public void setLocation(String location){
-        this.location = location;
+//    public void setLocation(String location){
+//        this.location = location;
+//    }
+//    public String getLocation(){
+//        return this.location;
+//    }
+
+    public void setPhoto(Photo photo){
+        this.photo = photo;
     }
-    public String getLocation(){
-        return this.location;
+    public Photo getPhoto(){
+        return photo;
     }
 
 }

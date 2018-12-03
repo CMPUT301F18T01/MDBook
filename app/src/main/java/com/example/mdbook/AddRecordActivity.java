@@ -31,6 +31,7 @@ import com.google.android.gms.common.GoogleApiAvailability;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -68,6 +69,8 @@ public class AddRecordActivity extends AppCompatActivity {
     private Button reminder;
     private Button save;
     private Button cancel;
+    private BodyLocation bodylocation;
+    private static ArrayList<BodyLocation> bodyLocationList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,12 +93,32 @@ public class AddRecordActivity extends AppCompatActivity {
         format = new SimpleDateFormat("dd/MM/yy");
 
         // Switches to addBodyLocationActivity upon the click of the body button
+        if(bodyLocationList == null){
+            bodyLocationList = new ArrayList<BodyLocation>();
+            Toast toast = Toast.makeText(getApplicationContext(), "something", Toast.LENGTH_SHORT);
+            toast.show();
+        }
+        else if(bodyLocationList.size()>0){
+            for(int i = 0; i < bodyLocationList.size(); i++){
+                Photo photo = bodyLocationList.get(i).getPhoto();
+                String path = photo.getFilepath();
+                Toast toast = Toast.makeText(getApplicationContext(), path, Toast.LENGTH_SHORT);
+                toast.show();
+            }
+        }
         body.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 goAddBodyLoc();
+                //AddRecordActivity.this.finish();
             }
         });
+        if(getIntent().getExtras().getSerializable("bodylocation")!= null) {
+            bodylocation = (BodyLocation) getIntent().getExtras().getSerializable("bodylocation");
+            bodyLocationList.add(bodylocation);
+
+        }
+
 
         // Switches to addBodyLocationActivity upon the click of the save button
         save.setOnClickListener(new View.OnClickListener() {
@@ -112,7 +135,9 @@ public class AddRecordActivity extends AppCompatActivity {
                     }
                     if (address != null){
                         record.getLocation().addAddress(address);
+
                     }
+
                     patient.getProblems().get(problemPos).addRecord(record);
                     userManager.saveUser(patient);
                     Toast.makeText(AddRecordActivity.this
