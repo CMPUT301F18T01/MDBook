@@ -47,13 +47,6 @@ class BodyLocation implements Serializable {
         return this.Backy;
     }
 
-//    public void setLocation(String location){
-//        this.location = location;
-//    }
-//    public String getLocation(){
-//        return this.location;
-//    }
-
     public void setPhoto(Photo photo){
         this.photo = photo;
     }

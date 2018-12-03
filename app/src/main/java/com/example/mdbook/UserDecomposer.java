@@ -10,11 +10,7 @@
 package com.example.mdbook;
 
 import android.accounts.NetworkErrorException;
-import android.location.Address;
-import android.location.Geocoder;
-import android.view.View;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -23,8 +19,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
 
 /**
  * Tools for converting user objects to and from JSONObjects.
@@ -144,7 +138,7 @@ public class UserDecomposer {
                         recordJSON.put("date", record.getDate());
                         recordJSON.put("title", record.getTitle());
                         recordJSON.put("description", record.getDescription());
-                        recordJSON.put("bodyLocation", record.getBodyLocation());
+                        recordJSON.put("bodyLocation", record.getBodyLocations());
                         recordJSON.put("comment", record.getComment());
 
                         /* Set up list for photoIDs */
@@ -270,7 +264,7 @@ public class UserDecomposer {
                         if (recordJSON.has("bodyLocation")) {
                             //BodyLocation bodyLocation = (BodyLocation) recordJSON.get("bodyLocation");
                             BodyLocation bodyLocation = new BodyLocation();
-                            record.setBodyLocation(bodyLocation);
+                            record.addBodyLocation(bodyLocation);
                         }
                         /* Add photos */
                         for (String photoID : (ArrayList<String>) recordJSON.get("photos")) {

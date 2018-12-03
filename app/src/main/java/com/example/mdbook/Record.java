@@ -34,7 +34,6 @@ class Record implements Serializable, Comparable {
     private String description;
     private GeoLocation geoLocation;
     private ArrayList<BodyLocation> bodyLocations;
-    private ArrayList<Photo> photos;
     private String comment;
     private String recordID = "-1";
 
@@ -58,7 +57,6 @@ class Record implements Serializable, Comparable {
             this.description = "";
             this.bodyLocations = new ArrayList<>();
             this.geoLocation = null;
-            this.photos = new ArrayList<>();
             this.comment = "";
         }
     }
@@ -80,14 +78,8 @@ class Record implements Serializable, Comparable {
             this.title = title;
             this.date = date;
             this.description = description;
-
-
             this.bodyLocations = new ArrayList<>();
-
             this.geoLocation = null;
-
-
-            this.photos = new ArrayList<>();
             this.comment = "";
         }
     }
@@ -112,44 +104,12 @@ class Record implements Serializable, Comparable {
         return this.geoLocation;
     }
 
-    /**
-     * Associate a photo with this record
-     * @param photo Photo to be added.
-     */
-    public void addPhoto(Photo photo) {
-        this.photos.add(photo);
-    }
-
-    /**
-     * Removes photo from record and deletes it from app storage.
-     * @param photo The photo to be deleted
-     * @return True on successful deletion, false if the photo could not be found.
-     */
-    //TODO: add this to test cases
-    public boolean deletePhoto(Photo photo) {
-       if(this.photos.contains(photo)){
-           this.photos.remove(photo);
-           return true;
-       }
-       else {
-           return false;
-       }
-    }
-
-    /**
-     * Returns list of photos associated with the record.
-     * @return ArrayList\<Photo\> of the records photos,
-     *         including an ArrayList of zero items if there are no associated records.
-     */
-    public ArrayList<Photo> getPhotos() {
-        return(this.photos);
-    }
 
     /**
      * @param bodyLocation The new body location.
      * @see BodyLocation
      */
-    public void setBodyLocation(BodyLocation bodyLocation) {
+    public void addBodyLocation(BodyLocation bodyLocation) {
         bodyLocations.add(bodyLocation);
     }
 
@@ -157,7 +117,7 @@ class Record implements Serializable, Comparable {
      * @return Body location of the record, returns null if no body location has been set.
      * @see BodyLocation
      */
-    public ArrayList<BodyLocation> getBodyLocation() {
+    public ArrayList<BodyLocation> getBodyLocations() {
         return this.bodyLocations;
     }
 

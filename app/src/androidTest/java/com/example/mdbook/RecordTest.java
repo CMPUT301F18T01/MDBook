@@ -56,8 +56,8 @@ public class RecordTest extends TestCase {
 
 
         BodyLocation bodyLocation = new BodyLocation("arm");
-        record.setBodyLocation(bodyLocation);
-        assertEquals(bodyLocation, record.getBodyLocation());
+        record.addBodyLocation(bodyLocation);
+        assertEquals(bodyLocation, record.getBodyLocations());
 
 
         // test for comment, title, date

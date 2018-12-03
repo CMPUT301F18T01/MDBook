@@ -27,9 +27,6 @@ import android.widget.Toast;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -129,7 +126,7 @@ public class AddRecordActivity extends AppCompatActivity {
                 }
                 if(bodylocationlist != null){
                     for(int i = 0; i<bodylocationlist.size(); i++) {
-                        record.setBodyLocation(bodylocationlist.get(i));
+                        record.addBodyLocation(bodylocationlist.get(i));
                     }
                     Toast toast = Toast.makeText(getApplicationContext(), "bodylocation(s) added to record", Toast.LENGTH_SHORT);
                     toast.show();
