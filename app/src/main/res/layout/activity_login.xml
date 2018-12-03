@@ -27,8 +27,8 @@
 
     <Button
         android:id="@+id/loginButton"
-        android:layout_width="126dp"
-        android:layout_height="35dp"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:background="@drawable/buttontemplate"
         android:onClick="onLoginClick"
@@ -38,18 +38,19 @@
         app:layout_constraintTop_toBottomOf="@+id/etUserID" />
 
 
-    <TextView
-        android:id="@+id/register_text"
-        android:layout_width="wrap_content"
+    <Button
+        android:id="@+id/registerBtn"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:layout_marginBottom="152dp"
+        android:background="@drawable/buttontemplate"
         android:clickable="true"
         android:onClick="onRegisterClick"
         android:text="@string/register_text"
-        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/loginButton"
         app:layout_constraintVertical_bias="0.0"
@@ -74,11 +75,11 @@
 
     <Button
         android:id="@+id/scanQRBtn"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:background="@drawable/buttontemplate"
@@ -87,6 +88,6 @@
         android:text="Scan QR"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/register_text" />
+        app:layout_constraintTop_toBottomOf="@+id/registerBtn" />
 
 </android.support.constraint.ConstraintLayout>

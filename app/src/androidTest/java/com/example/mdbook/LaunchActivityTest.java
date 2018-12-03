@@ -1,9 +1,7 @@
 package com.example.mdbook;
 import android.support.test.rule.ActivityTestRule;
-import android.support.v4.view.ViewPager;
-import android.support.v7.widget.RecyclerView;
 import android.widget.EditText;
-import android.widget.TextView;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -47,7 +45,7 @@ that means the activity was launched successfully
 */
     @Test
     public void Launch(){
-        EditText userID = LoginActivity.findViewById(R.id.etUserID);
+        EditText userID = LoginActivity.findViewById(R.id.etUserIDR);
         assertNotNull(userID);
         EditText etPhone = RegisterActivity.findViewById(R.id.etPhoneNumber);
         assertNotNull(etPhone);

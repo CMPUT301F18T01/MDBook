@@ -1,50 +1,86 @@
 package com.example.mdbook;
 
-import android.accounts.NetworkErrorException;
-import android.support.test.espresso.intent.matcher.IntentMatchers;
-import android.support.test.espresso.intent.rule.IntentsTestRule;
+
+import android.app.Activity;
+import android.support.constraint.solver.widgets.ChainHead;
 import android.support.test.rule.ActivityTestRule;
-import android.support.v7.app.AppCompatActivity;
-import android.widget.Toast;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.TextView;
 
+import com.robotium.solo.Solo;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.w3c.dom.Text;
 
-import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
-import static android.support.test.espresso.action.ViewActions.typeText;
-import static android.support.test.espresso.intent.Intents.intended;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static android.support.test.InstrumentationRegistry.getInstrumentation;
+import static junit.framework.TestCase.assertFalse;
+import static junit.framework.TestCase.assertTrue;
 
-public class LoginActivityTest{
+
+public class LoginActivityTest {
+
+    private Solo solo;
+    private EditText editText;
+    private Button loginButton;
+    private TextView registerText;
 
     @Rule
-    public IntentsTestRule<LoginActivity> loginActivityActivityTestRule = new IntentsTestRule<>(LoginActivity.class);
+    public ActivityTestRule<LoginActivity> activityTestRule= new ActivityTestRule(LoginActivity.class);
 
-    @Before
-    public void setUp() throws Exception {
-        loginActivityActivityTestRule.getActivity();
-        Patient p = new Patient("rajkapadia", "1234567890", "test@test.com");
-        UserController.getController().loadUser(p);
-        Caregiver c = new Caregiver("rajkapadiaCG", "1234567890", "test@test.com");
-        UserController.getController().loadUser(c);
 
+    public void setUp() throws Exception{
+        solo = new Solo(getInstrumentation(), activityTestRule.getActivity());
+    }
+
+
+    @Test
+    public void testStart() throws Exception {
+        Activity activity = activityTestRule.getActivity();
+    }
+
+
+    @Test
+    public void testPatientLogin(){
+        solo.assertCurrentActivity("Wrong Activity", LoginActivity.class);
+        solo.clickOnButton("REGISTER HERE");
+
+        solo.assertCurrentActivity("Wrong Activity", RegisterActivity.class);
+        solo.enterText((EditText) solo.getView(R.id.etUserIDR), "rajkapadia");
+        solo.enterText((EditText) solo.getView(R.id.etEmail), "rajkapadia@test.com");
+        solo.enterText((EditText) solo.getView(R.id.etPhoneNumber), "0000000000");
+        solo.clickOnButton("REGISTER");
+
+        solo.goBackToActivity("LoginActivity");
+        solo.enterText((EditText) solo.getView(R.id.etUserID), "rajkapadia");
+        solo.clickOnButton("LOG IN");
+
+        solo.assertCurrentActivity("Wrong Activity", ListProblemActivity.class);
+
+        solo.goBackToActivity("LoginActivity");
+
+        solo.clickOnButton("REGISTER HERE");
+
+        solo.assertCurrentActivity("Wrong Activity", RegisterActivity.class);
+        solo.enterText((EditText) solo.getView(R.id.etUserIDR), "rajkapadiaCG");
+        solo.enterText((EditText) solo.getView(R.id.etEmail), "rajkapadia@test.com");
+        solo.enterText((EditText) solo.getView(R.id.etPhoneNumber), "0000000000");
+        CheckBox checkBox = (CheckBox) solo.getView(R.id.cgCheckBox);
+        solo.clickOnView(checkBox);
+        solo.clickOnButton("REGISTER");
+
+        solo.goBackToActivity("LoginActivity");
+        solo.enterText((EditText) solo.getView(R.id.etUserID), "rajkapadiaCG");
+        solo.clickOnButton("LOG IN");
+
+        solo.assertCurrentActivity("Wrong Activity", ListPatientActivity.class);
     }
 
     @Test
-    public void login(){
-        loginActivityActivityTestRule.getActivity();
-        onView(withId(R.id.etUserID))
-                .perform(typeText("rajkapadia"), closeSoftKeyboard());
-        onView(withId(R.id.loginButton))
-                .perform(click());
-        intended(IntentMatchers.hasComponent(ListProblemActivity.class.getName()));
+    public void testCaregiverLogin(){
+
 
     }
 
