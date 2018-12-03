@@ -49,6 +49,7 @@ public class ProblemAdapter extends RecyclerView.Adapter<ProblemAdapter.ProblemA
 
         public TextView text;
         public TextView text2;
+        public TextView text3;
 
 
         /**
@@ -60,6 +61,7 @@ public class ProblemAdapter extends RecyclerView.Adapter<ProblemAdapter.ProblemA
             super(itemView);
             this.text = itemView.findViewById(R.id.mtext);
             this.text2 =itemView.findViewById(R.id.mtext2);
+            this.text3 =itemView.findViewById(R.id.mtext3);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -105,8 +107,10 @@ public class ProblemAdapter extends RecyclerView.Adapter<ProblemAdapter.ProblemA
     @Override
     public void onBindViewHolder(@NonNull ProblemAdapterHolder problemAdapterHolder, int i) {
         Problem currentitem = problems.get(i);
+
         problemAdapterHolder.text.setText(currentitem.getTitle());
         problemAdapterHolder.text2.setText(currentitem.getDescription());
+        problemAdapterHolder.text3.setText(currentitem.getDate().toString());
     }
 
     /**
