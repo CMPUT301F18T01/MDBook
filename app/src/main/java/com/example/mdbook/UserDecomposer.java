@@ -256,9 +256,9 @@ public class UserDecomposer {
                         /* Add geolocation if it exists */
                         if (recordJSON.has("location") && recordJSON.has("geoTitle")) {
                             String geoTitle = recordJSON.getString("geoTitle");
-                            JSONObject geoPoint = recordJSON.getJSONObject("location");
-                            Double lat = geoPoint.getDouble("lat");
-                            Double lon = geoPoint.getDouble("lon");
+                            ArrayList<Double> geoPoint = (ArrayList<Double>) recordJSON.get("location");
+                            Double lat = geoPoint.get(1);
+                            Double lon = geoPoint.get(0);
                             GeoLocation geoLocation = new GeoLocation(lat, lon, geoTitle);
                             record.setGeoLocation(geoLocation);
                         }

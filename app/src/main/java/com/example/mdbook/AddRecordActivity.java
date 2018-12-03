@@ -181,8 +181,11 @@ public class AddRecordActivity extends AppCompatActivity {
      * Creates a new intent for switch to the ViewLocationActivity
      */
     public void openGeoLoc(){
-        Intent launchmap= new Intent(this, MapActivity.class);
-        startActivityForResult(launchmap, MAP_ACTIVITY_REQUEST_CODE);
+        //Intent launchmap= new Intent(this, MapActivity.class);
+        //startActivityForResult(launchmap, MAP_ACTIVITY_REQUEST_CODE);
+        Lat = 53.544388;
+        Long = -113.490929;
+        Title = "Edmonton";
     }
 
 
