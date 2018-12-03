@@ -45,7 +45,7 @@ that means the activity was launched successfully
 */
     @Test
     public void Launch(){
-        EditText userID = LoginActivity.findViewById(R.id.etUserIDR);
+        EditText userID = LoginActivity.findViewById(R.id.etUserID);
         assertNotNull(userID);
         EditText etPhone = RegisterActivity.findViewById(R.id.etPhoneNumber);
         assertNotNull(etPhone);
