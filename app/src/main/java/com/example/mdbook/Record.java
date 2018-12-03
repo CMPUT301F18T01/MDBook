@@ -156,6 +156,12 @@ class Record implements Serializable, Comparable {
         return this.bodyLocations;
     }
 
+
+    public void removeBodyLocation(BodyLocation bodylocation){
+        if(bodyLocations.contains(bodylocation)){
+            bodyLocations.remove(bodylocation);
+        }
+    }
     /**
      * Sets record comment. Records can only have 1 comment.
      * @param comment The new comment.

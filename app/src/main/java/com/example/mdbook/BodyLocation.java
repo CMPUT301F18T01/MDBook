@@ -60,5 +60,6 @@ class BodyLocation implements Serializable {
     public Photo getPhoto(){
         return photo;
     }
+    public void deletePhoto(Photo photo){this.photo = null;}
 
 }
