@@ -57,6 +57,7 @@ public class AddRecordActivity extends AppCompatActivity {
     // Initialize all the required imageViews ans Buttons
 
     private Intent launchmap;
+    private Intent addRecordPage;
     private Record record;
     private Address address;
     private Integer problemPos;
@@ -71,8 +72,7 @@ public class AddRecordActivity extends AppCompatActivity {
     private Button reminder;
     private Button save;
     private Button cancel;
-    private ArrayList<BodyLocation> bodyLocationList;
-    private String path;
+    private ArrayList<BodyLocation> bodylocationlist;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,17 +94,16 @@ public class AddRecordActivity extends AppCompatActivity {
 
         format = new SimpleDateFormat("dd/MM/yy");
 
+
+        BodyLocation bodylocation = (BodyLocation) getIntent().getExtras().getSerializable("bodylocation");
+        bodylocationlist.add(bodylocation);
         // Switches to addBodyLocationActivity upon the click of the body button
-        if(bodyLocationList == null){
-            bodyLocationList = new ArrayList<BodyLocation>();
-            Toast toast = Toast.makeText(getApplicationContext(), "something", Toast.LENGTH_SHORT);
-            toast.show();
-        }
 
         body.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 goAddBodyLoc();
+                AddRecordActivity.this.finish();
                 //AddRecordActivity.this.finish();
             }
         });
@@ -125,6 +124,14 @@ public class AddRecordActivity extends AppCompatActivity {
                     }
                     if (address != null){
                         record.getLocation().addAddress(address);
+
+                    }
+                    if(bodylocationlist != null){
+                        for(int i = 0; i<bodylocationlist.size(); i++) {
+                            record.setBodyLocation(bodylocationlist.get(i));
+                        }
+                        Toast toast = Toast.makeText(getApplicationContext(), "bodylocation(s) added to record", Toast.LENGTH_SHORT);
+                        toast.show();
 
                     }
 
@@ -154,8 +161,7 @@ public class AddRecordActivity extends AppCompatActivity {
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast toast = Toast.makeText(getApplicationContext(), path, Toast.LENGTH_LONG);
-                toast.show();
+
                finish();
             }
         });
@@ -190,20 +196,7 @@ public class AddRecordActivity extends AppCompatActivity {
                 address.getAddressLine(0);
             }
         }
-        else if (requestCode == BODYLOC_ACTIVITY_REQUEST_CODE) {
-            if (resultCode == RESULT_OK) {
-                if (getIntent().getExtras().getSerializable("bodylocation") != null) {
-                    BodyLocation bodylocation = (BodyLocation) getIntent().getExtras().getSerializable("bodylocation");
-                    path = bodylocation.getPhoto().getFilepath();
-                    bodyLocationList.add(bodylocation);
-
-
-                    }
-
-
-                }
-            }
-        }
+    }
 
 //    if(bodyLocationList.size()>0){
 //        for(int i = 0; i < bodyLocationList.size(); i++){
@@ -218,9 +211,9 @@ public class AddRecordActivity extends AppCompatActivity {
      * Creates a new intent for switch to the AddBodyLocationActivity
      */
     public void goAddBodyLoc(){
-        Intent addRecordPage = new Intent(this, NewBodyLocationView.class);
+        addRecordPage = new Intent(this, NewBodyLocationView.class);
 
-        startActivityForResult(addRecordPage, BODYLOC_ACTIVITY_REQUEST_CODE);
+        startActivity(addRecordPage);
     }
 
 

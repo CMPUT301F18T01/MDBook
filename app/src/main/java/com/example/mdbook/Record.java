@@ -33,7 +33,7 @@ class Record implements Serializable, Comparable {
     private Date date;
     private String description;
     private GeoLocation geoLocation;
-    private BodyLocation bodyLocation;
+    private ArrayList<BodyLocation> bodyLocations;
     private ArrayList<Photo> photos;
     private String comment;
     private String recordID = "-1";
@@ -57,7 +57,7 @@ class Record implements Serializable, Comparable {
             this.date = new Date();
             this.description = "";
             this.geoLocation = new GeoLocation();
-            this.bodyLocation = null;
+            this.bodyLocations = new ArrayList<>();
             this.photos = new ArrayList<>();
             this.comment = "";
         }
@@ -81,7 +81,7 @@ class Record implements Serializable, Comparable {
             this.date = date;
             this.description = description;
             this.geoLocation = new GeoLocation();
-            this.bodyLocation = null;
+            this.bodyLocations = new ArrayList<>();
             this.photos = new ArrayList<>();
             this.comment = "";
         }
@@ -145,15 +145,15 @@ class Record implements Serializable, Comparable {
      * @see BodyLocation
      */
     public void setBodyLocation(BodyLocation bodyLocation) {
-        this.bodyLocation = bodyLocation;
+        bodyLocations.add(bodyLocation);
     }
 
     /**
      * @return Body location of the record, returns null if no body location has been set.
      * @see BodyLocation
      */
-    public BodyLocation getBodyLocation() {
-        return this.bodyLocation;
+    public ArrayList<BodyLocation> getBodyLocation() {
+        return this.bodyLocations;
     }
 
     /**

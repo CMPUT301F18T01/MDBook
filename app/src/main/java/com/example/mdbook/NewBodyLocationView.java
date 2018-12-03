@@ -80,13 +80,12 @@ public class NewBodyLocationView extends AppCompatActivity {
         bodyBack = findViewById(R.id.body_back);
 
 
-
         bodyFront.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 xF = (int) motionEvent.getX();
                 yF = (int) motionEvent.getY();
-                bodylocation.setFrontLoc(xF,yF);
+                bodylocation.setFrontLoc(xF, yF);
                 ChooseUploadMethod();
                 return false;
 
@@ -98,14 +97,12 @@ public class NewBodyLocationView extends AppCompatActivity {
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 xB = (int) motionEvent.getX();
                 yB = (int) motionEvent.getY();
-                bodylocation.setBackLoc(xB,yB);
+                bodylocation.setBackLoc(xB, yB);
                 ChooseUploadMethod();
                 return false;
 
             }
         });
-
-
 
 
         //Intent intent = getIntent();
@@ -120,6 +117,8 @@ public class NewBodyLocationView extends AppCompatActivity {
                 //BackToAddProblem();
 
             }
+
+
         });
         // Switches to the add problem upon the click of the cancel button
         cancel.setOnClickListener(new View.OnClickListener() {
@@ -130,20 +129,19 @@ public class NewBodyLocationView extends AppCompatActivity {
         });
 
 
-
     }
 
     /**
      * Creates a new intent for switching to the ListProblemActivity
      */
 
-    public void BackToAddProblem(){
+    public void BackToAddProblem() {
         this.finish();
     }
 
-    public void ChooseUploadMethod(){
+    public void ChooseUploadMethod() {
         Intent chooseUpload = new Intent(this, ChooseUploadActivity.class);
-        startActivityForResult(chooseUpload,1);
+        startActivityForResult(chooseUpload, 1);
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -159,26 +157,28 @@ public class NewBodyLocationView extends AppCompatActivity {
 
                 Photo photo = new Photo(uri);
                 bodylocation.setPhoto(photo);
-                if(bodylocation != null) {
-                    Intent intent = new Intent();
+
+                if (bodylocation != null) {
+                    //Toast toast = Toast.makeText(getApplicationContext(), bodylocation.getPhoto().getFilepath() + " " + "added", Toast.LENGTH_LONG);
+                    //toast.show();
+                    Intent intent = new Intent(NewBodyLocationView.this, AddRecordActivity.class);
                     intent.putExtra("bodylocation", bodylocation);
-                    setResult(RESULT_OK, intent);
-                    finish();
+                    startActivity(intent);
+                    NewBodyLocationView.this.finish();
+
+
                 }
 
 
-
+                if (resultCode == RESULT_CANCELED) {
+                    Toast toast = Toast.makeText(getApplicationContext(), "No image URI found", Toast.LENGTH_SHORT);
+                    toast.show();
+                }
             }
 
-
-            if (resultCode == RESULT_CANCELED) {
-                Toast toast = Toast.makeText(getApplicationContext(), "No image URI found", Toast.LENGTH_SHORT);
-                toast.show();
-            }
         }
 
     }
-
 }
 
 
