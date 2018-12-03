@@ -127,10 +127,21 @@ public class UserDecomposer {
                         /* Add record data to recordJSON */
                         JSONObject recordJSON = new JSONObject();
 
+                        /* Build geolocation json */
+                        GeoLocation geoLocation = record.getLocation();
+
+                        if (geoLocation != null) {
+                            recordJSON.put("geoTitle", geoLocation.getTitle());
+                            JSONObject geoPoint = new JSONObject();
+                            geoPoint.put("_type", "geo_point");
+                            geoPoint.put("lat", geoLocation.getLat());
+                            geoPoint.put("lon", geoLocation.getLong());
+                            recordJSON.put("location", geoPoint);
+                        }
+
                         recordJSON.put("date", record.getDate());
                         recordJSON.put("title", record.getTitle());
                         recordJSON.put("description", record.getDescription());
-                        recordJSON.put("geoLocation", record.getLocation());
                         recordJSON.put("bodyLocation", record.getBodyLocation());
                         recordJSON.put("comment", record.getComment());
 
@@ -240,15 +251,18 @@ public class UserDecomposer {
                         record.setComment(comment);
                         record.setRecordID(recordID);
 
-                        // TODO
-                        if (recordJSON.has("geoLocation")) {
-                            //GeoLocation geoLocation = (GeoLocation) recordJSON.get("geoLocation");
-                            GeoLocation geoLocation = new GeoLocation();
-                            Geocoder geocoder = new Geocoder(this, Locale.getDefault());
-                            List<Address> addresses;
-                            geoLocation.addAddress();
+                        /* Add geolocation if it exists */
+                        if (recordJSON.has("location") && recordJSON.has("geoTitle")) {
+                            String geoTitle = recordJSON.getString("geoTitle");
+                            JSONObject geoPoint = recordJSON.getJSONObject("location");
+                            Double lat = geoPoint.getDouble("lat");
+                            Double lon = geoPoint.getDouble("lon");
+                            GeoLocation geoLocation = new GeoLocation(lat, lon, geoTitle);
                             record.setGeoLocation(geoLocation);
                         }
+
+
+
 
                         // TODO
                         if (recordJSON.has("bodyLocation")) {

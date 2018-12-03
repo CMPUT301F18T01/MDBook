@@ -110,14 +110,14 @@ public class AddRecordActivity extends AppCompatActivity {
             public void onClick(View v) {
                 recordDate = new Date();
                 if (record == null) {
-                    Record record = new Record(headline.getText().toString(), recordDate, Description.getText().toString());
+                    record = new Record(headline.getText().toString(), recordDate, Description.getText().toString());
                 }
                 if (Lat != null){
                     if (Long != null){
                         if (Title != null){
-                            record.getLocation().setLat(Lat);
-                            record.getLocation().setLong(Long);
-                            record.getLocation().setTitle(Title);
+                            if (record.getLocation() == null){
+                                record.setLocation(new GeoLocation(Lat, Long, Title));
+                            }
                         }
                     }
                 }
@@ -182,7 +182,7 @@ public class AddRecordActivity extends AppCompatActivity {
      */
     public void openGeoLoc(){
         Intent launchmap= new Intent(this, MapActivity.class);
-        startActivity(launchmap);
+        startActivityForResult(launchmap, MAP_ACTIVITY_REQUEST_CODE);
     }
 
 

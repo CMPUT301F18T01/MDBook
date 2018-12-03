@@ -56,7 +56,7 @@ class Record implements Serializable, Comparable {
             this.title = title;
             this.date = new Date();
             this.description = "";
-            this.geoLocation = new GeoLocation();
+            this.geoLocation = null;
             this.bodyLocation = null;
             this.photos = new ArrayList<>();
             this.comment = "";
@@ -80,7 +80,7 @@ class Record implements Serializable, Comparable {
             this.title = title;
             this.date = date;
             this.description = description;
-            this.geoLocation = new GeoLocation();
+            this.geoLocation = null;
             this.bodyLocation = null;
             this.photos = new ArrayList<>();
             this.comment = "";

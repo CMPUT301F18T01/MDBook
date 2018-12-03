@@ -16,6 +16,12 @@ class GeoLocation implements Serializable {
     private Double Long;
     private String title;
 
+    public GeoLocation(Double Lat, Double Long, String title){
+        this.Lat = Lat;
+        this.Long = Long;
+        this.title = title;
+    }
+
     public Double getLat() {
         return Lat;
     }
