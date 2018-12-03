@@ -7,10 +7,10 @@ import java.util.ArrayList;
 // might be better off leaving body location as just a name for a string, we'll see
 class BodyLocation implements Serializable {
 
-    private  int Frontx;
-    private int Fronty;
-    private  int Backx;
-    private int Backy;
+    private  Integer Frontx;
+    private Integer Fronty;
+    private  Integer Backx;
+    private Integer Backy;
 
     private Photo photo;
 
@@ -34,16 +34,16 @@ class BodyLocation implements Serializable {
         this.Backy = y;
     }
 
-    public int getFrontx(){
+    public Integer getFrontx(){
         return this.Frontx;
     }
-    public int getFronty(){
+    public Integer getFronty(){
         return this.Fronty;
     }
-    public int getBackx(){
+    public Integer getBackx(){
         return this.Backx;
     }
-    public int getBacky(){
+    public Integer getBacky(){
         return this.Backy;
     }
 

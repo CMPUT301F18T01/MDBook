@@ -368,6 +368,7 @@ class ElasticsearchController {
                     decomposition.getRecords().put(recordID, recordJSON);
 
                     /* Get photos */
+                    //TODO: sync local file and cloud file?
                     for(String photoID : (ArrayList<String>) recordJSON.get("photos")){
                         Get photoGet = new Get.Builder(index, photoID)
                                 .type("photo")
@@ -512,6 +513,7 @@ class ElasticsearchController {
             }
 
             /* Add/Update new/existing photos */
+            //TODO: sync local file and cloud file
             for (String photoID : userDecomp.getPhotos().keySet()){
                 Photo photo = userDecomp.getPhotos().get(photoID);
                 if (!this.idlists.get("photoIDs").contains(photoID)){
@@ -525,6 +527,7 @@ class ElasticsearchController {
             }
 
             /* Delete removed photos */
+            //TODO: sync local file and cloud file
             for (String photoID : cloudPatient.getPhotos().keySet()) {
                 if (!userDecomp.getPhotos().containsKey(photoID)) {
                     this.idlists.get("photoIDs").remove(photoID);

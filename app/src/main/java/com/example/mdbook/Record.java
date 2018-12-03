@@ -121,6 +121,9 @@ class Record implements Serializable, Comparable {
         return this.bodyLocations;
     }
 
+    public void setBodyLocations(ArrayList<BodyLocation> bodyLocations) {
+        this.bodyLocations = bodyLocations;
+    }
 
     public void removeBodyLocation(BodyLocation bodylocation){
         if(bodyLocations.contains(bodylocation)){

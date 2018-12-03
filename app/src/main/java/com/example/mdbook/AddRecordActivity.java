@@ -113,7 +113,14 @@ public class AddRecordActivity extends AppCompatActivity {
             public void onClick(View v) {
                 recordDate = new Date();
                 if (record == null) {
-                    record = new Record(headline.getText().toString(), recordDate, Description.getText().toString());
+                    try {
+                        record = new Record(headline.getText().toString(), recordDate, Description.getText().toString());
+                    } catch (IllegalArgumentException e){
+                        Toast.makeText(AddRecordActivity.this
+                                ,"Title required"
+                                ,Toast.LENGTH_SHORT).show();
+
+                    }
                 }
                 if (Lat != null){
                     if (Long != null){

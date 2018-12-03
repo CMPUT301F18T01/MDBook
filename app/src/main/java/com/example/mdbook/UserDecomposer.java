@@ -42,7 +42,12 @@ import java.util.HashMap;
  *      "date": DateString
  *      "description": String
  *      "geoLocation": GeoLocation
- *      "bodyLocation": BodyLocation
+ *      "bodyLocation":
+ *          "Frontx": numeric string
+ *          "Fronty": numeric string
+ *          "Backx": numeric string
+ *          "Backy": numeric string
+ *          "photo": numeric string
  *      "photos": ArrayList of photoIDs (ints)
  *      "comment": String
  * PhotoID: Photo
@@ -138,27 +143,39 @@ public class UserDecomposer {
                         recordJSON.put("date", record.getDate());
                         recordJSON.put("title", record.getTitle());
                         recordJSON.put("description", record.getDescription());
-                        recordJSON.put("bodyLocation", record.getBodyLocations());
                         recordJSON.put("comment", record.getComment());
 
                         /* Set up list for photoIDs */
-                        ArrayList<String> photoIDs = new ArrayList<>();
+                        ArrayList<JSONObject> bodyLocations = new ArrayList<>();
+                        for (BodyLocation bodyLocation : record.getBodyLocations()) {
+                            JSONObject bodyJSON = new JSONObject();
+                            bodyJSON.put("Frontx", bodyLocation.getFrontx().toString());
+                            bodyJSON.put("Fronty", bodyLocation.getFronty().toString());
+                            bodyJSON.put("Backx", bodyLocation.getBackx().toString());
+                            bodyJSON.put("Backy", bodyLocation.getBacky().toString());
 
-                        for (Photo photo : record.getPhotos()) {
+                            Photo photo = bodyLocation.getPhoto();
                             /* Assign an ID to new photos */
                             if (photo.getPhotoid() == "-1") {
                                 photo.setPhotoid(elasticsearchController.generateID());
                             }
 
-                            /*Add photo ID to recordJSON */
-                            photoIDs.add(photo.getPhotoid());
+                            // TODO: actually move the photo
+                            /* update photo filename */
+                            photo.setFilepath(photo.getPhotoid());
+
+                            /* Add photo to bodylocation */
+                            bodyJSON.put("photo", photo.getPhotoid());
 
                             /* Add photo to hashmap */
                             photos.put(photo.getPhotoid(), photo);
+
+                            /* Add bodylocation to recordJSON */
+                            bodyLocations.add(bodyJSON);
                         }
 
-                        /* Add photo ids to recordJSON */
-                        recordJSON.put("photos", photoIDs);
+                        /* Add bodylocations to recordJSON */
+                        recordJSON.put("bodyLocations", bodyLocations);
 
                         /* Add recordJSON to hashmap */
                         records.put(record.getRecordID(), recordJSON);
@@ -261,16 +278,27 @@ public class UserDecomposer {
 
 
                         // TODO
-                        if (recordJSON.has("bodyLocation")) {
+                        if (recordJSON.has("bodyLocations")) {
                             //BodyLocation bodyLocation = (BodyLocation) recordJSON.get("bodyLocation");
-                            BodyLocation bodyLocation = new BodyLocation();
-                            record.addBodyLocation(bodyLocation);
-                        }
-                        /* Add photos */
-                        for (String photoID : (ArrayList<String>) recordJSON.get("photos")) {
-                            Photo photo = decomposition.getPhotos().get(photoID);
-                            photo.setPhotoid(photoID);
-                            record.addPhoto(photo);
+                            ArrayList<JSONObject> bodyJSONs = (ArrayList<JSONObject>) recordJSON.get("bodyLocations");
+                            ArrayList<BodyLocation> bodyLocations = new ArrayList<>();
+                            for (JSONObject bodyJSON : bodyJSONs){
+                                BodyLocation bodyLocation = new BodyLocation();
+                                Integer fx = Integer.valueOf(bodyJSON.getString("Frontx"));
+                                Integer fy = Integer.valueOf(bodyJSON.getString("Fronty"));
+                                Integer bx = Integer.valueOf(bodyJSON.getString("Backx"));
+                                Integer by = Integer.valueOf(bodyJSON.getString("Backy"));
+                                String photoID = bodyJSON.getString("photo");
+                                Photo photo = decomposition.getPhotos().get(photoID);
+
+                                bodyLocation.setFrontLoc(fx,fy);
+                                bodyLocation.setBackLoc(bx,by);
+                                bodyLocation.setPhoto(photo);
+
+                                bodyLocations.add(bodyLocation);
+                            }
+
+                            record.setBodyLocations(bodyLocations);
                         }
 
                         problem.addRecord(record);
