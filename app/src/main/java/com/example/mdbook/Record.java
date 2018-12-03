@@ -33,7 +33,7 @@ class Record implements Serializable, Comparable {
     private Date date;
     private String description;
     private GeoLocation geoLocation;
-    private BodyLocation bodyLocation;
+    private ArrayList<BodyLocation> bodyLocations;
     private ArrayList<Photo> photos;
     private String comment;
     private String recordID = "-1";
@@ -56,8 +56,8 @@ class Record implements Serializable, Comparable {
             this.title = title;
             this.date = new Date();
             this.description = "";
+            this.bodyLocations = new ArrayList<>();
             this.geoLocation = null;
-            this.bodyLocation = null;
             this.photos = new ArrayList<>();
             this.comment = "";
         }
@@ -80,8 +80,13 @@ class Record implements Serializable, Comparable {
             this.title = title;
             this.date = date;
             this.description = description;
+
+
+            this.bodyLocations = new ArrayList<>();
+
             this.geoLocation = null;
-            this.bodyLocation = null;
+
+
             this.photos = new ArrayList<>();
             this.comment = "";
         }
@@ -145,17 +150,23 @@ class Record implements Serializable, Comparable {
      * @see BodyLocation
      */
     public void setBodyLocation(BodyLocation bodyLocation) {
-        this.bodyLocation = bodyLocation;
+        bodyLocations.add(bodyLocation);
     }
 
     /**
      * @return Body location of the record, returns null if no body location has been set.
      * @see BodyLocation
      */
-    public BodyLocation getBodyLocation() {
-        return this.bodyLocation;
+    public ArrayList<BodyLocation> getBodyLocation() {
+        return this.bodyLocations;
     }
 
+
+    public void removeBodyLocation(BodyLocation bodylocation){
+        if(bodyLocations.contains(bodylocation)){
+            bodyLocations.remove(bodylocation);
+        }
+    }
     /**
      * Sets record comment. Records can only have 1 comment.
      * @param comment The new comment.

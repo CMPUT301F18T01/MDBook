@@ -269,7 +269,7 @@ public class UserDecomposer {
                         // TODO
                         if (recordJSON.has("bodyLocation")) {
                             //BodyLocation bodyLocation = (BodyLocation) recordJSON.get("bodyLocation");
-                            BodyLocation bodyLocation = new BodyLocation("");
+                            BodyLocation bodyLocation = new BodyLocation();
                             record.setBodyLocation(bodyLocation);
                         }
                         /* Add photos */
