@@ -18,6 +18,8 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 /**
  * Activity which lists the records for a certain problem, viewed by the Patient
@@ -52,6 +54,20 @@ public class ListRecordActivity extends AppCompatActivity {
             problemPos = getIntent().getExtras().getInt("problemPos");
         }
         recordList = patient.getProblems().get(problemPos).getRecords();
+        Collections.sort(recordList, new Comparator<Record>() {
+            @Override
+            public int compare(Record p, Record q) {
+                {
+                    if (p.getDate().before(q.getDate())) {
+                        return 11;
+                    } else if (p.getDate().after(q.getDate())) {
+                        return -1;
+                    } else {
+                        return 0;
+                    }
+                }
+            }
+        });
 
 
 
