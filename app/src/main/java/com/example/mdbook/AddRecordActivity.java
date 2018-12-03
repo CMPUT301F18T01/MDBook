@@ -14,6 +14,7 @@ package com.example.mdbook;
 import android.app.Dialog;
 import android.content.Intent;
 //import android.media.Image;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -49,9 +50,15 @@ import java.util.Date;
 public class AddRecordActivity extends AppCompatActivity {
     private static final String TAG = "AddRecordActivity";
     private static final int ERROR_DIALOG_REQUEST = 9001;
+    private static final Integer MAP_ACTIVITY_REQUEST_CODE = 0;
+    private static final Integer BODY_ACTIVITY_REQUEST_CODE = 5;
     // Initialize all the required imageViews ans Buttons
 
     private ArrayList<Record> recordList;
+    private Record record;
+    private Double Lat;
+    private Double Long;
+    private String Title;
     private Integer problemPos;
     private Date recordDate;
     private ImageView image;
@@ -61,6 +68,8 @@ public class AddRecordActivity extends AppCompatActivity {
     private Button body;
     private Button save;
     private Button cancel;
+    private ArrayList<BodyLocation> bodylocationlist = new ArrayList<BodyLocation>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +82,7 @@ public class AddRecordActivity extends AppCompatActivity {
         geo = findViewById(R.id.geo);
         body = findViewById(R.id.body);
         image = findViewById(R.id.addImage);
-        save = findViewById(R.id.save);
+        save = findViewById(R.id.done);
         cancel = findViewById(R.id.cancel);
 
         UserManager.initManager();
@@ -81,7 +90,6 @@ public class AddRecordActivity extends AppCompatActivity {
         recordList = new ArrayList<>();
         final Patient patient = (Patient) UserController.getController().getUser();
         problemPos = getIntent().getExtras().getInt("problemPos");
-
 
         image.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,12 +110,33 @@ public class AddRecordActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 recordDate = new Date();
-                Record record = new Record(headline.getText().toString(),recordDate,Description.getText().toString());
+                if (record == null) {
+                    record = new Record(headline.getText().toString(), recordDate, Description.getText().toString());
+                }
+                if (Lat != null){
+                    if (Long != null){
+                        if (Title != null){
+                            if (record.getLocation() == null){
+                                record.setLocation(new GeoLocation(Lat, Long, Title));
+                            }
+                        }
+                    }
+                }
+                if(bodylocationlist != null){
+                    for(int i = 0; i<bodylocationlist.size(); i++) {
+                        record.setBodyLocation(bodylocationlist.get(i));
+                    }
+                    Toast toast = Toast.makeText(getApplicationContext(), "bodylocation(s) added to record", Toast.LENGTH_SHORT);
+                    toast.show();
+
+                }
                 patient.getProblems().get(problemPos).addRecord(record);
                 userManager.saveUser(patient);
                 Toast.makeText(AddRecordActivity.this
-                        ,"Record " + headline.getText().toString() + " Added",Toast.LENGTH_SHORT).show();
-                endActivity();
+                        ,"Record " + headline.getText().toString() + " Added"
+                        ,Toast.LENGTH_SHORT).show();
+                setResult(RESULT_OK);
+                finish();
 
             }
         });
@@ -116,7 +145,7 @@ public class AddRecordActivity extends AppCompatActivity {
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               endActivity();
+                endActivity();
             }
         });
 
@@ -131,12 +160,33 @@ public class AddRecordActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode,@Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == MAP_ACTIVITY_REQUEST_CODE){
+            if (resultCode == RESULT_OK){
+                Lat = (Double) data.getSerializableExtra("Lat");
+                Long = (Double) data.getSerializableExtra("Long");
+                Title = (String) data.getSerializableExtra("Title");
+            }
+        }
+        if(requestCode == BODY_ACTIVITY_REQUEST_CODE){
+            if(resultCode != RESULT_CANCELED && data != null){
+                BodyLocation bodylocation = (BodyLocation) data.getSerializableExtra("bodylocation");
+                bodylocationlist.add(bodylocation);
+            }
+        }
+    }
+
+
+
     /**
      * Creates a new intent for switch to the AddBodyLocationActivity
      */
     public void goAddBodyLoc(){
         Intent addRecordPage = new Intent(this, NewBodyLocationView.class);
-        startActivity(addRecordPage);
+        startActivityForResult(addRecordPage, BODY_ACTIVITY_REQUEST_CODE);
+
     }
 
     /**
@@ -150,7 +200,7 @@ public class AddRecordActivity extends AppCompatActivity {
      */
     public void openGeoLoc(){
         Intent launchmap= new Intent(this, MapActivity.class);
-        startActivity(launchmap);
+        startActivityForResult(launchmap, MAP_ACTIVITY_REQUEST_CODE);
     }
 
 

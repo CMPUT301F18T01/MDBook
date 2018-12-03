@@ -38,15 +38,13 @@ public class ViewMapActivity extends AppCompatActivity implements OnMapReadyCall
 
 
     /* Vars */
-    private List<Address> myAddress;
+    private Double Lat;
+    private Double Long;
+    private String Title;
     private Boolean mLocationPermissionGranted = false;
     private GoogleMap mMap;
-    private Address address;
-    private Record record;
     private UserManager userManager;
-    private ArrayList<Problem> problems;
-    private ArrayList<Record> records;
-    private ArrayList<GeoLocation> GeoList;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -55,21 +53,20 @@ public class ViewMapActivity extends AppCompatActivity implements OnMapReadyCall
         UserManager.initManager();
         userManager = UserManager.getManager();
 
-        address = getIntent().getParcelableExtra("recieveAddress");
-        mMap = getIntent().getParcelableExtra("recieveAllAddress");
+        Lat = (Double) getIntent().getSerializableExtra("recieveLat");
+        Long = (Double) getIntent().getSerializableExtra("recieveLong");
+        Title = (String) getIntent().getSerializableExtra("recieveTitle");
 
 
-        //getProblemLocation();
+
         getLocationPermission();
-        //viewRecordLocation();
-        //initMap();
+
     }
 
     private void init(){
         Log.d(TAG,"init: initializing");
-        if (address != null){
-            //address =myAddress.get(i);
-            moveCamera(new LatLng(address.getLatitude(), address.getLongitude()),DEFAULT_ZOOM, address.getAddressLine(0));
+        if (Lat !=null && Long != null && Title != null){
+            moveCamera(new LatLng(Lat, Long),DEFAULT_ZOOM, Title);
         }
     }
 
@@ -160,36 +157,6 @@ public class ViewMapActivity extends AppCompatActivity implements OnMapReadyCall
             init();
         }
     }
-    /*
-    public void viewRecordLocation(){
-        myAddress = record.getLocation().getAddressList();
-    }*/
-
-    /*
-    public void getProblemLocation(){
-        Patient patient = (Patient) UserController.getController().getUser();
-        problems = patient.getProblems();
-        GeoList = new ArrayList<>();
-        myAddress = new ArrayList<>();
-        for (int i = 0; i < problems.size();i++)
-        {
-            Problem problem = problems.get(i);
-            records = problem.getRecords();
-            for(int j = 0 ; j < records.size(); j++){
-                Record record = records.get(j);
-                GeoList.add(record.getLocation());
-            }
-        }
-        for (int i = 0; i < GeoList.size(); i++) {
-            if (GeoList.get(i) != null) {
-                ArrayList<Address> addressList = GeoList.get(i).getAddressList();
-                for (int j = 0; j < addressList.size(); j++) {
-                    myAddress.add(addressList.get(i));
-                }
-            }
-        }
-
-    }*/
 
 
     @Override
