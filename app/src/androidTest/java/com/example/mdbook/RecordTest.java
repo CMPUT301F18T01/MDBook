@@ -47,15 +47,7 @@ public class RecordTest extends TestCase {
         record.setLocation(geoLocation);
         assertEquals(geoLocation, record.getLocation());
 
-        for(int i = 0; i<9;i++){
-            record.addPhoto(new Photo());
-        }
-        Photo photo = new Photo();
-        record.addPhoto(photo);
-        assertTrue(record.getPhotos().contains(photo));
-
-
-        BodyLocation bodyLocation = new BodyLocation("arm");
+        BodyLocation bodyLocation = new BodyLocation();
         record.addBodyLocation(bodyLocation);
         assertEquals(bodyLocation, record.getBodyLocations());
 

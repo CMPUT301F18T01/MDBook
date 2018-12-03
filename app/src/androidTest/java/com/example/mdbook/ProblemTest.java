@@ -110,7 +110,9 @@ public class ProblemTest extends TestCase {
     public void testAddRemoveRecord(){
         Record record = new Record("title");
         BodyLocation bodyLocation = new BodyLocation();
-        record.addBodyLocation(new BodyLocation());
+        Photo photo = new Photo("");
+        bodyLocation.setPhoto(photo);
+        record.addBodyLocation(bodyLocation);
 
 
         //test for adding problem to record
