@@ -3,6 +3,7 @@ package com.example.mdbook;
 import android.accounts.NetworkErrorException;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.support.v7.app.AppCompatActivity;
@@ -47,6 +48,11 @@ public class LoginActivity extends AppCompatActivity {
         LocalStorageController.init(sharedPreferences);
         ElasticsearchController.init(connectivityManager);
         UserManager.initManager();
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        SyncController syncController = new SyncController();
+        registerReceiver(syncController,filter);
+
+
 
 
         setContentView(R.layout.activity_login);
