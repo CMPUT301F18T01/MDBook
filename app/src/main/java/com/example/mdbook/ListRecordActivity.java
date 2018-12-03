@@ -27,7 +27,7 @@ import java.util.Comparator;
  * @see Patient
  *
  * @author Thomas Chan
- * 
+ *
  */
 public class ListRecordActivity extends AppCompatActivity {
 
@@ -89,9 +89,10 @@ public class ListRecordActivity extends AppCompatActivity {
             public void viewmapClick(int postion) {
                 if (isServicesOK()) {
                     Intent launchmap = new Intent(ListRecordActivity.this, ViewMapActivity.class);
-                    if (recordList.get(postion).getLocation().getAddressList().size() > 0){
-                        Address address = recordList.get(postion).getLocation().getAddressList().get(0);
-                        launchmap.putExtra("recieveAddress", address);
+                    if (recordList.get(postion).getLocation() != null){
+                        launchmap.putExtra("recieveLat",recordList.get(postion).getLocation().getLat());
+                        launchmap.putExtra("recieveLong",recordList.get(postion).getLocation().getLong());
+                        launchmap.putExtra("recieveTitle",recordList.get(postion).getLocation().getTitle());
                         startActivity(launchmap);
                     }else {
                         Toast.makeText(ListRecordActivity.this, "No location for record",Toast.LENGTH_SHORT).show();
@@ -128,6 +129,7 @@ public class ListRecordActivity extends AppCompatActivity {
                 UserManager userManager = UserManager.getManager();
                 Patient patient = (Patient) UserController.getController().getUser();
                 recordList = patient.getProblems().get(problemPos).getRecords();
+                mAdapter.notifyDataSetChanged();
             }
         }
     }

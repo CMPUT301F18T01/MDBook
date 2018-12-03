@@ -200,12 +200,12 @@ public class UserManager {
 
         /* Check if userID corresponds with a patient */
         if (elasticsearchController.existsPatient(userID)){
-                return decomposer.compose(elasticsearchController.getPatientDecomposition(userID));
+            return decomposer.compose(elasticsearchController.getPatientDecomposition(userID));
         }
 
         /* Check if userID corresponds with a caregiver */
         else if (elasticsearchController.existsCaregiver(userID)){
-                return decomposer.compose(elasticsearchController.getCaregiverDecomposition(userID));
+            return decomposer.compose(elasticsearchController.getCaregiverDecomposition(userID));
         }
 
         else {
@@ -228,29 +228,29 @@ public class UserManager {
         dataManager.addToQueue(user);
 
         // TODO: this should also be triggered whenever there is an internet connection
-       if (elasticsearchController.isConnected()){
-           ArrayList<User> toupload = (ArrayList<User>) dataManager.getPushQueue().clone();
-           for (User user1 : toupload){
+        if (elasticsearchController.isConnected()){
+            ArrayList<User> toupload = (ArrayList<User>) dataManager.getPushQueue().clone();
+            for (User user1 : toupload){
 
-               UserDecomposer.Decomposition userDecomp;
-               try {
-                   userDecomp = decomposer.decompose(user1);
-                   if (user1.getClass() == Patient.class) {
-                       if (elasticsearchController.pushPatient(userDecomp)) {
-                           dataManager.removeFromQueue(user1);
-                       }
-                   }
-                   else {
-                       if (elasticsearchController.pushCaregiver(userDecomp)) {
-                           dataManager.removeFromQueue(user1);
-                       }
-                   }
+                UserDecomposer.Decomposition userDecomp;
+                try {
+                    userDecomp = decomposer.decompose(user1);
+                    if (user1.getClass() == Patient.class) {
+                        if (elasticsearchController.pushPatient(userDecomp)) {
+                            dataManager.removeFromQueue(user1);
+                        }
+                    }
+                    else {
+                        if (elasticsearchController.pushCaregiver(userDecomp)) {
+                            dataManager.removeFromQueue(user1);
+                        }
+                    }
 
-               } catch (NetworkErrorException e) {
-                   break;
-               }
-           }
-       }
+                } catch (NetworkErrorException e) {
+                    break;
+                }
+            }
+        }
     }
 
     /**

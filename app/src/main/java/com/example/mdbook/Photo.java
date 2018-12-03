@@ -1,18 +1,44 @@
 package com.example.mdbook;
 
+import android.graphics.Bitmap;
+import android.location.Address;
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+
 // class to hold photo objects
-class Photo {
+
+class Photo implements Serializable {
+
     private String photoid = "-1";
-    public Photo(){
 
-    }
+    private  String filepath;
 
-    public String getPhotoid() {
-        return photoid;
-    }
+    public Photo(String path) {
+        this.filepath = path;
 
-    public void setPhotoid(String photoid) {
-        this.photoid = photoid;
-    }
-}
+        }
+        public String getPhotoid() {
+                return photoid;
+            }
+
+            public void setPhotoid(String photoid) {
+
+                this.photoid = photoid;
+            }
+
+            public String getFilepath() {
+
+                return filepath;
+            }
+
+            public void setFilepath(String path) {
+
+                this.filepath = path;
+            }
+
+
+        }
 

@@ -8,6 +8,7 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -29,6 +30,7 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
@@ -61,7 +63,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private ImageView mAddLocation;
 
 
+
     /* Vars */
+    private SupportMapFragment mapFragment;
     private Address address;
     private List<Address> myAddress = new ArrayList<>();
     private Patient patient;
@@ -222,7 +226,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
      */
     private void initMap(){
         Log.d(TAG, "initMap: initializing map");
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+        mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(MapActivity.this);
     }
@@ -309,7 +313,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             mMap.setMyLocationEnabled(true);
             mMap.getUiSettings().setMyLocationButtonEnabled(false);
             init();
-
         }
     }
 
@@ -347,7 +350,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             public void onClick(DialogInterface dialog, int which) {
                if (address != null) {
                    Intent intent = new Intent();
-                   intent.putExtra("address", address);
+                   intent.putExtra("Lat", address.getLatitude());
+                   intent.putExtra("Long", address.getLongitude());
+                   intent.putExtra("Title", address.getAddressLine(0));
                    setResult(RESULT_OK,intent);
                    finish();
 
@@ -362,4 +367,19 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         });
         alert.create().show();
     }
+
+    /*
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mapFragment != null) {
+            this.getSupportFragmentManager().beginTransaction().remove(mapFragment).commitAllowingStateLoss();
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        //super.onSaveInstanceState(outState, outPersistentState);
+    }
+    */
 }

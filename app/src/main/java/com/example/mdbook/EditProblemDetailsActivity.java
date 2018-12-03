@@ -23,8 +23,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
-
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -66,7 +64,7 @@ public class EditProblemDetailsActivity extends AppCompatActivity implements Dat
         editTitle = findViewById(R.id.showTitle);
         editDate = findViewById(R.id.datePickerEdit);
         editDescription = findViewById(R.id.editDescription);
-        save = findViewById(R.id.save);
+        save = findViewById(R.id.done);
         cancel = findViewById(R.id.cancel);
         UserManager.initManager();
         final UserManager userManager = UserManager.getManager();

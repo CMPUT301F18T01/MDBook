@@ -96,6 +96,13 @@ public class ElasticSearchTools {
         new jestIndexTask().execute(JestID);
     }
 
+    public static void setRecordMapping(String mapping) throws JSONException {
+        JSONObject mappingJSON = new JSONObject(mapping);
+        Index JestID = new Index.Builder(mappingJSON).index("cmput301f18t01test").type("record")
+                .build();
+        new jestIndexTask().execute(JestID);
+    }
+
     /**
      * Provides async interface for running jest index tasks.
      */
