@@ -27,7 +27,6 @@ public class ChooseUploadActivity extends AppCompatActivity {
 
     Button uploadFromGallery;
     Button openCamera;
-    private UserManager userManager;
 
     public static final int GET_FROM_GALLERY_REQUEST_CODE = 1;
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 2;

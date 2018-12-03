@@ -114,12 +114,10 @@ public class NewBodyLocationView extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //Todo: Save data into the user manager
-                Intent intent = new Intent(NewBodyLocationView.this, AddRecordActivity.class);
-                intent.putExtra("bodylocation", bodylocation);
-                startActivity(intent);
+
                 //Toast toast = Toast.makeText(getApplicationContext(), "Body Location successfully added!", Toast.LENGTH_SHORT);
                 //toast.show();
-                BackToAddProblem();
+                //BackToAddProblem();
 
             }
         });
@@ -161,7 +159,12 @@ public class NewBodyLocationView extends AppCompatActivity {
 
                 Photo photo = new Photo(uri);
                 bodylocation.setPhoto(photo);
-
+                if(bodylocation != null) {
+                    Intent intent = new Intent();
+                    intent.putExtra("bodylocation", bodylocation);
+                    setResult(RESULT_OK, intent);
+                    finish();
+                }
 
 
 

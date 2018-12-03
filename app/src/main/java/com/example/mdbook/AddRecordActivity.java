@@ -52,6 +52,8 @@ public class AddRecordActivity extends AppCompatActivity {
     private static final String TAG = "AddRecordActivity";
     private static final int ERROR_DIALOG_REQUEST = 9001;
     private static final Integer MAP_ACTIVITY_REQUEST_CODE = 0;
+    private static final Integer BODYLOC_ACTIVITY_REQUEST_CODE = 1;
+
     // Initialize all the required imageViews ans Buttons
 
     private Intent launchmap;
@@ -69,8 +71,8 @@ public class AddRecordActivity extends AppCompatActivity {
     private Button reminder;
     private Button save;
     private Button cancel;
-    private BodyLocation bodylocation;
-    private static ArrayList<BodyLocation> bodyLocationList;
+    private ArrayList<BodyLocation> bodyLocationList;
+    private String path;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,14 +100,7 @@ public class AddRecordActivity extends AppCompatActivity {
             Toast toast = Toast.makeText(getApplicationContext(), "something", Toast.LENGTH_SHORT);
             toast.show();
         }
-        else if(bodyLocationList.size()>0){
-            for(int i = 0; i < bodyLocationList.size(); i++){
-                Photo photo = bodyLocationList.get(i).getPhoto();
-                String path = photo.getFilepath();
-                Toast toast = Toast.makeText(getApplicationContext(), path, Toast.LENGTH_SHORT);
-                toast.show();
-            }
-        }
+
         body.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -113,11 +108,6 @@ public class AddRecordActivity extends AppCompatActivity {
                 //AddRecordActivity.this.finish();
             }
         });
-        if(getIntent().getExtras().getSerializable("bodylocation")!= null) {
-            bodylocation = (BodyLocation) getIntent().getExtras().getSerializable("bodylocation");
-            bodyLocationList.add(bodylocation);
-
-        }
 
 
         // Switches to addBodyLocationActivity upon the click of the save button
@@ -164,6 +154,8 @@ public class AddRecordActivity extends AppCompatActivity {
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toast toast = Toast.makeText(getApplicationContext(), path, Toast.LENGTH_LONG);
+                toast.show();
                finish();
             }
         });
@@ -192,20 +184,43 @@ public class AddRecordActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == MAP_ACTIVITY_REQUEST_CODE){
-            if (resultCode == RESULT_OK){
+        if (requestCode == MAP_ACTIVITY_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
                 address = (Address) data.getParcelableExtra("address");
                 address.getAddressLine(0);
             }
         }
-    }
+        else if (requestCode == BODYLOC_ACTIVITY_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                if (getIntent().getExtras().getSerializable("bodylocation") != null) {
+                    BodyLocation bodylocation = (BodyLocation) getIntent().getExtras().getSerializable("bodylocation");
+                    path = bodylocation.getPhoto().getFilepath();
+                    bodyLocationList.add(bodylocation);
+
+
+                    }
+
+
+                }
+            }
+        }
+
+//    if(bodyLocationList.size()>0){
+//        for(int i = 0; i < bodyLocationList.size(); i++){
+//            Photo photo = bodyLocationList.get(i).getPhoto();
+//            String path = photo.getFilepath();
+//            Toast toast = Toast.makeText(getApplicationContext(), path, Toast.LENGTH_SHORT);
+//            toast.show();
+//        }
+//    }
 
     /**
      * Creates a new intent for switch to the AddBodyLocationActivity
      */
     public void goAddBodyLoc(){
         Intent addRecordPage = new Intent(this, NewBodyLocationView.class);
-        startActivity(addRecordPage);
+
+        startActivityForResult(addRecordPage, BODYLOC_ACTIVITY_REQUEST_CODE);
     }
 
 
