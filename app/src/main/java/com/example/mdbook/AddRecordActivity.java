@@ -51,6 +51,7 @@ public class AddRecordActivity extends AppCompatActivity {
     private static final String TAG = "AddRecordActivity";
     private static final int ERROR_DIALOG_REQUEST = 9001;
     private static final Integer MAP_ACTIVITY_REQUEST_CODE = 0;
+    private static final Integer BODY_ACTIVITY_REQUEST_CODE = 5;
     // Initialize all the required imageViews ans Buttons
 
     private ArrayList<Record> recordList;
@@ -67,8 +68,8 @@ public class AddRecordActivity extends AppCompatActivity {
     private Button body;
     private Button save;
     private Button cancel;
-    private ArrayList<BodyLocation> bodylocationlist;
-    private BodyLocation bodylocation;
+    private ArrayList<BodyLocation> bodylocationlist = new ArrayList<BodyLocation>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,12 +90,6 @@ public class AddRecordActivity extends AppCompatActivity {
         recordList = new ArrayList<>();
         final Patient patient = (Patient) UserController.getController().getUser();
         problemPos = getIntent().getExtras().getInt("problemPos");
-
-        if(bodylocation != null) {
-            bodylocation = (BodyLocation) getIntent().getExtras().getSerializable("bodylocation");
-            bodylocationlist.add(bodylocation);
-        }
-
 
         image.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -166,24 +161,32 @@ public class AddRecordActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == MAP_ACTIVITY_REQUEST_CODE){
-            if (resultCode == RESULT_OK){
-                Lat = (Double) data.getSerializableExtra("Lat");
-                Long = (Double) data.getSerializableExtra("Long");
-                Title = (String) data.getSerializableExtra("Title");
+//        if (requestCode == MAP_ACTIVITY_REQUEST_CODE){
+//            if (resultCode == RESULT_OK){
+//                Lat = (Double) data.getSerializableExtra("Lat");
+//                Long = (Double) data.getSerializableExtra("Long");
+//                Title = (String) data.getSerializableExtra("Title");
+//            }
+//        }
+        if(requestCode == BODY_ACTIVITY_REQUEST_CODE){
+            if(resultCode != RESULT_CANCELED && data != null){
+                BodyLocation bodylocation = (BodyLocation) data.getSerializableExtra("bodylocation");
+                bodylocationlist.add(bodylocation);
             }
         }
     }
+
+
 
     /**
      * Creates a new intent for switch to the AddBodyLocationActivity
      */
     public void goAddBodyLoc(){
         Intent addRecordPage = new Intent(this, NewBodyLocationView.class);
-        startActivity(addRecordPage);
-        endActivity();
+        startActivityForResult(addRecordPage, BODY_ACTIVITY_REQUEST_CODE);
+
     }
 
     /**
