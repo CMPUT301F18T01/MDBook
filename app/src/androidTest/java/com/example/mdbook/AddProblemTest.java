@@ -42,13 +42,13 @@ public class AddProblemTest
         solo.clickOnView(solo.getView(R.id.registerBtn));
 
         solo.assertCurrentActivity("Wrong Activity", RegisterActivity.class);
-        solo.enterText((EditText) solo.getView(R.id.etUserIDR), "rajkapadia");
+        solo.enterText((EditText) solo.getView(R.id.etUserIDR), "rajkapadia1234");
         solo.enterText((EditText) solo.getView(R.id.etEmail), "rajkapadia@test.com");
         solo.enterText((EditText) solo.getView(R.id.etPhoneNumber), "0000000000");
         solo.clickOnView(solo.getView(R.id.registerButton));
 
         solo.goBackToActivity("LoginActivity");
-        solo.enterText((EditText) solo.getView(R.id.etUserID), "rajkapadia");
+        solo.enterText((EditText) solo.getView(R.id.etUserID), "rajkapadia1234");
         solo.clickOnView(solo.getView(R.id.loginButton));
 
 
@@ -65,7 +65,12 @@ public class AddProblemTest
         solo.clickOnView(solo.getView(R.id.saveButton));
 
         solo.assertCurrentActivity("Wrong Activity", ListProblemActivity.class);
-
     }
+
+    @Test
+    public void testEnd() throws Exception{
+        UserController.getController().clearUser();
+    }
+
 
 }
