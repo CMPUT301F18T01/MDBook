@@ -1,13 +1,18 @@
+/*
+ * ElasticsearchTools
+ *
+ * Version 1.0.0
+ *
+ * 2018-12-02
+ *
+ * Copyright (c) 2018. All rights reserved.
+ */
 package com.example.mdbook;
 
-import android.accounts.NetworkErrorException;
 import android.os.AsyncTask;
 
-import com.google.gson.internal.LinkedTreeMap;
 import com.searchly.jestdroid.DroidClientConfig;
 import com.searchly.jestdroid.JestClientFactory;
-
-import junit.framework.TestCase;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -20,8 +25,24 @@ import io.searchbox.client.JestClient;
 import io.searchbox.core.DocumentResult;
 import io.searchbox.core.Index;
 
-public class ClearESMetadata extends TestCase {
-    public void testResetStringIDs() {
+/**
+ * Provides a suite of tools to Manage Elasticsearch cloud data.
+ * Elasticsearch Servers
+ *  * http://cmput301.softwareprocess.es:8080/cmput301f18t01test
+ *  * http://cmput301.softwareprocess.es:8080/cmput301f18t01
+ *  * http://es2.softwareprocess.ca:8080/cmput301f18t01test
+ *  * http://es2.softwareprocess.ca:8080/cmput301f18t01
+ *
+ * @author Noah Burghardt
+ * @see ElasticsearchController
+ * @version 1.0.0
+ */
+public class ElasticSearchTools {
+
+    /**
+     * Sets all metadata at index/metadata/idlists to empty lists and makes availableID = "0".
+     */
+    public static void ResetStringIDs() {
 
         HashMap<String, ArrayList<String>> idlists = new HashMap<>();
         String availableID = "0";
@@ -38,7 +59,7 @@ public class ClearESMetadata extends TestCase {
         try {
             IDJSON.put("availableID", availableID);
         } catch (JSONException e) {
-            fail();
+            e.printStackTrace();
         }
         Index JestID = new Index.Builder(IDJSON).index("cmput301f18t01test").type("metadata")
                 .id("idlists")
@@ -46,7 +67,10 @@ public class ClearESMetadata extends TestCase {
         new jestIndexTask().execute(JestID);
     }
 
-    public void testResetIntIDs(){
+    /**
+     * Sets all metadata at index/metadata/idlists to empty lists and makes availableID = 0.
+     */
+    public static void ResetIntIDs(){
 
 
         HashMap<String, Object> idlists = new HashMap<>();
@@ -64,7 +88,7 @@ public class ClearESMetadata extends TestCase {
         try {
             IDJSON.put("availableID", availableID);
         } catch (JSONException e) {
-            fail();
+            e.printStackTrace();
         }
         Index JestID = new Index.Builder(IDJSON).index("cmput301f18t01test").type("metadata")
                 .id("idlists")
@@ -72,8 +96,16 @@ public class ClearESMetadata extends TestCase {
         new jestIndexTask().execute(JestID);
     }
 
+    /**
+     * Provides async interface for running jest index tasks.
+     */
     private static class jestIndexTask extends AsyncTask<Index, Void, DocumentResult> {
 
+        /**
+         * Executes the given index.
+         * @param indices Indexes to be executed.
+         * @return Return value of Index (null if failed for any reason)
+         */
         @Override
         protected DocumentResult doInBackground(Index... indices) {
             for (Index index : indices) {

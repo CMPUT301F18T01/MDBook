@@ -6,49 +6,80 @@
     android:layout_height="match_parent"
     tools:context=".OptionsMenuActivity">
 
-    <LinearLayout
-        android:layout_width="361dp"
-        android:layout_height="246dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="192dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:orientation="vertical"
+    <!--<LinearLayout-->
+        <!--android:layout_width="361dp"-->
+        <!--android:layout_height="295dp"-->
+        <!--android:layout_marginStart="8dp"-->
+        <!--android:layout_marginLeft="8dp"-->
+        <!--android:layout_marginTop="184dp"-->
+        <!--android:layout_marginEnd="8dp"-->
+        <!--android:layout_marginRight="8dp"-->
+        <!--android:orientation="vertical"-->
+        <!--app:layout_constraintEnd_toEndOf="parent"-->
+        <!--app:layout_constraintHorizontal_bias="1.0"-->
+        <!--app:layout_constraintStart_toStartOf="parent"-->
+        <!--app:layout_constraintTop_toTopOf="parent">-->
+
+    <Button
+        android:id="@+id/EditProblem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="104dp"
+        android:background="@drawable/buttontemplate"
+        android:text="Edit Problem Detail"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.724"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
-            android:id="@+id/EditProblem"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Edit Problem Detail" />
+    <Button
+        android:id="@+id/EditRecord"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:background="@drawable/buttontemplate"
+        android:text="Add/View Records"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/EditProblem" />
 
-        <Button
-            android:id="@+id/EditRecord"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Add/View Records" />
+    <Button
+        android:id="@+id/RecordSlide"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/buttontemplate"
+        android:text="Show Record in Slide Mode"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/EditRecord" />
 
-        <Button
-            android:id="@+id/RecordSlide"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Show Record in Slide Mode" />
+    <Button
+        android:id="@+id/GeoLocation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/buttontemplate"
+        android:text="Show Geo Location"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/setRemindersBtn"
+        app:layout_constraintVertical_bias="0.043" />
 
-        <Button
-            android:id="@+id/GeoLocation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Show Geo Location" />
+    <Button
+        android:id="@+id/setRemindersBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/buttontemplate"
+        android:text="SET REMINDER"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/RecordSlide" />
 
-        <Button
-            android:id="@+id/setRemindersBtn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="SET REMINDER" />
-
-    </LinearLayout>
+    <!--</LinearLayout>-->
 </android.support.constraint.ConstraintLayout>

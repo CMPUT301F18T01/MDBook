@@ -46,6 +46,7 @@ class Problem implements Serializable {
             this.title = title;
             this.description = description;
             this.comments = new ArrayList<>();
+            this.date = new Date();
         }
     }
 

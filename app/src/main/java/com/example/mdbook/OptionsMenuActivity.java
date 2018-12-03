@@ -118,7 +118,9 @@ public class OptionsMenuActivity extends AppCompatActivity {
      */
     public void GeoLocation(){
         if (isServicesOK()) {
-            Intent launchmap = new Intent(this, ViewMapActivity.class);
+            Intent launchmap = new Intent(this, ViewAllMapActivity.class);
+            launchmap.putExtra("problemPos", getIntent().getExtras()
+                    .getInt("problemPos"));
             startActivity(launchmap);
         }
     }
