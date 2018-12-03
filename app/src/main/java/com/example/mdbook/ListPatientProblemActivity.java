@@ -12,6 +12,8 @@
 package com.example.mdbook;
 import android.accounts.NetworkErrorException;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -61,7 +63,7 @@ public class ListPatientProblemActivity extends AppCompatActivity implements Nav
         Caregiver caregiver = (Caregiver) UserController.getController().getUser();
         patientPos = getIntent().getExtras().getInt("patientPos");
         patientID = caregiver.getPatientList().get(patientPos);
-        SyncController syncController = new SyncController();
+
 
         try {
             patient = (Patient) userManager.fetchUser(patientID);

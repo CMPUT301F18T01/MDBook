@@ -2,6 +2,8 @@ package com.example.mdbook;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -65,7 +67,6 @@ public class ListProblemActivity extends AppCompatActivity
         UserManager.initManager();
         UserManager userManager = UserManager.getManager();
         Patient patient = (Patient) UserController.getController().getUser();
-        SyncController syncController = new SyncController();
 
         problems = patient.getProblems();
         /* Create recycler view */
