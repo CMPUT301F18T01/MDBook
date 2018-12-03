@@ -92,9 +92,8 @@ public class ImageAdapter extends PagerAdapter {
             uri = photos.get(i).getFilepath();
             Bitmap myBitmap = BitmapFactory.decodeFile(uri);
             imageView.setImageBitmap(myBitmap);
-        }
-
             container.addView(imageView, 0);
+        }
             return imageView;
 
         }
