@@ -89,7 +89,7 @@ public class ListRecordActivity extends AppCompatActivity {
             public void viewmapClick(int postion) {
                 if (isServicesOK()) {
                     Intent launchmap = new Intent(ListRecordActivity.this, ViewMapActivity.class);
-                    if (recordList.get(postion).getLocation().getLat() != null){
+                    if (recordList.get(postion).getLocation() != null){
                         launchmap.putExtra("recieveLat",recordList.get(postion).getLocation().getLat());
                         launchmap.putExtra("recieveLong",recordList.get(postion).getLocation().getLong());
                         launchmap.putExtra("recieveTitle",recordList.get(postion).getLocation().getTitle());
