@@ -12,8 +12,10 @@ package com.example.mdbook;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -22,26 +24,15 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ListView;
-import android.widget.Switch;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
 
 /**
  * Creates an activity that list all the patients for the Caregiver
@@ -64,6 +55,7 @@ public class ListPatientActivity extends AppCompatActivity implements Navigation
     private PatientAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutmanager;
     private Caregiver caregiver;
+    private FloatingActionButton fab;
 
 
 
@@ -118,8 +110,8 @@ public class ListPatientActivity extends AppCompatActivity implements Navigation
             }
         }).attachToRecyclerView(recyclerView);
 
-        /* Initializes the add problem activity */
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        /* Initializes the add record activity */
+        FloatingActionButton fab = findViewById(R.id.fabAddProblem);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

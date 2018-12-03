@@ -1,9 +1,7 @@
 package com.example.mdbook;
 import android.support.test.rule.ActivityTestRule;
-import android.support.v4.view.ViewPager;
-import android.support.v7.widget.RecyclerView;
 import android.widget.EditText;
-import android.widget.TextView;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
