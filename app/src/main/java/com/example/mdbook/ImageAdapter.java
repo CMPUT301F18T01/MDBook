@@ -87,16 +87,18 @@ public class ImageAdapter extends PagerAdapter {
         ImageView imageView = new ImageView(mContext);
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
-//        uri = record1.get(problemPos1).getPhotos().getPath();
-//        Bitmap myBitmap = BitmapFactory.decodeFile(uri);
-//
-//        imageView.setImageResource(myBitmap);
+        ArrayList<Photo> photos = record1.get(problemPos1).getPhotos();
+        for (int i = 0; i < photos.size(); i++) {
+            uri = photos.get(i).getFilepath();
+            Bitmap myBitmap = BitmapFactory.decodeFile(uri);
+            imageView.setImageBitmap(myBitmap);
+        }
 
+            container.addView(imageView, 0);
+            return imageView;
 
-        container.addView(imageView, 0);
-        return imageView;
+        }
 
-    }
 
     /**
      *
