@@ -52,12 +52,15 @@ public class EditProblemDetailsActivity extends AppCompatActivity implements Dat
     private int problemPos;
     private Patient patient;
     private Date date;
+    private String strDate;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_problem_details);
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yy");
 
         // set the views and buttons appropriately by id's
         editTitle = findViewById(R.id.showTitle);
@@ -72,7 +75,9 @@ public class EditProblemDetailsActivity extends AppCompatActivity implements Dat
         problem = patient.getProblems().get(problemPos);
         editTitle.setText(problem.getTitle());
         editDescription.setText(problem.getDescription());
-        editDate.setText(problem.getDate().toString());
+        date = problem.getDate();
+        strDate = dateFormat.format(date);
+        editDate.setText(strDate);
 
         // Switches to the main activity upon the click of the save button
         save.setOnClickListener(new View.OnClickListener() {

@@ -7,7 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 
 /**
@@ -24,6 +26,7 @@ import java.util.ArrayList;
 public class ProblemAdapter extends RecyclerView.Adapter<ProblemAdapter.ProblemAdapterHolder> {
     private ArrayList<Problem> problems;
     private OnItemClickListener mListener;
+    private String strDate;
 
     /**
      * Listens for clicks then notifies OnitemsClicks with the position so when the recycler view is
@@ -107,10 +110,12 @@ public class ProblemAdapter extends RecyclerView.Adapter<ProblemAdapter.ProblemA
     @Override
     public void onBindViewHolder(@NonNull ProblemAdapterHolder problemAdapterHolder, int i) {
         Problem currentitem = problems.get(i);
-
+        Date date = currentitem.getDate();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yy");
+        strDate = dateFormat.format(date);
         problemAdapterHolder.text.setText(currentitem.getTitle());
         problemAdapterHolder.text2.setText(currentitem.getDescription());
-        problemAdapterHolder.text3.setText(currentitem.getDate().toString());
+        problemAdapterHolder.text3.setText(strDate);
     }
 
     /**
