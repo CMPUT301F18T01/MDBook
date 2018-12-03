@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/PR-SVG-20010719/DTD/svg10.dtd">
-<svg width="166cm" height="108cm" viewBox="557 -2088 3317 2143" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg width="176cm" height="135cm" viewBox="557 -2640 3501 2695" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
   <g>
     <rect style="fill: #ffffff" x="694.734" y="-1121.63" width="125.5" height="44"/>
     <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="694.734" y="-1121.63" width="125.5" height="44"/>
@@ -110,14 +110,36 @@
     <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="964.356" y="-140.94">+removePhoto(photo:Photo): void</text>
   </g>
   <g>
-    <rect style="fill: #ffffff" x="1956.44" y="-1836.19" width="210.3" height="44"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1956.44" y="-1836.19" width="210.3" height="44"/>
-    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:monospace;font-style:normal;font-weight:normal" x="2061.59" y="-1820.19">&lt;&lt;singleton&gt;&gt;</text>
-    <text font-size="16" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="2061.59" y="-1801.19">ElastisearchController</text>
-    <rect style="fill: #ffffff" x="1956.44" y="-1792.19" width="210.3" height="8"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1956.44" y="-1792.19" width="210.3" height="8"/>
-    <rect style="fill: #ffffff" x="1956.44" y="-1784.19" width="210.3" height="8"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1956.44" y="-1784.19" width="210.3" height="8"/>
+    <rect style="fill: #ffffff" x="2029.98" y="-2349.55" width="579.8" height="44"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="2029.98" y="-2349.55" width="579.8" height="44"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:monospace;font-style:normal;font-weight:normal" x="2319.88" y="-2333.55">&lt;&lt;singleton&gt;&gt;</text>
+    <text font-size="16" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="2319.88" y="-2314.55">ElastisearchController</text>
+    <rect style="fill: #ffffff" x="2029.98" y="-2305.55" width="579.8" height="116"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="2029.98" y="-2305.55" width="579.8" height="116"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2032.98" y="-2291.55">-elasticsearchController: ElasticsearchController</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2032.98" y="-2275.55">-connectivityManager: ConnectivityManager</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2032.98" y="-2259.55">-dataManager: DataManager</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2032.98" y="-2243.55">-client: JestClient</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2032.98" y="-2227.55">-index: String = "cmput301f18t01test"</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2032.98" y="-2211.55">-idlists: HashMap&lt;String, ArrayList&lt;String&gt;&gt;</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2032.98" y="-2195.55">-availableID: String</text>
+    <rect style="fill: #ffffff" x="2029.98" y="-2189.55" width="579.8" height="244"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="2029.98" y="-2189.55" width="579.8" height="244"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2032.98" y="-2175.55">+init(connectivityManager:ConnectivityManager): void</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2032.98" y="-2159.55">+getController(): ElasticsearchController</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2032.98" y="-2143.55">+pushIDLists(): void</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2032.98" y="-2127.55">+pullIDLists(): void</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2032.98" y="-2111.55">+existsPatient(userID:String): boolean</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2032.98" y="-2095.55">+existsCaregiver(userID:String): boolean</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2032.98" y="-2079.55">+deleteUser(userID:String): void</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2032.98" y="-2063.55">+generateID(): String</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2032.98" y="-2047.55">+getPatientDecomposition(userID:String): UserDecomposition.decomposition</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2032.98" y="-2031.55">+getCaregiverDecomposition(userID:String): UserDecomposition.decomposition</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2032.98" y="-2015.55">+pushPatient(userDecomp:UserDecomposition.decomposition): boolean</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2032.98" y="-1999.55">+pushCaregiver(userDecomp:UserDecomposition.decomposition): boolean</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2032.98" y="-1983.55">+isConnected(): boolean</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2032.98" y="-1967.55">+addPatient(decomposition:UserDecomposition.decomposition): void</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2032.98" y="-1951.55">+addCaregiver(decomposition:UserDecomposition.decomposition): void</text>
   </g>
   <g>
     <rect style="fill: #ffffff" x="1896.98" y="-1507.65" width="387.3" height="28"/>
@@ -156,20 +178,20 @@
     <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1491.3" y="-1407.72">+onResume()</text>
   </g>
   <g>
-    <rect style="fill: #ffffff" x="2341.56" y="-1759.99" width="356.5" height="28"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="2341.56" y="-1759.99" width="356.5" height="28"/>
-    <text font-size="16" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="2519.81" y="-1740.99">ListPatientsProblemsActivity</text>
-    <rect style="fill: #ffffff" x="2341.56" y="-1731.99" width="356.5" height="100"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="2341.56" y="-1731.99" width="356.5" height="100"/>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2344.56" y="-1717.99">-headerPatientProblem: TextView</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2344.56" y="-1701.99">-patientsProblemContainer: ListView</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2344.56" y="-1685.99">-problemListAdapter: ArrayAdapter&lt;String&gt;</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2344.56" y="-1669.99">-drawerLayout: DrawerLayout</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2344.56" y="-1653.99">-actionBarDrawerToggle: ActionBarDrawerToggle</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2344.56" y="-1637.99">-navigationView: NavigationView</text>
-    <rect style="fill: #ffffff" x="2341.56" y="-1631.99" width="356.5" height="20"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="2341.56" y="-1631.99" width="356.5" height="20"/>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2344.56" y="-1617.99">+onCreate(Bundle:savedInstanceState)</text>
+    <rect style="fill: #ffffff" x="2269.44" y="-1827.87" width="356.5" height="28"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="2269.44" y="-1827.87" width="356.5" height="28"/>
+    <text font-size="16" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="2447.69" y="-1808.87">ListPatientsProblemsActivity</text>
+    <rect style="fill: #ffffff" x="2269.44" y="-1799.87" width="356.5" height="100"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="2269.44" y="-1799.87" width="356.5" height="100"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2272.44" y="-1785.87">-headerPatientProblem: TextView</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2272.44" y="-1769.87">-patientsProblemContainer: ListView</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2272.44" y="-1753.87">-problemListAdapter: ArrayAdapter&lt;String&gt;</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2272.44" y="-1737.87">-drawerLayout: DrawerLayout</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2272.44" y="-1721.87">-actionBarDrawerToggle: ActionBarDrawerToggle</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2272.44" y="-1705.87">-navigationView: NavigationView</text>
+    <rect style="fill: #ffffff" x="2269.44" y="-1699.87" width="356.5" height="20"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="2269.44" y="-1699.87" width="356.5" height="20"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2272.44" y="-1685.87">+onCreate(Bundle:savedInstanceState)</text>
   </g>
   <g>
     <rect style="fill: #ffffff" x="2366.86" y="-1435.87" width="333.4" height="28"/>
@@ -205,21 +227,21 @@
     <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2464.12" y="-965.202">+onCreate(Bundle:savedInstanceState)</text>
   </g>
   <g>
-    <rect style="fill: #ffffff" x="3042.11" y="-1462.91" width="341.1" height="28"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="3042.11" y="-1462.91" width="341.1" height="28"/>
-    <text font-size="16" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="3212.66" y="-1443.91">ListRecordActivity</text>
-    <rect style="fill: #ffffff" x="3042.11" y="-1434.91" width="341.1" height="84"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="3042.11" y="-1434.91" width="341.1" height="84"/>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3045.11" y="-1420.91">-mRecyclerView: RecyclerView</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3045.11" y="-1404.91">-mAdapter: RecyclerView.Adapter</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3045.11" y="-1388.91">-mLayoutManager: RecyclerView.LayoutManager</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3045.11" y="-1372.91">-recordList: ArrayList&lt;Record&gt;</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3045.11" y="-1356.91">-problemPos: Integer</text>
-    <rect style="fill: #ffffff" x="3042.11" y="-1350.91" width="341.1" height="52"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="3042.11" y="-1350.91" width="341.1" height="52"/>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3045.11" y="-1336.91">+onCreate(Bundle:savedInstanceState)</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3045.11" y="-1320.91">+onResume(): void</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3045.11" y="-1304.91">+AddRecord(): void</text>
+    <rect style="fill: #ffffff" x="3042.1" y="-1462.91" width="341.1" height="28"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="3042.1" y="-1462.91" width="341.1" height="28"/>
+    <text font-size="16" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="3212.65" y="-1443.91">ListRecordActivity</text>
+    <rect style="fill: #ffffff" x="3042.1" y="-1434.91" width="341.1" height="84"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="3042.1" y="-1434.91" width="341.1" height="84"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3045.1" y="-1420.91">-mRecyclerView: RecyclerView</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3045.1" y="-1404.91">-mAdapter: RecyclerView.Adapter</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3045.1" y="-1388.91">-mLayoutManager: RecyclerView.LayoutManager</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3045.1" y="-1372.91">-recordList: ArrayList&lt;Record&gt;</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3045.1" y="-1356.91">-problemPos: Integer</text>
+    <rect style="fill: #ffffff" x="3042.1" y="-1350.91" width="341.1" height="52"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="3042.1" y="-1350.91" width="341.1" height="52"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3045.1" y="-1336.91">+onCreate(Bundle:savedInstanceState)</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3045.1" y="-1320.91">+onResume(): void</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3045.1" y="-1304.91">+AddRecord(): void</text>
   </g>
   <g>
     <rect style="fill: #ffffff" x="1489.13" y="-1971.95" width="387.3" height="28"/>
@@ -301,14 +323,14 @@
     <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1899.56" y="-1561.33">+onCreate(Bundle:savedInstanceState)</text>
   </g>
   <g>
-    <rect style="fill: #ffffff" x="2378.71" y="-1527.99" width="287.2" height="28"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="2378.71" y="-1527.99" width="287.2" height="28"/>
-    <text font-size="16" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="2522.31" y="-1508.99">ViewPatientProfileActivity</text>
-    <rect style="fill: #ffffff" x="2378.71" y="-1499.99" width="287.2" height="8"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="2378.71" y="-1499.99" width="287.2" height="8"/>
-    <rect style="fill: #ffffff" x="2378.71" y="-1491.99" width="287.2" height="20"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="2378.71" y="-1491.99" width="287.2" height="20"/>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2381.71" y="-1477.99">+onCreate(Bundle:savedInstanceState)</text>
+    <rect style="fill: #ffffff" x="2378.72" y="-1527.99" width="287.2" height="28"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="2378.72" y="-1527.99" width="287.2" height="28"/>
+    <text font-size="16" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="2522.32" y="-1508.99">ViewPatientProfileActivity</text>
+    <rect style="fill: #ffffff" x="2378.72" y="-1499.99" width="287.2" height="8"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="2378.72" y="-1499.99" width="287.2" height="8"/>
+    <rect style="fill: #ffffff" x="2378.72" y="-1491.99" width="287.2" height="20"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="2378.72" y="-1491.99" width="287.2" height="20"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2381.72" y="-1477.99">+onCreate(Bundle:savedInstanceState)</text>
   </g>
   <g>
     <rect style="fill: #ffffff" x="1847.96" y="-950.18" width="541.3" height="28"/>
@@ -369,36 +391,36 @@
     <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3034.56" y="-831.296">            onBackPressed)</text>
   </g>
   <g>
-    <rect style="fill: #ffffff" x="3050.53" y="-1580.62" width="287.2" height="28"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="3050.53" y="-1580.62" width="287.2" height="28"/>
-    <text font-size="16" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="3194.13" y="-1561.62">EditBodyLocationActivity</text>
-    <rect style="fill: #ffffff" x="3050.53" y="-1552.62" width="287.2" height="8"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="3050.53" y="-1552.62" width="287.2" height="8"/>
-    <rect style="fill: #ffffff" x="3050.53" y="-1544.62" width="287.2" height="20"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="3050.53" y="-1544.62" width="287.2" height="20"/>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3053.53" y="-1530.62">+onCreate(Bundle:savedInstanceState)</text>
+    <rect style="fill: #ffffff" x="3050.54" y="-1580.62" width="287.2" height="28"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="3050.54" y="-1580.62" width="287.2" height="28"/>
+    <text font-size="16" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="3194.14" y="-1561.62">EditBodyLocationActivity</text>
+    <rect style="fill: #ffffff" x="3050.54" y="-1552.62" width="287.2" height="8"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="3050.54" y="-1552.62" width="287.2" height="8"/>
+    <rect style="fill: #ffffff" x="3050.54" y="-1544.62" width="287.2" height="20"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="3050.54" y="-1544.62" width="287.2" height="20"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3053.54" y="-1530.62">+onCreate(Bundle:savedInstanceState)</text>
   </g>
   <g>
-    <rect style="fill: #ffffff" x="3033.11" y="-1895.97" width="433.5" height="28"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="3033.11" y="-1895.97" width="433.5" height="28"/>
-    <text font-size="16" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="3249.86" y="-1876.97">ChooseUploadActivity</text>
-    <rect style="fill: #ffffff" x="3033.11" y="-1867.97" width="433.5" height="68"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="3033.11" y="-1867.97" width="433.5" height="68"/>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3036.11" y="-1853.97">-uploadFromGallery: Button</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3036.11" y="-1837.97">-openCamera: Button</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3036.11" y="-1821.97">-GET_FROM_GALLERY_REQUEST_CODE: int</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3036.11" y="-1805.97">-CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE: int</text>
-    <rect style="fill: #ffffff" x="3033.11" y="-1799.97" width="433.5" height="148"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="3033.11" y="-1799.97" width="433.5" height="148"/>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3036.11" y="-1785.97">+onCreate(Bundle:savedInstanceState)</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3036.11" y="-1769.97">+takeAPhoto(): void</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3036.11" y="-1753.97">+viewGallery(): void</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3036.11" y="-1737.97">+onActivityResult(requestCode:int,resultCode:int,</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3036.11" y="-1721.97">                  data:Intent): void</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3036.11" y="-1705.97">+checkPermission(): void</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3036.11" y="-1689.97">+onPermissionResult(requestCode:int,permissions:String,</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3036.11" y="-1673.97">                    grantResults:int[]): void</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3036.11" y="-1657.97">+saveImage(myBitmap:Bitmap): String</text>
+    <rect style="fill: #ffffff" x="3033.1" y="-1895.97" width="433.5" height="28"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="3033.1" y="-1895.97" width="433.5" height="28"/>
+    <text font-size="16" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="3249.85" y="-1876.97">ChooseUploadActivity</text>
+    <rect style="fill: #ffffff" x="3033.1" y="-1867.97" width="433.5" height="68"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="3033.1" y="-1867.97" width="433.5" height="68"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3036.1" y="-1853.97">-uploadFromGallery: Button</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3036.1" y="-1837.97">-openCamera: Button</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3036.1" y="-1821.97">-GET_FROM_GALLERY_REQUEST_CODE: int</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3036.1" y="-1805.97">-CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE: int</text>
+    <rect style="fill: #ffffff" x="3033.1" y="-1799.97" width="433.5" height="148"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="3033.1" y="-1799.97" width="433.5" height="148"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3036.1" y="-1785.97">+onCreate(Bundle:savedInstanceState)</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3036.1" y="-1769.97">+takeAPhoto(): void</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3036.1" y="-1753.97">+viewGallery(): void</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3036.1" y="-1737.97">+onActivityResult(requestCode:int,resultCode:int,</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3036.1" y="-1721.97">                  data:Intent): void</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3036.1" y="-1705.97">+checkPermission(): void</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3036.1" y="-1689.97">+onPermissionResult(requestCode:int,permissions:String,</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3036.1" y="-1673.97">                    grantResults:int[]): void</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3036.1" y="-1657.97">+saveImage(myBitmap:Bitmap): String</text>
   </g>
   <g>
     <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 8; stroke: #000000" points="1896.98,-1493.65 1860.56,-1493.65 1860.56,-1503.72 1782.2,-1503.72 "/>
@@ -418,7 +440,7 @@
   </g>
   <g>
     <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 8; stroke: #000000" points="2366.86,-1313.87 2312.06,-1313.87 2312.06,-959.777 "/>
-    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="2307.06,-972.424 2312.06,-956.424 2317.06,-972.424 "/>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="2307.06,-972.425 2312.06,-956.425 2317.06,-972.425 "/>
   </g>
   <g>
     <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 8; stroke: #000000" points="2365.85,-1345.87 2329.07,-1345.87 2329.07,-1453.65 2290.99,-1453.65 "/>
@@ -429,8 +451,8 @@
     <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="1895.78,-1774.95 1879.78,-1769.95 1895.78,-1764.95 "/>
   </g>
   <g>
-    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 8; stroke: #000000" points="2040.16,-1612.32 2040.16,-1634.47 2049.35,-1634.47 2049.35,-1657.92 "/>
-    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="2054.35,-1645.27 2049.35,-1661.27 2044.35,-1645.27 "/>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 8; stroke: #000000" points="2040.16,-1612.34 2040.16,-1634.49 2049.35,-1634.49 2049.35,-1657.94 "/>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="2054.35,-1645.29 2049.35,-1661.29 2044.35,-1645.29 "/>
   </g>
   <g>
     <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 8; stroke: #000000" points="2090.63,-1508.66 2090.63,-1527.49 2040.16,-1527.49 2040.16,-1547.62 "/>
@@ -441,45 +463,57 @@
     <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="2408.61,-917.18 2392.61,-912.18 2408.61,-907.18 "/>
   </g>
   <g>
-    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 8; stroke: #000000" points="2377.9,-1499.99 2312.56,-1499.99 2312.56,-1493.65 2290.99,-1493.65 "/>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 8; stroke: #000000" points="2377.91,-1499.99 2312.56,-1499.99 2312.56,-1493.65 2290.99,-1493.65 "/>
     <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="2303.63,-1498.65 2287.63,-1493.65 2303.63,-1488.65 "/>
   </g>
   <g>
-    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 8; stroke: #000000" points="2519.81,-1611.99 2519.81,-1574.2 2522.31,-1574.2 2522.31,-1535.7 "/>
-    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="2517.31,-1548.34 2522.31,-1532.34 2527.31,-1548.34 "/>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 8; stroke: #000000" points="2447.69,-1679.87 2447.69,-1574.2 2522.32,-1574.2 2522.32,-1535.7 "/>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="2517.32,-1548.34 2522.32,-1532.34 2527.32,-1548.34 "/>
   </g>
   <g>
-    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 8; stroke: #000000" points="3042.11,-1340.91 2899.72,-1340.91 2899.72,-1025.2 2756.03,-1025.2 "/>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 8; stroke: #000000" points="3042.1,-1340.91 2899.71,-1340.91 2899.71,-1025.2 2756.03,-1025.2 "/>
     <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="2768.68,-1030.2 2752.68,-1025.2 2768.68,-1020.2 "/>
   </g>
   <g>
-    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 8; stroke: #000000" points="3031.56,-1199.3 2738.52,-1199.3 2738.52,-1448.91 3035.4,-1448.91 "/>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 8; stroke: #000000" points="3031.56,-1199.3 2738.52,-1199.3 2738.52,-1448.91 3035.39,-1448.91 "/>
     <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="3022.75,-1443.91 3038.75,-1448.91 3022.75,-1453.91 "/>
   </g>
   <g>
-    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 8; stroke: #000000" points="3049.54,-1552.62 2842.5,-1552.62 2842.5,-1424.91 3035.4,-1424.91 "/>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 8; stroke: #000000" points="3049.55,-1552.62 2842.5,-1552.62 2842.5,-1424.91 3035.39,-1424.91 "/>
     <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="3022.75,-1419.91 3038.75,-1424.91 3022.75,-1429.91 "/>
   </g>
   <g>
-    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 8; stroke: #000000" points="3033.11,-1881.97 2778.52,-1881.97 2778.52,-1376.91 3035.4,-1376.91 "/>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 8; stroke: #000000" points="3033.1,-1881.97 2778.52,-1881.97 2778.52,-1376.91 3035.39,-1376.91 "/>
     <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="3022.75,-1371.91 3038.75,-1376.91 3022.75,-1381.91 "/>
   </g>
   <g>
-    <rect style="fill: #ffffff" x="1956.24" y="-1911.81" width="218.6" height="44"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1956.24" y="-1911.81" width="218.6" height="44"/>
-    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:monospace;font-style:normal;font-weight:normal" x="2065.54" y="-1895.81">&lt;&lt;singleton&gt;&gt;</text>
-    <text font-size="16" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="2065.54" y="-1876.81">LocalStorageController</text>
-    <rect style="fill: #ffffff" x="1956.24" y="-1867.81" width="218.6" height="8"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1956.24" y="-1867.81" width="218.6" height="8"/>
-    <rect style="fill: #ffffff" x="1956.24" y="-1859.81" width="218.6" height="8"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1956.24" y="-1859.81" width="218.6" height="8"/>
+    <rect style="fill: #ffffff" x="2011.4" y="-2638.72" width="379.6" height="44"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="2011.4" y="-2638.72" width="379.6" height="44"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:monospace;font-style:normal;font-weight:normal" x="2201.2" y="-2622.72">&lt;&lt;singleton&gt;&gt;</text>
+    <text font-size="16" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="2201.2" y="-2603.72">LocalStorageController</text>
+    <rect style="fill: #ffffff" x="2011.4" y="-2594.72" width="379.6" height="84"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="2011.4" y="-2594.72" width="379.6" height="84"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2014.4" y="-2580.72">-localStorageController: LocalStoragecontroller</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2014.4" y="-2564.72">-sharedPreferences: SharedPreferences</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2014.4" y="-2548.72">-gson: Gson</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2014.4" y="-2532.72">-editor: SharedPreferences.Editor</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2014.4" y="-2516.72">+</text>
+    <rect style="fill: #ffffff" x="2011.4" y="-2510.72" width="379.6" height="116"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="2011.4" y="-2510.72" width="379.6" height="116"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2014.4" y="-2496.72">+init(sharedPreferences:SharedPreferences): void</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2014.4" y="-2480.72">+getController(): LocalStorageController</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2014.4" y="-2464.72">+loadMe(): User</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2014.4" y="-2448.72">+saveMe(me:User): void</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2014.4" y="-2432.72">+saveQueue(pushQueue:ArrayList&lt;User&gt;): void</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2014.4" y="-2416.72">+loadQueue(): ARrayList&lt;User&gt;</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2014.4" y="-2400.72">+clearMe(): void</text>
   </g>
   <g>
-    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 8; stroke: #000000" points="1956.24,-1889.81 1920.34,-1889.81 1920.34,-1933.95 1883.14,-1933.95 "/>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 8; stroke: #000000" points="2011.4,-2616.72 1947.91,-2616.72 1947.91,-1933.95 1883.14,-1933.95 "/>
     <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="1895.78,-1938.95 1879.78,-1933.95 1895.78,-1928.95 "/>
   </g>
   <g>
-    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 8; stroke: #000000" points="1956.44,-1814.19 1920.43,-1814.19 1920.43,-1933.95 1883.14,-1933.95 "/>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 8; stroke: #000000" points="2029.98,-2327.55 1957.2,-2327.55 1957.2,-1933.95 1883.14,-1933.95 "/>
     <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="1895.78,-1938.95 1879.78,-1933.95 1895.78,-1928.95 "/>
   </g>
   <g>
@@ -648,17 +682,17 @@
     <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="783.161,-1759.84 799.161,-1764.84 783.161,-1769.84 "/>
   </g>
   <g>
-    <rect style="fill: #ffffff" x="1879.16" y="-594.014" width="287.2" height="44"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1879.16" y="-594.014" width="287.2" height="44"/>
-    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:monospace;font-style:normal;font-weight:normal" x="2022.76" y="-578.014">&lt;&lt;Instrumented Test&gt;&gt;</text>
-    <text font-size="16" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="2022.76" y="-559.014">UserTest</text>
-    <rect style="fill: #ffffff" x="1879.16" y="-550.014" width="287.2" height="8"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1879.16" y="-550.014" width="287.2" height="8"/>
-    <rect style="fill: #ffffff" x="1879.16" y="-542.014" width="287.2" height="52"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1879.16" y="-542.014" width="287.2" height="52"/>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1882.16" y="-528.014">+testAddPatient(): void</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1882.16" y="-512.014">+testAddProblem(): void</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1882.16" y="-496.014">+testUserControllerSingleton(): void</text>
+    <rect style="fill: #ffffff" x="1816.49" y="-606.014" width="287.2" height="44"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1816.49" y="-606.014" width="287.2" height="44"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:monospace;font-style:normal;font-weight:normal" x="1960.09" y="-590.014">&lt;&lt;Instrumented Test&gt;&gt;</text>
+    <text font-size="16" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="1960.09" y="-571.014">UserTest</text>
+    <rect style="fill: #ffffff" x="1816.49" y="-562.014" width="287.2" height="8"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1816.49" y="-562.014" width="287.2" height="8"/>
+    <rect style="fill: #ffffff" x="1816.49" y="-554.014" width="287.2" height="52"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1816.49" y="-554.014" width="287.2" height="52"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1819.49" y="-540.014">+testAddPatient(): void</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1819.49" y="-524.014">+testAddProblem(): void</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1819.49" y="-508.014">+testUserControllerSingleton(): void</text>
   </g>
   <g>
     <rect style="fill: #ffffff" x="1879.26" y="-444.23" width="217.9" height="44"/>
@@ -680,8 +714,8 @@
     <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1882.26" y="-250.23">+testDeleteData(): void</text>
   </g>
   <g>
-    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 8; stroke: #000000" points="1879.16,-572.014 1801.22,-572.014 1801.22,-1099.63 826.939,-1099.63 "/>
-    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="839.587,-1104.63 823.587,-1099.63 839.587,-1094.63 "/>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 8; stroke: #000000" points="1816.49,-584.014 1766.56,-584.014 1766.56,-1090.29 792.273,-1090.29 "/>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="804.92,-1095.29 788.92,-1090.29 804.92,-1085.29 "/>
   </g>
   <g>
     <rect style="fill: #ffffff" x="1272.73" y="-821.844" width="121" height="28"/>
@@ -702,7 +736,7 @@
     <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="1096.73,-1296.96 1080.73,-1291.96 1096.73,-1286.96 "/>
   </g>
   <g>
-    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 8; stroke: #000000" points="1879.16,-572.014 1801.22,-572.014 1801.22,-1287.39 1763.89,-1287.39 "/>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 8; stroke: #000000" points="1815.49,-554.014 1801.22,-554.014 1801.22,-1287.39 1763.89,-1287.39 "/>
     <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="1776.53,-1292.39 1760.53,-1287.39 1776.53,-1282.39 "/>
   </g>
   <g>
@@ -765,38 +799,38 @@
     <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1951.36" y="-995.972">+goBackToListPatieient(): void</text>
   </g>
   <g>
-    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 8; stroke: #000000" points="2091.96,-1185.97 2091.96,-1225.07 2090.63,-1225.07 2090.63,-1256.94 "/>
-    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="2095.63,-1244.3 2090.63,-1260.3 2085.63,-1244.3 "/>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 8; stroke: #000000" points="2091.96,-1185.97 2091.96,-1225.07 2090.64,-1225.07 2090.64,-1256.94 "/>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="2095.64,-1244.3 2090.64,-1260.3 2085.64,-1244.3 "/>
   </g>
   <g>
-    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 8; stroke: #000000" points="3042.11,-1392.91 2835.83,-1392.91 2835.83,-716.18 2395.97,-716.18 "/>
-    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="2408.61,-721.18 2392.61,-716.18 2408.61,-711.18 "/>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 8; stroke: #000000" points="3042.1,-1392.91 2835.84,-1392.91 2835.84,-844.18 2395.97,-844.18 "/>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="2408.61,-849.18 2392.61,-844.18 2408.61,-839.18 "/>
   </g>
   <g>
-    <rect style="fill: #ffffff" x="2347.9" y="-2086.81" width="341.1" height="28"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="2347.9" y="-2086.81" width="341.1" height="28"/>
-    <text font-size="16" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="2518.45" y="-2067.81">ListRecordCGActivity</text>
-    <rect style="fill: #ffffff" x="2347.9" y="-2058.81" width="341.1" height="132"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="2347.9" y="-2058.81" width="341.1" height="132"/>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2350.9" y="-2044.81">-mRecyclerView: RecyclerView</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2350.9" y="-2028.81">-mAdapter: RecyclerView.Adapter</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2350.9" y="-2012.81">-mLayoutManager: RecyclerView.LayoutManager</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2350.9" y="-1996.81">-recordList: ArrayList&lt;Record&gt;</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2350.9" y="-1980.81">-problemPos: Integer</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2350.9" y="-1964.81">-patientPos: Integer</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2350.9" y="-1948.81">-patientID: String</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2350.9" y="-1932.81">-patient: Patient</text>
-    <rect style="fill: #ffffff" x="2347.9" y="-1926.81" width="341.1" height="84"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="2347.9" y="-1926.81" width="341.1" height="84"/>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2350.9" y="-1912.81">+onCreate(Bundle:savedInstanceState)</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2350.9" y="-1896.81">+onResume(): void</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2350.9" y="-1880.81"> comapre(): int</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2350.9" y="-1864.81">+onBackPressed()</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2350.9" y="-1848.81">+AddComment()</text>
+    <rect style="fill: #ffffff" x="2660.44" y="-2311.68" width="341.1" height="28"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="2660.44" y="-2311.68" width="341.1" height="28"/>
+    <text font-size="16" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="2830.99" y="-2292.68">ListRecordCGActivity</text>
+    <rect style="fill: #ffffff" x="2660.44" y="-2283.68" width="341.1" height="132"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="2660.44" y="-2283.68" width="341.1" height="132"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2663.44" y="-2269.68">-mRecyclerView: RecyclerView</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2663.44" y="-2253.68">-mAdapter: RecyclerView.Adapter</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2663.44" y="-2237.68">-mLayoutManager: RecyclerView.LayoutManager</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2663.44" y="-2221.68">-recordList: ArrayList&lt;Record&gt;</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2663.44" y="-2205.68">-problemPos: Integer</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2663.44" y="-2189.68">-patientPos: Integer</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2663.44" y="-2173.68">-patientID: String</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2663.44" y="-2157.68">-patient: Patient</text>
+    <rect style="fill: #ffffff" x="2660.44" y="-2151.68" width="341.1" height="84"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="2660.44" y="-2151.68" width="341.1" height="84"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2663.44" y="-2137.68">+onCreate(Bundle:savedInstanceState)</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2663.44" y="-2121.68">+onResume(): void</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2663.44" y="-2105.68"> comapre(): int</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2663.44" y="-2089.68">+onBackPressed()</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2663.44" y="-2073.68">+AddComment()</text>
   </g>
   <g>
-    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 8; stroke: #000000" points="2518.45,-1842.81 2518.45,-1795.28 2519.81,-1795.28 2519.81,-1766.69 "/>
-    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="2514.81,-1779.34 2519.81,-1763.34 2524.81,-1779.34 "/>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 8; stroke: #000000" points="2830.99,-2067.68 2830.99,-1908.15 2447.69,-1908.15 2447.69,-1834.57 "/>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="2442.69,-1847.22 2447.69,-1831.22 2452.69,-1847.22 "/>
   </g>
   <g>
     <rect style="fill: #ffffff" x="3586.34" y="-1494.81" width="287.2" height="28"/>
@@ -828,6 +862,220 @@
   </g>
   <g>
     <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 8; stroke: #000000" points="3586.34,-1376.81 3483.56,-1376.81 3483.56,-1376.91 3389.91,-1376.91 "/>
-    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="3402.56,-1381.91 3386.56,-1376.91 3402.56,-1371.91 "/>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="3402.55,-1381.91 3386.55,-1376.91 3402.55,-1371.91 "/>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="2593.82" y="-433.234" width="287.2" height="28"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="2593.82" y="-433.234" width="287.2" height="28"/>
+    <text font-size="16" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="2737.42" y="-414.234">AddProblemActivity</text>
+    <rect style="fill: #ffffff" x="2593.82" y="-405.234" width="287.2" height="100"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="2593.82" y="-405.234" width="287.2" height="100"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2596.82" y="-391.234">-problemArray : ArrayList&lt;String&gt;</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2596.82" y="-375.234">-title: EditText</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2596.82" y="-359.234">-date: EditText</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2596.82" y="-343.234">-description: EditText</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2596.82" y="-327.234">-problem: Problem</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2596.82" y="-311.234">-save: Button</text>
+    <rect style="fill: #ffffff" x="2593.82" y="-305.234" width="287.2" height="52"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="2593.82" y="-305.234" width="287.2" height="52"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2596.82" y="-291.234">+onCreate(Bundle:savedInstanceState)</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2596.82" y="-275.234">+BackToListProblem(): void</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2596.82" y="-259.234">+goAddRecord(): void</text>
+  </g>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 8; stroke: #000000" points="2593.82,-363.234 2492.52,-363.234 2492.52,-665.484 2399.23,-665.484 "/>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="2411.87,-670.484 2395.87,-665.484 2411.87,-660.484 "/>
+  </g>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 8; stroke: #000000" points="2914,-725.472 2463.72,-725.472 2463.72,-718.574 2386.67,-718.574 "/>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="2399.31,-723.574 2383.31,-718.574 2399.31,-713.574 "/>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="2914" y="-779.472" width="287.2" height="28"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="2914" y="-779.472" width="287.2" height="28"/>
+    <text font-size="16" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="3057.6" y="-760.472">OptionsMenuActivity</text>
+    <rect style="fill: #ffffff" x="2914" y="-751.472" width="287.2" height="84"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="2914" y="-751.472" width="287.2" height="84"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2917" y="-737.472">-editProblem: Button</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2917" y="-721.472">-EditRecord: Button</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2917" y="-705.472">-RecordSlide: Button</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2917" y="-689.472">-Geolocation: Button</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2917" y="-673.472">-setReminder: Button</text>
+    <rect style="fill: #ffffff" x="2914" y="-667.472" width="287.2" height="116"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="2914" y="-667.472" width="287.2" height="116"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2917" y="-653.472">+onCreate(Bundle:savedInstanceState)</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2917" y="-637.472">+GoEditProblem(): void</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2917" y="-621.472">+RecordSlide(): void</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2917" y="-605.472">+GeoLocation(): void</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2917" y="-589.472">+setReminder(): void</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2917" y="-573.472">+isServiceOK(): boolean</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2917" y="-557.472">+onBackPressed(): void</text>
+  </g>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 8; stroke: #000000" points="3586.34,-1296.81 3508.2,-1296.81 3508.2,-741.472 3207.91,-741.472 "/>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="3220.55,-746.472 3204.55,-741.472 3220.55,-736.472 "/>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="3330.44" y="-608.372" width="287.2" height="28"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="3330.44" y="-608.372" width="287.2" height="28"/>
+    <text font-size="16" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="3474.04" y="-589.372">PatientSlideActivity</text>
+    <rect style="fill: #ffffff" x="3330.44" y="-580.372" width="287.2" height="36"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="3330.44" y="-580.372" width="287.2" height="36"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3333.44" y="-566.372">+viewPager: ViewPager</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3333.44" y="-550.372">-adapter: ImageAdapter</text>
+    <rect style="fill: #ffffff" x="3330.44" y="-544.372" width="287.2" height="20"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="3330.44" y="-544.372" width="287.2" height="20"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3333.44" y="-530.372">+onCreate(Bundle:savedInstanceState)</text>
+  </g>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 8; stroke: #000000" points="3330.44,-570.372 3295.94,-570.372 3295.94,-652.572 3210.45,-652.572 "/>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="3223.09,-657.572 3207.09,-652.572 3223.09,-647.572 "/>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="3304.64" y="-453.372" width="325.7" height="28"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="3304.64" y="-453.372" width="325.7" height="28"/>
+    <text font-size="16" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="3467.49" y="-434.372">Add ReminderActivity</text>
+    <rect style="fill: #ffffff" x="3304.64" y="-425.372" width="325.7" height="116"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="3304.64" y="-425.372" width="325.7" height="116"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3307.64" y="-411.372">-addReminder: Button</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3307.64" y="-395.372">-timePicker: TimePicker</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3307.64" y="-379.372">-minute: int</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3307.64" y="-363.372">-hour: int</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3307.64" y="-347.372">-notificationID: int</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3307.64" y="-331.372">-alarm: AlarmManager</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3307.64" y="-315.372">-spinnerListAdapter: ArrayAdapter&lt;String&gt;</text>
+    <rect style="fill: #ffffff" x="3304.64" y="-309.372" width="325.7" height="36"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="3304.64" y="-309.372" width="325.7" height="36"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3307.64" y="-295.372">+onCreate(Bundle:savedInstanceState)</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3307.64" y="-279.372">+onClick(v:View): void</text>
+  </g>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 8; stroke: #000000" points="3303.65,-363.372 3258.64,-363.372 3258.64,-593.472 3207.91,-593.472 "/>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="3220.55,-598.472 3204.55,-593.472 3220.55,-588.472 "/>
+  </g>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 8; stroke: #000000" points="2737.42,-433.234 2755.82,-433.234 2755.82,-665.472 2906.29,-665.472 "/>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="2893.65,-660.472 2909.65,-665.472 2893.65,-670.472 "/>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="1434.46" y="-2335.81" width="433.5" height="28"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1434.46" y="-2335.81" width="433.5" height="28"/>
+    <text font-size="16" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="1651.21" y="-2316.81">ScanQRActivity</text>
+    <rect style="fill: #ffffff" x="1434.46" y="-2307.81" width="433.5" height="100"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1434.46" y="-2307.81" width="433.5" height="100"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1437.46" y="-2293.81">-cameraPreview: SurfaceView</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1437.46" y="-2277.81">-userIDText: TextView</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1437.46" y="-2261.81">-barcodeDetector: BarcodeDetector</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1437.46" y="-2245.81">-cameraSource: CameraSource</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1437.46" y="-2229.81">+RequestCameraPermissionID</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1437.46" y="-2213.81">+userID: String</text>
+    <rect style="fill: #ffffff" x="1434.46" y="-2207.81" width="433.5" height="132"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1434.46" y="-2207.81" width="433.5" height="132"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1437.46" y="-2193.81">+onCreate(Bundle:savedInstanceState)</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1437.46" y="-2177.81">+onPermissionResult(requestCode:int,permissions:String,</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1437.46" y="-2161.81">                    grantResults:int[]): void</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1437.46" y="-2145.81">+surfaceCreated(holder:SurfaceHolder): void</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1437.46" y="-2129.81">+onActivityResult(requestCode:int,resultCode:int,</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1437.46" y="-2113.81">                  data:Intent): void</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1437.46" y="-2097.81">+checkPermission(): void</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1437.46" y="-2081.81">+saveImage(myBitmap:Bitmap): String</text>
+  </g>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 0.02; stroke: #000000" points="2996.42,-1449.22 3006.42,-1449.22 3006.42,-1429.22 3018.92,-1429.22 "/>
+    <line style="fill: none; fill-opacity:0; stroke-width: 0.02; stroke: #000000" x1="2986.42" y1="-1449.22" x2="2988.42" y2="-1449.22"/>
+    <line style="fill: none; fill-opacity:0; stroke-width: 0.02; stroke: #000000" x1="2989.75" y1="-1449.22" x2="2991.75" y2="-1449.22"/>
+    <line style="fill: none; fill-opacity:0; stroke-width: 0.02; stroke: #000000" x1="2993.09" y1="-1449.22" x2="2995.09" y2="-1449.22"/>
+    <polygon style="fill: #000000" points="3026.42,-1429.22 3016.42,-1424.22 3018.92,-1429.22 3016.42,-1434.22 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 0.02; stroke: #000000" points="3026.42,-1429.22 3016.42,-1424.22 3018.92,-1429.22 3016.42,-1434.22 "/>
+  </g>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 8; stroke: #000000" points="1434.46,-2217.81 1220.86,-2217.81 1220.86,-1443.72 1481.59,-1443.72 "/>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="1468.94,-1438.72 1484.94,-1443.72 1468.94,-1448.72 "/>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="2150.11" y="-487.801" width="287.2" height="28"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="2150.11" y="-487.801" width="287.2" height="28"/>
+    <text font-size="16" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="2293.71" y="-468.801">GenerateQRActivity</text>
+    <rect style="fill: #ffffff" x="2150.11" y="-459.801" width="287.2" height="84"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="2150.11" y="-459.801" width="287.2" height="84"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2153.11" y="-445.801">-qrImage: ImageView</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2153.11" y="-429.801">-generate: Button</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2153.11" y="-413.801">-inputValue: String</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2153.11" y="-397.801">-bitmap: BitMap</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2153.11" y="-381.801">-qrgEncoder: QRGEncoder</text>
+    <rect style="fill: #ffffff" x="2150.11" y="-375.801" width="287.2" height="52"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="2150.11" y="-375.801" width="287.2" height="52"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2153.11" y="-361.801">+onCreate(Bundle:savedInstanceState)</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2153.11" y="-345.801">+onClick(view:View): void</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2153.11" y="-329.801">+onBackPressed(): void</text>
+  </g>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 8; stroke: #000000" points="2293.71,-487.801 2293.71,-552.99 2118.61,-552.99 2118.61,-619.475 "/>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="2123.61,-606.827 2118.61,-622.827 2113.61,-606.827 "/>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="3654.21" y="-1004.07" width="402.7" height="28"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="3654.21" y="-1004.07" width="402.7" height="28"/>
+    <text font-size="16" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="3855.56" y="-985.073">ViewAllMapActivity</text>
+    <rect style="fill: #ffffff" x="3654.21" y="-976.073" width="402.7" height="132"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="3654.21" y="-976.073" width="402.7" height="132"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3657.21" y="-962.073">-TAG: String</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3657.21" y="-946.073">-FINE_LOCATION: String</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3657.21" y="-930.073">-COARSE_LOCATION: String</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3657.21" y="-914.073">-mLocationPermissionGranted: Boolean</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3657.21" y="-898.073">-myAddress: List&lt;Address&gt;</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3657.21" y="-882.073">-mMap: GoogleMaps</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3657.21" y="-866.073">-userManger: UserManager</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3657.21" y="-850.073">-mLOcationPermissionGranted: int</text>
+    <rect style="fill: #ffffff" x="3654.21" y="-844.073" width="402.7" height="196"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="3654.21" y="-844.073" width="402.7" height="196"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3657.21" y="-830.073">+onCreate(Bundle:savedInstanceState)</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3657.21" y="-814.073">+init()</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3657.21" y="-798.073">+moveCamera(latLng:LatLng,zoom:float,title:String)</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3657.21" y="-782.073">+initMap()()</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3657.21" y="-766.073">+getLocationPermission()</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3657.21" y="-750.073">+onRequestPermissionResult(requestCode:int,</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3657.21" y="-734.073">                           permissions:String[],</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3657.21" y="-718.073">                           grantResults:int[])</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3657.21" y="-702.073">+onMapReady(googleMap:GoogleMap,getProblemLocation,</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3657.21" y="-686.073">            onBackPressed)</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3657.21" y="-670.073">+onBackPressed(): void</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3657.21" y="-654.073">+getProblemLocation(): void</text>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="3633.58" y="-1915.41" width="402.7" height="28"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="3633.58" y="-1915.41" width="402.7" height="28"/>
+    <text font-size="16" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="3834.93" y="-1896.41">ViewMapActivity</text>
+    <rect style="fill: #ffffff" x="3633.58" y="-1887.41" width="402.7" height="132"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="3633.58" y="-1887.41" width="402.7" height="132"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3636.58" y="-1873.41">-TAG: String</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3636.58" y="-1857.41">-FINE_LOCATION: String</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3636.58" y="-1841.41">-COARSE_LOCATION: String</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3636.58" y="-1825.41">-mLocationPermissionGranted: Boolean</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3636.58" y="-1809.41">-myAddress: List&lt;Address&gt;</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3636.58" y="-1793.41">-mMap: GoogleMaps</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3636.58" y="-1777.41">-userManger: UserManager</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3636.58" y="-1761.41">-mLOcationPermissionGranted: int</text>
+    <rect style="fill: #ffffff" x="3633.58" y="-1755.41" width="402.7" height="180"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="3633.58" y="-1755.41" width="402.7" height="180"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3636.58" y="-1741.41">+onCreate(Bundle:savedInstanceState)</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3636.58" y="-1725.41">+init()</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3636.58" y="-1709.41">+moveCamera(latLng:LatLng,zoom:float,title:String)</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3636.58" y="-1693.41">+initMap()()</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3636.58" y="-1677.41">+getLocationPermission()</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3636.58" y="-1661.41">+onRequestPermissionResult(requestCode:int,</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3636.58" y="-1645.41">                           permissions:String[],</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3636.58" y="-1629.41">                           grantResults:int[])</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3636.58" y="-1613.41">+onMapReady(googleMap:GoogleMap,getProblemLocation,</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3636.58" y="-1597.41">            onBackPressed)</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3636.58" y="-1581.41">+onBackPressed(): void</text>
+  </g>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 8; stroke: #000000" points="3654.21,-706.073 3310.47,-706.073 3310.47,-709.472 3207.91,-709.472 "/>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="3220.55,-714.472 3204.55,-709.472 3220.55,-704.472 "/>
+  </g>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 8; stroke: #000000" points="3633.58,-1665.41 3541.91,-1665.41 3541.91,-1408.91 3389.91,-1408.91 "/>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="3402.55,-1413.91 3386.55,-1408.91 3402.55,-1403.91 "/>
   </g>
 </svg>
