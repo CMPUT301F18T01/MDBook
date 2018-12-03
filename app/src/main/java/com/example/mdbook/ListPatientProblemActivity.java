@@ -61,6 +61,7 @@ public class ListPatientProblemActivity extends AppCompatActivity implements Nav
         Caregiver caregiver = (Caregiver) UserController.getController().getUser();
         patientPos = getIntent().getExtras().getInt("patientPos");
         patientID = caregiver.getPatientList().get(patientPos);
+        SyncController syncController = new SyncController();
 
         try {
             patient = (Patient) userManager.fetchUser(patientID);

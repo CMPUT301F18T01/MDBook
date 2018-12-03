@@ -65,6 +65,7 @@ public class ListProblemActivity extends AppCompatActivity
         UserManager.initManager();
         UserManager userManager = UserManager.getManager();
         Patient patient = (Patient) UserController.getController().getUser();
+        SyncController syncController = new SyncController();
 
         problems = patient.getProblems();
         /* Create recycler view */

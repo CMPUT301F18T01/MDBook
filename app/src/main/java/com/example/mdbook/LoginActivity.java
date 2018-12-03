@@ -51,6 +51,7 @@ public class LoginActivity extends AppCompatActivity {
         UserManager.initManager();
 
 
+
         setContentView(R.layout.activity_login);
         etUserID = findViewById(R.id.etUserID);
         etUserID.setOnEditorActionListener(new TextView.OnEditorActionListener() {
