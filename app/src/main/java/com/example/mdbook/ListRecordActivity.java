@@ -18,6 +18,8 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 /**
  * Activity which lists the records for a certain problem, viewed by the Patient
@@ -52,6 +54,20 @@ public class ListRecordActivity extends AppCompatActivity {
             problemPos = getIntent().getExtras().getInt("problemPos");
         }
         recordList = patient.getProblems().get(problemPos).getRecords();
+        Collections.sort(recordList, new Comparator<Record>() {
+            @Override
+            public int compare(Record p, Record q) {
+                {
+                    if (p.getDate().before(q.getDate())) {
+                        return 11;
+                    } else if (p.getDate().after(q.getDate())) {
+                        return -1;
+                    } else {
+                        return 0;
+                    }
+                }
+            }
+        });
 
 
 
@@ -73,9 +89,10 @@ public class ListRecordActivity extends AppCompatActivity {
             public void viewmapClick(int postion) {
                 if (isServicesOK()) {
                     Intent launchmap = new Intent(ListRecordActivity.this, ViewMapActivity.class);
-                    if (recordList.get(postion).getLocation().getAddressList().size() > 0){
-                        Address address = recordList.get(postion).getLocation().getAddressList().get(0);
-                        launchmap.putExtra("recieveAddress", address);
+                    if (recordList.get(postion).getLocation().getLat() != null){
+                        launchmap.putExtra("recieveLat",recordList.get(postion).getLocation().getLat());
+                        launchmap.putExtra("recieveLong",recordList.get(postion).getLocation().getLong());
+                        launchmap.putExtra("recieveTitle",recordList.get(postion).getLocation().getTitle());
                         startActivity(launchmap);
                     }else {
                         Toast.makeText(ListRecordActivity.this, "No location for record",Toast.LENGTH_SHORT).show();
@@ -112,6 +129,7 @@ public class ListRecordActivity extends AppCompatActivity {
                 UserManager userManager = UserManager.getManager();
                 Patient patient = (Patient) UserController.getController().getUser();
                 recordList = patient.getProblems().get(problemPos).getRecords();
+                mAdapter.notifyDataSetChanged();
             }
         }
     }

@@ -15,6 +15,8 @@ package com.example.mdbook;
 
 import junit.framework.TestCase;
 
+import org.json.JSONException;
+
 /**
  * test functionalities of user class and controller
  *
@@ -84,6 +86,10 @@ public class UserTest extends TestCase {
 
         // check loaded user against initial patient
         assert (userController1.getUser() == patient);
+    }
+
+    public void testTest(){
+        ElasticSearchTools.ResetStringIDs();
     }
 
 

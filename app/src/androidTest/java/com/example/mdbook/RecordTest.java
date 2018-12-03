@@ -43,7 +43,7 @@ public class RecordTest extends TestCase {
 
         //Add items
         //test location picker
-        GeoLocation geoLocation = new GeoLocation();
+        GeoLocation geoLocation = new GeoLocation(0d,0d,"");
         record.setLocation(geoLocation);
         assertEquals(geoLocation, record.getLocation());
 
