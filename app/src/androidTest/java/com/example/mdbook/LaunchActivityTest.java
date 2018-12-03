@@ -5,7 +5,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import static org.junit.Assert.*;
+
+import static junit.framework.TestCase.assertNotNull;
 
 
 
@@ -41,7 +42,6 @@ that means the activity was launched successfully
         assertNotNull(etPhone);
         EditText edit = AddProblemActivity.findViewById(R.id.addTitle);
         assertNotNull(edit);
-
     }
 
     @After
@@ -49,6 +49,5 @@ that means the activity was launched successfully
         LoginActivity = null;
         RegisterActivity = null;
         AddProblemActivity = null;
-
     }
 }
