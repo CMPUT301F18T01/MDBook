@@ -5,11 +5,19 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
+
+
+/**
+ * Provides functionality to sync check when internet is available and to sync up offline changes
+ *
+ * @author Thomas chan
+ * @see SyncController
+ * @version 1.0.0
+ */
 
 public class SyncController extends BroadcastReceiver {
 
@@ -19,7 +27,9 @@ public class SyncController extends BroadcastReceiver {
     private UserDecomposer decomposer;
     private boolean isConnected = false;
 
-
+    /**
+     * Constructor for SyncController
+     */
     public void SyncController(){
         if (elasticsearchController == null){
             elasticsearchController = ElasticsearchController.getController();
@@ -33,22 +43,23 @@ public class SyncController extends BroadcastReceiver {
 
     }
 
-    public static SyncController getController() {
-        if (syncController == null) {
-            throw new RuntimeException("SyncController has not been initialized!");
-        }
-        return syncController;
-    }
-
+    /**
+     * Gets the internet connection and if there has been changes while the system was off the
+     * network, it will update the profile in Elastic search
+     * @param context context of the activity
+     * @param intent and the intents internet connection
+     */
     @Override
     public void onReceive(Context context, Intent intent) {
         elasticsearchController = ElasticsearchController.getController();
         dataManager = DataManager.getDataManager();
         decomposer = new UserDecomposer();
 
-        boolean isConnected = intent.getBooleanExtra(ConnectivityManager.EXTRA_NO_CONNECTIVITY, false);
+        boolean isConnected = intent.getBooleanExtra(ConnectivityManager.EXTRA_NO_CONNECTIVITY,
+                false);
         if(isConnected){
-            Toast.makeText(context,"Internet Connection Lost \n Profile Not Synced",Toast.LENGTH_SHORT).show();
+            Toast.makeText(context,"Internet Connection Lost \n Profile Not Synced",
+                    Toast.LENGTH_SHORT).show();
 
         }
         else{

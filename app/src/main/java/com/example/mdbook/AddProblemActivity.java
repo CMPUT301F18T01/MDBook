@@ -28,7 +28,7 @@ import java.util.GregorianCalendar;
  *
  * @see com.example.mdbook.Problem
  *
- *
+ * @author ThomasChan
  * @author Vanessa Peng
  * @author Raj Kapadia
  * @author James Aina
@@ -46,6 +46,10 @@ public class AddProblemActivity extends AppCompatActivity implements DatePickerD
     private EditText description;
     private Date date;
 
+    /**
+     * Creates the activity for adding a problem into list of problems that a user has
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,7 +104,7 @@ public class AddProblemActivity extends AppCompatActivity implements DatePickerD
 
 
     /**
-     *
+     * Resumes the Activity
      */
     @Override
     protected void onResume() {

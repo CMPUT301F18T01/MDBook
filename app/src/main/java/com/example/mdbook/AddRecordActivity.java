@@ -39,12 +39,11 @@ import java.util.Date;
  *
  * @see com.example.mdbook.Record
  *
- *
+ * @author ThomasChan
  * @author Jayanta Chatterjee
- * @author James Aina
  * @author Raj Kapadia
  *
- * @version 0.0.1
+ * @version 3.0.0
  */
 
 public class AddRecordActivity extends AppCompatActivity {
@@ -94,7 +93,8 @@ public class AddRecordActivity extends AppCompatActivity {
         image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(AddRecordActivity.this, "Add photo", Toast.LENGTH_LONG).show();
+                Toast.makeText(AddRecordActivity.this, "Add photo",
+                        Toast.LENGTH_LONG).show();
             }
         });
         // Switches to addBodyLocationActivity upon the click of the body button
@@ -111,7 +111,8 @@ public class AddRecordActivity extends AppCompatActivity {
             public void onClick(View v) {
                 recordDate = new Date();
                 if (record == null) {
-                    record = new Record(headline.getText().toString(), recordDate, Description.getText().toString());
+                    record = new Record(headline.getText().toString(), recordDate,
+                            Description.getText().toString());
                 }
                 if (Lat != null){
                     if (Long != null){
@@ -126,7 +127,8 @@ public class AddRecordActivity extends AppCompatActivity {
                     for(int i = 0; i<bodylocationlist.size(); i++) {
                         record.setBodyLocation(bodylocationlist.get(i));
                     }
-                    Toast toast = Toast.makeText(getApplicationContext(), "bodylocation(s) added to record", Toast.LENGTH_SHORT);
+                    Toast toast = Toast.makeText(getApplicationContext(),
+                            "bodylocation(s) added to record", Toast.LENGTH_SHORT);
                     toast.show();
 
                 }
@@ -160,6 +162,12 @@ public class AddRecordActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * After an Intent is finished it will get the results of the intent
+     * @param requestCode Request code for intents
+     * @param resultCode Result code to see if activities finished
+     * @param data
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode,@Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -172,7 +180,8 @@ public class AddRecordActivity extends AppCompatActivity {
         }
         if(requestCode == BODY_ACTIVITY_REQUEST_CODE){
             if(resultCode != RESULT_CANCELED && data != null){
-                BodyLocation bodylocation = (BodyLocation) data.getSerializableExtra("bodylocation");
+                BodyLocation bodylocation = (BodyLocation) data.getSerializableExtra(
+                        "bodylocation");
                 bodylocationlist.add(bodylocation);
             }
         }
