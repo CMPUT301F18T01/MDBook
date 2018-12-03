@@ -89,14 +89,15 @@ public class AddRecordActivity extends AppCompatActivity {
         recordList = new ArrayList<>();
         final Patient patient = (Patient) UserController.getController().getUser();
         problemPos = getIntent().getExtras().getInt("problemPos");
-
+        /*
         image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(AddRecordActivity.this, "Add photo",
                         Toast.LENGTH_LONG).show();
             }
-        });
+        });*/
+
         // Switches to addBodyLocationActivity upon the click of the body button
         body.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,10 +110,12 @@ public class AddRecordActivity extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                try{
                 recordDate = new Date();
                 if (record == null) {
-                    record = new Record(headline.getText().toString(), recordDate,
-                            Description.getText().toString());
+                        record = new Record(headline.getText().toString(), recordDate,
+                                Description.getText().toString());
+
                 }
                 if (Lat != null){
                     if (Long != null){
@@ -139,6 +142,13 @@ public class AddRecordActivity extends AppCompatActivity {
                         ,Toast.LENGTH_SHORT).show();
                 setResult(RESULT_OK);
                 finish();
+                }catch (NullPointerException e){
+                    Toast.makeText(AddRecordActivity.this, "No Title Entered",
+                            Toast.LENGTH_SHORT).show();
+                }catch (IllegalArgumentException e) {
+                    Toast.makeText(AddRecordActivity.this, "Illegal Arguments in Title",
+                            Toast.LENGTH_SHORT).show();
+                }
 
             }
         });
