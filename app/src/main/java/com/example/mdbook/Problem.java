@@ -9,6 +9,8 @@
  */
 package com.example.mdbook;
 
+import android.graphics.RectF;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -134,20 +136,6 @@ class Problem implements Serializable {
         }
     }
 
-    /**
-     * Fetches a list comprised of all photos associated with all records associated with problem.
-     * Fetches photos from each record by method call every time this method is called,
-     * does not keep running list in Problem object.
-     * @return ArrayList of all photos of all associated records.
-     */
-    public ArrayList<Photo> getPhotos() {
-        ArrayList<Photo> photos = new ArrayList<>();
-        for (Record record : this.records){
-            photos.addAll(record.getPhotos());
-        }
-
-        return photos;
-    }
 
     /**
      * @return problem title
@@ -176,4 +164,13 @@ class Problem implements Serializable {
         this.problemID = problemID;
     }
 
+    public ArrayList<Photo> getPhotos() {
+        ArrayList<Photo> photos = new ArrayList<>();
+        for (Record record : this.records){
+            for (BodyLocation bodyLocation : record.getBodyLocations()){
+                photos.add(bodyLocation.getPhoto());
+            }
+        }
+        return photos;
+    }
 }
