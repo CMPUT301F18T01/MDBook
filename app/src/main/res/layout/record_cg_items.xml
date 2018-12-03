@@ -41,14 +41,13 @@
         <TextView
             android:id="@+id/recordCommentsCG"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:text="Comment"
-            android:layout_toRightOf="@id/recordImage"
+            android:layout_height="wrap_content"
             android:layout_below="@id/recordTitleCG"
-            android:scrollbars="vertical"
             android:layout_marginLeft="10dp"
-            android:textSize="15dp"
-            />
+            android:layout_toRightOf="@id/recordImage"
+            android:scrollbars="vertical"
+            android:text="Comment"
+            android:textSize="15dp" />
 
         <ImageButton
             android:id="@+id/recordAddCommentCG"

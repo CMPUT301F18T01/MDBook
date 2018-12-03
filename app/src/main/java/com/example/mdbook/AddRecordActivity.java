@@ -62,7 +62,6 @@ public class AddRecordActivity extends AppCompatActivity {
     private Date recordDate;
     private ImageView image;
     private EditText headline;
-    private EditText date;
     private EditText Description;
     private Button geo;
     private Button body;

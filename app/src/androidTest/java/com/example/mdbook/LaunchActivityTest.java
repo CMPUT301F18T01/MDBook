@@ -22,12 +22,12 @@ public class LaunchActivityTest {
     @Rule
     public ActivityTestRule<AddProblemActivity> addProblemActivityActivityTestRule = new ActivityTestRule<>(AddProblemActivity.class);
     private AddProblemActivity AddProblemActivity = null;
-    @Rule
-    public ActivityTestRule<ViewAccountDetailActivity> viewAccountDetailActivityActivityTestRule = new ActivityTestRule<>(ViewAccountDetailActivity.class);
-    private ViewAccountDetailActivity ViewAccountDetailActivity = null;
-    @Rule
-    public ActivityTestRule<EditAccountDetailActivity> editAccountDetailsActivityActivityTestRule = new ActivityTestRule<>(EditAccountDetailActivity.class);
-    private EditAccountDetailActivity EditAccountDetailsActivity = null;
+//    @Rule
+//    public ActivityTestRule<ViewAccountDetailActivity> viewAccountDetailActivityActivityTestRule = new ActivityTestRule<>(ViewAccountDetailActivity.class);
+//    private ViewAccountDetailActivity ViewAccountDetailActivity = null;
+//    @Rule
+//    public ActivityTestRule<EditAccountDetailActivity> editAccountDetailsActivityActivityTestRule = new ActivityTestRule<>(EditAccountDetailActivity.class);
+//    private EditAccountDetailActivity EditAccountDetailsActivity = null;
 
 
 
@@ -37,8 +37,8 @@ public class LaunchActivityTest {
         LoginActivity = loginActivityActivityTestRule.getActivity();
         RegisterActivity = registerActivityActivityTestRule.getActivity();
         AddProblemActivity = addProblemActivityActivityTestRule.getActivity();
-        ViewAccountDetailActivity = viewAccountDetailActivityActivityTestRule.getActivity();
-        EditAccountDetailsActivity = editAccountDetailsActivityActivityTestRule.getActivity();
+        //ViewAccountDetailActivity = viewAccountDetailActivityActivityTestRule.getActivity();
+        //EditAccountDetailsActivity = editAccountDetailsActivityActivityTestRule.getActivity();
     }
 
     /*
@@ -53,10 +53,10 @@ that means the activity was launched successfully
         assertNotNull(etPhone);
         EditText edit = AddProblemActivity.findViewById(R.id.addTitle);
         assertNotNull(edit);
-        TextView viewName = ViewAccountDetailActivity.findViewById(R.id.viewName);
-        assertNotNull(viewName);
-        EditText editName = EditAccountDetailsActivity.findViewById(R.id.editName);
-        assertNotNull(editName);
+//        TextView viewName = ViewAccountDetailActivity.findViewById(R.id.viewName);
+////        assertNotNull(viewName);
+//        EditText editName = EditAccountDetailsActivity.findViewById(R.id.editName);
+//        assertNotNull(editName);
 
     }
 
@@ -65,7 +65,7 @@ that means the activity was launched successfully
         LoginActivity = null;
         RegisterActivity = null;
         AddProblemActivity = null;
-        ViewAccountDetailActivity = null;
-        EditAccountDetailsActivity = null;
+        //ViewAccountDetailActivity = null;
+        //EditAccountDetailsActivity = null;
     }
 }
