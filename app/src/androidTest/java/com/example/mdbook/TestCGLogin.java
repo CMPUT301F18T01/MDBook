@@ -1,6 +1,5 @@
 package com.example.mdbook;
 
-
 import android.app.Activity;
 import android.support.test.rule.ActivityTestRule;
 import android.widget.Button;
@@ -15,8 +14,7 @@ import org.junit.Test;
 
 import static android.support.test.InstrumentationRegistry.getInstrumentation;
 
-
-public class LoginActivityTest {
+public class TestCGLogin {
 
     private Solo solo;
     private EditText editText;
@@ -39,28 +37,8 @@ public class LoginActivityTest {
 
 
     @Test
-    public void testPatientLogin(){
-        solo = new Solo(getInstrumentation(), activityTestRule.getActivity());
-        solo.assertCurrentActivity("Wrong Activity", LoginActivity.class);
-        solo.clickOnView(solo.getView(R.id.registerBtn));
-
-        solo.assertCurrentActivity("Wrong Activity", RegisterActivity.class);
-        solo.enterText((EditText) solo.getView(R.id.etUserIDR), "rajkapadia");
-        solo.enterText((EditText) solo.getView(R.id.etEmail), "rajkapadia@test.com");
-        solo.enterText((EditText) solo.getView(R.id.etPhoneNumber), "0000000000");
-        solo.clickOnView(solo.getView(R.id.registerButton));
-
-        solo.goBackToActivity("LoginActivity");
-        solo.enterText((EditText) solo.getView(R.id.etUserID), "rajkapadia");
-        solo.clickOnView(solo.getView(R.id.loginButton));
-
-        solo.assertCurrentActivity("Wrong Activity", ListProblemActivity.class);
-
-    }
-
-    @Test
-    public void testCaregiverLogin(){
-
+    public void testLogin()
+    {
         solo = new Solo(getInstrumentation(), activityTestRule.getActivity());
         solo.goBackToActivity("LoginActivity");
         solo.assertCurrentActivity("Wrong Activity", LoginActivity.class);
@@ -80,8 +58,5 @@ public class LoginActivityTest {
 
         solo.assertCurrentActivity("Wrong Activity", ListPatientActivity.class);
 
-
-
     }
-
 }
