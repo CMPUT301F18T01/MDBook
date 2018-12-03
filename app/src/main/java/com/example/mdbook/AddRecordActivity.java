@@ -56,7 +56,6 @@ public class AddRecordActivity extends AppCompatActivity {
     private Date recordDate;
     private ImageView image;
     private EditText headline;
-    private EditText date;
     private EditText Description;
     private Button geo;
     private Button body;
@@ -107,8 +106,7 @@ public class AddRecordActivity extends AppCompatActivity {
                 patient.getProblems().get(problemPos).addRecord(record);
                 userManager.saveUser(patient);
                 Toast.makeText(AddRecordActivity.this
-                        ,"Record " + headline.getText().toString() + " Added"
-                        ,Toast.LENGTH_SHORT).show();
+                        ,"Record " + headline.getText().toString() + " Added",Toast.LENGTH_SHORT).show();
                 endActivity();
 
             }

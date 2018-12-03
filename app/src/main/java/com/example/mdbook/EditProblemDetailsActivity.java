@@ -61,7 +61,6 @@ public class EditProblemDetailsActivity extends AppCompatActivity {
         problem = patient.getProblems().get(problemPos);
         editTitle.setText(problem.getTitle());
         editDescription.setText(problem.getDescription());
-        //showDate.setText(problem.getDate().toString());
 
         // Switches to the main activity upon the click of the save button
         save.setOnClickListener(new View.OnClickListener() {

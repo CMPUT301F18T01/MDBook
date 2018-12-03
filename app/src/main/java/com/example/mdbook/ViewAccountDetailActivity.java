@@ -44,7 +44,7 @@ public class ViewAccountDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_account_detail);
-        UserManager.initManager();
+//        UserManager.initManager();
         UserManager userManager = UserManager.getManager();
         User user = UserController.getController().getUser();
 
