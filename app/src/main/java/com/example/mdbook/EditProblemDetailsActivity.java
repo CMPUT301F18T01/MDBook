@@ -79,6 +79,7 @@ public class EditProblemDetailsActivity extends AppCompatActivity implements Dat
         strDate = dateFormat.format(date);
         editDate.setText(strDate);
 
+
         // Switches to the main activity upon the click of the save button
         save.setOnClickListener(new View.OnClickListener() {
             @Override
