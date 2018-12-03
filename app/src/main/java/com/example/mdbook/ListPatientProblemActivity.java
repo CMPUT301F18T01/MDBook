@@ -10,34 +10,20 @@
 
 
 package com.example.mdbook;
-
 import android.accounts.NetworkErrorException;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.Switch;
-import android.widget.TextView;
 import android.widget.Toast;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * Creates an activity that lists the Patients Problems for the care giver.
@@ -47,7 +33,7 @@ import java.util.Arrays;
  * @see com.example.mdbook.Problem
  *
  * @author Raj Kapadia
- * @author James Aina
+ *
  *
  * @version 0.0.1
  */
@@ -61,14 +47,11 @@ public class ListPatientProblemActivity extends AppCompatActivity implements Nav
     private int patientPos;
     private String patientID;
     private Patient patient;
-    private String problemPos;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list_patient);
+        setContentView(R.layout.activity_list_patient_problem);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -78,17 +61,15 @@ public class ListPatientProblemActivity extends AppCompatActivity implements Nav
         Caregiver caregiver = (Caregiver) UserController.getController().getUser();
         patientPos = getIntent().getExtras().getInt("patientPos");
         patientID = caregiver.getPatientList().get(patientPos);
+
         try {
             patient = (Patient) userManager.fetchUser(patientID);
-            patientProblems = patient.getProblems();
         } catch (NoSuchUserException e) {
-            patientProblems = new ArrayList<>();
-            Toast.makeText(ListPatientProblemActivity.this, "No user found!", Toast.LENGTH_LONG).show();
             e.printStackTrace();
         } catch (NetworkErrorException e) {
-            Toast.makeText(this, "Internet connection is required to view patient problems", Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
         }
-
+        patientProblems = patient.getProblems();
 
         /* Create recycler view */
         recyclerView = findViewById(R.id.recylerView);
@@ -98,43 +79,11 @@ public class ListPatientProblemActivity extends AppCompatActivity implements Nav
         recyclerView.setLayoutManager(mLayoutmanager);
         recyclerView.setAdapter(mAdapter);
 
-
-
         /* Opens options menu when problem is clicked */
         mAdapter.setOnItemClickListener(new ProblemAdapter.OnItemClickListener() {
             @Override
             public void OnItemClick(int Position) {
                 OptionMenu(Position);
-            }
-        });
-
-//        /* Delete problem when swipe right is activated */
-//        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.RIGHT) {
-//
-//            @Override
-//            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView
-//                    .ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder viewHolder1) {
-//                return false;
-//            }
-//
-//            @Override
-//            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-//                if (direction == ItemTouchHelper.RIGHT){
-////                    Snackbar.make(recyclerView,  problems.get(viewHolder.getAdapterPosition())
-////                            .getTitle()+" removed", Snackbar.LENGTH_LONG)
-////                            .setAction("Action", null).show();
-//                    showAlertDialog(viewHolder);
-//                }
-//
-//            }
-//        }).attachToRecyclerView(recyclerView);
-
-        /* Initializes the add problem activity */
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                addPatient();
             }
         });
 
@@ -145,31 +94,10 @@ public class ListPatientProblemActivity extends AppCompatActivity implements Nav
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view_patient);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view_problem);
         navigationView.setNavigationItemSelectedListener(this);
 
     }
-
-//    public void showAlertDialog(final RecyclerView.ViewHolder position){
-//        AlertDialog.Builder alert = new AlertDialog.Builder(this);
-//        alert.setTitle("MDBook");
-//        alert.setMessage("Are you sure you want to delete this patient?");
-//        alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialog, int which) {
-//                patientProblems.remove(position.getAdapterPosition());
-//                mAdapter.notifyDataSetChanged();
-//                Toast.makeText(ListPatientProblemActivity.this, "Patient Removed", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//        alert.setNegativeButton("No", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialog, int which) {
-//                mAdapter.notifyDataSetChanged();
-//            }
-//        });
-//        alert.create().show();
-//    }
 
     /**
      * @param item item in the menu object
@@ -208,12 +136,11 @@ public class ListPatientProblemActivity extends AppCompatActivity implements Nav
         this.finish();
     }
 
-    public void addPatient(){
-        Intent intent = new Intent(this, AddPatientActivity.class);
-        startActivity(intent);
-    }
 
-
+    /**
+     * Changes to ListRecordsCGActivity, passes the necessary Extras
+     * @param position:position of problem in list
+     */
     public void OptionMenu(int position){
         Intent intent = new Intent(this, ListRecordsCGActivity.class);
         intent.putExtra("problemPos", position);

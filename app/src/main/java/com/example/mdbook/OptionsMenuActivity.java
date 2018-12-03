@@ -22,6 +22,16 @@ import android.widget.Toast;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 
+
+import java.util.ArrayList;
+
+/**
+ * Creates activity that shows user things they can do when clicked on a particular proble,
+ * @see Problem
+ *
+ * @author ...
+ */
+
 public class OptionsMenuActivity extends AppCompatActivity {
 
     private static final String TAG = "OptionsMenuActivity";
@@ -87,6 +97,7 @@ public class OptionsMenuActivity extends AppCompatActivity {
      */
     public void GoEditProblem(){
         Intent goEditProblem = new Intent(this, EditProblemDetailsActivity.class);
+        goEditProblem.putExtra("problemPos", getIntent().getExtras().getInt("problemPos"));
         startActivity(goEditProblem);
     }
     /**
@@ -111,11 +122,42 @@ public class OptionsMenuActivity extends AppCompatActivity {
      */
     public void GeoLocation(){
         if (isServicesOK()) {
-            Intent launchmap = new Intent(this, ViewMapActivity.class);
-            startActivity(launchmap);
+            Intent launchmap = new Intent(this, ViewAllMapActivity.class);
+            boolean toggle = false;
+
+            UserManager.initManager();
+            UserManager userManager = UserManager.getManager();
+            Patient patient = (Patient) UserController.getController().getUser();
+            ArrayList<Record> allRecords = patient.getProblems().get( getIntent().getExtras()
+                    .getInt("problemPos")).getRecords();
+            if (allRecords.size() >0) {
+                for (int i =0; i < allRecords.size();i++) {
+                    if (allRecords.get(i).getLocation() != null) {
+                        if (allRecords.get(i).getLocation().getLat() != null &&
+                                allRecords.get(i).getLocation().getLong() != null &&
+                                allRecords.get(i).getLocation().getTitle() != null) {
+                            toggle = true;
+                        }
+                    }
+                }
+                if (toggle) {
+                    launchmap.putExtra("problemPos", getIntent().getExtras()
+                            .getInt("problemPos"));
+                    startActivity(launchmap);
+                }
+                else{
+                    Toast.makeText(this, "No locations for any record", Toast.LENGTH_SHORT).show();
+                }
+            }
+            else{
+                Toast.makeText(this, "No records", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
+    /**
+     * Changes to AddReminderActivity when set reminder buttons is pressed.
+     */
     public  void setReminder()
     {
         Intent intent = new Intent(OptionsMenuActivity.this, AddReminderActivity.class);
@@ -123,6 +165,10 @@ public class OptionsMenuActivity extends AppCompatActivity {
         this.finish();
     }
 
+    /**
+     * Checks google services for proper map functionalities
+     * @return
+     */
     public boolean isServicesOK(){
         Log.d(TAG,"isServicesOK: checking Google Services version");
         int available = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(OptionsMenuActivity.this);

@@ -1,44 +1,26 @@
+/*
+ * DataManager
+ *
+ * Version 2.0.0
+ *
+ * 2018-12-02
+ *
+ * Copyright (c) 2018. All rights reserved.
+ */
 package com.example.mdbook;
 
 
-import org.json.JSONObject;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
- * Holds data for currently logged in user
+ * Provides a cache between UserManager, LocalStorageController and ElasticsearchController for the
+ * data of the currently logged in user and a queue of offline changes made waiting to be uploaded.
  *
  * @author Noah Burghardt
- * @version 0.0.1
+ * @version 2.0.0
  **/
 public class DataManager {
-    /**
-     * PatientID:
-     *      "phone": String
-     *      "email": String
-     *      "problems": ArrayList of problemIDs (ints)
-     * CaregiverID:
-     *      "phone": String
-     *      "email": String
-     *      "patients": ArrayList of patient userIDs (strings)
-     * ProblemID:
-     *      "title": String
-     *      "description": String
-     *      "comments": ArrayList of comments (strings)
-     *      "records": ArrayList of recordIDs (ints)
-     * RecordID:
-     *      "title": String
-     *      "date": Date
-     *      "description": String
-     *      "geoLocation": GeoLocation
-     *      "bodyLocation": BodyLocation
-     *      "photos": ArrayList of photoIDs (ints)
-     *      "comment": String
-     * PhotoID: Photo
-     *
-     *
-     */
+
     private User me;
     private ArrayList<User> pushQueue;
 
@@ -58,30 +40,49 @@ public class DataManager {
         return dataManager;
     }
 
-    // Queues user up for upload
+    /**
+     * Queues a changed user object up for upload
+     * @param user The user to be uploaded.
+     */
     public void addToQueue(User user){
         pushQueue.add(user);
         localStorageController.saveQueue(pushQueue);
     }
 
+    /**
+     * @param pushQueue The array of User objects to be uploaded.
+     */
     public void setPushQueue(ArrayList<User> pushQueue) {
         this.pushQueue = pushQueue;
     }
 
+    /**
+     * @param user The user object to be removed from the queue.
+     */
     public void removeFromQueue(User user){
         pushQueue.remove(user);
         localStorageController.saveQueue(pushQueue);
     }
 
+    /**
+     * @return The queue of users to be pushed.
+     */
     public ArrayList<User> getPushQueue() {
         return pushQueue;
     }
 
+    /**
+     * Saves the data locally for the logged in user.
+     * @param user The user to log in as.
+     */
     public void saveMe(User user){
         me = user;
         localStorageController.saveMe(me);
     }
 
+    /**
+     * Clears the user data out from storage. Should be called on logout.
+     */
     public void removeMe(){
         me = null;
         localStorageController.clearMe();

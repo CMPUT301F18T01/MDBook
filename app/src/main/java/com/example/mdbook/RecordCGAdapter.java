@@ -18,9 +18,18 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 
 import java.util.ArrayList;
-
+/**
+ * Record Adapter for viewing records in ListRecordCGActivity for the caregiver
+ *
+ * @author Raj Kapadia
+ * @author Thomas Chan
+ *
+ * @see ListRecordsCGActivity
+ * @see Record
+ *
+ *
+ */
 public class RecordCGAdapter extends RecyclerView.Adapter<RecordCGAdapter.RecordCGViewholder> {
-
 
     private static final String TAG = "RecordCGAdapter";
     private static final int ERROR_DIALOG_REQUEST = 9001;
@@ -28,7 +37,9 @@ public class RecordCGAdapter extends RecyclerView.Adapter<RecordCGAdapter.Record
     private Activity mActivity;
     public Record currentRecord;
 
-
+    /**
+     * A static class which is for a particular view, which contains the contents of record.
+     */
     public static class RecordCGViewholder extends RecyclerView.ViewHolder{
 
         public ImageView mImageView;
@@ -39,7 +50,10 @@ public class RecordCGAdapter extends RecyclerView.Adapter<RecordCGAdapter.Record
 
 
 
-
+        /**
+         * creates a RecordViewHolder object
+         * @param itemView
+         */
         public RecordCGViewholder(@NonNull View itemView) {
             super(itemView);
 
@@ -49,18 +63,26 @@ public class RecordCGAdapter extends RecyclerView.Adapter<RecordCGAdapter.Record
             mComment = itemView.findViewById(R.id.recordCommentsCG);
             mAddComment = itemView.findViewById(R.id.recordAddCommentCG);
 
-
         }
     }
 
+
+    /**
+     * creates a RecordAdapter object
+     * @param recordList: needs list of all records by the user currently signed
+     * @param activity: needs the current activity to implement RecordAdapter
+     */
     public RecordCGAdapter(ArrayList<Record> recordList, Activity activity){
         mrecordList = recordList;
         mActivity = activity;
     }
 
-
-
-
+    /**
+     * when a RecordViewHolder is created, it adds to a layout
+     * @param viewGroup
+     * @param i
+     * @return RecordViewHolder
+     */
     @NonNull
     @Override
     public RecordCGViewholder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -71,6 +93,11 @@ public class RecordCGAdapter extends RecyclerView.Adapter<RecordCGAdapter.Record
         return rvh;
     }
 
+    /**
+     * Sets the content of a record to objects on the RecordViewHolder
+     * @param recordCGViewholder
+     * @param position
+     */
     @Override
     public void onBindViewHolder(@NonNull RecordCGViewholder recordCGViewholder, int position) {
         currentRecord = mrecordList.get(position);
@@ -81,36 +108,10 @@ public class RecordCGAdapter extends RecyclerView.Adapter<RecordCGAdapter.Record
         recordCGViewholder.mComment.setText(currentRecord.getComment());
     }
 
-//    private View.OnClickListener addComment = new View.OnClickListener() {
-//        @Override
-//        public void onClick(View v) {
-//            Intent commentIntent = new Intent(mActivity, AddCommentActivity.class);
-//            commentIntent.putExtra("record", currentRecord);
-//            mActivity.startActivity(commentIntent);
-//        }
-//    };
 
-    public boolean isServicesOK(){
-        Log.d(TAG,"isServicesOK: checking Google Services version");
-        int available = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(mActivity);
-        if(available == ConnectionResult.SUCCESS){
-            //Everything is fine and user can make map requests
-            Log.d(TAG, "isServicesOK: Google Play Services is working");
-            return true;
-        }
-        else if (GoogleApiAvailability.getInstance().isUserResolvableError(available)){
-            //Error occured but is fixable
-            Log.d(TAG,"isServicesOK: an error has occured but is fixable");
-            Dialog dialog = GoogleApiAvailability.getInstance().getErrorDialog(mActivity,available , ERROR_DIALOG_REQUEST);
-            dialog.show();
-        }
-        else{
-            Toast.makeText(mActivity, "You cant make map request", Toast.LENGTH_SHORT).show();
-        }
-        return false;
-    }
-
-
+    /**
+     * @return size of list
+     */
     @Override
     public int getItemCount() {
         return mrecordList.size();

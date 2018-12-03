@@ -7,17 +7,20 @@
         android:name="android.hardware.camera2"
         android:required="false" />
     <!-- To auto-complete the email text field in the login form with the user's emails -->
+    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.VIBRATE" />
+
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -27,12 +30,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <meta-data
-            android:name="com.google.android.maps.v2.API_KEY"
-            android:value="MAPS_KEY" />
+
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyC9PTxuI4wNeNbNKZ4hF_r_jr4ysNWSE4A" />
 
         <activity android:name=".LoginActivity">
             <intent-filter>
@@ -62,7 +66,9 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".MapActivity" />
         <activity android:name=".ViewMapActivity" />
-        <activity android:name=".AddReminderActivity" />
+        <activity android:name=".ViewAllMapActivity" />
+        <activity android:name=".AddReminderActivity"/>
+
         <activity
             android:name=".ListProblemActivity"
             android:label="@string/MDBook"
@@ -82,10 +88,11 @@
             android:label="@string/listPatientRecordsCG"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".AddCommentActivity" />
-
         <receiver android:name=".AlarmService" />
-
-        <activity android:name=".ListBodyLocationPhotos"></activity>
+        <activity android:name=".GenerateQRActivity"></activity>
+        <activity android:name=".ScanQRActivity"></activity>
+        <receiver android:name=".AlarmService"/>
+>>>>>>> 0898ff1041f8994f9ddd08296706b63cb22d3a9a
     </application>
 
 </manifest>

@@ -20,6 +20,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.Serializable;
@@ -48,6 +49,7 @@ public class ListProblemActivity extends AppCompatActivity
     private RecyclerView recyclerView;
     private ProblemAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutmanager;
+    private TextView headerUser, headerEmail;
 
     /**
      * Initializes the activity
@@ -56,15 +58,15 @@ public class ListProblemActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_list_problem);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         UserManager.initManager();
         UserManager userManager = UserManager.getManager();
-
         Patient patient = (Patient) UserController.getController().getUser();
-        problems = patient.getProblems();
 
+        problems = patient.getProblems();
         /* Create recycler view */
         recyclerView = findViewById(R.id.recylerView);
         recyclerView.setHasFixedSize(true);
@@ -162,21 +164,6 @@ public class ListProblemActivity extends AppCompatActivity
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.search_menu, menu);
         MenuItem item = menu.findItem(R.id.recylerView);
-
-        //SearchView searchView = (SearchView)item.getActionView();
-
-        /*searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
-            }
-        });
-        */
         return super.onCreateOptionsMenu(menu);
 
     }
@@ -210,6 +197,11 @@ public class ListProblemActivity extends AppCompatActivity
         } else if (id == R.id.signout) {
             Toast.makeText(this, "Signing out", Toast.LENGTH_SHORT).show();
             signout();
+        }
+        else if(id == R.id.shareQR)
+        {
+            Toast.makeText(this, "Share QR-Code with Caregiver so they can add you", Toast.LENGTH_LONG).show();
+            goGenerate();
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -246,6 +238,12 @@ public class ListProblemActivity extends AppCompatActivity
         Intent viewSignout= new Intent(this, LoginActivity.class);
         startActivity(viewSignout);
         this.finish();
+    }
+
+    public void goGenerate()
+    {
+        Intent generateIntent = new Intent(this, GenerateQRActivity.class);
+        startActivity(generateIntent);
     }
 
     /**

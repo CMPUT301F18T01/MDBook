@@ -3,8 +3,6 @@ package com.example.mdbook;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.location.Address;
-import android.location.Geocoder;
-import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -12,13 +10,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.KeyEvent;
-import android.view.View;
-import android.view.WindowManager;
-import android.view.inputmethod.EditorInfo;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -27,12 +18,14 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+/**
+ * Allows user to see the map
+ *
+ * @author Thomas Chan
+ */
 
 public class ViewMapActivity extends AppCompatActivity implements OnMapReadyCallback {
 
@@ -45,15 +38,13 @@ public class ViewMapActivity extends AppCompatActivity implements OnMapReadyCall
 
 
     /* Vars */
-    private List<Address> myAddress;
+    private Double Lat;
+    private Double Long;
+    private String Title;
     private Boolean mLocationPermissionGranted = false;
     private GoogleMap mMap;
-    private Address address;
-    private Record record;
     private UserManager userManager;
-    private ArrayList<Problem> problems;
-    private ArrayList<Record> records;
-    private ArrayList<GeoLocation> GeoList;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -61,20 +52,21 @@ public class ViewMapActivity extends AppCompatActivity implements OnMapReadyCall
         setContentView(R.layout.activity_view_map);
         UserManager.initManager();
         userManager = UserManager.getManager();
-        address = getIntent().getParcelableExtra("recieveAddress");
+
+        Lat = (Double) getIntent().getSerializableExtra("recieveLat");
+        Long = (Double) getIntent().getSerializableExtra("recieveLong");
+        Title = (String) getIntent().getSerializableExtra("recieveTitle");
 
 
-        //getProblemLocation();
+
         getLocationPermission();
-        //viewRecordLocation();
-        //initMap();
+
     }
 
     private void init(){
         Log.d(TAG,"init: initializing");
-        if (address != null){
-            //address =myAddress.get(i);
-            moveCamera(new LatLng(address.getLatitude(), address.getLongitude()),DEFAULT_ZOOM, address.getAddressLine(0));
+        if (Lat !=null && Long != null && Title != null){
+            moveCamera(new LatLng(Lat, Long),DEFAULT_ZOOM, Title);
         }
     }
 
@@ -165,36 +157,6 @@ public class ViewMapActivity extends AppCompatActivity implements OnMapReadyCall
             init();
         }
     }
-    /*
-    public void viewRecordLocation(){
-        myAddress = record.getLocation().getAddressList();
-    }*/
-
-    /*
-    public void getProblemLocation(){
-        Patient patient = (Patient) UserController.getController().getUser();
-        problems = patient.getProblems();
-        GeoList = new ArrayList<>();
-        myAddress = new ArrayList<>();
-        for (int i = 0; i < problems.size();i++)
-        {
-            Problem problem = problems.get(i);
-            records = problem.getRecords();
-            for(int j = 0 ; j < records.size(); j++){
-                Record record = records.get(j);
-                GeoList.add(record.getLocation());
-            }
-        }
-        for (int i = 0; i < GeoList.size(); i++) {
-            if (GeoList.get(i) != null) {
-                ArrayList<Address> addressList = GeoList.get(i).getAddressList();
-                for (int j = 0; j < addressList.size(); j++) {
-                    myAddress.add(addressList.get(i));
-                }
-            }
-        }
-
-    }*/
 
 
     @Override

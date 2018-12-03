@@ -18,7 +18,17 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
+/**
+ * Activity which lists the records for a certain problem, viewed by the Patient
+ *
+ * @see Patient
+ *
+ * @author Thomas Chan
+ *
+ */
 public class ListRecordActivity extends AppCompatActivity {
 
     private static final String TAG = "ListRecordActivity";
@@ -38,13 +48,26 @@ public class ListRecordActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         UserManager.initManager();
         UserManager userManager = UserManager.getManager();
-        recordList = new ArrayList<>();
 
         Patient patient = (Patient) UserController.getController().getUser();
         if (problemPos == null) {
             problemPos = getIntent().getExtras().getInt("problemPos");
         }
         recordList = patient.getProblems().get(problemPos).getRecords();
+        Collections.sort(recordList, new Comparator<Record>() {
+            @Override
+            public int compare(Record p, Record q) {
+                {
+                    if (p.getDate().before(q.getDate())) {
+                        return 11;
+                    } else if (p.getDate().after(q.getDate())) {
+                        return -1;
+                    } else {
+                        return 0;
+                    }
+                }
+            }
+        });
 
 
 
@@ -59,16 +82,22 @@ public class ListRecordActivity extends AppCompatActivity {
             @Override
             public void onItemClick(int position) {
                 recordList.get(position);
-                Toast.makeText(ListRecordActivity.this, "works",Toast.LENGTH_SHORT).show();
+                //Toast.makeText(ListRecordActivity.this, "works",Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void viewmapClick(int postion) {
                 if (isServicesOK()) {
                     Intent launchmap = new Intent(ListRecordActivity.this, ViewMapActivity.class);
-                    Address address = recordList.get(postion).getLocation().getAddressList().get(0);
-                    launchmap.putExtra("recieveAddress", address);
-                    startActivity(launchmap);
+                    if (recordList.get(postion).getLocation().getLat() != null){
+                        launchmap.putExtra("recieveLat",recordList.get(postion).getLocation().getLat());
+                        launchmap.putExtra("recieveLong",recordList.get(postion).getLocation().getLong());
+                        launchmap.putExtra("recieveTitle",recordList.get(postion).getLocation().getTitle());
+                        startActivity(launchmap);
+                    }else {
+                        Toast.makeText(ListRecordActivity.this, "No location for record",Toast.LENGTH_SHORT).show();
+                    }
+
                 }
 
             }
@@ -77,7 +106,6 @@ public class ListRecordActivity extends AppCompatActivity {
         });
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -86,6 +114,12 @@ public class ListRecordActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     *
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -100,14 +134,20 @@ public class ListRecordActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Changes to AddRecordActivity, when user clicks add
+     */
     public void AddRecord(){
         Intent addRecord = new Intent(this, AddRecordActivity.class);
         addRecord.putExtra("problemPos", problemPos);
         startActivityForResult(addRecord, ADD_RECORD_REQUEST_CODE);
-
         //this.finish();
     }
 
+    /**
+     * Checks the google services for proper map functionality
+     * @return bool
+     */
     public boolean isServicesOK(){
         Log.d(TAG,"isServicesOK: checking Google Services version");
         int available = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(this);

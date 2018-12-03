@@ -1,7 +1,20 @@
+/*
+ * UserDecomposer
+ *
+ * Version 1.0.0
+ *
+ * 2018-12-02
+ *
+ * Copyright (c) 2018. All rights reserved.
+ */
 package com.example.mdbook;
 
 import android.accounts.NetworkErrorException;
+import android.location.Address;
+import android.location.Geocoder;
+import android.view.View;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -10,40 +23,53 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 
 /**
- * Deconstructs user for saving to elasticsearch.
+ * Tools for converting user objects to and from JSONObjects.
+ * Data Structure:
+ * PatientID:
+ *      "phone": String
+ *      "email": String
+ *      "problems": ArrayList of problemIDs (ints)
+ * CaregiverID:
+ *      "phone": String
+ *      "email": String
+ *      "patients": ArrayList of patient userIDs (strings)
+ * ProblemID:
+ *      "title": String
+ *      "date": DateString
+ *      "description": String
+ *      "comments": ArrayList of comments (strings)
+ *      "records": ArrayList of recordIDs (ints)
+ * RecordID:
+ *      "title": String
+ *      "date": DateString
+ *      "description": String
+ *      "geoLocation": GeoLocation
+ *      "bodyLocation": BodyLocation
+ *      "photos": ArrayList of photoIDs (ints)
+ *      "comment": String
+ * PhotoID: Photo
  *
+ *
+ *
+ * @author Noah Burghardt
+ * @see User
+ * @version 1.0.0
  */
 public class UserDecomposer {
+
     /**
-     * PatientID:
-     *      "phone": String
-     *      "email": String
-     *      "problems": ArrayList of problemIDs (ints)
-     * CaregiverID:
-     *      "phone": String
-     *      "email": String
-     *      "patients": ArrayList of patient userIDs (strings)
-     * ProblemID:
-     *      "title": String
-     *      "description": String
-     *      "comments": ArrayList of comments (strings)
-     *      "records": ArrayList of recordIDs (ints)
-     * RecordID:
-     *      "title": String
-     *      "date": Date
-     *      "description": String
-     *      "geoLocation": GeoLocation
-     *      "bodyLocation": BodyLocation
-     *      "photos": ArrayList of photoIDs (ints)
-     *      "comment": String
-     * PhotoID: Photo
-     *
-     *
+     * Converts user object to decomposition. Relies on ElasticsearchController to provide IDs for
+     * objects before converting them to JSON.
+     * @see UserDecomposer.Decomposition
+     * @see User
+     * @param user The user (Patient or Caregiver) to be deconstructed.
+     * @return The decomposition of the user.
+     * @throws NetworkErrorException Thrown if no internet access is available.
      */
-
-
     public Decomposition decompose(User user) throws NetworkErrorException {
         Decomposition decomposition = new Decomposition(user.getUserID());
         ElasticsearchController elasticsearchController = ElasticsearchController.getController();
@@ -84,6 +110,7 @@ public class UserDecomposer {
                     /* Add problem data to problemJSON */
                     JSONObject problemJSON = new JSONObject();
                     problemJSON.put("title", problem.getTitle());
+                    problemJSON.put("date", problem.getDate());
                     problemJSON.put("description", problem.getDescription());
                     problemJSON.put("comments", problem.getComments());
 
@@ -102,10 +129,21 @@ public class UserDecomposer {
                         /* Add record data to recordJSON */
                         JSONObject recordJSON = new JSONObject();
 
+                        /* Build geolocation json */
+                        GeoLocation geoLocation = record.getLocation();
+
+                        /* Geopoint is saved as [lon, lat] */
+                        if (geoLocation != null) {
+                            recordJSON.put("geoTitle", geoLocation.getTitle());
+                            ArrayList<Double> geoPoint = new ArrayList<>();
+                            geoPoint.add(geoLocation.getLong());
+                            geoPoint.add(geoLocation.getLat());
+                            recordJSON.put("location", geoPoint);
+                        }
+
                         recordJSON.put("date", record.getDate());
                         recordJSON.put("title", record.getTitle());
                         recordJSON.put("description", record.getDescription());
-                        recordJSON.put("geoLocation", record.getLocation());
                         recordJSON.put("bodyLocation", record.getBodyLocation());
                         recordJSON.put("comment", record.getComment());
 
@@ -164,6 +202,13 @@ public class UserDecomposer {
         }
     }
 
+    /**
+     * Builds user object from decomposition.
+     * @see UserDecomposer.Decomposition
+     * @see User
+     * @param decomposition The decomposition to be turned into a user.
+     * @return The user built from the decomposition.
+     */
     public User compose(Decomposition decomposition){
         try {
             if (decomposition.getProblems() != null) {
@@ -179,10 +224,13 @@ public class UserDecomposer {
                     JSONObject problemJSON = decomposition.getProblems().get(problemID);
 
                     String title = problemJSON.getString("title");
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+                    Date problemDate = sdf.parse(problemJSON.getString("date"));
                     String description = problemJSON.getString("description");
 
                     Problem problem = new Problem(title, description);
                     problem.setProblemID(problemID);
+                    problem.setDate(problemDate);
 
                     /* Add comments */
                     for (String comment : (ArrayList<String>) problemJSON.get("comments")) {
@@ -196,7 +244,6 @@ public class UserDecomposer {
 
                         /* Fetch data */
                         String recordTitle = recordJSON.getString("title");
-                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
                         Date recordDate = sdf.parse(recordJSON.getString("date"));
                         String recordDescription = recordJSON.getString("description");
                         String comment = recordJSON.getString("comment");
@@ -206,12 +253,18 @@ public class UserDecomposer {
                         record.setComment(comment);
                         record.setRecordID(recordID);
 
-                        // TODO
-                        if (recordJSON.has("geoLocation")) {
-                            //GeoLocation geoLocation = (GeoLocation) recordJSON.get("geoLocation");
-                            GeoLocation geoLocation = new GeoLocation();
+                        /* Add geolocation if it exists */
+                        if (recordJSON.has("location") && recordJSON.has("geoTitle")) {
+                            String geoTitle = recordJSON.getString("geoTitle");
+                            ArrayList<Double> geoPoint = (ArrayList<Double>) recordJSON.get("location");
+                            Double lat = geoPoint.get(1);
+                            Double lon = geoPoint.get(0);
+                            GeoLocation geoLocation = new GeoLocation(lat, lon, geoTitle);
                             record.setGeoLocation(geoLocation);
                         }
+
+
+
 
                         // TODO
                         if (recordJSON.has("bodyLocation")) {
@@ -253,6 +306,11 @@ public class UserDecomposer {
     }
 
 
+    /**
+     * Equivalent of a User object, but with its components converted to JSONObjects and grouped
+     * into HashMaps based on their types. Makes it easier to store in Elasticsearch.
+     * @see User
+     */
     public static class Decomposition {
 
         private String userid;

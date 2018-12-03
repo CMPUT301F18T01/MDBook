@@ -7,25 +7,43 @@ import android.os.Parcelable;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-// class for holding geographic locations
+/**
+ * Class for implementing Geolocation
+ * @author Thomas Chan
+ */
 class GeoLocation implements Serializable {
-    private ArrayList<Address> addressList;
+    private Double Lat;
+    private Double Long;
+    private String title;
 
-    public GeoLocation(){
-        if (addressList == null) {
-            addressList = new ArrayList<>();
-        }
+    public GeoLocation(Double Lat, Double Long, String title){
+        this.Lat = Lat;
+        this.Long = Long;
+        this.title = title;
     }
 
-
-
-    public ArrayList<Address> getAddressList(){
-        return this.addressList;
+    public Double getLat() {
+        return Lat;
     }
 
-    public void addAddress(Address address){
-        addressList.add(address);
+    public Double getLong() {
+        return Long;
     }
 
+    public String getTitle() {
+        return title;
+    }
 
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setLat(Double lat) {
+        Lat = lat;
+    }
+
+    public void setLong(Double aLong) {
+        Long = aLong;
+    }
 }
+

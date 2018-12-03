@@ -1,9 +1,9 @@
 /*
  * UserManager
  *
- * Version 2.0.0
+ * Version 3.0.0
  *
- * 2018-11-13
+ * 2018-12-02
  *
  * Copyright (c) 2018. All rights reserved.
  */
@@ -21,19 +21,18 @@ import java.util.HashMap;
 
 /**
  * Provides a singleton interface for managing users, user data and user login / logout.
- * Also provides interface for creating and deleting users. Activities should use userManager
- * instead of going directly through the database controller or the Patient / Caregiver classes.
- * On login, the logged in user object is to be interacted with through the UserController.
- * Relies on DataManager for data lookup and management.
+ * Brings together the controllers for local storage, cache storage and cloud storage for managing
+ * data.
  *
- * Based (partially) off the StudentListManager in the student-picker app by Abram Hindle
+ * Based (loosely) off the StudentListManager in the student-picker app by Abram Hindle
  * https://github.com/abramhindle/student-picker
  *
  * @author Noah Burghardt
- * @see User
  * @see UserController
  * @see ElasticsearchController
- * @version 2.0.0
+ * @see LocalStorageController
+ * @see DataManager
+ * @version 3.0.0
  **/
 public class UserManager {
 
@@ -45,7 +44,7 @@ public class UserManager {
     private UserDecomposer decomposer;
 
     /**
-     * Initialize singleton instance.
+     * Initialize singleton instance and fetch controllers.
      */
     public static void initManager() {
         if (userManager == null){
@@ -59,7 +58,7 @@ public class UserManager {
     }
 
     /**
-     * Auto initilaizes if not already done
+     * Auto initializes if not already done
      * @return Singleton instance of self.
      */
     public static UserManager getManager() {
@@ -153,8 +152,8 @@ public class UserManager {
     }
 
     /**
-     * Attempt to login based on local data
-     * @return
+     * Attempt to login based on local data.
+     * @return True if there is a local copy of user data and login based on that was successful.
      */
     public boolean localLogin() {
         User localUser = localStorageController.loadMe();
@@ -182,7 +181,7 @@ public class UserManager {
     }
 
     /**
-     * Clears all data out of UserController.
+     * Clears all data out of cache and local storage.
      */
     public void logout() {
         UserController.getController().clearUser();
@@ -195,6 +194,7 @@ public class UserManager {
      * @param userID The userID of the user to load.
      * @return A patient or caregiver object built from the userID.
      * @throws NoSuchUserException Thrown if there is no user with the given userID in the database.
+     * @throws NetworkErrorException Thrown if app is unable to reach Elasticsearch server.
      */
     public User fetchUser (String userID) throws NoSuchUserException, NetworkErrorException {
 
@@ -214,18 +214,16 @@ public class UserManager {
     }
 
     /**
-     * Take the data in the given user object, convert its components into the corresponding
-     * hashmaps and send them to the esc to be uploaded.
+     * Take the data in the given user object, deconstructs it and queues it up for upload.
+     * If internet is available, also uploads all changes from queue to Elasticsearch.
      *
      * @param user The user object to be synced into the database.
-     * @throws NoSuchUserException Thrown if there is no user with a matching userID already in the
-     * database. Shouldn't happen if users are created through the UserManager.
-     * @throws IllegalArgumentException Thrown if the inputted user is not a (full) patient or
-     * caregiver, e.g. a ContactUser.
      */
-    public void saveUser(User user) throws IllegalArgumentException {
-        if (user.getUserID().equals(userController.getUser().getUserID())){
-            dataManager.saveMe(user);
+    public void saveUser(User user) {
+        if (userController.getUser() != null) {
+            if (user.getUserID().equals(userController.getUser().getUserID())) {
+                dataManager.saveMe(user);
+            }
         }
         dataManager.addToQueue(user);
 
@@ -261,6 +259,17 @@ public class UserManager {
      * @param userID The userID of the user to be cleared out.
      */
     public void deleteUser(String userID) throws NoSuchUserException, NetworkErrorException {
+        if (elasticsearchController.existsPatient(userID)) {
+            /* Replace patient with empty patient
+             * Effectively deletes all problems, records and photos
+             */
+            Patient patient = new Patient(userID, "", "");
+            userManager.saveUser(patient);
+        } else if (!elasticsearchController.existsCaregiver(userID)) {
+            throw new NoSuchUserException();
+        }
+
+        /* Delete what remains of the user */
         elasticsearchController.deleteUser(userID);
     }
 

@@ -42,8 +42,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private Button registerButton;
     private CheckBox CGCheckbox;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,6 +94,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     } catch (UserIDNotAvailableException e) {
                         Toast.makeText(this, "UserID is taken", Toast.LENGTH_SHORT).show();
                         e.printStackTrace();
+                    }  catch (IllegalArgumentException e){
+                        Toast.makeText(this, "UserID must be at least 8 characters", Toast.LENGTH_SHORT).show();
                     } catch (NetworkErrorException e) {
                         Toast.makeText(this, "Internet connection is required to register", Toast.LENGTH_SHORT).show();
                     }
