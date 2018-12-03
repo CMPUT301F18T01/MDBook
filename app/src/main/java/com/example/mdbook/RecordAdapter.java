@@ -140,7 +140,7 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
         //recordViewholder.mImageView.setImageResource(currentRecord.getPhotos().get(0).getPhotoid());
         recordViewholder.mTitle.setText(currentRecord.getTitle());
         recordViewholder.mDate.setText(currentRecord.getDate().toString());
-        recordViewholder.mComment.setText(currentRecord.getComment());
+        recordViewholder.mComment.setText(currentRecord.getDescription());
     }
 
 
