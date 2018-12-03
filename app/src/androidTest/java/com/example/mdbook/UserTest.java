@@ -87,11 +87,4 @@ public class UserTest extends TestCase {
         // check loaded user against initial patient
         assert (userController1.getUser() == patient);
     }
-
-    public void testTest(){
-        ElasticSearchTools.ResetStringIDs();
-    }
-
-
-
 }
