@@ -12,7 +12,9 @@ package com.example.mdbook;
 import android.accounts.NetworkErrorException;
 import android.location.Address;
 import android.location.Geocoder;
+import android.view.View;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -130,12 +132,12 @@ public class UserDecomposer {
                         /* Build geolocation json */
                         GeoLocation geoLocation = record.getLocation();
 
+                        /* Geopoint is saved as [lon, lat] */
                         if (geoLocation != null) {
                             recordJSON.put("geoTitle", geoLocation.getTitle());
-                            JSONObject geoPoint = new JSONObject();
-                            geoPoint.put("_type", "geo_point");
-                            geoPoint.put("lat", geoLocation.getLat());
-                            geoPoint.put("lon", geoLocation.getLong());
+                            ArrayList<Double> geoPoint = new ArrayList<>();
+                            geoPoint.add(geoLocation.getLong());
+                            geoPoint.add(geoLocation.getLat());
                             recordJSON.put("location", geoPoint);
                         }
 
