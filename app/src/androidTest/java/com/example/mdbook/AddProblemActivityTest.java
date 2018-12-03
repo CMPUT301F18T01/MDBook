@@ -28,17 +28,16 @@ public class AddProblemActivityTest {
 
     @Test
     public void testAddRecord() throws Exception{
-        EditText addTitle = AddProblemActivity.findViewById(R.id.etUserID);
+        EditText addTitle = AddProblemActivity.findViewById(R.id.addTitle);
         assertNotNull(addTitle);
-        String UserID;
-        UserID = "Testpatient";
-        Espresso.onView(withId(R.id.headline)).perform(typeText("Headline"));
+        Espresso.onView(withId(R.id.addTitle)).perform(typeText("headache"));
         Espresso.onView(withId(R.id.saveButton)).perform(click());
         UserManager.initManager();
         UserManager um = UserManager.getManager();
         um.createPatient("Person", "Phone", "Email");
+        String UserID = UserController.getController().getUser().getUserID();
         Patient p = (Patient) um.fetchUser(UserID);
-        assertEquals(p.getProblems().get(0).getRecords().get(0), "Headline");
+        assertEquals(p.getProblems().get(0), "headache");
     }
 
     @After
