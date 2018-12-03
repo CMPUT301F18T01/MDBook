@@ -10,6 +10,8 @@
 package com.example.mdbook;
 
 import android.accounts.NetworkErrorException;
+import android.location.Address;
+import android.location.Geocoder;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -19,6 +21,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 
 /**
  * Tools for converting user objects to and from JSONObjects.
@@ -240,6 +244,9 @@ public class UserDecomposer {
                         if (recordJSON.has("geoLocation")) {
                             //GeoLocation geoLocation = (GeoLocation) recordJSON.get("geoLocation");
                             GeoLocation geoLocation = new GeoLocation();
+                            Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+                            List<Address> addresses;
+                            geoLocation.addAddress();
                             record.setGeoLocation(geoLocation);
                         }
 

@@ -12,33 +12,32 @@ import java.util.ArrayList;
  * @author Thomas Chan
  */
 class GeoLocation implements Serializable {
-    private ArrayList<Address> addressList;
+    private Double Lat;
+    private Double Long;
+    private String title;
 
-    /**
-     * creates a Geolocation object
-     */
-    public GeoLocation(){
-        if (addressList == null) {
-            addressList = new ArrayList<>();
-        }
+    public Double getLat() {
+        return Lat;
     }
 
-
-    /**
-     * Returns current address list
-     * @return ArrayList<Address> addressList
-     */
-    public ArrayList<Address> getAddressList(){
-        return this.addressList;
+    public Double getLong() {
+        return Long;
     }
 
-    /**
-     * adds 'address' ArrayList of addresses
-     * @param address: address
-     */
-    public void addAddress(Address address){
-        addressList.add(address);
+    public String getTitle() {
+        return title;
     }
 
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
+    public void setLat(Double lat) {
+        Lat = lat;
+    }
+
+    public void setLong(Double aLong) {
+        Long = aLong;
+    }
 }
+
