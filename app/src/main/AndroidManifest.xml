@@ -14,10 +14,8 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.VIBRATE" />
-
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -30,7 +28,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
@@ -67,8 +64,7 @@
         <activity android:name=".MapActivity" />
         <activity android:name=".ViewMapActivity" />
         <activity android:name=".ViewAllMapActivity" />
-        <activity android:name=".AddReminderActivity"/>
-
+        <activity android:name=".AddReminderActivity" />
         <activity
             android:name=".ListProblemActivity"
             android:label="@string/MDBook"
@@ -88,11 +84,15 @@
             android:label="@string/listPatientRecordsCG"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".AddCommentActivity" />
+
         <receiver android:name=".AlarmService" />
-        <activity android:name=".GenerateQRActivity"></activity>
-        <activity android:name=".ScanQRActivity"></activity>
-        <receiver android:name=".AlarmService"/>
->>>>>>> 0898ff1041f8994f9ddd08296706b63cb22d3a9a
+
+        <activity android:name=".GenerateQRActivity" />
+        <activity android:name=".ScanQRActivity" />
+
+        <receiver android:name=".AlarmService" />
+        >>>>>>> 0898ff1041f8994f9ddd08296706b63cb22d3a9a
+        <activity android:name=".ShowBodyLocationsActivity"></activity>
     </application>
 
 </manifest>
