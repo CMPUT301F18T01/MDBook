@@ -161,15 +161,15 @@ public class AddRecordActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode,@Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-//        if (requestCode == MAP_ACTIVITY_REQUEST_CODE){
-//            if (resultCode == RESULT_OK){
-//                Lat = (Double) data.getSerializableExtra("Lat");
-//                Long = (Double) data.getSerializableExtra("Long");
-//                Title = (String) data.getSerializableExtra("Title");
-//            }
-//        }
+        if (requestCode == MAP_ACTIVITY_REQUEST_CODE){
+            if (resultCode == RESULT_OK){
+                Lat = (Double) data.getSerializableExtra("Lat");
+                Long = (Double) data.getSerializableExtra("Long");
+                Title = (String) data.getSerializableExtra("Title");
+            }
+        }
         if(requestCode == BODY_ACTIVITY_REQUEST_CODE){
             if(resultCode != RESULT_CANCELED && data != null){
                 BodyLocation bodylocation = (BodyLocation) data.getSerializableExtra("bodylocation");
