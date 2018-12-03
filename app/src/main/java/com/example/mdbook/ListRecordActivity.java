@@ -66,16 +66,21 @@ public class ListRecordActivity extends AppCompatActivity {
             @Override
             public void onItemClick(int position) {
                 recordList.get(position);
-                Toast.makeText(ListRecordActivity.this, "works",Toast.LENGTH_SHORT).show();
+                //Toast.makeText(ListRecordActivity.this, "works",Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void viewmapClick(int postion) {
                 if (isServicesOK()) {
                     Intent launchmap = new Intent(ListRecordActivity.this, ViewMapActivity.class);
-                    Address address = recordList.get(postion).getLocation().getAddressList().get(0);
-                    launchmap.putExtra("recieveAddress", address);
-                    startActivity(launchmap);
+                    if (recordList.get(postion).getLocation().getAddressList().size() > 0){
+                        Address address = recordList.get(postion).getLocation().getAddressList().get(0);
+                        launchmap.putExtra("recieveAddress", address);
+                        startActivity(launchmap);
+                    }else {
+                        Toast.makeText(ListRecordActivity.this, "No location for record",Toast.LENGTH_SHORT).show();
+                    }
+
                 }
 
             }

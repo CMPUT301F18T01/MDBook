@@ -59,6 +59,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".MapActivity" />
         <activity android:name=".ViewMapActivity" />
+        <activity android:name=".ViewAllMapActivity" />
         <activity android:name=".AddReminderActivity"/>
         <activity
             android:name=".ListProblemActivity"
