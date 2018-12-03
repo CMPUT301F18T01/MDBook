@@ -68,11 +68,12 @@ public class ViewAllMapActivity extends AppCompatActivity implements OnMapReadyC
         ArrayList<Record> allRecords = patient.getProblems().get(problemPos).getRecords();
         if (problemPos != null){
             if (allRecords.size() >0) {
-                Double Latitude = allRecords.get(0).getLocation().getLat();
-                Double Longitude = allRecords.get(0).getLocation().getLong();
-                String Title = allRecords.get(0).getLocation().getTitle();
-
-                moveCamera(new LatLng(Latitude, Longitude), 11);
+                if (allRecords.get(0).getLocation() != null) {
+                    Double Latitude = allRecords.get(0).getLocation().getLat();
+                    Double Longitude = allRecords.get(0).getLocation().getLong();
+                    String Title = allRecords.get(0).getLocation().getTitle();
+                    moveCamera(new LatLng(Latitude, Longitude), 11);
+                }
             }
         }
     }
@@ -184,7 +185,7 @@ public class ViewAllMapActivity extends AppCompatActivity implements OnMapReadyC
             markers = new ArrayList<>();
             ArrayList<Record> allRecords = patient.getProblems().get(problemPos).getRecords();
             for (int i = 0; i < allRecords.size(); i++){
-                if (allRecords.get(i).getLocation().getLat() != null) {
+                if (allRecords.get(i).getLocation()!= null) {
                     LatLng LLPos = new LatLng(allRecords.get(i).getLocation().getLat(),
                             allRecords.get(i).getLocation().getLong());
                     String title = allRecords.get(i).getLocation().getTitle();

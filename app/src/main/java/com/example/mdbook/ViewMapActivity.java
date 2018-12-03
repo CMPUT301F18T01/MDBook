@@ -53,9 +53,9 @@ public class ViewMapActivity extends AppCompatActivity implements OnMapReadyCall
         UserManager.initManager();
         userManager = UserManager.getManager();
 
-        Lat = (Double) getIntent().getSerializableExtra("Lat");
-        Long = (Double) getIntent().getSerializableExtra("Long");
-        Title = (String) getIntent().getSerializableExtra("Title");
+        Lat = (Double) getIntent().getSerializableExtra("recieveLat");
+        Long = (Double) getIntent().getSerializableExtra("recieveLong");
+        Title = (String) getIntent().getSerializableExtra("recieveTitle");
 
 
 
