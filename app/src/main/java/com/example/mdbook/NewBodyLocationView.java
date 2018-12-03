@@ -158,13 +158,13 @@ public class NewBodyLocationView extends AppCompatActivity {
                 Photo photo = new Photo(uri);
                 bodylocation.setPhoto(photo);
 
-                if (bodylocation != null) {
+
                     //Toast toast = Toast.makeText(getApplicationContext(), bodylocation.getPhoto().getFilepath() + " " + "added", Toast.LENGTH_LONG);
                     //toast.show();
-                    Intent intent = new Intent(NewBodyLocationView.this, AddRecordActivity.class);
-                    intent.putExtra("bodylocation", bodylocation);
-                    startActivity(intent);
-                    NewBodyLocationView.this.finish();
+                Intent intent = new Intent();
+                intent.putExtra("bodylocation", bodylocation);
+                setResult(NewBodyLocationView.RESULT_OK,intent);
+                finish();
 
 
                 }
@@ -179,6 +179,6 @@ public class NewBodyLocationView extends AppCompatActivity {
         }
 
     }
-}
+
 
 
