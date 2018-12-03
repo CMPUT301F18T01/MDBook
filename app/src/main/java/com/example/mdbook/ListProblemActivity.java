@@ -20,6 +20,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.Serializable;
@@ -48,6 +49,7 @@ public class ListProblemActivity extends AppCompatActivity
     private RecyclerView recyclerView;
     private ProblemAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutmanager;
+    private TextView headerUser, headerEmail;
 
     /**
      * Initializes the activity
@@ -56,12 +58,14 @@ public class ListProblemActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_list_problem);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         UserManager.initManager();
         UserManager userManager = UserManager.getManager();
         Patient patient = (Patient) UserController.getController().getUser();
+
         problems = patient.getProblems();
         /* Create recycler view */
         recyclerView = findViewById(R.id.recylerView);
