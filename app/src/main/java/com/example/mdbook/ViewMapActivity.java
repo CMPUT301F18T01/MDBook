@@ -21,6 +21,12 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Allows user to see the map
+ *
+ * @author Thomas Chan
+ */
+
 public class ViewMapActivity extends AppCompatActivity implements OnMapReadyCallback {
 
 

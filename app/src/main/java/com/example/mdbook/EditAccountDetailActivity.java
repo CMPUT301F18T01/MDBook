@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 
 /**
@@ -31,11 +32,12 @@ import android.widget.EditText;
  */
 public class EditAccountDetailActivity extends AppCompatActivity {
 
-    EditText editName;
-    EditText editPhone;
-    EditText editEmail;
-    Button save;
-    Button cancel;
+    private TextView editName;
+    private EditText editPhone;
+    private EditText editEmail;
+    private Button save;
+    private Button cancel;
+    private User user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,11 +48,21 @@ public class EditAccountDetailActivity extends AppCompatActivity {
         editPhone = findViewById(R.id.editPhone);
         save = findViewById(R.id.save);
         cancel = findViewById(R.id.cancel);
+        UserManager.initManager();
+        final UserManager userManager = UserManager.getManager();
+        user = UserController.getController().getUser();
+
+       editName.setText(user.getUserID());
+       editPhone.setText(user.getPhoneNumber());
+       editEmail.setText(user.getEmail());
 
         // Switches to the main activity upon the click of the save button
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                user.setPhoneNumber(editPhone.getText().toString());
+                user.setEmail(editEmail.getText().toString());
+                userManager.saveUser(user);
                 backToMain();
             }
         });
@@ -70,8 +82,9 @@ public class EditAccountDetailActivity extends AppCompatActivity {
      */
     public void backToMain(){
 
-        Intent backToMain = new Intent(this, ListProblemActivity.class);
+        Intent backToMain = new Intent(this, ViewAccountDetailActivity.class);
         startActivity(backToMain);
+        this.finish();
 
     }
 }

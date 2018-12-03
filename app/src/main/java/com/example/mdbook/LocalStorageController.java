@@ -1,24 +1,21 @@
 /*
  * LocalStorageController
  *
- * Version 1.0.0
+ * Version 2.0.0
  *
- * 2018-11-18
+ * 2018-12-02
  *
  * Copyright (c) 2018. All rights reserved.
  */
 package com.example.mdbook;
 
-import android.content.Context;
 import android.content.SharedPreferences;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import org.json.JSONObject;
+
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.HashMap;
-
-import static android.content.Context.MODE_PRIVATE;
 
 
 /**
@@ -29,19 +26,13 @@ import static android.content.Context.MODE_PRIVATE;
  * @author Thomas Chan
  * @author Noah Burghardt
  * @see DataManager
- * @version 1.0.0
+ * @version 2.0.0
  */
 
 class LocalStorageController {
 
 
     private static LocalStorageController localStorageController;
-    private Gson patients = new Gson();
-    private Gson caregivers = new Gson();
-    private Gson problems = new Gson();
-    private Gson records = new Gson();
-    private Gson photos = new Gson();
-    private Gson availableIDs = new Gson();
     private SharedPreferences sharedPreferences;
     private Gson gson;
     private SharedPreferences.Editor editor;
@@ -74,6 +65,10 @@ class LocalStorageController {
 
     }
 
+    /**
+     * Loads the local data for the logged in user.
+     * @return User object of logged in user.
+     */
     public User loadMe(){
         String userTypeString = sharedPreferences.getString("usertype", null);
         Type userTypeStringType = new TypeToken<String>(){}.getType();
@@ -101,6 +96,10 @@ class LocalStorageController {
         }
     }
 
+    /**
+     * Saves cached data of currently logged in user to storage.
+     * @param me The User data of currently logged in user.
+     */
     public void saveMe(User me) {
         String user = gson.toJson(me);
         editor.putString("user",user);
@@ -112,7 +111,10 @@ class LocalStorageController {
         editor.apply();
     }
 
-    // TODO: split saveQueue into two arraylists of each type of user
+    /**
+     * Saves queue of offline changes to localstorage, for uploading when possible.
+     * @param pushQueue Queue of user objects to update.
+     */
     public void saveQueue(ArrayList<User> pushQueue) {
 
         ArrayList<Patient> patientQueue = new ArrayList<>();
@@ -133,7 +135,10 @@ class LocalStorageController {
     }
 
 
-    // TODO: split saveQueue into two arraylists of each type of user
+    /**
+     * Loads queue of offline changes that need to be uploaded when possible.
+     * @return Queue of user objects to update.
+     */
     public ArrayList<User> loadQueue() {
 
         String patientQueueString = sharedPreferences.getString("patientPushQueue", null);
@@ -152,6 +157,9 @@ class LocalStorageController {
         return pushQueue;
     }
 
+    /**
+     * Clears logged in user data out from saved storage. Should be called on logout.
+     */
     public void clearMe() {
         editor.remove("user").commit();
         editor.remove("usertype").commit();
