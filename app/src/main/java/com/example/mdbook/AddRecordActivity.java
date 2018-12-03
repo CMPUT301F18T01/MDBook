@@ -73,6 +73,7 @@ public class AddRecordActivity extends AppCompatActivity {
     private Button save;
     private Button cancel;
     private ArrayList<BodyLocation> bodylocationlist;
+    private BodyLocation bodylocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,9 +95,10 @@ public class AddRecordActivity extends AppCompatActivity {
 
         format = new SimpleDateFormat("dd/MM/yy");
 
-
-        BodyLocation bodylocation = (BodyLocation) getIntent().getExtras().getSerializable("bodylocation");
-        bodylocationlist.add(bodylocation);
+        if(bodylocation != null) {
+            bodylocation = (BodyLocation) getIntent().getExtras().getSerializable("bodylocation");
+            bodylocationlist.add(bodylocation);
+        }
         // Switches to addBodyLocationActivity upon the click of the body button
 
         body.setOnClickListener(new View.OnClickListener() {
