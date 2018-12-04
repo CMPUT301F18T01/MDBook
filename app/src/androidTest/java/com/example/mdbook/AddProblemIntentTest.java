@@ -3,6 +3,7 @@ package com.example.mdbook;
 import android.app.Activity;
 import android.support.design.widget.FloatingActionButton;
 import android.support.test.rule.ActivityTestRule;
+import android.view.Display;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -14,12 +15,9 @@ import org.junit.Test;
 
 import static android.support.test.InstrumentationRegistry.getInstrumentation;
 
-public class AddProblemTest
+public class AddProblemIntentTest
 {
     private Solo solo;
-    private EditText editText;
-    private Button loginButton;
-    private TextView registerText;
 
     @Rule
     public ActivityTestRule<LoginActivity> activityTestRule= new ActivityTestRule(LoginActivity.class);
@@ -36,8 +34,7 @@ public class AddProblemTest
     }
 
     @Test
-    public void testAddProblem()
-    {
+    public void testAddProblem() {
         solo = new Solo(getInstrumentation(), activityTestRule.getActivity());
         solo.assertCurrentActivity("Wrong Activity", LoginActivity.class);
         solo.clickOnView(solo.getView(R.id.registerBtn));
@@ -64,14 +61,10 @@ public class AddProblemTest
         solo.setDatePicker(0, 2018, 12, 3);
         solo.clickOnText("OK");
         solo.clickOnView(solo.getView(R.id.saveButton));
-
         solo.assertCurrentActivity("Wrong Activity", ListProblemActivity.class);
+        UserManager.initManager();
+        UserManager um = UserManager.getManager();
+        um.logout();
     }
-
-    @Test
-    public void testEnd() throws Exception{
-
-    }
-
 
 }
