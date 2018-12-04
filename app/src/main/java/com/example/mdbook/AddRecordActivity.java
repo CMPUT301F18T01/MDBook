@@ -13,10 +13,9 @@ package com.example.mdbook;
 
 import android.app.Dialog;
 import android.content.Intent;
-//import android.media.Image;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -27,11 +26,10 @@ import android.widget.Toast;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+
+//import android.media.Image;
 
 /**
  * Creates an activity for the user to add a record
@@ -114,7 +112,8 @@ public class AddRecordActivity extends AppCompatActivity {
                 recordDate = new Date();
                 if (record == null) {
                         record = new Record(headline.getText().toString(), recordDate,
-                                Description.getText().toString());
+                                "");
+                        record.setComment(Description.getText().toString());
 
                 }
                 if (Lat != null){

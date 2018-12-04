@@ -1,22 +1,14 @@
 package com.example.mdbook;
 
 import android.app.Activity;
-import android.app.Dialog;
-import android.content.Intent;
-import android.location.Address;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GoogleApiAvailability;
 
 import java.util.ArrayList;
 
@@ -140,7 +132,7 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
         //recordViewholder.mImageView.setImageResource(currentRecord.getPhotos().get(0).getPhotoid());
         recordViewholder.mTitle.setText(currentRecord.getTitle());
         recordViewholder.mDate.setText(currentRecord.getDate().toString());
-        recordViewholder.mComment.setText(currentRecord.getDescription());
+        recordViewholder.mComment.setText(currentRecord.getComment());
     }
 
 
