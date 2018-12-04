@@ -20,7 +20,7 @@ import org.junit.Test;
 import static android.support.test.InstrumentationRegistry.getInstrumentation;
 
 
-public class LoginActivityTest {
+public class LoginActivityIntentTest {
 
     private Solo solo;
 

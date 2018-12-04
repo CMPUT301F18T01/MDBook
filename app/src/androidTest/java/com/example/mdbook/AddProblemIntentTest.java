@@ -15,12 +15,9 @@ import org.junit.Test;
 
 import static android.support.test.InstrumentationRegistry.getInstrumentation;
 
-public class AddProblemTest
+public class AddProblemIntentTest
 {
     private Solo solo;
-    private EditText editText;
-    private Button loginButton;
-    private TextView registerText;
 
     @Rule
     public ActivityTestRule<LoginActivity> activityTestRule= new ActivityTestRule(LoginActivity.class);
