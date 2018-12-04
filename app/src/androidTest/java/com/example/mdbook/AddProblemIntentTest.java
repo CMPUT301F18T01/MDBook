@@ -34,8 +34,7 @@ public class AddProblemIntentTest
     }
 
     @Test
-    public void testAddProblem()
-    {
+    public void testAddProblem() {
         solo = new Solo(getInstrumentation(), activityTestRule.getActivity());
         solo.assertCurrentActivity("Wrong Activity", LoginActivity.class);
         solo.clickOnView(solo.getView(R.id.registerBtn));
@@ -63,25 +62,9 @@ public class AddProblemIntentTest
         solo.clickOnText("OK");
         solo.clickOnView(solo.getView(R.id.saveButton));
         solo.assertCurrentActivity("Wrong Activity", ListProblemActivity.class);
-        swipeToRight();
-        solo.setNavigationDrawer(Solo.OPENED);
-        solo.clickOnMenuItem("Log out");
-        solo.assertCurrentActivity("Wrong Activity", LoginActivity.class);
+        UserManager.initManager();
+        UserManager um = UserManager.getManager();
+        um.logout();
     }
-
-    private void swipeToRight() {
-        Display display = solo.getCurrentActivity().getWindowManager().getDefaultDisplay();
-        int width = display.getWidth();
-        int height = display.getHeight();
-        float xStart = 0 ;
-        float xEnd = width / 2;
-        solo.drag(xStart, xEnd, height / 2, height / 2, 1);
-    }
-
-    @Test
-    public void testEnd() throws Exception{
-
-    }
-
 
 }

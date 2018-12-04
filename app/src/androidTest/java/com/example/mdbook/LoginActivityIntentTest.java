@@ -42,7 +42,7 @@ public class LoginActivityIntentTest {
 
 
     @Test
-    public void testPatientLogin(){
+    public void testPatientLogin() {
         solo = new Solo(getInstrumentation(), activityTestRule.getActivity());
         solo.assertCurrentActivity("Wrong Activity", LoginActivity.class);
         solo.clickOnView(solo.getView(R.id.registerBtn));
@@ -55,14 +55,13 @@ public class LoginActivityIntentTest {
         solo.enterText((EditText) solo.getView(R.id.etUserID), "rajkapadia12345");
         solo.clickOnView(solo.getView(R.id.loginButton));
         solo.assertCurrentActivity("Wrong Activity", ListProblemActivity.class);
-        swipeToRight();
-        solo.setNavigationDrawer(Solo.OPENED);
-        solo.clickOnMenuItem("Log out");
-        solo.assertCurrentActivity("Wrong Activity", LoginActivity.class);
+        UserManager.initManager();
+        UserManager um = UserManager.getManager();
+        um.logout();
     }
 
     @Test
-    public void careProviderLogin(){
+    public void careProviderLogin() {
         solo = new Solo(getInstrumentation(), activityTestRule.getActivity());
         solo.goBackToActivity("LoginActivity");
         solo.assertCurrentActivity("Wrong Activity", LoginActivity.class);
@@ -80,22 +79,10 @@ public class LoginActivityIntentTest {
         solo.enterText((EditText) solo.getView(R.id.etUserID), "rajkapadiaCG1");
         solo.clickOnView(solo.getView(R.id.loginButton));
         solo.assertCurrentActivity("Wrong Activity", ListPatientActivity.class);
-        swipeToRight();
-        solo.setNavigationDrawer(Solo.OPENED);
-        solo.clickOnMenuItem("Log out");
-        solo.assertCurrentActivity("Wrong Activity", LoginActivity.class);
-
+        UserManager.initManager();
+        UserManager um = UserManager.getManager();
+        um.logout();
     }
-
-    private void swipeToRight() {
-        Display display = solo.getCurrentActivity().getWindowManager().getDefaultDisplay();
-        int width = display.getWidth();
-        int height = display.getHeight();
-        float xStart = 0 ;
-        float xEnd = width / 2;
-        solo.drag(xStart, xEnd, height / 2, height / 2, 1);
-    }
-
 
 
 }
