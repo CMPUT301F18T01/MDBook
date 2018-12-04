@@ -63,13 +63,7 @@ public class AddPatientTest {
         solo.goBackToActivity("LoginActivity");
         solo.enterText((EditText) solo.getView(R.id.etUserID), "rajkapadiaCG");
         solo.clickOnView(solo.getView(R.id.loginButton));
-//
-//        solo.assertCurrentActivity("Wrong Activity", ListPatientActivity.class);
-//        FloatingActionButton  fab = (FloatingActionButton) solo.getView(R.id.gotoAddPatient);
-//        solo.clickOnView(fab);
-//
-//        solo.assertCurrentActivity("Wrong activity", AddRecordActivity.class);
-//
+
 
     }
 }
