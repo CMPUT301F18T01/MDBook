@@ -51,7 +51,6 @@ public class OptionsMenuActivity extends AppCompatActivity {
         // set the view and butons appropriately by id's
         EditProblem = findViewById(R.id.EditProblem);
         EditRecord = findViewById(R.id.EditRecord);
-        RecordSlide = findViewById(R.id.RecordSlide);
         GeoLocation = findViewById(R.id.GeoLocation);
         setReminder = findViewById(R.id.setRemindersBtn);
 
@@ -70,12 +69,7 @@ public class OptionsMenuActivity extends AppCompatActivity {
             }
         });
         // Switches to the record slide activity upon the click of the edit record slide button
-        RecordSlide.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                RecordSlide();
-            }
-        });
+       
         // Switches to the geolocation activity upon the click of the edit geolocation button
         GeoLocation.setOnClickListener(new View.OnClickListener() {
             @Override

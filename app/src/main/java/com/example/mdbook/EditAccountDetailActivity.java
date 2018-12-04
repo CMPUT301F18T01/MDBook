@@ -46,7 +46,7 @@ public class EditAccountDetailActivity extends AppCompatActivity {
         editName = findViewById(R.id.editName);
         editEmail = findViewById(R.id.editEmail);
         editPhone = findViewById(R.id.editPhone);
-        save = findViewById(R.id.done);
+        save = findViewById(R.id.save);
         cancel = findViewById(R.id.cancel);
         UserManager.initManager();
         final UserManager userManager = UserManager.getManager();
