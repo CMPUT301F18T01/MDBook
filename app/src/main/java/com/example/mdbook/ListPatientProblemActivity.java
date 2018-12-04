@@ -12,6 +12,8 @@
 package com.example.mdbook;
 import android.accounts.NetworkErrorException;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -57,10 +59,14 @@ public class ListPatientProblemActivity extends AppCompatActivity implements Nav
         setSupportActionBar(toolbar);
         UserManager.initManager();
         UserManager userManager = UserManager.getManager();
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        SyncController syncController = new SyncController();
+        registerReceiver(syncController,filter);
 
         Caregiver caregiver = (Caregiver) UserController.getController().getUser();
         patientPos = getIntent().getExtras().getInt("patientPos");
         patientID = caregiver.getPatientList().get(patientPos);
+
 
         try {
             patient = (Patient) userManager.fetchUser(patientID);
@@ -148,4 +154,11 @@ public class ListPatientProblemActivity extends AppCompatActivity implements Nav
         startActivity(intent);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        SyncController syncController = new SyncController();
+        registerReceiver(syncController,filter);
+    }
 }

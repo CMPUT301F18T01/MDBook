@@ -2,6 +2,8 @@ package com.example.mdbook;
 
 import android.accounts.NetworkErrorException;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.nfc.Tag;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -100,6 +102,10 @@ public class ListRecordsCGActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
       super.onResume();
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        SyncController syncController = new SyncController();
+        registerReceiver(syncController,filter);
+
         Caregiver caregiver = (Caregiver) UserController.getController().getUser();
         UserManager.initManager();
         UserManager userManager = UserManager.getManager();

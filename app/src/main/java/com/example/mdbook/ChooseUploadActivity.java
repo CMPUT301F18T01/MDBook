@@ -25,6 +25,16 @@ import java.util.Calendar;
 
 public class ChooseUploadActivity extends AppCompatActivity {
 
+    /**
+     * Activity which allows user to choose between camera and gallery then saves the image
+     *
+     * @see NewBodyLocationView
+     *
+     * @author Jayanta Chatterjee
+     *
+     *@version 0.0.1
+     */
+
     Button uploadFromGallery;
     Button openCamera;
 

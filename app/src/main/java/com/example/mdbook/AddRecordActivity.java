@@ -39,12 +39,11 @@ import java.util.Date;
  *
  * @see com.example.mdbook.Record
  *
- *
+ * @author ThomasChan
  * @author Jayanta Chatterjee
- * @author James Aina
  * @author Raj Kapadia
  *
- * @version 0.0.1
+ * @version 3.0.0
  */
 
 public class AddRecordActivity extends AppCompatActivity {
@@ -90,13 +89,15 @@ public class AddRecordActivity extends AppCompatActivity {
         recordList = new ArrayList<>();
         final Patient patient = (Patient) UserController.getController().getUser();
         problemPos = getIntent().getExtras().getInt("problemPos");
-
+        /*
         image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(AddRecordActivity.this, "Add photo", Toast.LENGTH_LONG).show();
+                Toast.makeText(AddRecordActivity.this, "Add photo",
+                        Toast.LENGTH_LONG).show();
             }
-        });
+        });*/
+
         // Switches to addBodyLocationActivity upon the click of the body button
         body.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,9 +110,12 @@ public class AddRecordActivity extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                try{
                 recordDate = new Date();
                 if (record == null) {
-                    record = new Record(headline.getText().toString(), recordDate, Description.getText().toString());
+                        record = new Record(headline.getText().toString(), recordDate,
+                                Description.getText().toString());
+
                 }
                 if (Lat != null){
                     if (Long != null){
@@ -126,7 +130,8 @@ public class AddRecordActivity extends AppCompatActivity {
                     for(int i = 0; i<bodylocationlist.size(); i++) {
                         record.setBodyLocation(bodylocationlist.get(i));
                     }
-                    Toast toast = Toast.makeText(getApplicationContext(), "bodylocation(s) added to record", Toast.LENGTH_SHORT);
+                    Toast toast = Toast.makeText(getApplicationContext(),
+                            "bodylocation(s) added to record", Toast.LENGTH_SHORT);
                     toast.show();
 
                 }
@@ -137,6 +142,13 @@ public class AddRecordActivity extends AppCompatActivity {
                         ,Toast.LENGTH_SHORT).show();
                 setResult(RESULT_OK);
                 finish();
+                }catch (NullPointerException e){
+                    Toast.makeText(AddRecordActivity.this, "No Title Entered",
+                            Toast.LENGTH_SHORT).show();
+                }catch (IllegalArgumentException e) {
+                    Toast.makeText(AddRecordActivity.this, "Illegal Arguments in Title",
+                            Toast.LENGTH_SHORT).show();
+                }
 
             }
         });
@@ -160,6 +172,12 @@ public class AddRecordActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * After an Intent is finished it will get the results of the intent
+     * @param requestCode Request code for intents
+     * @param resultCode Result code to see if activities finished
+     * @param data
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode,@Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -172,7 +190,8 @@ public class AddRecordActivity extends AppCompatActivity {
         }
         if(requestCode == BODY_ACTIVITY_REQUEST_CODE){
             if(resultCode != RESULT_CANCELED && data != null){
-                BodyLocation bodylocation = (BodyLocation) data.getSerializableExtra("bodylocation");
+                BodyLocation bodylocation = (BodyLocation) data.getSerializableExtra(
+                        "bodylocation");
                 bodylocationlist.add(bodylocation);
             }
         }

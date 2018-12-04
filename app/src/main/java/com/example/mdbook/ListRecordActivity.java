@@ -2,7 +2,9 @@ package com.example.mdbook;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.location.Address;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -48,6 +50,9 @@ public class ListRecordActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         UserManager.initManager();
         UserManager userManager = UserManager.getManager();
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        SyncController syncController = new SyncController();
+        registerReceiver(syncController,filter);
 
         Patient patient = (Patient) UserController.getController().getUser();
         if (problemPos == null) {
@@ -166,5 +171,13 @@ public class ListRecordActivity extends AppCompatActivity {
             Toast.makeText(this, "You cant make map request", Toast.LENGTH_SHORT).show();
         }
         return false;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        SyncController syncController = new SyncController();
+        registerReceiver(syncController,filter);
     }
 }

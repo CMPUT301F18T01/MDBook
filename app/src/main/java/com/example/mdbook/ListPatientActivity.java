@@ -12,6 +12,9 @@ package com.example.mdbook;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -108,7 +111,7 @@ public class ListPatientActivity extends AppCompatActivity implements Navigation
         }).attachToRecyclerView(recyclerView);
 
         /* Initializes the add record activity */
-        FloatingActionButton fab = findViewById(R.id.gotoAddPatient);
+        FloatingActionButton fab = findViewById(R.id.fabAddProblem);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -210,6 +213,11 @@ public class ListPatientActivity extends AppCompatActivity implements Navigation
         startActivity(intent);
     }
 
-
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        SyncController syncController = new SyncController();
+        registerReceiver(syncController,filter);
+    }
 }
