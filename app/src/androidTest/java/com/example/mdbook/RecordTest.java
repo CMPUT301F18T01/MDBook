@@ -52,6 +52,7 @@ public class RecordTest extends TestCase {
         assertEquals(bodyLocation, record.getBodyLocations());
 
 
+
         // test for comment, title, date
         record.setComment("test comment");
         assertEquals("test comment", record.getComment());

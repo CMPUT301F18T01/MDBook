@@ -36,12 +36,11 @@ import java.util.Date;
  *
  * @see com.example.mdbook.Record
  *
- *
+ * @author ThomasChan
  * @author Jayanta Chatterjee
- * @author James Aina
  * @author Raj Kapadia
  *
- * @version 0.0.1
+ * @version 3.0.0
  */
 
 public class AddRecordActivity extends AppCompatActivity {
@@ -91,7 +90,8 @@ public class AddRecordActivity extends AppCompatActivity {
         image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(AddRecordActivity.this, "Add photo", Toast.LENGTH_LONG).show();
+                Toast.makeText(AddRecordActivity.this, "Add photo",
+                        Toast.LENGTH_LONG).show();
             }
         });
         // Switches to addBodyLocationActivity upon the click of the body button
@@ -130,7 +130,8 @@ public class AddRecordActivity extends AppCompatActivity {
                     for(int i = 0; i<bodylocationlist.size(); i++) {
                         record.addBodyLocation(bodylocationlist.get(i));
                     }
-                    Toast toast = Toast.makeText(getApplicationContext(), "bodylocation(s) added to record", Toast.LENGTH_SHORT);
+                    Toast toast = Toast.makeText(getApplicationContext(),
+                            "bodylocation(s) added to record", Toast.LENGTH_SHORT);
                     toast.show();
 
                 }
@@ -164,19 +165,26 @@ public class AddRecordActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * After an Intent is finished it will get the results of the intent
+     * @param requestCode Request code for intents
+     * @param resultCode Result code to see if activities finished
+     * @param data
+     */
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode,@Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-//        if (requestCode == MAP_ACTIVITY_REQUEST_CODE){
-//            if (resultCode == RESULT_OK){
-//                Lat = (Double) data.getSerializableExtra("Lat");
-//                Long = (Double) data.getSerializableExtra("Long");
-//                Title = (String) data.getSerializableExtra("Title");
-//            }
-//        }
+        if (requestCode == MAP_ACTIVITY_REQUEST_CODE){
+            if (resultCode == RESULT_OK){
+                Lat = (Double) data.getSerializableExtra("Lat");
+                Long = (Double) data.getSerializableExtra("Long");
+                Title = (String) data.getSerializableExtra("Title");
+            }
+        }
         if(requestCode == BODY_ACTIVITY_REQUEST_CODE){
             if(resultCode != RESULT_CANCELED && data != null){
-                BodyLocation bodylocation = (BodyLocation) data.getSerializableExtra("bodylocation");
+                BodyLocation bodylocation = (BodyLocation) data.getSerializableExtra(
+                        "bodylocation");
                 bodylocationlist.add(bodylocation);
             }
         }

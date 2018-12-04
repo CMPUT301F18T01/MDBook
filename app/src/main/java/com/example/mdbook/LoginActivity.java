@@ -1,9 +1,9 @@
 package com.example.mdbook;
 
 import android.accounts.NetworkErrorException;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.support.v7.app.AppCompatActivity;
@@ -14,7 +14,6 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
-import android.widget.CompoundButton;
 
 import android.widget.EditText;
 import android.widget.TextView;
@@ -52,6 +51,11 @@ public class LoginActivity extends AppCompatActivity {
         LocalStorageController.init(sharedPreferences, fileDir);
         ElasticsearchController.init(connectivityManager);
         UserManager.initManager();
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        SyncController syncController = new SyncController();
+        registerReceiver(syncController,filter);
+
+
 
 
         setContentView(R.layout.activity_login);

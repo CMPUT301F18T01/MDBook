@@ -47,7 +47,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         // set the view and butons appropriately by id's
-        etUserID = findViewById(R.id.etUserID);
+        etUserID = findViewById(R.id.etUserIDR);
         etUserID.setOnClickListener(this);
         etEmailAddress = findViewById(R.id.etEmail);
         etEmailAddress.setOnClickListener(this);
@@ -74,7 +74,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             case R.id.etPhoneNumber:
                 etPhoneNumber.setText("");
                 break;
-            case R.id.etUserID:
+            case R.id.etUserIDR:
                 etUserID.setText("");
                 break;
             case R.id.registerButton:

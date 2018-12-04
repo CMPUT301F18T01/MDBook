@@ -2,30 +2,29 @@ package com.example.mdbook;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.helper.ItemTouchHelper;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Activity for displaying the users problems when logging in. It displays problems,
@@ -66,6 +65,7 @@ public class ListProblemActivity extends AppCompatActivity
         UserManager userManager = UserManager.getManager();
         Patient patient = (Patient) UserController.getController().getUser();
 
+
         problems = patient.getProblems();
         /* Create recycler view */
         recyclerView = findViewById(R.id.recylerView);
@@ -102,7 +102,7 @@ public class ListProblemActivity extends AppCompatActivity
         }).attachToRecyclerView(recyclerView);
 
         /* Initializes the add problem activity */
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fabAddProblem);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -152,6 +152,10 @@ public class ListProblemActivity extends AppCompatActivity
         Patient patient = (Patient) UserController.getController().getUser();
         problems = patient.getProblems();
         mAdapter.notifyDataSetChanged();
+
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        SyncController syncController = new SyncController();
+        registerReceiver(syncController,filter);
     }
 
     /**

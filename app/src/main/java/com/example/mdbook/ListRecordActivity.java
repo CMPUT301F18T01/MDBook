@@ -2,7 +2,9 @@ package com.example.mdbook;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.location.Address;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -48,6 +50,9 @@ public class ListRecordActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         UserManager.initManager();
         UserManager userManager = UserManager.getManager();
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        SyncController syncController = new SyncController();
+        registerReceiver(syncController,filter);
 
         Patient patient = (Patient) UserController.getController().getUser();
         if (problemPos == null) {
@@ -89,7 +94,7 @@ public class ListRecordActivity extends AppCompatActivity {
             public void viewmapClick(int postion) {
                 if (isServicesOK()) {
                     Intent launchmap = new Intent(ListRecordActivity.this, ViewMapActivity.class);
-                    if (recordList.get(postion).getLocation().getLat() != null){
+                    if (recordList.get(postion).getLocation() != null){
                         launchmap.putExtra("recieveLat",recordList.get(postion).getLocation().getLat());
                         launchmap.putExtra("recieveLong",recordList.get(postion).getLocation().getLong());
                         launchmap.putExtra("recieveTitle",recordList.get(postion).getLocation().getTitle());
@@ -105,7 +110,7 @@ public class ListRecordActivity extends AppCompatActivity {
 
         });
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fabAddRecord);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -166,5 +171,13 @@ public class ListRecordActivity extends AppCompatActivity {
             Toast.makeText(this, "You cant make map request", Toast.LENGTH_SHORT).show();
         }
         return false;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        SyncController syncController = new SyncController();
+        registerReceiver(syncController,filter);
     }
 }
