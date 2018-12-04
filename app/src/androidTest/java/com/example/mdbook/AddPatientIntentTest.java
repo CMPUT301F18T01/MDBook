@@ -42,7 +42,7 @@ public class AddPatientIntentTest {
         solo.clickOnView(solo.getView(R.id.registerBtn));
 
         solo.assertCurrentActivity("Wrong Activity", RegisterActivity.class);
-        solo.enterText((EditText) solo.getView(R.id.etUserIDR), "VanessaPeng");
+        solo.enterText((EditText) solo.getView(R.id.etUserIDR), "testpatient103");
         solo.enterText((EditText) solo.getView(R.id.etEmail), "ryp4@test.com");
         solo.enterText((EditText) solo.getView(R.id.etPhoneNumber), "604604604");
         solo.clickOnView(solo.getView(R.id.registerButton));
@@ -50,7 +50,7 @@ public class AddPatientIntentTest {
         solo.assertCurrentActivity("Wrong Activity", LoginActivity.class);
         solo.clickOnView(solo.getView(R.id.registerBtn));
         solo.assertCurrentActivity("Wrong Activity", RegisterActivity.class);
-        solo.enterText((EditText) solo.getView(R.id.etUserIDR), "rajkapadiaCG");
+        solo.enterText((EditText) solo.getView(R.id.etUserIDR), "testcare2");
         solo.enterText((EditText) solo.getView(R.id.etEmail), "rajkapadia@test.com");
         solo.enterText((EditText) solo.getView(R.id.etPhoneNumber), "0000000000");
         CheckBox checkBox = (CheckBox) solo.getView(R.id.cgCheckBox);

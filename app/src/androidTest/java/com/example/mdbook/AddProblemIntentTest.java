@@ -39,12 +39,12 @@ public class AddProblemIntentTest
         solo.assertCurrentActivity("Wrong Activity", LoginActivity.class);
         solo.clickOnView(solo.getView(R.id.registerBtn));
         solo.assertCurrentActivity("Wrong Activity", RegisterActivity.class);
-        solo.enterText((EditText) solo.getView(R.id.etUserIDR), "lmkreg,srkmo123");
+        solo.enterText((EditText) solo.getView(R.id.etUserIDR), "testpatient103");
         solo.enterText((EditText) solo.getView(R.id.etEmail), "yp4@test.com");
         solo.enterText((EditText) solo.getView(R.id.etPhoneNumber), "0000000000");
         solo.clickOnView(solo.getView(R.id.registerButton));
         solo.goBackToActivity("LoginActivity");
-        solo.enterText((EditText) solo.getView(R.id.etUserID), "lmkreg,srkmo123");
+        solo.enterText((EditText) solo.getView(R.id.etUserID), "testpatient103");
         solo.clickOnView(solo.getView(R.id.loginButton));
         solo.assertCurrentActivity("Wrong Activity", ListProblemActivity.class);
         solo.clickOnScreen(1300,2500);
@@ -55,7 +55,7 @@ public class AddProblemIntentTest
         solo.setDatePicker(0, 2018, 12, 3);
         solo.clickOnText("OK");
         solo.clickOnView(solo.getView(R.id.saveButton));
-        //solo.assertCurrentActivity("Wrong Activity", ListProblemActivity.class);
+        solo.assertCurrentActivity("Wrong Activity", ListProblemActivity.class);
         UserManager.initManager();
         UserManager um = UserManager.getManager();
         um.logout();

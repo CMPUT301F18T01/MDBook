@@ -32,12 +32,12 @@ public class AddCommentIntentTest {
     {
         solo = new Solo(getInstrumentation(), activityTestRule.getActivity());
         solo.assertCurrentActivity("Wrong Activity", LoginActivity.class);
-        solo.enterText((EditText) solo.getView(R.id.etUserID), "rajkapadiaCG");
+        solo.enterText((EditText) solo.getView(R.id.etUserID), "testcare2");
         solo.clickOnView(solo.getView(R.id.loginButton));
         solo.assertCurrentActivity("Wrong Activity", ListPatientActivity.class);
         solo.clickOnScreen(1300,2500);
         solo.assertCurrentActivity("Wrong Activity", AddPatientActivity.class);
-        solo.enterText((EditText) solo.getView(R.id.enterUserText), "VanessaPeng");
+        solo.enterText((EditText) solo.getView(R.id.enterUserText), "testpatient103");
         solo.clickOnView(solo.getView(R.id.addPatientBtn));
         solo.assertCurrentActivity("Wrong Activity", ListPatientActivity.class);
         solo.clickOnScreen(750,500);
@@ -56,7 +56,9 @@ public class AddCommentIntentTest {
         UserManager.initManager();
         UserManager um = UserManager.getManager();
         um.logout();
-
+//        solo.setNavigationDrawer(Solo.OPENED);
+//        solo.clickOnScreen(300,1100);
+//        solo.assertCurrentActivity("Wrong Activity", LoginActivity.class);
     }
 
 }
