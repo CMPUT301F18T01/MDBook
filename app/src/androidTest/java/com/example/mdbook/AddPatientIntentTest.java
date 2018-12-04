@@ -25,11 +25,9 @@ public class AddPatientIntentTest {
     @Rule
     public ActivityTestRule<LoginActivity> activityTestRule= new ActivityTestRule(LoginActivity.class);
 
-
     public void setUp() throws Exception{
         solo = new Solo(getInstrumentation(), activityTestRule.getActivity());
     }
-
 
     @Test
     public void testStart() throws Exception {
@@ -48,11 +46,9 @@ public class AddPatientIntentTest {
         solo.enterText((EditText) solo.getView(R.id.etEmail), "ryp4@test.com");
         solo.enterText((EditText) solo.getView(R.id.etPhoneNumber), "604604604");
         solo.clickOnView(solo.getView(R.id.registerButton));
-
         solo.goBackToActivity("LoginActivity");
         solo.assertCurrentActivity("Wrong Activity", LoginActivity.class);
         solo.clickOnView(solo.getView(R.id.registerBtn));
-
         solo.assertCurrentActivity("Wrong Activity", RegisterActivity.class);
         solo.enterText((EditText) solo.getView(R.id.etUserIDR), "rajkapadiaCG");
         solo.enterText((EditText) solo.getView(R.id.etEmail), "rajkapadia@test.com");
@@ -64,8 +60,7 @@ public class AddPatientIntentTest {
         solo.enterText((EditText) solo.getView(R.id.etUserID), "rajkapadiaCG");
         solo.clickOnView(solo.getView(R.id.loginButton));
         solo.assertCurrentActivity("Wrong Activity", ListPatientActivity.class);
-        FloatingActionButton fab = (FloatingActionButton) solo.getView(R.id.fabAddProblem);
-        solo.clickOnView(fab);
+        solo.clickOnScreen(1300,2500);
         solo.assertCurrentActivity("Wrong Activity", AddPatientActivity.class);
         solo.enterText((EditText) solo.getView(R.id.enterUserText), "VanessaPeng");
         solo.clickOnView(solo.getView(R.id.addPatientBtn));
