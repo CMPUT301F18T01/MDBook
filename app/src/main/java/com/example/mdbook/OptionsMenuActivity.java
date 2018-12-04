@@ -69,7 +69,7 @@ public class OptionsMenuActivity extends AppCompatActivity {
             }
         });
         // Switches to the record slide activity upon the click of the edit record slide button
-       
+
         // Switches to the geolocation activity upon the click of the edit geolocation button
         GeoLocation.setOnClickListener(new View.OnClickListener() {
             @Override

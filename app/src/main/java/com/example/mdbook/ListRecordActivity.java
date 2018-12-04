@@ -178,6 +178,6 @@ public class ListRecordActivity extends AppCompatActivity {
         super.onResume();
         IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
         SyncController syncController = new SyncController();
-//        registerReceiver(syncController,filter);
+        registerReceiver(syncController,filter);
     }
 }
