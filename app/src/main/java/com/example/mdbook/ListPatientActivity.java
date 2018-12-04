@@ -164,12 +164,13 @@ public class ListPatientActivity extends AppCompatActivity implements Navigation
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
+        UserManager userManager = UserManager.getManager();
         int id = item.getItemId();
 
         if (id == R.id.profile) {
             goViewProfile();
         } else if (id == R.id.signout) {
-            Toast.makeText(this, "Signing out", Toast.LENGTH_SHORT).show();
+            userManager.logout();
             signout();
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

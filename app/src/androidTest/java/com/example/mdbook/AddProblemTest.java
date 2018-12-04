@@ -35,7 +35,8 @@ public class AddProblemTest
         Activity activity = activityTestRule.getActivity();
     }
 
-    @Test public void testAddProblem()
+    @Test
+    public void testAddProblem()
     {
         solo = new Solo(getInstrumentation(), activityTestRule.getActivity());
         solo.assertCurrentActivity("Wrong Activity", LoginActivity.class);
@@ -69,7 +70,7 @@ public class AddProblemTest
 
     @Test
     public void testEnd() throws Exception{
-        UserController.getController().clearUser();
+
     }
 
 
