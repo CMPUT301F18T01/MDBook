@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Display;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -58,6 +59,32 @@ public class LoginActivityTest {
         solo.setNavigationDrawer(Solo.OPENED);
         solo.clickOnMenuItem("Log out");
         solo.assertCurrentActivity("Wrong Activity", LoginActivity.class);
+    }
+
+    @Test
+    public void careProviderLogin(){
+        solo = new Solo(getInstrumentation(), activityTestRule.getActivity());
+        solo.goBackToActivity("LoginActivity");
+        solo.assertCurrentActivity("Wrong Activity", LoginActivity.class);
+        solo.clickOnView(solo.getView(R.id.registerBtn));
+
+        solo.assertCurrentActivity("Wrong Activity", RegisterActivity.class);
+        solo.enterText((EditText) solo.getView(R.id.etUserIDR), "rajkapadiaCG1");
+        solo.enterText((EditText) solo.getView(R.id.etEmail), "rajkapadia@test.com");
+        solo.enterText((EditText) solo.getView(R.id.etPhoneNumber), "0000000000");
+        CheckBox checkBox = (CheckBox) solo.getView(R.id.cgCheckBox);
+        solo.clickOnView(checkBox);
+        solo.clickOnView(solo.getView(R.id.registerButton));
+
+        solo.goBackToActivity("LoginActivity");
+        solo.enterText((EditText) solo.getView(R.id.etUserID), "rajkapadiaCG1");
+        solo.clickOnView(solo.getView(R.id.loginButton));
+        solo.assertCurrentActivity("Wrong Activity", ListPatientActivity.class);
+        swipeToRight();
+        solo.setNavigationDrawer(Solo.OPENED);
+        solo.clickOnMenuItem("Log out");
+        solo.assertCurrentActivity("Wrong Activity", LoginActivity.class);
+
     }
 
     private void swipeToRight() {

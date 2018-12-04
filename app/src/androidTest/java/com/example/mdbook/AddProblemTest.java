@@ -3,6 +3,7 @@ package com.example.mdbook;
 import android.app.Activity;
 import android.support.design.widget.FloatingActionButton;
 import android.support.test.rule.ActivityTestRule;
+import android.view.Display;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -64,8 +65,20 @@ public class AddProblemTest
         solo.setDatePicker(0, 2018, 12, 3);
         solo.clickOnText("OK");
         solo.clickOnView(solo.getView(R.id.saveButton));
-
         solo.assertCurrentActivity("Wrong Activity", ListProblemActivity.class);
+        swipeToRight();
+        solo.setNavigationDrawer(Solo.OPENED);
+        solo.clickOnMenuItem("Log out");
+        solo.assertCurrentActivity("Wrong Activity", LoginActivity.class);
+    }
+
+    private void swipeToRight() {
+        Display display = solo.getCurrentActivity().getWindowManager().getDefaultDisplay();
+        int width = display.getWidth();
+        int height = display.getHeight();
+        float xStart = 0 ;
+        float xEnd = width / 2;
+        solo.drag(xStart, xEnd, height / 2, height / 2, 1);
     }
 
     @Test
