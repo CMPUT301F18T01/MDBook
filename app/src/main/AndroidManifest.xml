@@ -36,7 +36,7 @@
             android:value="@integer/google_play_services_version" />
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyApqnoJ4QLjxHj06ZvXInzqj1IuWt2xL-U" />
+            android:value="AIzaSyDjXY6GO55M7sHdZtl-Ml2hKENRNA7YtXI" />
 
         <activity android:name=".LoginActivity">
             <intent-filter>
@@ -92,7 +92,7 @@
         <activity android:name=".GenerateQRActivity"></activity>
         <activity android:name=".ScanQRActivity"></activity>
         <receiver android:name=".AlarmService"/>
->>>>>>> 0898ff1041f8994f9ddd08296706b63cb22d3a9a
+
     </application>
 
 </manifest>
